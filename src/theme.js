@@ -27,6 +27,18 @@ const theme = createTheme({
             main: '#10B981'
         }
     },
+    components: {
+        MuiButton: {
+            styleOverrides: {
+                root: {
+                    padding: '12px 14px',
+                    textTransform: 'unset',
+                    fontSize: '1rem',
+                    width: 'fit-content'
+                }
+            }
+        }
+    }
 });
 
 export default theme;
