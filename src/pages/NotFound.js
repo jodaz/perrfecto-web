@@ -17,7 +17,7 @@ const NotFound = () => {
                 width: '50%',
                 textAlign: 'center',
                 justifyContent: 'space-between',
-                fontWeight: 300
+                fontWeight: 500
             }}>
                 <Box sx={{
                     fontSize: '4rem',
@@ -27,7 +27,8 @@ const NotFound = () => {
                 </Box>
                 <Box sx={{
                     fontSize: '2rem',
-                    padding: '1rem 0'
+                    padding: '1rem 0',
+                    fontWeight: 400
                 }}>
                     La página que estaba buscando no se encuentra.
                 </Box>
@@ -35,13 +36,12 @@ const NotFound = () => {
                     padding: '1rem 0'
                 }}>
                     <Button to="/" sx={{
-                        backgroundColor: 'rgb(26, 26, 197)',
+                        backgroundColor: theme => theme.palette.primary.main,
                         color: '#fff',
-                        fontWeight: '500',
-                        padding: '0.5rem 1rem',
+                        fontWeight: 700,
                         borderRadius: '8px',
                         '&:hover': {
-                            backgroundColor: alpha('rgb(26, 26, 197)', 0.85)
+                            backgroundColor: theme => alpha(theme.palette.primary.main, 0.85)
                         }
                     }} component={LinkBehavior}>
                         Ir al inicio
