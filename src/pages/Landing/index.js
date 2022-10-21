@@ -2,6 +2,7 @@ import Box from '@mui/material/Box'
 import BackgroundDogs from '../../assets/images/background-dogs.png'
 import { Button } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import Header from './Header';
 
 const Landing = () => {
     const matches = useMediaQuery((theme) => theme.breakpoints.down('sm'));
@@ -22,6 +23,7 @@ const Landing = () => {
                 zIndex: 0
             }
         }}>
+            <Header />
             <Box sx={{
                 height: 'inherit',
                 width: '100%',
