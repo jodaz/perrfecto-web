@@ -4,12 +4,14 @@ import Button from '@mui/material/Button';
 import { styled, alpha } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
+import Link from '@mui/material/Link';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '../../assets/icons/Close';
 import PasswordInput from '../PasswordInput'
 import { useForm } from "react-hook-form";
 import Box from '@mui/material/Box';
 import TextInput from '../TextInput';
+import LinkBehavior from '../LinkBehavior';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -73,7 +75,7 @@ export default function Login() {
     return (
         <>
             <Button variant="contained" color="secondary" onClick={handleClickOpen}>
-                Open dialog
+                Iniciar sesión
             </Button>
             <BootstrapDialog
                 onClose={handleClose}
@@ -99,8 +101,24 @@ export default function Login() {
                         </Box>
                         <Box>
                         Al iniciar sesión en TinderDogs estás aceptando continuar de acuerdo a
-                            nuestros <a href="#">Términos y condiciones</a> y con nuestra
-                            <a href="#">Política de Privacidad</a>
+                            nuestros <Link href="#" underline="none">Términos y condiciones</Link> y con nuestra
+                             <Link href="#" underline="none">  Política de Privacidad</Link>
+                        </Box>
+                        <Box sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            margin: '5rem auto'
+                        }}>
+                            <Box>
+                                Continuar con
+                            </Box>
+                            <Box sx={{ display: 'flex' }}>
+
+                            </Box>
+                        </Box>
+                        <Box>
+                            ¿Aún no tienes una cuenta? <Link href="#" underline="none">Crear cuenta</Link>
                         </Box>
                     </Box>
                     <Box component="form" onSubmit={handleOnSubmit} sx={{ m: 1, flex: 1 }}>
@@ -131,7 +149,7 @@ export default function Login() {
                                     color: '#fff',
                                     backgroundColor: alpha(`#000`, 0.3)
                                 }
-                            }}>
+                            }} component={LinkBehavior} to="/home">
                                 Ingresar como invitado
                             </Button>
                         </Box>

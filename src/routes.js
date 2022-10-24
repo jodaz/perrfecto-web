@@ -1,5 +1,6 @@
 import NotFound from "./pages/NotFound";
 import Landing from "./pages/Landing";
+import Home from "./pages/Home";
 
 const routes = [
     {
@@ -9,6 +10,10 @@ const routes = [
     {
         path: '/',
         view: <Landing />
+    },
+    {
+        path: '/home',
+        view: <Home />
     }
 ];
 
