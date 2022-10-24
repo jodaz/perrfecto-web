@@ -1,40 +1,94 @@
-import { createTheme } from '@mui/material/styles';
+import { createTheme, alpha } from '@mui/material/styles';
+
+const palette = {
+    primary: {
+        main: '#A167C9',
+        contrastText: '#fff'
+    },
+    secondary: {
+        main: '#fff',
+        contrastText: 'rgba(31, 44, 56, 1)'
+    },
+    error: {
+        main: '#F24747'
+    },
+    info: {
+        main: '#3B82F6'
+    },
+    warning: {
+        main: '#F59E0B'
+    },
+    success: {
+        main: '#10B981'
+    },
+    text: {
+        primary: 'rgba(31, 44, 56, 1)'
+    },
+    background: {
+        default: '#fff'
+    }
+}
 
 const theme = createTheme({
     typography: {
         fontFamily: 'Ubuntu, sans-serif',
-        fontSize: 10,
+        color: 'rgba(31, 44, 56, 1)'
     },
-    palette: {
-        primary: {
-            main: '#A167C9',
-        },
-        secondary: {
-            main: '#fff',
-            light: '#878787',
-            dark: '#1e1e1e'
-        },
-        error: {
-            main: '#F24747'
-        },
-        info: {
-            main: '#3B82F6'
-        },
-        warning: {
-            main: '#F59E0B'
-        },
-        success: {
-            main: '#10B981'
-        }
-    },
+    palette: palette,
     components: {
         MuiButton: {
             styleOverrides: {
                 root: {
-                    padding: '12px 14px',
+                    padding: '8px 24px',
                     textTransform: 'unset',
-                    fontSize: '1rem',
-                    width: 'fit-content'
+                    fontSize: '1.05rem',
+                    fontWeight: 500,
+                    borderRadius: '100px',
+                    gap: '8px',
+                    boxShadown: '0px 2px 12px rgba(161, 103, 201, 0.36);'
+                }
+            }
+        },
+        MuiBackdrop: {
+            styleOverrides: {
+                root: {
+                    backdropFilter: "blur(4px)"
+                }
+            }
+        },
+        MuiInputBase: {
+            styleOverrides: {
+                root: ({ theme }) => ({
+                    border: '1px solid #ccc',
+                    borderRadius: 100,
+                    padding: '10px 12px',
+                    transition: theme.transitions.create([
+                        'border-color',
+                        'background-color',
+                        'box-shadow',
+                    ]),
+                    '&.Mui-focused': {
+                        boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
+                        borderColor: theme.palette.primary.main,
+                    },
+                })
+            }
+        },
+        MuiFormLabel: {
+            styleOverrides: {
+                root: {
+                    lineHeight: '22px',
+                    fontWeight: 500,
+                    fontSize: '20px',
+                    marginLeft: '-1rem',
+                    color: '#858585'
+                }
+            }
+        },
+        MuiFormControl: {
+            styleOverrides: {
+                root: {
+                    width: '100%'
                 }
             }
         }

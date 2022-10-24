@@ -3,6 +3,7 @@ import BackgroundDogs from '../../assets/images/background-dogs.png'
 import { Button } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Header from './Header';
+import SignUpDialog from '../../components/SignUp';
 
 const Landing = () => {
     const matches = useMediaQuery((theme) => theme.breakpoints.down('sm'));
@@ -37,7 +38,7 @@ const Landing = () => {
                 zIndex: 1000,
                 alignItems: 'center',
                 '& > *': {
-                    margin: '1rem 0'
+                    margin: '1.1rem 0'
                 }
             }}>
                 <Box sx={{
@@ -53,12 +54,7 @@ const Landing = () => {
                 }}>
                     Conoce nuevas mascotas, en diferentes lugares, pero con los mismos gustos que tú
                 </Box>
-                <Button
-                    sx={{ borderRadius: '100px' }}
-                    variant="contained"
-                >
-                    Crear una cuenta
-                </Button>
+                <SignUpDialog />
             </Box>
         </Box>
     );

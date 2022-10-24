@@ -2,6 +2,7 @@ import * as React from 'react'
 import Box from '@mui/material/Box'
 import { styled } from '@mui/material/styles';
 import { Link } from '@mui/material';
+import LoginDialog from '../../components/Login';
 
 const BoxContainer = styled(Box)(({ theme, isScroll }) => ({
     display: 'flex',
@@ -19,7 +20,7 @@ const BoxContainer = styled(Box)(({ theme, isScroll }) => ({
 
 const AnchorTag = styled(Link)(({ theme }) => ({
     textDecoration: 'none',
-    padding: '1rem',
+    padding: ' 0 1rem',
     fontWeight: '400',
     color: `${theme.palette.secondary.main}`,
     cursor: 'pointer',
@@ -52,8 +53,9 @@ const Header = () => {
                 fontWeight: '300',
                 fontSize: '1rem',
                 color: '#fff',
-                marginRight: '1rem',
-                listStyle: 'none'
+                marginRight: '2rem',
+                listStyle: 'none',
+                alignItems: 'center'
             }} component='ul'>
                 {internalLinks.map(link => (
                     <li>
@@ -68,6 +70,11 @@ const Header = () => {
                         </AnchorTag>
                     </li>
                 ))}
+                <li>
+                    <Box>
+                        <LoginDialog />
+                    </Box>
+                </li>
             </Box>
         </BoxContainer>
     );
