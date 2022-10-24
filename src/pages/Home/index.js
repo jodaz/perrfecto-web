@@ -2,7 +2,6 @@ import Box from '@mui/material/Box'
 import BackgroundDogs from '../../assets/images/background-dogs.png'
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Aside from './Aside';
-import SignUpDialog from '../../components/SignUp';
 
 const Landing = () => {
     const matches = useMediaQuery((theme) => theme.breakpoints.down('sm'));

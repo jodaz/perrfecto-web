@@ -1,9 +1,10 @@
 import Box from '@mui/material/Box'
 import BackgroundDogs from '../../assets/images/background-dogs.png'
-import { Button } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Header from './Header';
-import SignUpDialog from '../../components/SignUp';
+import { Link, Button } from '@mui/material';
+import LinkBehavior from '../../components/LinkBehavior';
+import { Outlet } from 'react-router-dom'
 
 const Landing = () => {
     const matches = useMediaQuery((theme) => theme.breakpoints.down('sm'));
@@ -54,7 +55,15 @@ const Landing = () => {
                 }}>
                     Conoce nuevas mascotas, en diferentes lugares, pero con los mismos gustos que tú
                 </Box>
-                <SignUpDialog />
+                <Button
+                    variant="contained"
+                    color="primary"
+                    to='/register'
+                    component={LinkBehavior}
+                >
+                    Crear una cuenta
+                </Button>
+                <Outlet />
             </Box>
         </Box>
     );

@@ -1,8 +1,8 @@
 import * as React from 'react'
 import Box from '@mui/material/Box'
 import { styled } from '@mui/material/styles';
-import { Link } from '@mui/material';
-import LoginDialog from '../../components/Login';
+import { Link, Button } from '@mui/material';
+import LinkBehavior from '../../components/LinkBehavior';
 
 const BoxContainer = styled(Box)(({ theme, isScroll }) => ({
     display: 'flex',
@@ -33,11 +33,11 @@ const AnchorTag = styled(Link)(({ theme }) => ({
 const internalLinks = [
     {
         title: 'Home',
-        link: 'services',
+        link: '/home',
     },
     {
         title: 'Conecta',
-        link: 'portfolio'
+        link: '/home'
     },
     {
         title: '¿Cómo funciona?',
@@ -62,9 +62,7 @@ const Header = () => {
                         <AnchorTag
                             aria-label={link.title}
                             to={link.link}
-                            spy={true}
-                            duration={500}
-                            smooth={true}
+                            component={LinkBehavior}
                         >
                             {link.title}
                         </AnchorTag>
@@ -72,7 +70,14 @@ const Header = () => {
                 ))}
                 <li>
                     <Box>
-                        <LoginDialog />
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            to='/login'
+                            component={LinkBehavior}
+                        >
+                            Iniciar sesión
+                        </Button>
                     </Box>
                 </li>
             </Box>

@@ -2,7 +2,6 @@ import * as React from 'react'
 import Box from '@mui/material/Box'
 import { styled } from '@mui/material/styles';
 import { Link } from '@mui/material';
-import LoginDialog from '../../components/Login';
 
 const BoxContainer = styled(Box)(({ theme, isScroll }) => ({
     display: 'flex',
@@ -72,7 +71,6 @@ const Aside = () => {
                 ))}
                 <li>
                     <Box>
-                        <LoginDialog />
                     </Box>
                 </li>
             </Box>

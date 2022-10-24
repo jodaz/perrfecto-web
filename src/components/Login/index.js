@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form";
 import Box from '@mui/material/Box';
 import TextInput from '../TextInput';
 import LinkBehavior from '../LinkBehavior';
+import { useNavigate } from 'react-router-dom';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -55,107 +56,97 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function Login() {
+export default function Login({ location }) {
+    const navigate = useNavigate()
     const { control, handleSubmit } = useForm({
         reValidateMode: "onBlur"
     });
-    const [open, setOpen] = React.useState(false);
 
     const handleOnSubmit = (evt) => {
         console.log(evt);
     };
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-    const handleClose = () => {
-        setOpen(false);
-    };
+    const handleClose = () => navigate('/')
 
     return (
-        <>
-            <Button variant="contained" color="secondary" onClick={handleClickOpen}>
-                Iniciar sesión
-            </Button>
-            <BootstrapDialog
-                onClose={handleClose}
-                aria-labelledby="customized-dialog-title"
-                open={open}
-            >
-                <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose} />
+        <BootstrapDialog
+            onClose={handleClose}
+            aria-labelledby="customized-dialog-title"
+            open={location.pathname == '/login'}
+        >
+            <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose} />
+            <Box sx={{
+                m: 1,
+                display: 'flex',
+                width: '800px',
+                height: '400px',
+                p: 3
+            }}>
                 <Box sx={{
+                    flex: 1,
                     m: 1,
                     display: 'flex',
-                    width: '800px',
-                    height: '400px',
-                    p: 3
+                    flexDirection: 'column',
                 }}>
+                    <Box component='h1' margin='0 0 1rem 0'>
+                        Iniciar sesión
+                    </Box>
+                    <Box>
+                    Al iniciar sesión en TinderDogs estás aceptando continuar de acuerdo a
+                        nuestros <Link href="#" underline="none">Términos y condiciones</Link> y con nuestra
+                            <Link href="#" underline="none">  Política de Privacidad</Link>
+                    </Box>
                     <Box sx={{
-                        flex: 1,
-                        m: 1,
                         display: 'flex',
                         flexDirection: 'column',
+                        alignItems: 'center',
+                        margin: '5rem auto'
                     }}>
-                        <Box component='h1' margin='0 0 1rem 0'>
-                            Iniciar sesión
-                        </Box>
                         <Box>
-                        Al iniciar sesión en TinderDogs estás aceptando continuar de acuerdo a
-                            nuestros <Link href="#" underline="none">Términos y condiciones</Link> y con nuestra
-                             <Link href="#" underline="none">  Política de Privacidad</Link>
+                            Continuar con
                         </Box>
-                        <Box sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            margin: '5rem auto'
-                        }}>
-                            <Box>
-                                Continuar con
-                            </Box>
-                            <Box sx={{ display: 'flex' }}>
+                        <Box sx={{ display: 'flex' }}>
 
-                            </Box>
-                        </Box>
-                        <Box>
-                            ¿Aún no tienes una cuenta? <Link href="#" underline="none">Crear cuenta</Link>
                         </Box>
                     </Box>
-                    <Box component="form" onSubmit={handleOnSubmit} sx={{ m: 1, flex: 1 }}>
-                        <Box sx={{ p: 1 }}>
-                            <TextInput
-                                label="Email"
-                                control={control}
-                                name="email"
-                                type="email"
-                            />
-                        </Box>
-                        <Box sx={{ p: 1 }}>
-                            <PasswordInput
-                                label='Contraseña'
-                                control={control}
-                                name="password"
-                            />
-                        </Box>
-                        <Box sx={{ p: 1 }}>
-                            <Button variant="contained" color="primary" fullWidth>
-                                Iniciar sesión
-                            </Button>
-                        </Box>
-                        <Box sx={{ p: 1 }}>
-                            <Button variant="contained" fullWidth sx={{
-                                backgroundColor: '#ccc',
-                                '&:hover': {
-                                    color: '#fff',
-                                    backgroundColor: alpha(`#000`, 0.3)
-                                }
-                            }} component={LinkBehavior} to="/home">
-                                Ingresar como invitado
-                            </Button>
-                        </Box>
+                    <Box>
+                        ¿Aún no tienes una cuenta? <Link href="#" underline="none" component={LinkBehavior} to='/register'>Crear cuenta</Link>
                     </Box>
                 </Box>
-            </BootstrapDialog>
-        </>
+                <Box component="form" onSubmit={handleOnSubmit} sx={{ m: 1, flex: 1 }}>
+                    <Box sx={{ p: 1 }}>
+                        <TextInput
+                            label="Email"
+                            control={control}
+                            name="email"
+                            type="email"
+                        />
+                    </Box>
+                    <Box sx={{ p: 1 }}>
+                        <PasswordInput
+                            label='Contraseña'
+                            control={control}
+                            name="password"
+                        />
+                    </Box>
+                    <Box sx={{ p: 1 }}>
+                        <Button variant="contained" color="primary" fullWidth>
+                            Iniciar sesión
+                        </Button>
+                    </Box>
+                    <Box sx={{ p: 1 }}>
+                        <Button variant="contained" fullWidth sx={{
+                            backgroundColor: '#ccc',
+                            '&:hover': {
+                                color: '#fff',
+                                backgroundColor: alpha(`#000`, 0.3)
+                            }
+                        }} component={LinkBehavior} to="/home">
+                            Ingresar como invitado
+                        </Button>
+                    </Box>
+                </Box>
+            </Box>
+        </BootstrapDialog>
     );
 }
