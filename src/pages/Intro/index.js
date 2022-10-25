@@ -2,18 +2,25 @@ import * as React from 'react'
 import Box from '@mui/material/Box'
 import BackgroundDogs from '../../assets/images/background-dogs.png'
 import useMediaQuery from '@mui/material/useMediaQuery';
-import vars from '../../vars';
 // Sections
 import Welcome from './Welcome'
+import Last from './Last';
+import jumpIntro from '../../utils/jumpIntro';
+
+const sections = [
+    {
+        component: <Welcome />,
+        index: 0
+    },
+    {
+        component: <Last />,
+        index: 1
+    }
+]
 
 const Intro = () => {
+    const [index, setIndex] = React.useState(0)
     const matches = useMediaQuery((theme) => theme.breakpoints.down('sm'));
-
-    React.useEffect(() => {
-        if (!localStorage.getItem(vars.intro)) {
-            localStorage.setItem(vars.intro, 'pass')
-        }
-    }, [])
 
     return (
         <Box sx={{
@@ -54,7 +61,21 @@ const Intro = () => {
                     height: '250px',
                     justifyContent: 'space-between'
                 }}>
-                    <Welcome />
+                    {
+                        sections.map(section => {
+                            if (section.index == index)
+
+                            return (
+                                <>
+                                    {React.cloneElement(section.component, {
+                                        handleNextSection: () => setIndex(index + 1),
+                                        index: index,
+                                        jumpIntro: jumpIntro
+                                    })}
+                                </>
+                            )
+                        })
+                    }
                 </Box>
             </Box>
         </Box>

@@ -3,7 +3,7 @@ import Button from '@mui/material/Button'
 import LinkBehavior from '../../components/LinkBehavior'
 import Link from '@mui/material/Link'
 
-const Welcome = () => {
+const Welcome = ({ index, handleNextSection, jumpIntro }) => {
 
     return (
         <>
@@ -16,10 +16,10 @@ const Welcome = () => {
             <Box>
                 A continuación  te mostraremos como funciona TinderDogs
             </Box>
-            <Button variant="contained">
+            <Button variant="contained" onClick={handleNextSection}>
                 Comenzar
             </Button>
-            <Link component={LinkBehavior} to='/home' color='secondary'>
+            <Link component={LinkBehavior} to='/home' color='secondary' onClick={jumpIntro}>
                 Saltar
             </Link>
         </>
