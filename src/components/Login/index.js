@@ -13,6 +13,7 @@ import Box from '@mui/material/Box';
 import TextInput from '../TextInput';
 import LinkBehavior from '../LinkBehavior';
 import { useNavigate } from 'react-router-dom';
+import vars from '../../vars'
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -67,6 +68,14 @@ export default function Login({ location }) {
     };
 
     const handleClose = () => navigate('/')
+
+    const handleGuestButton = () => {
+        if (!localStorage.getItem(vars.intro)) {
+            return navigate('/introduction')
+        } else {
+            return navigate('/home')
+        }
+    }
 
     return (
         <BootstrapDialog
@@ -141,7 +150,7 @@ export default function Login({ location }) {
                                 color: '#fff',
                                 backgroundColor: alpha(`#000`, 0.3)
                             }
-                        }} component={LinkBehavior} to="/home">
+                        }} onClick={handleGuestButton}>
                             Ingresar como invitado
                         </Button>
                     </Box>
