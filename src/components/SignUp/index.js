@@ -114,6 +114,7 @@ export default function SignUp({ location }) {
                                     label="Nombre"
                                     control={control}
                                     name="name"
+                                    placeholder='Ingresar nombre y apellido'
                                 />
                             </Box>
                             <Box sx={{ p: 1 }}>
@@ -121,6 +122,7 @@ export default function SignUp({ location }) {
                                     label="Teléfono"
                                     control={control}
                                     name="phone"
+                                    placeholder='Ingresar teléfono'
                                 />
                             </Box>
                         </>
@@ -131,6 +133,7 @@ export default function SignUp({ location }) {
                                 control={control}
                                 name="email"
                                 type="email"
+                                placeholder='Ingresar correo electrónico'
                             />
                         </Box>
                     )}
@@ -139,6 +142,7 @@ export default function SignUp({ location }) {
                             label='Contraseña'
                             control={control}
                             name="password"
+                            placeholder='Ingresar contraseña'
                         />
                     </Box>
                     <Box sx={{ p: 1 }}>
@@ -146,6 +150,7 @@ export default function SignUp({ location }) {
                             label='Confirmar contraseña'
                             control={control}
                             name="confirm_password"
+                            placeholder='Repita la contraseña'
                         />
                     </Box>
                     <Box textAlign='center'>

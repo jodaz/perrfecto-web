@@ -112,6 +112,7 @@ export default function Login({ location }) {
                             name="email"
                             type="email"
                             disabled={isSubmitting}
+                            placeholder='Ingresar correo electrónico'
                         />
                     </Box>
                     <Box sx={{ p: 1 }}>
@@ -120,6 +121,7 @@ export default function Login({ location }) {
                             control={control}
                             name="password"
                             disabled={isSubmitting}
+                            placeholder='Ingresar contraseña'
                         />
                     </Box>
                     <Box textAlign='center'>
