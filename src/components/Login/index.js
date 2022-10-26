@@ -19,7 +19,9 @@ import { apiProvider } from '../../api'
 export default function Login({ location }) {
     const navigate = useNavigate()
     const [error, setError] = React.useState(false)
-    const { control, handleSubmit } = useForm({
+    const { control, handleSubmit, formState: {
+        isSubmitting
+    }} = useForm({
         reValidateMode: "onBlur"
     });
 
@@ -38,7 +40,7 @@ export default function Login({ location }) {
         const { data: result } = response;
 
         localStorage.setItem(vars.authToken, result.access_token);
-        navigate('/home')
+        navigate('/detect-location')
     };
 
     const handleClose = () => navigate('/')
@@ -109,6 +111,7 @@ export default function Login({ location }) {
                             control={control}
                             name="email"
                             type="email"
+                            disabled={isSubmitting}
                         />
                     </Box>
                     <Box sx={{ p: 1 }}>
@@ -116,11 +119,18 @@ export default function Login({ location }) {
                             label='Contraseña'
                             control={control}
                             name="password"
+                            disabled={isSubmitting}
                         />
                     </Box>
                     <Box textAlign='center'>
                         <Box sx={{ p: 1 }}>
-                            <Button variant="contained" color="primary" fullWidth type="submit">
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                fullWidth
+                                type="submit"
+                                disabled={isSubmitting}
+                            >
                                 Iniciar sesión
                             </Button>
                         </Box>
