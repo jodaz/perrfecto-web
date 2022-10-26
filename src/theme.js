@@ -25,6 +25,7 @@ const palette = {
         primary: 'rgba(31, 44, 56, 1)',
         secondary: '#4B4B4B'
     },
+    divider: '#ccc',
     background: {
         default: '#fff'
     }
@@ -115,6 +116,15 @@ const theme = createTheme({
                     '& .MuiDialogActions-root': {
                         padding: theme.spacing(1),
                     },
+                })
+            }
+        },
+        MuiDivider: {
+            styleOverrides: {
+                root: ({ theme }) => ({
+                    '& .MuiDivider-wrapper': {
+                        color: theme.palette.divider
+                    }
                 })
             }
         }

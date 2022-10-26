@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { ReactComponent as FacebookIcon } from '../../assets/icons/Facebook.svg'
 import { ReactComponent as GoogleIcon } from '../../assets/icons/Google.svg'
 import { ReactComponent as PhoneIcon } from '../../assets/icons/Phone.svg'
+import LinkBehavior from '../LinkBehavior';
 import vars from '../../vars';
 
 const facebookFields = 'id,first_name,last_name,middle_name,name,name_format,picture,short_name,email,gender'
@@ -60,7 +61,7 @@ const SocialLogin = ({ hidePhone }) => {
                 </IconButton>
             </LoginSocialGoogle>
             {(!hidePhone) && (
-                <IconButton>
+                <IconButton component={LinkBehavior} to='/register?withPhone=true'>
                     <PhoneIcon />
                 </IconButton>
             )}

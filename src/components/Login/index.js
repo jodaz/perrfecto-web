@@ -1,10 +1,10 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import Button from '@mui/material/Button';
 import { alpha } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '../DialogTitle';
 import Link from '@mui/material/Link';
+import Divider from '@mui/material/Divider';
 import PasswordInput from '../PasswordInput'
 import { useForm } from "react-hook-form";
 import Box from '@mui/material/Box';
@@ -94,6 +94,9 @@ export default function Login({ location }) {
                         ¿Aún no tienes una cuenta? <Link href="#" underline="none" component={LinkBehavior} to='/register'>Crear cuenta</Link>
                     </Box>
                 </Box>
+                <Divider orientation='vertical'>
+                    o
+                </Divider>
                 <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ m: 1, flex: 1 }}>
                     {(error) && (
                         <Alert severity="error" sx={{ marginBottom: '1.5rem' }}>
