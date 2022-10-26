@@ -101,6 +101,22 @@ const theme = createTheme({
                     color: '#F24747'
                 }
             }
+        },
+        MuiDialog: {
+            styleOverrides: {
+                root: ({ theme }) => ({
+                    '& .MuiDialogContent-root': {
+                        padding: theme.spacing(2),
+                    },
+                    '& .MuiDialog-paper': {
+                        borderRadius: '16px',
+                        maxWidth: 'fit-content'
+                    },
+                    '& .MuiDialogActions-root': {
+                        padding: theme.spacing(1),
+                    },
+                })
+            }
         }
     }
 });

@@ -11,6 +11,7 @@ import Landing from "./pages/Landing";
 import Home from "./pages/Home";
 import Login from './components/Login';
 import SignUp from './components/SignUp';
+import RecoverPassword from './components/RecoverPassword';
 import Intro from './pages/Intro';
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
                 <Route path="/" element={<Landing />}>
                     <Route path="/login" element={<Login location={location} />} />
                     <Route path="/register" element={<SignUp location={location} />} />
+                    <Route path="/recover-password" element={<RecoverPassword location={location} />} />
                 </Route>
 
                 <Route path="/introduction" element={<Intro />} />
