@@ -13,6 +13,7 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 import RecoverPassword from './components/RecoverPassword';
 import Intro from './pages/Intro';
+import DetectLocation from './components/modals/DetectLocation';
 
 function App() {
     let location = useLocation();
@@ -30,6 +31,7 @@ function App() {
                 />
                 <Route path="/" element={<Landing />}>
                     <Route path="/login" element={<Login location={location} />} />
+                    <Route path="/detect-location" element={<DetectLocation location={location} />} />
                     <Route path="/register" element={<SignUp location={location} />} />
                     <Route path="/recover-password" element={<RecoverPassword location={location} />} />
                 </Route>
