@@ -92,6 +92,15 @@ const theme = createTheme({
                     width: '100%'
                 }
             }
+        },
+        MuiAlert: {
+            styleOverrides: {
+                root: {
+                    borderRadius: '12px',
+                    fontWeight: 500,
+                    color: '#F24747'
+                }
+            }
         }
     }
 });

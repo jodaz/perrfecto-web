@@ -14,7 +14,9 @@ import TextInput from '../TextInput';
 import LinkBehavior from '../LinkBehavior';
 import { useNavigate } from 'react-router-dom';
 import SocialLogin from '../SocialLogin'
+import Alert from '@mui/material/Alert';
 import vars from '../../vars'
+import { apiProvider } from '../../api'
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -60,15 +62,25 @@ BootstrapDialogTitle.propTypes = {
 
 export default function Login({ location }) {
     const navigate = useNavigate()
+    const [error, setError] = React.useState(false)
     const { control, handleSubmit } = useForm({
         reValidateMode: "onBlur"
     });
 
-    const onSubmit = (data) => {
-        console.log(data)
-    };
+    const onSubmit = async (data) => {
+        try {
+            const response = await apiProvider.post('/api/auth/signin', {
+                ...data,
+                tipo: 1
+            })
 
-    console.count("app rerender");
+            console.log(response)
+        } catch (error) {
+            if (error.response.status == 401) {
+                setError(true)
+            }
+        }
+    };
 
     const handleClose = () => navigate('/')
 
@@ -125,6 +137,11 @@ export default function Login({ location }) {
                     </Box>
                 </Box>
                 <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ m: 1, flex: 1 }}>
+                    {(error) && (
+                        <Alert severity="error" sx={{ marginBottom: '1.5rem' }}>
+                            No estás registrado. Crea una cuenta para poder comenzar en TinderDogs.
+                        </Alert>
+                    )}
                     <Box sx={{ p: 1 }}>
                         <TextInput
                             label="Email"
