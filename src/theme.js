@@ -22,7 +22,8 @@ const palette = {
         main: '#10B981'
     },
     text: {
-        primary: 'rgba(31, 44, 56, 1)'
+        primary: 'rgba(31, 44, 56, 1)',
+        secondary: '#4B4B4B'
     },
     background: {
         default: '#fff'

@@ -13,6 +13,7 @@ import Box from '@mui/material/Box';
 import TextInput from '../TextInput';
 import LinkBehavior from '../LinkBehavior';
 import { useNavigate } from 'react-router-dom';
+import SocialLogin from '../SocialLogin'
 import vars from '../../vars'
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -63,9 +64,11 @@ export default function Login({ location }) {
         reValidateMode: "onBlur"
     });
 
-    const handleOnSubmit = (evt) => {
-        console.log(evt);
+    const onSubmit = (data) => {
+        console.log(data)
     };
+
+    console.count("app rerender");
 
     const handleClose = () => navigate('/')
 
@@ -89,7 +92,8 @@ export default function Login({ location }) {
                 display: 'flex',
                 width: '800px',
                 height: '400px',
-                p: 3
+                p: 3,
+                color: theme => theme.palette.text.secondary
             }}>
                 <Box sx={{
                     flex: 1,
@@ -97,7 +101,7 @@ export default function Login({ location }) {
                     display: 'flex',
                     flexDirection: 'column',
                 }}>
-                    <Box component='h1' margin='0 0 1rem 0'>
+                    <Box component='h1' margin='0 0 1rem 0' color="text.primary">
                         Iniciar sesión
                     </Box>
                     <Box>
@@ -109,20 +113,18 @@ export default function Login({ location }) {
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
-                        margin: '5rem auto'
+                        margin: '3rem auto'
                     }}>
                         <Box>
                             Continuar con
                         </Box>
-                        <Box sx={{ display: 'flex' }}>
-
-                        </Box>
+                        <SocialLogin />
                     </Box>
                     <Box>
                         ¿Aún no tienes una cuenta? <Link href="#" underline="none" component={LinkBehavior} to='/register'>Crear cuenta</Link>
                     </Box>
                 </Box>
-                <Box component="form" onSubmit={handleOnSubmit} sx={{ m: 1, flex: 1 }}>
+                <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ m: 1, flex: 1 }}>
                     <Box sx={{ p: 1 }}>
                         <TextInput
                             label="Email"
@@ -139,7 +141,7 @@ export default function Login({ location }) {
                         />
                     </Box>
                     <Box sx={{ p: 1 }}>
-                        <Button variant="contained" color="primary" fullWidth>
+                        <Button variant="contained" color="primary" fullWidth type="submit">
                             Iniciar sesión
                         </Button>
                     </Box>
