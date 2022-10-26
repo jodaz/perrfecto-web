@@ -68,18 +68,21 @@ export default function Login({ location }) {
     });
 
     const onSubmit = async (data) => {
-        try {
-            const response = await apiProvider.post('/api/auth/signin', {
-                ...data,
-                tipo: 1
-            })
+        setError(false);
 
-            console.log(response)
-        } catch (error) {
+        const response = await apiProvider.post('/api/auth/signin', {
+            ...data,
+            tipo: 1
+        }).catch(error => {
             if (error.response.status == 401) {
                 setError(true)
             }
-        }
+        });
+
+        const { data: result } = response;
+
+        localStorage.setItem(vars.authToken, result.access_token);
+        navigate('/home')
     };
 
     const handleClose = () => navigate('/')
