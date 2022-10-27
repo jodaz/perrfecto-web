@@ -34,10 +34,10 @@ const icons = [
         route: '/blog'
     },
     {
-        label: 'Mensajes',
+        label: 'Chat',
         icon: <MessageIcon />,
         active: <MessageActiveIcon />,
-        route: '/messages'
+        route: '/chat'
     },
     {
         label: 'Perfil',
@@ -49,7 +49,7 @@ const icons = [
 
 const Navigation = () => {
     const location = useLocation();
-    console.log(location.pathname == '/no')
+
     return (
         <Toolbar sx={{
             display: 'flex',

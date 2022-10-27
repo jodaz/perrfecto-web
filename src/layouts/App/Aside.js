@@ -8,7 +8,7 @@ import Navigation from './Navigation';
 import { ReactComponent as CamaraIcon } from '../../assets/icons/Camara.svg'
 import { ReactComponent as NotificationIcon } from '../../assets/icons/Notification.svg'
 
-const drawerWidth = 'fit-content';
+const drawerWidth = '350px';
 
 const Sidebar = ({ children }) => (
     <Drawer

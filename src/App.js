@@ -5,6 +5,8 @@ import {
     Routes,
     useLocation
 } from 'react-router-dom'
+// Layouts
+import AppLayout from './layouts/App';
 // Pages
 import NotFound from "./pages/NotFound";
 import Landing from "./pages/Landing";
@@ -14,6 +16,10 @@ import SignUp from './components/SignUp';
 import RecoverPassword from './components/RecoverPassword';
 import Intro from './pages/Intro';
 import DetectLocation from './components/modals/DetectLocation';
+import Market from './pages/Market';
+import Blog from './pages/Blog';
+import Profile from './pages/Profile';
+import Chat from './pages/Chat';
 
 function App() {
     let location = useLocation();
@@ -27,7 +33,43 @@ function App() {
                 />
                 <Route
                     path='/home'
-                    element=<Home />
+                    element={
+                        <AppLayout>
+                            <Home />
+                        </AppLayout>
+                    }
+                />
+                <Route
+                    path='/market'
+                    element={
+                        <AppLayout>
+                            <Market />
+                        </AppLayout>
+                    }
+                />
+                <Route
+                    path='/chat'
+                    element={
+                        <AppLayout>
+                            <Chat />
+                        </AppLayout>
+                    }
+                />
+                <Route
+                    path='/blog'
+                    element={
+                        <AppLayout>
+                            <Blog />
+                        </AppLayout>
+                    }
+                />
+                <Route
+                    path='/profile'
+                    element={
+                        <AppLayout>
+                            <Profile />
+                        </AppLayout>
+                    }
                 />
                 <Route path="/" element={<Landing />}>
                     <Route path="/login" element={<Login location={location} />} />
