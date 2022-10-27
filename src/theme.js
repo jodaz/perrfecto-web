@@ -27,7 +27,7 @@ const palette = {
     },
     divider: '#ccc',
     background: {
-        default: '#fff'
+        default: '#E5E5E5'
     }
 }
 
