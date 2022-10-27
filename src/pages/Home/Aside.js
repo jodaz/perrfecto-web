@@ -1,81 +1,42 @@
-import * as React from 'react'
-import Box from '@mui/material/Box'
-import { styled } from '@mui/material/styles';
-import { Link } from '@mui/material';
+import * as React from 'react';
+import Drawer from '@mui/material/Drawer';
+import Toolbar from '@mui/material/Toolbar';
+import Divider from '@mui/material/Divider';
+import Box from '@mui/material/Box';
+import Navigation from './Navigation';
+// Icons
+import { ReactComponent as CamaraIcon } from '../../assets/icons/Camara.svg'
+import { ReactComponent as NotificationIcon } from '../../assets/icons/Notification.svg'
 
-const BoxContainer = styled(Box)(({ theme, isScroll }) => ({
-    display: 'flex',
-    width: '100%',
-    justifyContent: 'end',
-    padding: '0 1rem',
-    position: 'fixed',
-    alignItems: 'center',
-    zIndex: 1000,
-    [theme.breakpoints.down('md')]: {
-        padding: '1.5rem 0',
-        justifyContent: 'center'
-    }
-}))
+const drawerWidth = 'fit-content';
 
-const AnchorTag = styled(Link)(({ theme }) => ({
-    textDecoration: 'none',
-    padding: ' 0 1rem',
-    fontWeight: '400',
-    color: `${theme.palette.secondary.main}`,
-    cursor: 'pointer',
-    transition: '0.3s',
-    '&:hover': {
-        color: `${theme.palette.primary.main}`,
-    }
-}))
+const Sidebar = ({ children }) => (
+    <Drawer
+        sx={{
+            width: drawerWidth,
+            flexShrink: 0,
+            '& .MuiDrawer-paper': {
+                width: drawerWidth,
+                boxSizing: 'border-box',
+            },
+        }}
+        variant="permanent"
+        anchor="left"
+    >
+        <Toolbar sx={{
+            backgroundColor: theme => theme.palette.primary.main,
+            display: 'flex',
+            justifyContent: 'space-between'
+        }}>
+            <CamaraIcon />
+            <NotificationIcon />
+        </Toolbar>
+        <Divider />
+        <Navigation />
+        <Box>
+            {children}
+        </Box>
+    </Drawer>
+)
 
-const internalLinks = [
-    {
-        title: 'Home',
-        link: 'services',
-    },
-    {
-        title: 'Conecta',
-        link: 'portfolio'
-    },
-    {
-        title: '¿Cómo funciona?',
-        link: 'contact'
-    }
-]
-
-const Aside = () => {
-    return (
-        <BoxContainer component='navbar'>
-            <Box sx={{
-                display: 'flex',
-                fontWeight: '300',
-                fontSize: '1rem',
-                color: '#fff',
-                marginRight: '2rem',
-                listStyle: 'none',
-                alignItems: 'center'
-            }} component='ul'>
-                {internalLinks.map(link => (
-                    <li>
-                        <AnchorTag
-                            aria-label={link.title}
-                            to={link.link}
-                            spy={true}
-                            duration={500}
-                            smooth={true}
-                        >
-                            {link.title}
-                        </AnchorTag>
-                    </li>
-                ))}
-                <li>
-                    <Box>
-                    </Box>
-                </li>
-            </Box>
-        </BoxContainer>
-    );
-}
-
-export default Aside;
+export default Sidebar;

@@ -1,47 +1,17 @@
-import Box from '@mui/material/Box'
-import BackgroundDogs from '../../assets/images/background-dogs.png'
-import useMediaQuery from '@mui/material/useMediaQuery';
-import Aside from './Aside';
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Aside from './Aside'
 
-const Landing = () => {
-    const matches = useMediaQuery((theme) => theme.breakpoints.down('sm'));
-
+export default function Home() {
     return (
-        <Box sx={{
-            height: '100vh',
-            transition: 'all 0.3s ease-out 0s',
-            position: 'relative',
-            display: 'flex',
-            '&:before': {
-                content: '""',
-                background: `url(${BackgroundDogs}) no-repeat center center fixed`,
-                backgroundSize: 'cover',
-                position: 'absolute',
-                height: '100%',
-                width: '100%',
-                zIndex: 0
-            }
-        }}>
-            <Box sx={{
-                height: 'inherit',
-                width: '100%',
-                display: 'flex',
-                justifyContent: 'center',
-                flexDirection: 'column',
-                flex: matches ? 1 : 0.5,
-                margin: '0 auto',
-                color: '#DFDFDF',
-                textAlign: 'center',
-                zIndex: 1000,
-                alignItems: 'center',
-                '& > *': {
-                    margin: '1.1rem 0'
-                }
-            }}>
-                <Aside />
+        <Box sx={{ display: 'flex' }}>
+            <Aside />
+            <Box
+                component="main"
+                sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
+            >
+
             </Box>
         </Box>
     );
 }
-
-export default Landing;
