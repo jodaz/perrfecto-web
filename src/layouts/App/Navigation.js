@@ -57,7 +57,7 @@ const Navigation = () => {
             boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.08)'
         }}>
             {icons.map((icon, i) => (
-                <Tooltip index={i} title={icon.label}>
+                <Tooltip key={i} title={icon.label}>
                     <IconButton component={LinkBehavior} to={icon.route}>
                         {React.cloneElement(
                             (location.pathname == icon.route) ? icon.active : icon.icon,

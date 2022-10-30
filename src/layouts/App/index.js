@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom'
 import Aside from './Aside'
 import vars from '../../vars';
 import PawPrints from '../../assets/images/pawprints.svg'
-import PopularMembers from '../../components/PopularMembers';
+const PopularMembers = React.lazy(() => import('../../components/PopularMembers'));
 
 export default function AppLayout({ children }) {
     const isAuthenticated = localStorage.getItem(vars.authToken);
@@ -37,9 +37,11 @@ export default function AppLayout({ children }) {
                     }
                 }}
             >
-                <Box width='450px'>
-                    <PopularMembers />
-                </Box>
+                <React.Suspense>
+                    <Box width='450px'>
+                        <PopularMembers />
+                    </Box>
+                </React.Suspense>
             </Box>
         </Box>
     );
