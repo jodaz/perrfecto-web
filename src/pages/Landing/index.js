@@ -2,7 +2,7 @@ import Box from '@mui/material/Box'
 import BackgroundDogs from '../../assets/images/background-dogs.png'
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Header from './Header';
-import { Link, Button } from '@mui/material';
+import { Button } from '@mui/material';
 import LinkBehavior from '../../components/LinkBehavior';
 import { Outlet } from 'react-router-dom'
 
