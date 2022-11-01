@@ -14,7 +14,10 @@ import PawIcon from '../../assets/icons/Huella2.png'
 import { ReactComponent as StarIcon } from '../../assets/icons/Star.svg'
 import CloseIcon from '../../assets/icons/Close'
 
-export default function FeedCard() {
+const FeedCard = ({
+    height,
+    width
+}) => {
     return (
         <Box sx={{ position: 'relative' }}>
             <Box sx={{
@@ -36,15 +39,14 @@ export default function FeedCard() {
                 </Typography>
             </Box>
             <Card sx={{
-                height: 475,
-                maxWidth: 344,
+                height: height,
+                maxWidth: width,
                 borderRadius: '20px',
                 position: 'relative',
                 filter: 'drop-shadow(0px 2px 12px rgba(0, 0, 0, 0.24));'
             }}>
                 <CardMedia
                     component="img"
-                    height="345"
                     width='100%'
                     src="/images/samples/sad-pupi.png"
                     alt="green iguana"
@@ -134,3 +136,10 @@ export default function FeedCard() {
         </Box>
     );
 }
+
+FeedCard.defaultProps = {
+    height: 500,
+    width: 345
+}
+
+export default FeedCard
