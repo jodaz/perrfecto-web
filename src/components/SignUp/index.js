@@ -1,13 +1,12 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '../DialogTitle';
 import Link from '@mui/material/Link';
-import PasswordInput from '../PasswordInput'
+import PasswordInput from '../Forms/PasswordInput'
 import { useForm } from "react-hook-form";
 import Box from '@mui/material/Box';
-import TextInput from '../TextInput';
+import TextInput from '../Forms/TextInput';
 import LinkBehavior from '../LinkBehavior';
 import { useNavigate } from 'react-router-dom';
 import SocialLogin from '../SocialLogin'

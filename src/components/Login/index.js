@@ -5,14 +5,15 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '../DialogTitle';
 import Link from '@mui/material/Link';
 import Divider from '@mui/material/Divider';
-import PasswordInput from '../PasswordInput'
+import PasswordInput from '../Forms/PasswordInput'
 import { useForm } from "react-hook-form";
 import Box from '@mui/material/Box';
-import TextInput from '../TextInput';
+import TextInput from '../Forms/TextInput'
 import LinkBehavior from '../LinkBehavior';
 import { useNavigate } from 'react-router-dom';
 import SocialLogin from '../SocialLogin'
 import Alert from '@mui/material/Alert';
+import Checkbox from '../Forms/Checkbox';
 import vars from '../../vars'
 import { apiProvider } from '../../api'
 
@@ -122,6 +123,13 @@ export default function Login({ location }) {
                             name="password"
                             disabled={isSubmitting}
                             placeholder='Ingresar contraseña'
+                        />
+                    </Box>
+                    <Box sx={{ p: 1 }}>
+                        <Checkbox
+                            control={control}
+                            name='remember_me'
+                            label='Recordar contraseña'
                         />
                     </Box>
                     <Box textAlign='center'>
