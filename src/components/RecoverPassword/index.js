@@ -7,16 +7,18 @@ import DialogTitle from '../DialogTitle'
 import SelectMethod from './SelectMethod';
 import getSearchParams from '../../utils/getSearchParams';
 import RecoverPasswordForm from './RecoverPasswordForm';
+import SendCodeSuccessful from './SendCodeSuccessful';
 
 export default function RecoverPassword({ location }) {
     const navigate = useNavigate()
     const methodSelected = getSearchParams(location, 'method');
+    const isSuccessful = getSearchParams(location, 'success');
 
     React.useEffect(() => {
-        if (methodSelected != 'email' || methodSelected != 'sms') {
+        if ((methodSelected != 'email' || methodSelected != 'sms') && methodSelected == null) {
             navigate('/recover-password')
         }
-    }, [])
+    }, [methodSelected])
 
     const handleClose = () => navigate('/')
 
@@ -46,8 +48,12 @@ export default function RecoverPassword({ location }) {
                         <SelectMethod />
                     )}
 
-                    {(methodSelected) && (
+                    {(methodSelected && !isSuccessful) && (
                         <RecoverPasswordForm />
+                    )}
+
+                    {(isSuccessful) && (
+                        <SendCodeSuccessful method={methodSelected} />
                     )}
                 </Box>
             </Box>

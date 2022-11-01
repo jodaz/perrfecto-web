@@ -3,10 +3,12 @@ import Box from '@mui/material/Box';
 import { useForm } from "react-hook-form";
 import TextInput from '../TextInput';
 import { apiProvider } from '../../api'
+import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 
 const RecoverPasswordForm = () => {
+    const navigate = useNavigate()
     const { control, handleSubmit, formState: {
         isSubmitting
     }} = useForm({
@@ -14,12 +16,14 @@ const RecoverPasswordForm = () => {
     });
 
     const onSubmit = async (data) => {
-        const response = await apiProvider.post('/api/auth/signin', {
-            ...data,
-            tipo: 1
-        }).catch(error => {
-            console.log(error)
-        });
+        // const response = await apiProvider.post('/api/auth/signin', {
+        //     ...data,
+        //     tipo: 1
+        // }).catch(error => {
+        //     console.log(error)
+        // });
+
+        navigate('?method=email&success=true')
     };
 
     return (
