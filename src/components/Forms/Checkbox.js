@@ -8,9 +8,6 @@ const Checkbox = ({
     control,
     name,
     defaultValue,
-    rules,
-    type,
-    InputProps,
     label
 }) => (
     <FormControl>

@@ -10,14 +10,42 @@ import { ReactComponent as FacebookIcon } from '../../assets/icons/Facebook.svg'
 import { ReactComponent as GoogleIcon } from '../../assets/icons/Google.svg'
 import { ReactComponent as PhoneIcon } from '../../assets/icons/Phone.svg'
 import LinkBehavior from '../LinkBehavior';
+import { apiProvider } from '../../api'
 import vars from '../../vars';
 
 const facebookFields = 'id,first_name,last_name,middle_name,name,name_format,picture,short_name,email,gender'
 
 const SocialLogin = ({ hidePhone }) => {
     const navigate = useNavigate();
-    const [provider, setProvider] = React.useState('');
-    const [profile, setProfile] = React.useState();
+
+    const processResponse = (provider, data) => {
+        console.log(provider, data)
+        navigate('/home')
+
+
+        // return apiProvider.post('', {
+        //     email: email,
+        //     provider: 'facebook',
+        //     key: userID
+        // })
+        //     .then(res => {
+        //         const { token } = res.data;
+
+        //         window.location.href =
+        //             `${process.env.REACT_APP_LOCATION}/auth?token=${token}`;
+        //     }).catch(err => {
+        //         if (err.response.status === 422) {
+        //             set({
+        //                 email: email,
+        //                 provider: 'facebook',
+        //                 key: userID,
+        //                 names: name
+        //             })
+
+        //             return history.push('/register');
+        //         }
+        //     });
+    }
 
     return (
         <Box sx={{
@@ -30,9 +58,7 @@ const SocialLogin = ({ hidePhone }) => {
                 appId={vars.FacebookID}
                 fieldsProfile={facebookFields}
                 onResolve={({ provider, data }) => {
-                    setProvider(provider);
-                    setProfile(data);
-                    navigate('/home')
+                    processResponse(provider, data)
                 }}
                 onReject={err => {
                     console.log(err);
@@ -48,9 +74,7 @@ const SocialLogin = ({ hidePhone }) => {
                 discoveryDocs="claims_supported"
                 access_type="offline"
                 onResolve={({ provider, data }) => {
-                    setProvider(provider);
-                    setProfile(data);
-                    navigate('/home')
+                    processResponse(provider, data)
                 }}
                 onReject={err => {
                     console.log(err);
