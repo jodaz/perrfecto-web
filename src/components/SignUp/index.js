@@ -15,8 +15,7 @@ import Alert from '@mui/material/Alert';
 import vars from '../../vars'
 import { apiProvider } from '../../api'
 import { Divider } from '@mui/material';
-
-const getSearchParams = (location, string) => new URLSearchParams(location.search).get(string)
+import getSearchParams from '../../utils/getSearchParams';
 
 export default function SignUp({ location }) {
     const navigate = useNavigate()
