@@ -14,6 +14,7 @@ import Alert from '@mui/material/Alert';
 import vars from '../../vars'
 import { apiProvider } from '../../api'
 import { Divider } from '@mui/material';
+import PhoneInput from '../Forms/PhoneInput';
 
 const getSearchParams = (location, string) => new URLSearchParams(location.search).get(string)
 
@@ -101,11 +102,6 @@ export default function SignUp({ location }) {
                     o
                 </Divider>
                 <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ m: 1, flex: 1 }}>
-                    {(error) && (
-                        <Alert severity="error" sx={{ marginBottom: '1.5rem' }}>
-                            No estás registrado. Crea una cuenta para poder comenzar en TinderDogs.
-                        </Alert>
-                    )}
                     {(isPhoneRegister) ? (
                         <>
                             <Box sx={{ p: 1 }}>
@@ -117,7 +113,7 @@ export default function SignUp({ location }) {
                                 />
                             </Box>
                             <Box sx={{ p: 1 }}>
-                                <TextInput
+                                <PhoneInput
                                     label="Teléfono"
                                     control={control}
                                     name="phone"
