@@ -4,8 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import { ReactComponent as CheckCircle } from '../../../assets/icons/CheckCircle.svg'
 
-const SuccessfulPasswordRecover = ({ location }) => {
+const SuccessfulPasswordRecover = () => {
     const navigate = useNavigate()
+
+    React.useEffect(() => {
+        setTimeout(() => navigate('/login'), 3000)
+    }, [])
 
     return (
         <Box sx={{
