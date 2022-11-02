@@ -73,6 +73,9 @@ const theme = createTheme({
                         boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
                         borderColor: theme.palette.primary.main,
                     },
+                    '&.Mui-error': {
+                        border: `2px solid ${theme.palette.error.main}`
+                    },
                 })
             }
         },
@@ -126,6 +129,13 @@ const theme = createTheme({
                         color: theme.palette.divider
                     }
                 })
+            }
+        },
+        MuiFormHelperText: {
+            styleOverrides: {
+                root: {
+                    fontWeight: 500
+                }
             }
         }
     }

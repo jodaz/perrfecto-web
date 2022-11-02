@@ -18,6 +18,7 @@ const TextInput = ({
     defaultValue,
     rules,
     type,
+    validations,
     placeholder,
     InputProps,
     label
@@ -29,14 +30,30 @@ const TextInput = ({
             name={name}
             defaultValue={defaultValue}
             rules={rules}
-            render={({ field, fieldState: { error } }) => (
-                <Input
-                    {...field}
-                    placeholder={placeholder}
-                    type={type}
-                    {...InputProps}
-                />
-            )}
+            render={({ field, fieldState: { error } }) => {
+                console.log(name, error)
+                return (
+                    <>
+                        <Input
+                            {...field}
+                            placeholder={placeholder}
+                            type={type}
+                            error={error != undefined}
+                            {...InputProps}
+                            sx={{
+                                'error': {
+                                    border: '1px solid red !important'
+                                }
+                            }}
+                        />
+                        {error && (
+                            <FormHelperText error>
+                                {validations[name][error.type]}
+                            </FormHelperText>
+                        )}
+                    </>
+                )
+            }}
         />
     </FormControl>
 );

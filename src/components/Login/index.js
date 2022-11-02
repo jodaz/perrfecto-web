@@ -16,6 +16,16 @@ import Alert from '@mui/material/Alert';
 import vars from '../../vars'
 import { apiProvider } from '../../api'
 
+const validations = {
+    email: {
+        required: "Ingrese su correo",
+        pattern: "Email inválido"
+    },
+    password: {
+        required: "Ingrese su contraseña"
+    }
+}
+
 export default function Login({ location }) {
     const navigate = useNavigate()
     const [error, setError] = React.useState(false)
@@ -111,6 +121,11 @@ export default function Login({ location }) {
                             control={control}
                             name="email"
                             type="email"
+                            rules={{
+                                required: true,
+                                pattern: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
+                            }}
+                            validations={validations}
                             disabled={isSubmitting}
                             placeholder='Ingresar correo electrónico'
                         />
@@ -121,6 +136,10 @@ export default function Login({ location }) {
                             control={control}
                             name="password"
                             disabled={isSubmitting}
+                            rules={{
+                                required: true
+                            }}
+                            validations={validations}
                             placeholder='Ingresar contraseña'
                         />
                     </Box>
