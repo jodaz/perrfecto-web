@@ -85,12 +85,17 @@ const SocialLogin = ({ hidePhone }) => {
                 </IconButton>
             </LoginSocialGoogle>
             {(!hidePhone) && (
-                <IconButton component={LinkBehavior} to='/register?withPhone=true'>
+                <IconButton component={LinkBehavior} to='?withPhone=true'>
                     <PhoneIcon />
                 </IconButton>
             )}
         </Box>
     )
+}
+
+SocialLogin.defaultProps = {
+    hidePhone: false,
+    path: '/register'
 }
 
 export default SocialLogin
