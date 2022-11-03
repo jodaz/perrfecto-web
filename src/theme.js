@@ -62,7 +62,7 @@ const theme = createTheme({
             styleOverrides: {
                 root: ({ theme }) => ({
                     border: '1px solid #ccc',
-                    borderRadius: 100,
+                    borderRadius: '100px !important',
                     padding: '10px 12px',
                     transition: theme.transitions.create([
                         'border-color',
@@ -72,6 +72,9 @@ const theme = createTheme({
                     '&.Mui-focused': {
                         boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
                         borderColor: theme.palette.primary.main,
+                    },
+                    '&.Mui-error': {
+                        border: `2px solid ${theme.palette.error.main}`
                     },
                 })
             }
@@ -126,6 +129,13 @@ const theme = createTheme({
                         color: theme.palette.divider
                     }
                 })
+            }
+        },
+        MuiFormHelperText: {
+            styleOverrides: {
+                root: {
+                    fontWeight: 500
+                }
             }
         }
     }

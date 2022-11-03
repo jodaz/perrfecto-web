@@ -1,13 +1,12 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '../DialogTitle';
 import Link from '@mui/material/Link';
-import PasswordInput from '../PasswordInput'
+import PasswordInput from '../Forms/PasswordInput'
 import { useForm } from "react-hook-form";
 import Box from '@mui/material/Box';
-import TextInput from '../TextInput';
+import TextInput from '../Forms/TextInput';
 import LinkBehavior from '../LinkBehavior';
 import { useNavigate } from 'react-router-dom';
 import SocialLogin from '../SocialLogin'
@@ -101,11 +100,6 @@ export default function SignUp({ location }) {
                     o
                 </Divider>
                 <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ m: 1, flex: 1 }}>
-                    {(error) && (
-                        <Alert severity="error" sx={{ marginBottom: '1.5rem' }}>
-                            No estás registrado. Crea una cuenta para poder comenzar en TinderDogs.
-                        </Alert>
-                    )}
                     {(isPhoneRegister) ? (
                         <>
                             <Box sx={{ p: 1 }}>
@@ -117,7 +111,7 @@ export default function SignUp({ location }) {
                                 />
                             </Box>
                             <Box sx={{ p: 1 }}>
-                                <TextInput
+                                <PhoneInput
                                     label="Teléfono"
                                     control={control}
                                     name="phone"

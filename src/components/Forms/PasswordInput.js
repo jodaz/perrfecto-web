@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { InputAdornment, IconButton } from '@mui/material';
-import Eye from '../assets/icons/Eye';
-import EyeOff from '../assets/icons/EyeOff';
+import Eye from '../../assets/icons/Eye';
+import EyeOff from '../../assets/icons/EyeOff';
 import TextInput from './TextInput';
 
 const PasswordInput = ({

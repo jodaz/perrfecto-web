@@ -5,16 +5,27 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '../DialogTitle';
 import Link from '@mui/material/Link';
 import Divider from '@mui/material/Divider';
-import PasswordInput from '../PasswordInput'
+import PasswordInput from '../Forms/PasswordInput'
 import { useForm } from "react-hook-form";
 import Box from '@mui/material/Box';
-import TextInput from '../TextInput';
+import TextInput from '../Forms/TextInput'
 import LinkBehavior from '../LinkBehavior';
 import { useNavigate } from 'react-router-dom';
 import SocialLogin from '../SocialLogin'
 import Alert from '@mui/material/Alert';
+import Checkbox from '../Forms/Checkbox';
 import vars from '../../vars'
 import { apiProvider } from '../../api'
+
+const validations = {
+    email: {
+        required: "Ingrese su correo",
+        pattern: "Email inválido"
+    },
+    password: {
+        required: "Ingrese su contraseña"
+    }
+}
 
 export default function Login({ location }) {
     const navigate = useNavigate()
@@ -111,6 +122,11 @@ export default function Login({ location }) {
                             control={control}
                             name="email"
                             type="email"
+                            rules={{
+                                required: true,
+                                pattern: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
+                            }}
+                            validations={validations}
                             disabled={isSubmitting}
                             placeholder='Ingresar correo electrónico'
                         />
@@ -121,7 +137,18 @@ export default function Login({ location }) {
                             control={control}
                             name="password"
                             disabled={isSubmitting}
+                            rules={{
+                                required: true
+                            }}
+                            validations={validations}
                             placeholder='Ingresar contraseña'
+                        />
+                    </Box>
+                    <Box sx={{ p: 1 }}>
+                        <Checkbox
+                            control={control}
+                            name='remember_me'
+                            label='Recordar contraseña'
                         />
                     </Box>
                     <Box textAlign='center'>
