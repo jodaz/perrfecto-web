@@ -8,7 +8,7 @@ const DialogTitle = (props) => {
   const { children, onClose, ...other } = props;
 
   return (
-    <MuiDialogTitle sx={{ m: 1, p: 3, border: 'none !important' }} {...other}>
+    <MuiDialogTitle sx={{ m: 1, p: 1, border: 'none !important' }} {...other}>
         {children}
         {onClose ? (
             <IconButton
