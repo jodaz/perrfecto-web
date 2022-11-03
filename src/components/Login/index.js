@@ -16,6 +16,8 @@ import Alert from '@mui/material/Alert';
 import Checkbox from '../Forms/Checkbox';
 import vars from '../../vars'
 import { apiProvider } from '../../api'
+import getSearchParams from '../../utils/getSearchParams';
+import PhoneInput from '../Forms/PhoneInput';
 
 const validations = {
     email: {
@@ -29,6 +31,7 @@ const validations = {
 
 export default function Login({ location }) {
     const navigate = useNavigate()
+    const isPhoneRegister = getSearchParams(location, 'withPhone');
     const [error, setError] = React.useState(false)
     const { control, handleSubmit, formState: {
         isSubmitting
@@ -116,21 +119,33 @@ export default function Login({ location }) {
                             No estás registrado. Crea una cuenta para poder comenzar en TinderDogs.
                         </Alert>
                     )}
-                    <Box sx={{ p: 1 }}>
-                        <TextInput
-                            label="Email"
-                            control={control}
-                            name="email"
-                            type="email"
-                            rules={{
-                                required: true,
-                                pattern: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
-                            }}
-                            validations={validations}
-                            disabled={isSubmitting}
-                            placeholder='Ingresar correo electrónico'
-                        />
-                    </Box>
+                    {(!isPhoneRegister) ? (
+                        <Box sx={{ p: 1 }}>
+                            <TextInput
+                                label="Email"
+                                control={control}
+                                name="email"
+                                type="email"
+                                rules={{
+                                    required: true,
+                                    pattern: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
+                                }}
+                                validations={validations}
+                                disabled={isSubmitting}
+                                placeholder='Ingresar correo electrónico'
+                            />
+                        </Box>
+                    ) : (
+                        <Box sx={{ p: 1 }}>
+                            <PhoneInput
+                                label="Teléfono"
+                                control={control}
+                                name="phone"
+                                placeholder='Ingresar teléfono'
+                            />
+                        </Box>
+                    )}
+
                     <Box sx={{ p: 1 }}>
                         <PasswordInput
                             label='Contraseña'
