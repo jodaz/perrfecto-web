@@ -2,13 +2,18 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import EmailSendIcon from '../../assets/icons/EmailSend'
-import ListItem from '@mui/material/ListItem';
+import MuiListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import { ReactComponent as MessageIcon2 } from '../../assets/icons/Message2.svg'
 import LinkBehavior from '../LinkBehavior';
+import { styled } from '@mui/material/styles';
+
+const ListItem = styled(MuiListItem)(({ theme }) => ({
+    color: theme.palette.text.secondary
+}))
 
 const SelectMethod = () => (
     <>
