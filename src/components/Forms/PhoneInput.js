@@ -49,12 +49,16 @@ const StyledInput = styled(TextField)(({ theme }) => ({
     width: '100%',
     transition: 'none',
     borderBottom: `1px solid ${theme.palette.background.main}`,
-    '& root': {
-        border: 'none !important'
+    '& .MuiInputBase-root': {
+        border: 'none',
+        transition: 'none',
+        borderBottom: `1px solid #ccc`,
+        borderRadius: '0 !important'
     },
     '&.Mui-focused': {
         border: 'none',
-        boxShadow: 'none'
+        boxShadow: 'none',
+        border: 'none !important',
     },
     '& input': {
         borderRadius: 4,
@@ -79,6 +83,7 @@ export default function PhoneInput(rest) {
         <React.Fragment>
             <TextInput
                 {...rest}
+                defaultValue={value}
                 InputProps={{
                     startAdornment: (
                         <>
