@@ -43,7 +43,7 @@ const SendCodeSuccessful = ({
                     color="primary"
                     fullWidth
                     component={LinkBehavior}
-                    to={`/new-password?method=${method}`}
+                    to={`/recover-password/code?method=${method}`}
                 >
                     Continuar
                 </Button>

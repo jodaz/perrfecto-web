@@ -21,6 +21,7 @@ const TextInput = ({
     validations,
     placeholder,
     InputProps,
+    disabled,
     label,
 }) => (
     <FormControl>
@@ -38,6 +39,7 @@ const TextInput = ({
                         type={type}
                         error={error != undefined}
                         {...InputProps}
+                        disabled={disabled}
                         sx={{
                             'error': {
                                 border: '1px solid red !important'

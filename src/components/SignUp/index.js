@@ -100,16 +100,16 @@ export default function SignUp({ location }) {
                     o
                 </Divider>
                 <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ m: 1, flex: 1 }}>
+                    <Box sx={{ p: 1 }}>
+                        <TextInput
+                            label="Nombre"
+                            control={control}
+                            name="name"
+                            placeholder='Ingresar nombre y apellido'
+                        />
+                    </Box>
                     {(isPhoneRegister) ? (
                         <>
-                            <Box sx={{ p: 1 }}>
-                                <TextInput
-                                    label="Nombre"
-                                    control={control}
-                                    name="name"
-                                    placeholder='Ingresar nombre y apellido'
-                                />
-                            </Box>
                             <Box sx={{ p: 1 }}>
                                 <PhoneInput
                                     label="Teléfono"

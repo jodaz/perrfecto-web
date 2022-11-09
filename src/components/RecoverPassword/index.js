@@ -1,8 +1,6 @@
 import * as React from 'react';
-import Dialog from '@mui/material/Dialog';
-import Box from '@mui/material/Box';
 import { useNavigate } from 'react-router-dom';
-import DialogTitle from '../DialogTitle'
+import Modal from '../Modals/Modal'
 // Components
 import SelectMethod from './SelectMethod';
 import getSearchParams from '../../utils/getSearchParams';
@@ -20,43 +18,23 @@ export default function RecoverPassword({ location }) {
         }
     }, [methodSelected])
 
-    const handleClose = () => navigate('/')
-
     return (
-        <Dialog
-            onClose={handleClose}
-            open={location.pathname == '/recover-password'}
+        <Modal
+            location={location}
+            pathname='/recover-password'
+            title="Recuperar contraseña"
         >
-            <DialogTitle onClose={handleClose} />
-            <Box sx={{
-                m: 1,
-                display: 'flex',
-                width: '350px',
-                height: '350px',
-                p: 3,
-                color: theme => theme.palette.text.secondary
-            }}>
-                <Box sx={{
-                    flex: 1,
-                    display: 'flex',
-                    flexDirection: 'column',
-                }}>
-                    <Box component='h2' margin='0 0 1rem 0' color="text.primary">
-                        Recuperar contraseña
-                    </Box>
-                    {(!methodSelected) && (
-                        <SelectMethod />
-                    )}
+            {(!methodSelected) && (
+                <SelectMethod />
+            )}
 
-                    {(methodSelected && !isSuccessful) && (
-                        <RecoverPasswordForm />
-                    )}
+            {(methodSelected && !isSuccessful) && (
+                <RecoverPasswordForm method={methodSelected} />
+            )}
 
-                    {(isSuccessful) && (
-                        <SendCodeSuccessful method={methodSelected} />
-                    )}
-                </Box>
-            </Box>
-        </Dialog>
+            {(isSuccessful) && (
+                <SendCodeSuccessful method={methodSelected} />
+            )}
+        </Modal>
     );
 }

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import { useForm } from "react-hook-form";
-import PasswordInput from '../../PasswordInput';
+import PasswordInput from '../../Forms/PasswordInput';
 import { apiProvider } from '../../../api'
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';

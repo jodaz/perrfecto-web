@@ -1,11 +1,18 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import { useForm } from "react-hook-form";
-import TextInput from '../TextInput';
+import TextInput from '../Forms/TextInput';
 import { apiProvider } from '../../api'
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
+
+const validations = {
+    email: {
+        required: "Ingrese su correo",
+        pattern: "Email inválido"
+    }
+}
 
 const RecoverPasswordForm = () => {
     const navigate = useNavigate()
@@ -59,6 +66,12 @@ const RecoverPasswordForm = () => {
                                 control={control}
                                 name="email"
                                 type="email"
+                                rules={{
+                                    required: true,
+                                    pattern: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
+                                }}
+                                validations={validations}
+                                disabled={isSubmitting}
                                 placeholder='Ingresar correo electrónico'
                             />
                         </Box>
