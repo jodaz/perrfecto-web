@@ -1,20 +1,23 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
+import Button from '../Button';
 import { alpha } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '../DialogTitle';
 import Link from '@mui/material/Link';
 import Divider from '@mui/material/Divider';
-import PasswordInput from '../PasswordInput'
+import PasswordInput from '../Forms/PasswordInput'
 import { useForm } from "react-hook-form";
 import Box from '@mui/material/Box';
-import TextInput from '../TextInput';
+import TextInput from '../Forms/TextInput'
 import LinkBehavior from '../LinkBehavior';
 import { useNavigate } from 'react-router-dom';
 import SocialLogin from '../SocialLogin'
 import Alert from '@mui/material/Alert';
+import Checkbox from '../Forms/Checkbox';
 import vars from '../../vars'
 import { apiProvider } from '../../api'
+import getSearchParams from '../../utils/getSearchParams';
+import PhoneInput from '../Forms/PhoneInput';
 
 const validations = {
     email: {
@@ -28,6 +31,7 @@ const validations = {
 
 export default function Login({ location }) {
     const navigate = useNavigate()
+    const isPhoneRegister = getSearchParams(location, 'withPhone');
     const [error, setError] = React.useState(false)
     const { control, handleSubmit, formState: {
         isSubmitting
@@ -115,21 +119,33 @@ export default function Login({ location }) {
                             No estás registrado. Crea una cuenta para poder comenzar en TinderDogs.
                         </Alert>
                     )}
-                    <Box sx={{ p: 1 }}>
-                        <TextInput
-                            label="Email"
-                            control={control}
-                            name="email"
-                            type="email"
-                            rules={{
-                                required: true,
-                                pattern: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
-                            }}
-                            validations={validations}
-                            disabled={isSubmitting}
-                            placeholder='Ingresar correo electrónico'
-                        />
-                    </Box>
+                    {(!isPhoneRegister) ? (
+                        <Box sx={{ p: 1 }}>
+                            <TextInput
+                                label="Email"
+                                control={control}
+                                name="email"
+                                type="email"
+                                rules={{
+                                    required: true,
+                                    pattern: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
+                                }}
+                                validations={validations}
+                                disabled={isSubmitting}
+                                placeholder='Ingresar correo electrónico'
+                            />
+                        </Box>
+                    ) : (
+                        <Box sx={{ p: 1 }}>
+                            <PhoneInput
+                                label="Teléfono"
+                                control={control}
+                                name="phone"
+                                placeholder='Ingresar teléfono'
+                            />
+                        </Box>
+                    )}
+
                     <Box sx={{ p: 1 }}>
                         <PasswordInput
                             label='Contraseña'
@@ -141,6 +157,13 @@ export default function Login({ location }) {
                             }}
                             validations={validations}
                             placeholder='Ingresar contraseña'
+                        />
+                    </Box>
+                    <Box sx={{ p: 1 }}>
+                        <Checkbox
+                            control={control}
+                            name='remember_me'
+                            label='Recordar contraseña'
                         />
                     </Box>
                     <Box textAlign='center'>

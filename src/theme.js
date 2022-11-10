@@ -62,7 +62,7 @@ const theme = createTheme({
             styleOverrides: {
                 root: ({ theme }) => ({
                     border: '1px solid #ccc',
-                    borderRadius: 100,
+                    borderRadius: '100px !important',
                     padding: '10px 12px',
                     transition: theme.transitions.create([
                         'border-color',

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
-import { Navigate } from 'react-router-dom'
 import Aside from './Aside'
 import vars from '../../vars';
 import PawPrints from '../../assets/images/pawprints.svg'
@@ -12,7 +11,7 @@ const PopularMembers = React.lazy(() => import('../../components/PopularMembers'
 export default function AppLayout({ children }) {
     const isAuthenticated = localStorage.getItem(vars.authToken);
 
-    if (!isAuthenticated) return <Navigate to='/login' />;
+    // if (!isAuthenticated) return <Navigate to='/login' />;
 
     return (
         <Box sx={{ display: 'flex' }}>

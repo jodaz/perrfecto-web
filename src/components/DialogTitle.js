@@ -4,11 +4,8 @@ import MuiDialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '../assets/icons/Close';
 
-const DialogTitle = (props) => {
-  const { children, onClose, ...other } = props;
-
-  return (
-    <MuiDialogTitle sx={{ m: 1, p: 3, border: 'none !important' }} {...other}>
+const DialogTitle = ({ children, onClose, ...other }) => (
+    <MuiDialogTitle sx={{ m: 1, p: 1, border: 'none !important' }} {...other}>
         {children}
         {onClose ? (
             <IconButton
@@ -25,8 +22,7 @@ const DialogTitle = (props) => {
             </IconButton>
         ) : null}
     </MuiDialogTitle>
-  );
-}
+);
 
 DialogTitle.propTypes = {
   children: PropTypes.node,

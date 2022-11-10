@@ -1,29 +1,63 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
-import Button from '@mui/material/Button';
+import Button from '../Button';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '../DialogTitle';
 import Link from '@mui/material/Link';
-import PasswordInput from '../PasswordInput'
+import PasswordInput from '../Forms/PasswordInput'
 import { useForm } from "react-hook-form";
 import Box from '@mui/material/Box';
-import TextInput from '../TextInput';
+import TextInput from '../Forms/TextInput';
 import LinkBehavior from '../LinkBehavior';
 import { useNavigate } from 'react-router-dom';
 import SocialLogin from '../SocialLogin'
-import Alert from '@mui/material/Alert';
+import PhoneInput from '../Forms/PhoneInput'
 import vars from '../../vars'
 import { apiProvider } from '../../api'
 import { Divider } from '@mui/material';
+import getSearchParams from '../../utils/getSearchParams';
 
-const getSearchParams = (location, string) => new URLSearchParams(location.search).get(string)
+const validations = {
+    name: {
+        required: "Ingrese su nombre y apellido"
+    },
+    email: {
+        required: "Ingrese su correo",
+        pattern: "Email inválido"
+    },
+    password: {
+        required: "Ingrese su contraseña"
+    },
+    confirm_password: {
+        required: "Repita la contraseña",
+        validate: "Las contraseñas no coinciden."
+    }
+}
+
+const rules = {
+    name: {
+        required: true,
+    },
+    email: {
+        required: true,
+        pattern: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
+    },
+    password: {
+        required: true,
+    },
+    confirm_password: {
+        required: true,
+    }
+}
 
 export default function SignUp({ location }) {
     const navigate = useNavigate()
     const [error, setError] = React.useState(false)
-    const { control, handleSubmit } = useForm({
+    const { control, handleSubmit, watch, formState: {
+        isSubmitting
+    }} = useForm({
         reValidateMode: "onBlur"
     });
+    const password = watch("password", "");
     const isPhoneRegister = getSearchParams(location, 'withPhone');
 
     const onSubmit = async (data) => {
@@ -87,38 +121,36 @@ export default function SignUp({ location }) {
                     </Box>
                     <Box>
                         ¿Ya tienes una cuenta?
-                            <Link
-                                href="/login"
-                                underline="none"
-                                component={LinkBehavior}
-                                to='/login'
-                                sx={{ marginLeft: '1rem' }}
-                            >
-                                Inicia sesión
-                            </Link>
+                        <Link
+                            href="/login"
+                            underline="none"
+                            component={LinkBehavior}
+                            to='/login'
+                            sx={{ marginLeft: '1rem' }}
+                        >
+                            Inicia sesión
+                        </Link>
                     </Box>
                 </Box>
                 <Divider orientation='vertical'>
                     o
                 </Divider>
                 <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ m: 1, flex: 1 }}>
-                    {(error) && (
-                        <Alert severity="error" sx={{ marginBottom: '1.5rem' }}>
-                            No estás registrado. Crea una cuenta para poder comenzar en TinderDogs.
-                        </Alert>
-                    )}
+                    <Box sx={{ p: 1 }}>
+                        <TextInput
+                            label="Nombre"
+                            control={control}
+                            name="name"
+                            placeholder='Ingresar nombre y apellido'
+                            rules={rules.name}
+                            validations={validations}
+                            disabled={isSubmitting}
+                        />
+                    </Box>
                     {(isPhoneRegister) ? (
                         <>
                             <Box sx={{ p: 1 }}>
-                                <TextInput
-                                    label="Nombre"
-                                    control={control}
-                                    name="name"
-                                    placeholder='Ingresar nombre y apellido'
-                                />
-                            </Box>
-                            <Box sx={{ p: 1 }}>
-                                <TextInput
+                                <PhoneInput
                                     label="Teléfono"
                                     control={control}
                                     name="phone"
@@ -133,6 +165,9 @@ export default function SignUp({ location }) {
                                 control={control}
                                 name="email"
                                 type="email"
+                                rules={rules.email}
+                                validations={validations}
+                                disabled={isSubmitting}
                                 placeholder='Ingresar correo electrónico'
                             />
                         </Box>
@@ -142,6 +177,9 @@ export default function SignUp({ location }) {
                             label='Contraseña'
                             control={control}
                             name="password"
+                            rules={rules.password}
+                            validations={validations}
+                            disabled={isSubmitting}
                             placeholder='Ingresar contraseña'
                         />
                     </Box>
@@ -150,12 +188,24 @@ export default function SignUp({ location }) {
                             label='Confirmar contraseña'
                             control={control}
                             name="confirm_password"
+                            rules={{
+                                ...rules.confirm_password,
+                                validate: value => value === password
+                            }}
+                            validations={validations}
+                            disabled={isSubmitting}
                             placeholder='Repita la contraseña'
                         />
                     </Box>
                     <Box textAlign='center'>
                         <Box sx={{ p: 1 }}>
-                            <Button variant="contained" color="primary" fullWidth type="submit">
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                fullWidth
+                                type="submit"
+                                disabled={isSubmitting}
+                            >
                                 Siguiente
                             </Button>
                         </Box>

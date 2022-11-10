@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles';
 import { Link, Button } from '@mui/material';
 import LinkBehavior from '../../components/LinkBehavior';
 
-const BoxContainer = styled(Box)(({ theme, isScroll }) => ({
+const BoxContainer = styled(Box)(({ theme }) => ({
     display: 'flex',
     width: '100%',
     justifyContent: 'end',

@@ -15,11 +15,14 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 import RecoverPassword from './components/RecoverPassword';
 import Intro from './pages/Intro';
-import DetectLocation from './components/modals/DetectLocation';
+import DetectLocation from './components/Modals/DetectLocation';
 import Market from './pages/Market';
 import Blog from './pages/Blog';
 import Profile from './pages/Profile';
 import Chat from './pages/Chat';
+import NewPassword from './components/Modals/NewPassword';
+import AskCode from './components/Modals/AskCode';
+import Notifications from './pages/Notifications'
 
 function App() {
     let location = useLocation();
@@ -71,11 +74,21 @@ function App() {
                         </AppLayout>
                     }
                 />
+                <Route
+                    path='/notifications'
+                    element={
+                        <AppLayout>
+                            <Notifications />
+                        </AppLayout>
+                    }
+                />
                 <Route path="/" element={<Landing />}>
                     <Route path="/login" element={<Login location={location} />} />
                     <Route path="/detect-location" element={<DetectLocation location={location} />} />
                     <Route path="/register" element={<SignUp location={location} />} />
                     <Route path="/recover-password" element={<RecoverPassword location={location} />} />
+                    <Route path="/recover-password/new" element={<NewPassword location={location} />} />
+                    <Route path="/recover-password/code" element={<AskCode location={location} />} />
                 </Route>
 
                 <Route path="/introduction" element={<Intro />} />
