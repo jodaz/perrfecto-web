@@ -8,13 +8,33 @@ import Button from '../../Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 
+const validations = {
+    password: {
+        required: "Ingrese una contraseña"
+    },
+    confirm_password: {
+        required: "Repita la contraseña",
+        validate: "Las contraseñas no coinciden."
+    }
+}
+
+const rules = {
+    password: {
+        required: true,
+    },
+    confirm_password: {
+        required: true,
+    }
+}
+
 const NewPasswordForm = () => {
     const navigate = useNavigate()
-    const { control, handleSubmit, formState: {
+    const { control, handleSubmit, watch, formState: {
         isSubmitting
     }} = useForm({
         reValidateMode: "onBlur"
     });
+    const password = watch("password", "");
 
     const onSubmit = async (data) => {
         // const response = await apiProvider.post('/api/auth/signin', {
@@ -45,18 +65,27 @@ const NewPasswordForm = () => {
                 </Typography>
                 <Box sx={{ p: 1, mt: 2 }}>
                     <PasswordInput
-                        label="Contraseña"
+                        label='Contraseña'
                         control={control}
                         name="password"
-                        placeholder='Ingrese una contraseña'
+                        rules={rules.password}
+                        validations={validations}
+                        disabled={isSubmitting}
+                        placeholder='Ingresar contraseña'
                     />
                 </Box>
                 <Box sx={{ p: 1 }}>
                     <PasswordInput
-                        label="Confirmar contraseña"
+                        label='Confirmar contraseña'
                         control={control}
-                        name="email"
-                        placeholder='Confirmar contraseña'
+                        name="confirm_password"
+                        rules={{
+                            ...rules.confirm_password,
+                            validate: value => value === password
+                        }}
+                        validations={validations}
+                        disabled={isSubmitting}
+                        placeholder='Repita la contraseña'
                     />
                 </Box>
                 <Box sx={{ p: 1 }}>
