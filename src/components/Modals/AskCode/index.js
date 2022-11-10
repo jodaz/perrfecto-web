@@ -2,19 +2,14 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '../Modal';
+import PinInput from 'react-pin-input';
 import { Typography } from '@mui/material';
-import TextInput from '../../Forms/TextInput'
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from 'react-router-dom';
-
-const validations = {
-    code: {
-        required: "Ingrese su codigo",
-    }
-}
 
 const AskCode = ({ location }) => {
     const navigate = useNavigate();
+    const [isCompletted, setIsCompletted] = React.useState(false)
     const [error, setError] = React.useState(false)
     const { control, handleSubmit, formState: {
         isSubmitting
@@ -22,8 +17,7 @@ const AskCode = ({ location }) => {
         reValidateMode: "onBlur"
     });
 
-    const onSubmit = (data) => {
-        // console.log(data)
+    const onSubmit = data => {
         // setError(false);
 
         // // const response = await apiProvider.post('/api/auth/signin', {
@@ -55,6 +49,10 @@ const AskCode = ({ location }) => {
         // // const { data: result } = response;
     };
 
+    const onCompletedCodeHandler = () => {
+        setIsCompletted(true)
+    }
+
     return (
         <Modal
             location={location}
@@ -62,15 +60,29 @@ const AskCode = ({ location }) => {
             title="Recuperar contraseña"
         >
             <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-                <Box sx={{ m: 5 }}>
-                    <TextInput
-                        name="code"
+                <Box sx={{ margin: '2rem 0', textAlign: 'center' }}>
+                    <Controller
                         control={control}
-                        disabled={isSubmitting}
-                        rules={{
-                            required: true
-                        }}
-                        validations={validations}
+                        name="code"
+                        render={({ field: { onChange, onBlur, value, ref } }) => (
+                            <PinInput
+                                length={6}
+                                type="numeric"
+                                inputMode="number"
+                                style={{ padding: '0px' }}
+                                placeholder='0'
+                                inputStyle={{borderColor: 'red'}}
+                                inputFocusStyle={{borderColor: 'blue'}}
+                                onChange={value => {
+                                    onChange(value);
+                                    setIsCompletted(false)
+                                }}
+                                onComplete={onCompletedCodeHandler}
+                                onBlur={onBlur}
+                                autoSelect={true}
+                                regexCriteria={/^[ A-Za-z0-9_@./#&+-]*$/}
+                            />
+                        )}
                     />
                 </Box>
                 <Box display="flex" justifyContent='space-between'>
@@ -91,7 +103,7 @@ const AskCode = ({ location }) => {
                         color="primary"
                         fullWidth
                         type="submit"
-                        disabled={isSubmitting}
+                        disabled={isSubmitting || !isCompletted}
                     >
                         Continuar
                     </Button>
