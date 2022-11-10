@@ -22,6 +22,7 @@ import Profile from './pages/Profile';
 import Chat from './pages/Chat';
 import NewPassword from './components/Modals/NewPassword';
 import AskCode from './components/Modals/AskCode';
+import Notifications from './pages/Notifications'
 
 function App() {
     let location = useLocation();
@@ -70,6 +71,14 @@ function App() {
                     element={
                         <AppLayout>
                             <Profile />
+                        </AppLayout>
+                    }
+                />
+                <Route
+                    path='/notifications'
+                    element={
+                        <AppLayout>
+                            <Notifications />
                         </AppLayout>
                     }
                 />

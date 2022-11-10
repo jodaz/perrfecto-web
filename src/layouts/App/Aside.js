@@ -4,9 +4,11 @@ import Toolbar from '@mui/material/Toolbar';
 import Divider from '@mui/material/Divider';
 import Box from '@mui/material/Box';
 import Navigation from './Navigation';
+
+import LinkBehavior from '../../components/LinkBehavior';
 // Icons
 import { ReactComponent as CamaraIcon } from '../../assets/icons/Camara.svg'
-import { ReactComponent as NotificationIcon } from '../../assets/icons/Notification.svg'
+import NotificationButton from './NotificationButton';
 
 const drawerWidth = '350px';
 
@@ -29,7 +31,7 @@ const Sidebar = ({ children }) => (
             justifyContent: 'space-between'
         }}>
             <CamaraIcon />
-            <NotificationIcon />
+            <NotificationButton />
         </Toolbar>
         <Divider />
         <Navigation />
