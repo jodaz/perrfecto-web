@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
+import Button from '../Button';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '../DialogTitle';
 import Link from '@mui/material/Link';
@@ -16,12 +16,48 @@ import { apiProvider } from '../../api'
 import { Divider } from '@mui/material';
 import getSearchParams from '../../utils/getSearchParams';
 
+const validations = {
+    name: {
+        required: "Ingrese su nombre y apellido"
+    },
+    email: {
+        required: "Ingrese su correo",
+        pattern: "Email inválido"
+    },
+    password: {
+        required: "Ingrese su contraseña"
+    },
+    confirm_password: {
+        required: "Repita la contraseña",
+        validate: "Las contraseñas no coinciden."
+    }
+}
+
+const rules = {
+    name: {
+        required: true,
+    },
+    email: {
+        required: true,
+        pattern: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
+    },
+    password: {
+        required: true,
+    },
+    confirm_password: {
+        required: true,
+    }
+}
+
 export default function SignUp({ location }) {
     const navigate = useNavigate()
     const [error, setError] = React.useState(false)
-    const { control, handleSubmit } = useForm({
+    const { control, handleSubmit, watch, formState: {
+        isSubmitting
+    }} = useForm({
         reValidateMode: "onBlur"
     });
+    const password = watch("password", "");
     const isPhoneRegister = getSearchParams(location, 'withPhone');
 
     const onSubmit = async (data) => {
@@ -85,15 +121,15 @@ export default function SignUp({ location }) {
                     </Box>
                     <Box>
                         ¿Ya tienes una cuenta?
-                            <Link
-                                href="/login"
-                                underline="none"
-                                component={LinkBehavior}
-                                to='/login'
-                                sx={{ marginLeft: '1rem' }}
-                            >
-                                Inicia sesión
-                            </Link>
+                        <Link
+                            href="/login"
+                            underline="none"
+                            component={LinkBehavior}
+                            to='/login'
+                            sx={{ marginLeft: '1rem' }}
+                        >
+                            Inicia sesión
+                        </Link>
                     </Box>
                 </Box>
                 <Divider orientation='vertical'>
@@ -106,6 +142,9 @@ export default function SignUp({ location }) {
                             control={control}
                             name="name"
                             placeholder='Ingresar nombre y apellido'
+                            rules={rules.name}
+                            validations={validations}
+                            disabled={isSubmitting}
                         />
                     </Box>
                     {(isPhoneRegister) ? (
@@ -126,6 +165,9 @@ export default function SignUp({ location }) {
                                 control={control}
                                 name="email"
                                 type="email"
+                                rules={rules.email}
+                                validations={validations}
+                                disabled={isSubmitting}
                                 placeholder='Ingresar correo electrónico'
                             />
                         </Box>
@@ -135,6 +177,9 @@ export default function SignUp({ location }) {
                             label='Contraseña'
                             control={control}
                             name="password"
+                            rules={rules.password}
+                            validations={validations}
+                            disabled={isSubmitting}
                             placeholder='Ingresar contraseña'
                         />
                     </Box>
@@ -143,12 +188,24 @@ export default function SignUp({ location }) {
                             label='Confirmar contraseña'
                             control={control}
                             name="confirm_password"
+                            rules={{
+                                ...rules.confirm_password,
+                                validate: value => value === password
+                            }}
+                            validations={validations}
+                            disabled={isSubmitting}
                             placeholder='Repita la contraseña'
                         />
                     </Box>
                     <Box textAlign='center'>
                         <Box sx={{ p: 1 }}>
-                            <Button variant="contained" color="primary" fullWidth type="submit">
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                fullWidth
+                                type="submit"
+                                disabled={isSubmitting}
+                            >
                                 Siguiente
                             </Button>
                         </Box>
