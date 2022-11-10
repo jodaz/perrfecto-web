@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import TextInput from '../Forms/TextInput';
 import { apiProvider } from '../../api'
 import { useNavigate } from 'react-router-dom';
-import Button from '@mui/material/Button';
+import Button from '../Button';
 import CircularProgress from '@mui/material/CircularProgress';
 
 const validations = {

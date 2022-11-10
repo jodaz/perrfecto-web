@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import PasswordInput from '../../Forms/PasswordInput';
 import { apiProvider } from '../../../api'
 import { useNavigate } from 'react-router-dom';
-import Button from '@mui/material/Button';
+import Button from '../../Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 

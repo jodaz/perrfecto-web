@@ -12,6 +12,10 @@ const Button = ({ disabled, children, ...rest }) => (
     </MuiButton>
 )
 
+Button.defaultProps = {
+    disabled: false
+}
+
 Button.propTypes = {
   children: PropTypes.node,
   disabled: PropTypes.bool,
