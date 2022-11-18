@@ -15,6 +15,7 @@ import vars from '../../vars'
 import { apiProvider } from '../../api'
 import { Divider } from '@mui/material';
 import getSearchParams from '../../utils/getSearchParams';
+// Other components
 
 const validations = {
     name: {
@@ -63,19 +64,19 @@ export default function SignUp({ location }) {
     const onSubmit = async (data) => {
         setError(false);
 
-        const response = await apiProvider.post('/api/auth/signin', {
-            ...data,
-            tipo: 1
-        }).catch(error => {
-            if (error.response.status == 401) {
-                setError(true)
-            }
-        });
+        // const response = await apiProvider.post('/api/auth/signin', {
+        //     ...data,
+        //     tipo: 1
+        // }).catch(error => {
+        //     if (error.response.status == 401) {
+        //         setError(true)
+        //     }
+        // });
 
-        const { data: result } = response;
+        // const { data: result } = response;
 
-        localStorage.setItem(vars.authToken, result.access_token);
-        navigate('/home')
+        // localStorage.setItem(vars.authToken, result.access_token);
+        navigate('/register/call-profile')
     };
 
     const handleClose = () => navigate('/')
