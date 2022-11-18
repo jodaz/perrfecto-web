@@ -90,7 +90,7 @@ export default function SignUp({ location }) {
                 m: 1,
                 display: 'flex',
                 width: '800px',
-                height: '400px',
+                height: 'fit-content',
                 p: 3,
                 color: theme => theme.palette.text.secondary
             }}>
