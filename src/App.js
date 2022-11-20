@@ -87,11 +87,11 @@ function App() {
                     <Route path="/login" element={<Login location={location} />} />
                     <Route path="/detect-location" element={<DetectLocation location={location} />} />
                     <Route path="/register" element={<SignUp location={location} />} />
-                    <Route path="/register/call-profile" element={<CallToProfile location={location} />} />
                     <Route path="/recover-password" element={<RecoverPassword location={location} />} />
                     <Route path="/recover-password/new" element={<NewPassword location={location} />} />
                     <Route path="/recover-password/code" element={<AskCode location={location} />} />
                 </Route>
+                <Route path="/register/call-profile" element={<CallToProfile location={location} />} />
 
                 <Route path="/introduction" element={<Intro />} />
             </Routes>
