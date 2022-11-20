@@ -27,7 +27,7 @@ const validations = {
     password: {
         required: "Ingrese su contraseña"
     },
-    confirm_password: {
+    confirm: {
         required: "Repita la contraseña",
         validate: "Las contraseñas no coinciden."
     }
@@ -44,7 +44,7 @@ const rules = {
     password: {
         required: true,
     },
-    confirm_password: {
+    confirm: {
         required: true,
     }
 }
@@ -63,9 +63,8 @@ export default function SignUp({ location }) {
     const onSubmit = async (data) => {
         setError(false);
 
-        const response = await apiProvider.post('/api/auth/signin', {
-            ...data,
-            tipo: 1
+        const response = await apiProvider.post('/api/auth/new', {
+            ...data
         }).catch(error => {
             if (error.response.status == 401) {
                 setError(true)
@@ -187,9 +186,9 @@ export default function SignUp({ location }) {
                         <PasswordInput
                             label='Confirmar contraseña'
                             control={control}
-                            name="confirm_password"
+                            name="confirm"
                             rules={{
-                                ...rules.confirm_password,
+                                ...rules.confirm,
                                 validate: value => value === password
                             }}
                             validations={validations}
