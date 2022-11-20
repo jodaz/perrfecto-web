@@ -18,8 +18,8 @@ export default function Modal({ location, title, pathname, children }) {
             <Box sx={{
                 m: 1,
                 display: 'flex',
-                width: '350px',
-                height: '350px',
+                width: '400px',
+                height: 'fit-content',
                 p: 3,
                 color: theme => theme.palette.text.secondary
             }}>

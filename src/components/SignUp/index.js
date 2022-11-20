@@ -28,7 +28,7 @@ const validations = {
     password: {
         required: "Ingrese su contraseña"
     },
-    confirm_password: {
+    confirm: {
         required: "Repita la contraseña",
         validate: "Las contraseñas no coinciden."
     }
@@ -45,7 +45,7 @@ const rules = {
     password: {
         required: true,
     },
-    confirm_password: {
+    confirm: {
         required: true,
     }
 }
@@ -64,18 +64,15 @@ export default function SignUp({ location }) {
     const onSubmit = async (data) => {
         setError(false);
 
-        // const response = await apiProvider.post('/api/auth/signin', {
-        //     ...data,
-        //     tipo: 1
-        // }).catch(error => {
-        //     if (error.response.status == 401) {
-        //         setError(true)
-        //     }
-        // });
+        const response = await apiProvider.post('/api/auth/new', {
+            ...data
+        }).catch(error => {
+            if (error.response.status == 401) {
+                setError(true)
+            }
+        });
 
-        // const { data: result } = response;
-
-        // localStorage.setItem(vars.authToken, result.access_token);
+        localStorage.setItem(vars.authToken, response.token);
         navigate('/register/call-profile')
     };
 
@@ -91,7 +88,7 @@ export default function SignUp({ location }) {
                 m: 1,
                 display: 'flex',
                 width: '800px',
-                height: '400px',
+                height: 'fit-content',
                 p: 3,
                 color: theme => theme.palette.text.secondary
             }}>
@@ -188,9 +185,9 @@ export default function SignUp({ location }) {
                         <PasswordInput
                             label='Confirmar contraseña'
                             control={control}
-                            name="confirm_password"
+                            name="confirm"
                             rules={{
-                                ...rules.confirm_password,
+                                ...rules.confirm,
                                 validate: value => value === password
                             }}
                             validations={validations}

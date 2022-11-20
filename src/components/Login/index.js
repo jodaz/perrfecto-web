@@ -42,19 +42,20 @@ export default function Login({ location }) {
     const onSubmit = async (data) => {
         setError(false);
 
-        const response = await apiProvider.post('/api/auth/signin', {
-            ...data,
-            tipo: 1
+        const response = await apiProvider.post('/api/auth', {
+            ...data
         }).catch(error => {
-            if (error.response.status == 401) {
+            if (error.response.status == 400) {
                 setError(true)
             }
         });
 
-        const { data: result } = response;
+        if (response) {
+            const { data: result } = response;
 
-        localStorage.setItem(vars.authToken, result.access_token);
-        navigate('/detect-location')
+            localStorage.setItem(vars.authToken, result.access_token);
+            navigate('/detect-location')
+        }
     };
 
     const handleClose = () => navigate('/')
@@ -77,7 +78,7 @@ export default function Login({ location }) {
                 m: 1,
                 display: 'flex',
                 width: '800px',
-                height: '400px',
+                height: 'fit-content',
                 p: 3,
                 color: theme => theme.palette.text.secondary
             }}>
