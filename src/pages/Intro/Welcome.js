@@ -3,8 +3,7 @@ import Button from '@mui/material/Button'
 import LinkBehavior from '../../components/LinkBehavior'
 import Link from '@mui/material/Link'
 
-const Welcome = ({ index, handleNextSection, jumpIntro }) => {
-
+const Welcome = ({ handleNextSection, jumpIntro }) => {
     return (
         <>
             <Box sx={{

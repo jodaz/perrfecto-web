@@ -6,9 +6,11 @@ import { alpha } from '@mui/material/styles';
 import PupiRectangle from '../../assets/images/PupiRectangle.png'
 import useMediaQuery from '@mui/material/useMediaQuery';
 import LinkBehavior from '../LinkBehavior';
+import RegisterDog from '../RegisterDog';
 
 const CallToProfile = () => {
     const matches = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+    const [open, setOpen] = React.useState(false)
 
     return (
         <Box sx={{
@@ -46,6 +48,7 @@ const CallToProfile = () => {
                                 <Button
                                     variant="contained"
                                     fullWidth
+                                    onClick={() => setOpen(true)}
                                 >
                                     Completar perfil
                                 </Button>
@@ -85,6 +88,7 @@ const CallToProfile = () => {
                     }
                 }} />
             </Box>
+            <RegisterDog open={open} handleClose={() => setOpen(false)} />
         </Box>
     );
 }
