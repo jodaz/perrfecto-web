@@ -73,7 +73,7 @@ export default function SignUp({ location }) {
         });
 
         localStorage.setItem(vars.authToken, response.token);
-        navigate('/register/call-profile')
+        navigate('/register/welcome')
     };
 
     const handleClose = () => navigate('/')
