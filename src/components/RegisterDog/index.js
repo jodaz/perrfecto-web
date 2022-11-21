@@ -6,12 +6,24 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import DialogTitle from '../DialogTitle';
 import TextInput from '../Forms/TextInput';
+import SelectInput from '../Forms/SelectInput';
 
 const validations = {
     name: {
         required: "Ingrese el nombre de su perro"
     }
 }
+
+const razas = [
+    { value: 1, label: "Bulldog Frances" },
+    { value: 2, label: "PAstor aleman" },
+    { value: 3, label: "Dalmata" }
+];
+
+const sexos = [
+    { value: 1, label: "Macho" },
+    { value: 2, label: "Hembra" }
+];
 
 const RegisterDog = (open, handleClose) => {
     const { control, handleSubmit, formState: {
@@ -62,7 +74,31 @@ const RegisterDog = (open, handleClose) => {
                                 placeholder='Ingresar nombre de tu perro'
                             />
                         </Box>
-                        <Button disabled={isSubmitting} variant="contained">
+                        <Box sx={{ p: 1 }}>
+                            <SelectInput
+                                label="Raza"
+                                control={control}
+                                options={razas}
+                                disabled={isSubmitting}
+                                name="race"
+                                InputProps={{
+                                    placeholder: 'Seleccione la raza'
+                                }}
+                            />
+                        </Box>
+                        <Box sx={{ p: 1 }}>
+                            <SelectInput
+                                label="Sexo"
+                                control={control}
+                                options={sexos}
+                                disabled={isSubmitting}
+                                name="genre"
+                                InputProps={{
+                                    placeholder: 'Seleccione el sexo'
+                                }}
+                            />
+                        </Box>
+                        <Button disabled={isSubmitting} variant="contained" type="submit">
                             Siguiente
                         </Button>
                     </Box>
