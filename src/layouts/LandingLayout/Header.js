@@ -42,6 +42,10 @@ const internalLinks = [
     {
         title: '¿Cómo funciona?',
         link: 'contact'
+    },
+    {
+        title: 'Registrar negocio',
+        link: '/business'
     }
 ]
 

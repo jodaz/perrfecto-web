@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom'
 // Layouts
 import AppLayout from './layouts/App';
+import LandingLayout from './layouts/LandingLayout';
 // Pages
 import NotFound from "./pages/NotFound";
 import Landing from "./pages/Landing";
@@ -82,7 +83,11 @@ function App() {
                         </AppLayout>
                     }
                 />
-                <Route path="/" element={<Landing />}>
+                <Route path="/" element={
+                    <LandingLayout>
+                        <Landing />
+                    </LandingLayout>
+                }>
                     <Route path="/login" element={<Login location={location} />} />
                     <Route path="/detect-location" element={<DetectLocation location={location} />} />
                     <Route path="/register" element={<SignUp location={location} />} />
