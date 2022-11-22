@@ -3,7 +3,8 @@ import Header from './Header';
 
 const LandingLayout = ({ children, dark }) => (
     <Box sx={{
-        height: '100vh'
+        height: '100vh',
+        position: 'relative'
     }}>
         <Header dark={dark} />
         {children}
