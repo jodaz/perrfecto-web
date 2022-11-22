@@ -24,6 +24,7 @@ import Chat from './pages/Chat';
 import NewPassword from './components/Modals/NewPassword';
 import AskCode from './components/Modals/AskCode';
 import Notifications from './pages/Notifications'
+import Business from './pages/Business';
 
 function App() {
     let location = useLocation();
@@ -75,6 +76,7 @@ function App() {
                         </AppLayout>
                     }
                 />
+
                 <Route
                     path='/notifications'
                     element={
@@ -83,6 +85,7 @@ function App() {
                         </AppLayout>
                     }
                 />
+
                 <Route path="/" element={
                     <LandingLayout>
                         <Landing />
@@ -94,6 +97,14 @@ function App() {
                     <Route path="/recover-password" element={<RecoverPassword location={location} />} />
                     <Route path="/recover-password/new" element={<NewPassword location={location} />} />
                     <Route path="/recover-password/code" element={<AskCode location={location} />} />
+                </Route>
+
+                <Route path="/business" element={
+                    <LandingLayout dark>
+                        <Business />
+                    </LandingLayout>
+                }>
+                    <Route path="/business/register" element={<SignUp location={location} />} />
                 </Route>
 
                 <Route path="/introduction" element={<Intro />} />

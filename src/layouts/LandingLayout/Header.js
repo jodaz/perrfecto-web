@@ -12,17 +12,18 @@ const BoxContainer = styled(Box)(({ theme }) => ({
     position: 'fixed',
     alignItems: 'center',
     zIndex: 1000,
+    boxShadow: '0px 2px 12px rgba(0, 0, 0, 0.16)',
     [theme.breakpoints.down('md')]: {
         padding: '1.5rem 0',
         justifyContent: 'center'
     }
 }))
 
-const AnchorTag = styled(Link)(({ theme }) => ({
+const AnchorTag = styled(Link)(({ theme, dark }) => ({
     textDecoration: 'none',
     padding: ' 0 1rem',
     fontWeight: '400',
-    color: `${theme.palette.secondary.main}`,
+    color: dark ? `${theme.palette.text.primary}` : `${theme.palette.secondary.main}`,
     cursor: 'pointer',
     transition: '0.3s',
     '&:hover': {
@@ -33,15 +34,15 @@ const AnchorTag = styled(Link)(({ theme }) => ({
 const internalLinks = [
     {
         title: 'Home',
-        link: '/home',
+        link: '/',
     },
     {
         title: 'Conecta',
-        link: '/home'
+        link: '/connect'
     },
     {
         title: '¿Cómo funciona?',
-        link: 'contact'
+        link: '/how-it-works'
     },
     {
         title: 'Registrar negocio',
@@ -49,7 +50,7 @@ const internalLinks = [
     }
 ]
 
-const Header = () => {
+const Header = ({ dark }) => {
     return (
         <BoxContainer component='navbar'>
             <Box sx={{
@@ -67,6 +68,7 @@ const Header = () => {
                             aria-label={link.title}
                             to={link.link}
                             component={LinkBehavior}
+                            dark={dark}
                         >
                             {link.title}
                         </AnchorTag>
@@ -76,7 +78,7 @@ const Header = () => {
                     <Box>
                         <Button
                             variant="contained"
-                            color="secondary"
+                            color={dark ? 'primary' : 'secondary'}
                             to='/login'
                             component={LinkBehavior}
                         >

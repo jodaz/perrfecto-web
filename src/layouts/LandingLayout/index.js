@@ -1,11 +1,11 @@
 import Box from '@mui/material/Box'
 import Header from './Header';
 
-const LandingLayout = ({ children }) => (
+const LandingLayout = ({ children, dark }) => (
     <Box sx={{
         height: '100vh'
     }}>
-        <Header />
+        <Header dark={dark} />
         {children}
     </Box>
 );
