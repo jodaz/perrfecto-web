@@ -1,0 +1,49 @@
+name: Deploy Frontend Apps
+
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Razón'
+        required: true
+        default: 'warning'
+  push:
+    branches: [ "main" ]
+
+env:
+  REACT_APP_API: ${{ secrets.REACT_APP_API_DOMAIN }}
+  REACT_APP_TOKEN: ${{ secrets.REACT_APP_AUTH_TOKEN_NAME }}
+  INLINE_RUNTIME_CHUNK: false
+  REACT_APP_INTRODUCTION: ${{ secrets.REACT_APP_GOOGLE_ID }}
+  REACT_APP_FB_APP_ID: ${{ secrets.REACT_APP_LOCATION }}
+  REACT_APP_GG_APP_ID: ${{ secrets.REACT_APP_AUTH_USER_INFO }}
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    environment: production
+    strategy:
+      matrix:
+        node-version: [16.x]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Nodejs ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - name: Install dependencies
+      run: npm i --force
+
+    - name: Build admin app
+      run: npm run build --if-present
+
+    - name: 📂 Deploy Admin App
+      uses: burnett01/rsync-deployments@5.2.1
+      with:
+        switches: -avzr --delete
+        path: /packages/admin/build
+        remote_path: /var/www/html/admin
+        remote_host: ${{ secrets.SSH_HOST }}
+        remote_user: ${{ secrets.SSH_USERNAME }}
+        remote_key: ${{ secrets.SSH_KEY }}
