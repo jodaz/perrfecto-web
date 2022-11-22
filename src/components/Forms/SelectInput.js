@@ -56,7 +56,7 @@ const SelectInput = ({
                                 fullWidth
                                 error={error != undefined}
                                 inputRef={ref}
-                                {...InputProps}
+                                InputProps={{ ...params.InputProps, ...InputProps }}
                                 disabled={disabled}
                             />
                         )}

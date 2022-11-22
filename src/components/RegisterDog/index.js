@@ -8,6 +8,7 @@ import DialogTitle from '../DialogTitle';
 import TextInput from '../Forms/TextInput';
 import SelectInput from '../Forms/SelectInput';
 import { ReactComponent as CalendarIcon } from '../../assets/icons/Calendar.svg'
+import InputAdornment from '@mui/material/InputAdornment';
 
 const validations = {
     name: {
@@ -156,15 +157,15 @@ const RegisterDog = (open, handleClose) => {
                             name="dogAge"
                             InputProps={{
                                 placeholder: 'Seleccionar fecha',
-                                startAdornment: (
-                                    <Box color="purple">
-                                        <CalendarIcon />
-                                    </Box>
-                                )
+                                startAdornment: <InputAdornment position="start"><CalendarIcon /></InputAdornment>
                             }}
                         />
                     </Box>
-                    <Button disabled={isSubmitting} variant="contained" type="submit">
+                    <Button
+                        disabled={isSubmitting}
+                        variant="contained"
+                        type="submit"
+                    >
                         Siguiente
                     </Button>
                 </Box>
