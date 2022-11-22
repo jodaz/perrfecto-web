@@ -6,6 +6,8 @@ import { Controller } from "react-hook-form";
 import { styled } from '@mui/material/styles';
 import InputLabel from '@mui/material/InputLabel';
 import TextField from '@mui/material/TextField';
+import { ReactComponent as ChevronDownIcon } from '../../assets/icons/ChevronDown.svg'
+import { ReactComponent as CloseIcon } from '../../assets/icons/close.svg'
 
 const Select = styled(Autocomplete)(({ theme }) => ({
     'label + &': {
@@ -26,10 +28,10 @@ const SelectInput = ({
     options,
     multiple,
     validations,
-    placeholder,
     InputProps,
     disabled,
     label,
+    ...rest
 }) => (
     <FormControl>
         {label && <InputLabel shrink>{label}</InputLabel>}
@@ -37,31 +39,37 @@ const SelectInput = ({
             control={control}
             name={name}
             defaultValue={defaultValue}
+            validations={validations}
             rules={rules}
-            render={({ field: { ref, onChange, ...field } }) => (
+            render={({ field: { ref, onChange, ...fieldRest }, fieldState: { error } }) => (
                 <>
                     <Select
-                        multiple={false}
+                        multiple={multiple}
                         options={options}
                         defaultValue={defaultValue}
                         getOptionLabel={(option) => option.label}
                         onChange={(_, data) => onChange(data)}
                         renderInput={params => (
                             <TextField
-                                {...field}
+                                {...fieldRest}
                                 {...params}
                                 fullWidth
+                                error={error != undefined}
                                 inputRef={ref}
                                 {...InputProps}
                                 disabled={disabled}
                             />
                         )}
+                        clearIcon={<CloseIcon />}
+                        popupIcon={<ChevronDownIcon />}
+                        disableClearable
+                        {...rest}
                     />
-                    {/* {error && (
+                    {error && (
                         <FormHelperText error>
                             {validations[name][error.type]}
                         </FormHelperText>
-                    )} */}
+                    )}
                 </>
             )}
         />
