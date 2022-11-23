@@ -11,7 +11,7 @@ export default function RecoverPassword({ location }) {
     const navigate = useNavigate()
     const methodSelected = getSearchParams(location, 'method');
     const isSuccessful = getSearchParams(location, 'success');
-    console.log(location)
+
     React.useEffect(() => {
         if ((methodSelected != 'email' || methodSelected != 'sms') && methodSelected == null) {
             navigate('/recover-password')

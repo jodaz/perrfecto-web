@@ -13,7 +13,7 @@ const validations = {
         required: "Ingrese una contraseña",
         minLength: "Mínimo 6 caracteres"
     },
-    confirm_password: {
+    confirm: {
         required: "Repita la contraseña",
         minLength: "Mínimo 6 caracteres",
         validate: "Las contraseñas no coinciden."
@@ -31,8 +31,10 @@ const rules = {
     }
 }
 
-const NewPasswordForm = () => {
+const NewPasswordForm = ({ location }) => {
     const navigate = useNavigate()
+    const { state } = location
+    const [error, setError] = React.useState(false);
     const { control, handleSubmit, watch, formState: {
         isSubmitting
     }} = useForm({
@@ -41,14 +43,19 @@ const NewPasswordForm = () => {
     const password = watch("password", "");
 
     const onSubmit = async (data) => {
-        const response = await apiProvider.post('/api/auth/update-password', {
+        const { email } = state
+        const res = await apiProvider.post('/api/auth/update-password', {
             ...data,
-            tipo: 1
+            email: email
         }).catch(error => {
             console.log(error)
         });
 
-        navigate('?success=true')
+        if (res.status >= 200 && res.status < 300) {
+            navigate('?success=true')
+        } else {
+            setError(true)
+        }
     };
 
     return (
@@ -83,9 +90,9 @@ const NewPasswordForm = () => {
                     <PasswordInput
                         label='Confirmar contraseña'
                         control={control}
-                        name="confirm_password"
+                        name="confirm"
                         rules={{
-                            ...rules.confirm_password,
+                            ...rules.confirm,
                             validate: value => value === password
                         }}
                         validations={validations}

@@ -23,7 +23,7 @@ const AskCode = ({ location }) => {
         setError(false);
         const { email } = state;
 
-        const response = await apiProvider.post('/api/auth/verify-code', {
+        const res = await apiProvider.post('/api/auth/verify-code', {
             ...data,
             email: email
         })
@@ -33,7 +33,15 @@ const AskCode = ({ location }) => {
                 }
             });
 
-        return navigate(`/recover-password/new`)
+        if (res.status >= 200 && res.status < 300) {
+            return navigate(`/recover-password/new`, {
+                state: {
+                    email: email
+                }
+            })
+        } else {
+            setError(true)
+        }
     };
 
     /**

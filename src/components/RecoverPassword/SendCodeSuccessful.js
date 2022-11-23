@@ -33,7 +33,7 @@ const SendCodeSuccessful = ({
             </Box>
             <Box sx={{ p: 1 }}>
                 <Typography align='center'>
-                    Hemos enviado un email al correo lu*************ro@gmail.com con un código
+                    Hemos enviado un email al correo {location.state.email} con un código
                     para que puedas recuperar tu contraseña ;)
                 </Typography>
             </Box>
