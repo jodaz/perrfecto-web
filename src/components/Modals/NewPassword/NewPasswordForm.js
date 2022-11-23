@@ -10,10 +10,12 @@ import Typography from '@mui/material/Typography';
 
 const validations = {
     password: {
-        required: "Ingrese una contraseña"
+        required: "Ingrese una contraseña",
+        minLength: "Mínimo 6 caracteres"
     },
     confirm_password: {
         required: "Repita la contraseña",
+        minLength: "Mínimo 6 caracteres",
         validate: "Las contraseñas no coinciden."
     }
 }
@@ -21,9 +23,11 @@ const validations = {
 const rules = {
     password: {
         required: true,
+        minLength: 6
     },
-    confirm_password: {
+    confirm: {
         required: true,
+        minLength: 6
     }
 }
 
@@ -37,12 +41,13 @@ const NewPasswordForm = () => {
     const password = watch("password", "");
 
     const onSubmit = async (data) => {
-        // const response = await apiProvider.post('/api/auth/signin', {
-        //     ...data,
-        //     tipo: 1
-        // }).catch(error => {
-        //     console.log(error)
-        // });
+        const response = await apiProvider.post('/api/auth/update-password', {
+            ...data,
+            tipo: 1
+        }).catch(error => {
+            console.log(error)
+        });
+
         navigate('?success=true')
     };
 

@@ -9,7 +9,7 @@ import { ReactComponent as MessagePhoneGreenIcon } from '../../assets/icons/Mess
 
 const SendCodeSuccessful = ({
     method,
-    text
+    location
 }) => (
     <Box sx={{
         flex: 1,
@@ -44,6 +44,7 @@ const SendCodeSuccessful = ({
                     fullWidth
                     component={LinkBehavior}
                     to={`/recover-password/code?method=${method}`}
+                    state={location.state}
                 >
                     Continuar
                 </Button>

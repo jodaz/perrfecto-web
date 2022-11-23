@@ -35,9 +35,14 @@ const RecoverPasswordForm = ({ method }) => {
                 console.log(error)
             });
 
-        console.log(response)
-
-        navigate(`?method=${method}&success=true`)
+        navigate(
+            `?method=${method}&success=true`,
+            {
+                state: {
+                    email: "jesuodz@gmail.com"
+                }
+            }
+        )
     };
 
     return (

@@ -6,9 +6,11 @@ import PinInput from 'react-pin-input';
 import { Typography } from '@mui/material';
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from 'react-router-dom';
+import { apiProvider } from '../../../api'
 
 const AskCode = ({ location }) => {
     const navigate = useNavigate();
+    const { state } = location;
     const [isCompletted, setIsCompletted] = React.useState(false)
     const [error, setError] = React.useState(false)
     const { control, handleSubmit, formState: {
@@ -17,22 +19,27 @@ const AskCode = ({ location }) => {
         reValidateMode: "onBlur"
     });
 
-    const onSubmit = data => {
-        // setError(false);
+    const onSubmit = async (data) => {
+        setError(false);
+        const { email } = state;
 
-        // // const response = await apiProvider.post('/api/auth/signin', {
-        // //     ...data,
-        // //     tipo: 1
-        // // }).catch(error => {
-        // //     if (error.response.status == 401) {
-        // //         setError(true)
-        // //     }
-        // // });
+        const response = await apiProvider.post('/api/auth/verify-code', {
+            ...data,
+            email: email
+        })
+            .catch(error => {
+                if (error.response.status == 401) {
+                    setError(true)
+                }
+            });
 
-        // // const { data: result } = response;
         return navigate(`/recover-password/new`)
     };
 
+    /**
+     * Cuando pida un nuevo codigo, el boton submit debe quedar cargando
+     * y el campo deshabilitado
+     */
     const onSubmitNewCode = (data) => {
         // console.log(data)
         // setError(false);
@@ -66,13 +73,13 @@ const AskCode = ({ location }) => {
                         name="code"
                         render={({ field: { onChange, onBlur, value, ref } }) => (
                             <PinInput
-                                length={6}
+                                length={5}
                                 type="numeric"
                                 inputMode="number"
                                 style={{ padding: '0px' }}
                                 placeholder='0'
-                                inputStyle={{borderColor: 'red'}}
-                                inputFocusStyle={{borderColor: 'blue'}}
+                                inputStyle={{ borderColor: 'red' }}
+                                inputFocusStyle={{ borderColor: 'blue' }}
                                 onChange={value => {
                                     onChange(value);
                                     setIsCompletted(false)
