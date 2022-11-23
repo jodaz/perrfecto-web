@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { InputAdornment, IconButton } from '@mui/material';
-import Eye from '../../assets/icons/Eye';
-import EyeOff from '../../assets/icons/EyeOff';
+import { ReactComponent as EyeIcon } from '../../assets/icons/Eye.svg';
+import { ReactComponent as EyeOffIcon } from '../../assets/icons/EyeOff.svg';
 import TextInput from './TextInput';
 
 const PasswordInput = ({
@@ -42,8 +42,8 @@ const PasswordInput = ({
 };
 
 PasswordInput.defaultProps = {
-    visibilityIcon: <Eye />,
-    visibilityOffIcon: <EyeOff />
+    visibilityIcon: <EyeIcon />,
+    visibilityOffIcon: <EyeOffIcon />
 }
 
 export default PasswordInput
