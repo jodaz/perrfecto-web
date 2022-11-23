@@ -24,6 +24,7 @@ import Chat from './pages/Chat';
 import NewPassword from './components/Modals/NewPassword';
 import AskCode from './components/Modals/AskCode';
 import Notifications from './pages/Notifications'
+import CreateProfileWelcome from './components/CreateProfileWelcome';
 import Business from './pages/Business';
 
 function App() {
@@ -97,6 +98,15 @@ function App() {
                     <Route path="/recover-password" element={<RecoverPassword location={location} />} />
                     <Route path="/recover-password/new" element={<NewPassword location={location} />} />
                     <Route path="/recover-password/code" element={<AskCode location={location} />} />
+                </Route>
+                <Route path="/register/welcome" element={<CreateProfileWelcome location={location} />} />
+
+                <Route path="/business" element={
+                    <LandingLayout dark>
+                        <Business />
+                    </LandingLayout>
+                }>
+                    <Route path="/business/register" element={<SignUp location={location} />} />
                 </Route>
 
                 <Route path="/business" element={

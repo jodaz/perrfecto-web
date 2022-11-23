@@ -15,6 +15,7 @@ import vars from '../../vars'
 import { apiProvider } from '../../api'
 import { Divider } from '@mui/material';
 import getSearchParams from '../../utils/getSearchParams';
+// Other components
 
 const validations = {
     name: {
@@ -71,10 +72,8 @@ export default function SignUp({ location }) {
             }
         });
 
-        const { data: result } = response;
-
-        localStorage.setItem(vars.authToken, result.access_token);
-        navigate('/home')
+        localStorage.setItem(vars.authToken, response.token);
+        navigate('/register/welcome')
     };
 
     const handleClose = () => navigate('/')
