@@ -19,7 +19,10 @@ import getSearchParams from '../../utils/getSearchParams';
 
 const validations = {
     name: {
-        required: "Ingrese su nombre y apellido"
+        required: "Ingrese su nombre"
+    },
+    lastName: {
+        required: "Ingrese su apellido"
     },
     email: {
         required: "Ingrese su correo",
@@ -36,6 +39,9 @@ const validations = {
 
 const rules = {
     name: {
+        required: true,
+    },
+    lastName: {
         required: true,
     },
     email: {
@@ -139,8 +145,19 @@ export default function SignUp({ location }) {
                             label="Nombre"
                             control={control}
                             name="name"
-                            placeholder='Ingresar nombre y apellido'
+                            placeholder='Ingresar nombre'
                             rules={rules.name}
+                            validations={validations}
+                            disabled={isSubmitting}
+                        />
+                    </Box>
+                    <Box sx={{ p: 1 }}>
+                        <TextInput
+                            label="Apellido"
+                            control={control}
+                            name="lastName"
+                            placeholder='Ingresar apellido'
+                            rules={rules.lastName}
                             validations={validations}
                             disabled={isSubmitting}
                         />
