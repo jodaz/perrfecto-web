@@ -3,6 +3,8 @@ import Box from '@mui/material/Box'
 import { styled } from '@mui/material/styles';
 import { Link, Button } from '@mui/material';
 import LinkBehavior from '../../components/LinkBehavior';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import LanguageButton from './LanguageButton';
 
 const BoxContainer = styled(Box)(({ theme }) => ({
     display: 'flex',
@@ -12,17 +14,20 @@ const BoxContainer = styled(Box)(({ theme }) => ({
     position: 'fixed',
     alignItems: 'center',
     zIndex: 1000,
+    top: 0,
+    left: 0,
+    right: 0,
+    boxShadow: '0px 2px 12px rgba(0, 0, 0, 0.16)',
     [theme.breakpoints.down('md')]: {
-        padding: '1.5rem 0',
-        justifyContent: 'center'
+        justifyContent: 'end'
     }
 }))
 
-const AnchorTag = styled(Link)(({ theme }) => ({
+const AnchorTag = styled(Link)(({ theme, dark }) => ({
     textDecoration: 'none',
     padding: ' 0 1rem',
     fontWeight: '400',
-    color: `${theme.palette.secondary.main}`,
+    color: dark ? `${theme.palette.text.primary}` : `${theme.palette.secondary.main}`,
     cursor: 'pointer',
     transition: '0.3s',
     '&:hover': {
@@ -33,19 +38,25 @@ const AnchorTag = styled(Link)(({ theme }) => ({
 const internalLinks = [
     {
         title: 'Home',
-        link: '/home',
+        link: '/',
     },
     {
         title: 'Conecta',
-        link: '/home'
+        link: '/connect'
     },
     {
         title: '¿Cómo funciona?',
-        link: 'contact'
+        link: '/how-it-works'
+    },
+    {
+        title: 'Registrar negocio',
+        link: '/business'
     }
 ]
 
-const Header = () => {
+const Header = ({ dark }) => {
+    const matches = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+
     return (
         <BoxContainer component='navbar'>
             <Box sx={{
@@ -57,22 +68,32 @@ const Header = () => {
                 listStyle: 'none',
                 alignItems: 'center'
             }} component='ul'>
-                {internalLinks.map(link => (
-                    <li>
-                        <AnchorTag
-                            aria-label={link.title}
-                            to={link.link}
-                            component={LinkBehavior}
-                        >
-                            {link.title}
-                        </AnchorTag>
-                    </li>
-                ))}
+                {!matches && (
+                    <>
+                        {internalLinks.map(link => (
+                            <li>
+                                <AnchorTag
+                                    aria-label={link.title}
+                                    to={link.link}
+                                    component={LinkBehavior}
+                                    dark={dark}
+                                >
+                                    {link.title}
+                                </AnchorTag>
+                            </li>
+                        ))}
+                    </>
+                )}
+                <li>
+                    <Box sx={{ marginRight: 2 }}>
+                        <LanguageButton />
+                    </Box>
+                </li>
                 <li>
                     <Box>
                         <Button
                             variant="contained"
-                            color="secondary"
+                            color={dark ? 'primary' : 'secondary'}
                             to='/login'
                             component={LinkBehavior}
                         >

@@ -1,7 +1,6 @@
 import Box from '@mui/material/Box'
 import BackgroundDogs from '../../assets/images/background-dogs.png'
 import useMediaQuery from '@mui/material/useMediaQuery';
-import Header from './Header';
 import { Button } from '@mui/material';
 import LinkBehavior from '../../components/LinkBehavior';
 import { Outlet } from 'react-router-dom'
@@ -25,7 +24,6 @@ const Landing = () => {
                 zIndex: 0
             }
         }}>
-            <Header />
             <Box sx={{
                 height: 'inherit',
                 width: '100%',

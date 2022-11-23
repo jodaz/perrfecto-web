@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom'
 // Layouts
 import AppLayout from './layouts/App';
+import LandingLayout from './layouts/LandingLayout';
 // Pages
 import NotFound from "./pages/NotFound";
 import Landing from "./pages/Landing";
@@ -24,6 +25,7 @@ import NewPassword from './components/Modals/NewPassword';
 import AskCode from './components/Modals/AskCode';
 import Notifications from './pages/Notifications'
 import CreateProfileWelcome from './components/CreateProfileWelcome';
+import Business from './pages/Business';
 
 function App() {
     let location = useLocation();
@@ -75,6 +77,7 @@ function App() {
                         </AppLayout>
                     }
                 />
+
                 <Route
                     path='/notifications'
                     element={
@@ -83,7 +86,12 @@ function App() {
                         </AppLayout>
                     }
                 />
-                <Route path="/" element={<Landing />}>
+
+                <Route path="/" element={
+                    <LandingLayout>
+                        <Landing />
+                    </LandingLayout>
+                }>
                     <Route path="/login" element={<Login location={location} />} />
                     <Route path="/detect-location" element={<DetectLocation location={location} />} />
                     <Route path="/register" element={<SignUp location={location} />} />
@@ -92,6 +100,22 @@ function App() {
                     <Route path="/recover-password/code" element={<AskCode location={location} />} />
                 </Route>
                 <Route path="/register/welcome" element={<CreateProfileWelcome location={location} />} />
+
+                <Route path="/business" element={
+                    <LandingLayout dark>
+                        <Business />
+                    </LandingLayout>
+                }>
+                    <Route path="/business/register" element={<SignUp location={location} />} />
+                </Route>
+
+                <Route path="/business" element={
+                    <LandingLayout dark>
+                        <Business />
+                    </LandingLayout>
+                }>
+                    <Route path="/business/register" element={<SignUp location={location} />} />
+                </Route>
 
                 <Route path="/introduction" element={<Intro />} />
             </Routes>
