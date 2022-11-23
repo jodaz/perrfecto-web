@@ -1,9 +1,9 @@
 import * as React from 'react';
+import getSearchParams from '../../utils/getSearchParams';
 import { useNavigate } from 'react-router-dom';
 import Modal from '../Modals/Modal'
 // Components
 import SelectMethod from './SelectMethod';
-import getSearchParams from '../../utils/getSearchParams';
 import RecoverPasswordForm from './RecoverPasswordForm';
 import SendCodeSuccessful from './SendCodeSuccessful';
 

@@ -23,6 +23,7 @@ import Chat from './pages/Chat';
 import NewPassword from './components/Modals/NewPassword';
 import AskCode from './components/Modals/AskCode';
 import Notifications from './pages/Notifications'
+import CreateProfileWelcome from './components/CreateProfileWelcome';
 
 function App() {
     let location = useLocation();
@@ -90,6 +91,7 @@ function App() {
                     <Route path="/recover-password/new" element={<NewPassword location={location} />} />
                     <Route path="/recover-password/code" element={<AskCode location={location} />} />
                 </Route>
+                <Route path="/register/welcome" element={<CreateProfileWelcome location={location} />} />
 
                 <Route path="/introduction" element={<Intro />} />
             </Routes>
