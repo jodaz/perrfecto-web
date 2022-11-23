@@ -14,7 +14,12 @@ const validations = {
     }
 }
 
-const RecoverPasswordForm = () => {
+const endpoints = [
+    '/api/auth/reset-password',
+    '/api/auth/reset-password-phone'
+]
+
+const RecoverPasswordForm = ({ method }) => {
     const navigate = useNavigate()
     const { control, handleSubmit, formState: {
         isSubmitting
@@ -23,14 +28,21 @@ const RecoverPasswordForm = () => {
     });
 
     const onSubmit = async (data) => {
-        // const response = await apiProvider.post('/api/auth/signin', {
-        //     ...data,
-        //     tipo: 1
-        // }).catch(error => {
-        //     console.log(error)
-        // });
+        const endpoint = (method == 'email') ? endpoints[0] : endpoints[1];
 
-        navigate('?method=email&success=true')
+        const response = await apiProvider.post(endpoint, data)
+            .catch(error => {
+                console.log(error)
+            });
+
+        navigate(
+            `?method=${method}&success=true`,
+            {
+                state: {
+                    email: "jesuodz@gmail.com"
+                }
+            }
+        )
     };
 
     return (

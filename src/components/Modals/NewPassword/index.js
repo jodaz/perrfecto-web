@@ -13,7 +13,7 @@ const NewPassword = ({ location }) => {
             pathname='/recover-password/new'
             title="Recuperar contraseña"
         >
-            {isSuccessful ? <SuccessfulPasswordRecover /> : <NewPasswordForm />}
+            {isSuccessful ? <SuccessfulPasswordRecover /> : <NewPasswordForm location={location} />}
         </Modal>
     );
 }

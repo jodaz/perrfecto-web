@@ -33,7 +33,7 @@ export default function RecoverPassword({ location }) {
             )}
 
             {(isSuccessful) && (
-                <SendCodeSuccessful method={methodSelected} />
+                <SendCodeSuccessful method={methodSelected} location={location} />
             )}
         </Modal>
     );

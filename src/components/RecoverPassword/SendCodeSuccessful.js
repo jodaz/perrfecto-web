@@ -9,7 +9,7 @@ import { ReactComponent as MessagePhoneGreenIcon } from '../../assets/icons/Mess
 
 const SendCodeSuccessful = ({
     method,
-    text
+    location
 }) => (
     <Box sx={{
         flex: 1,
@@ -33,7 +33,7 @@ const SendCodeSuccessful = ({
             </Box>
             <Box sx={{ p: 1 }}>
                 <Typography align='center'>
-                    Hemos enviado un email al correo lu*************ro@gmail.com con un código
+                    Hemos enviado un email al correo {location.state.email} con un código
                     para que puedas recuperar tu contraseña ;)
                 </Typography>
             </Box>
@@ -44,6 +44,7 @@ const SendCodeSuccessful = ({
                     fullWidth
                     component={LinkBehavior}
                     to={`/recover-password/code?method=${method}`}
+                    state={location.state}
                 >
                     Continuar
                 </Button>
