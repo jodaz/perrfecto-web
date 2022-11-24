@@ -27,91 +27,95 @@ import Notifications from './pages/Notifications'
 import CreateProfileWelcome from './components/CreateProfileWelcome';
 import Business from './pages/Business';
 import RegisterBusiness from './components/Modals/RegisterBusiness';
+// Contexts
+import { AuthProvider } from './context/AuthContext'
 
 function App() {
     let location = useLocation();
 
     return (
         <ThemeProvider theme={theme}>
-            <Routes>
-                <Route
-                    path='*'
-                    element=<NotFound />
-                />
-                <Route
-                    path='/home'
-                    element={
-                        <AppLayout>
-                            <Home />
-                        </AppLayout>
-                    }
-                />
-                <Route
-                    path='/market'
-                    element={
-                        <AppLayout>
-                            <Market />
-                        </AppLayout>
-                    }
-                />
-                <Route
-                    path='/chat'
-                    element={
-                        <AppLayout>
-                            <Chat />
-                        </AppLayout>
-                    }
-                />
-                <Route
-                    path='/blog'
-                    element={
-                        <AppLayout>
-                            <Blog />
-                        </AppLayout>
-                    }
-                />
-                <Route
-                    path='/profile'
-                    element={
-                        <AppLayout>
-                            <Profile />
-                        </AppLayout>
-                    }
-                />
+            <AuthProvider>
+                <Routes>
+                    <Route
+                        path='*'
+                        element=<NotFound />
+                    />
+                    <Route
+                        path='/home'
+                        element={
+                            <AppLayout>
+                                <Home />
+                            </AppLayout>
+                        }
+                    />
+                    <Route
+                        path='/market'
+                        element={
+                            <AppLayout>
+                                <Market />
+                            </AppLayout>
+                        }
+                    />
+                    <Route
+                        path='/chat'
+                        element={
+                            <AppLayout>
+                                <Chat />
+                            </AppLayout>
+                        }
+                    />
+                    <Route
+                        path='/blog'
+                        element={
+                            <AppLayout>
+                                <Blog />
+                            </AppLayout>
+                        }
+                    />
+                    <Route
+                        path='/profile'
+                        element={
+                            <AppLayout>
+                                <Profile />
+                            </AppLayout>
+                        }
+                    />
 
-                <Route
-                    path='/notifications'
-                    element={
-                        <AppLayout>
-                            <Notifications />
-                        </AppLayout>
-                    }
-                />
+                    <Route
+                        path='/notifications'
+                        element={
+                            <AppLayout>
+                                <Notifications />
+                            </AppLayout>
+                        }
+                    />
 
-                <Route path="/" element={
-                    <LandingLayout>
-                        <Landing />
-                    </LandingLayout>
-                }>
-                    <Route path="/login" element={<Login location={location} />} />
-                    <Route path="/detect-location" element={<DetectLocation location={location} />} />
-                    <Route path="/register" element={<SignUp location={location} />} />
-                    <Route path="/recover-password" element={<RecoverPassword location={location} />} />
-                    <Route path="/recover-password/new" element={<NewPassword location={location} />} />
-                    <Route path="/recover-password/code" element={<AskCode location={location} />} />
-                </Route>
-                <Route path="/register/welcome" element={<CreateProfileWelcome location={location} />} />
+                    <Route path="/" element={
+                        <LandingLayout>
+                            <Landing />
+                        </LandingLayout>
+                    }>
+                        <Route path="/login" element={<Login location={location} />} />
+                        <Route path="/detect-location" element={<DetectLocation location={location} />} />
+                        <Route path="/register" element={<SignUp location={location} />} />
+                        <Route path="/recover-password" element={<RecoverPassword location={location} />} />
+                        <Route path="/recover-password/new" element={<NewPassword location={location} />} />
+                        <Route path="/recover-password/code" element={<AskCode location={location} />} />
+                    </Route>
+                    <Route path="/register/welcome" element={<CreateProfileWelcome location={location} />} />
 
-                <Route path="/business" element={
-                    <LandingLayout dark>
-                        <Business />
-                    </LandingLayout>
-                }>
-                    <Route path="/business/register" element={<RegisterBusiness location={location} />} />
-                </Route>
+                    <Route path="/business" element={
+                        <LandingLayout dark>
+                            <Business />
+                        </LandingLayout>
+                    }>
+                        <Route path="/business/register" element={<RegisterBusiness location={location} />} />
+                    </Route>
 
-                <Route path="/introduction" element={<Intro />} />
-            </Routes>
+                    <Route path="/introduction" element={<Intro />} />
+                </Routes>
+            </AuthProvider>
         </ThemeProvider>
     );
 }

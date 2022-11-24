@@ -5,6 +5,7 @@ const vars = {
     intro: `${process.env.REACT_APP_INTRODUCTION}`,
     source: `${process.env.REACT_APP_API}`,
     GoogleID: `${process.env.REACT_APP_GG_APP_ID}`,
+    user: `${process.env.REACT_APP_USER_INFO}`,
     FacebookID: `${process.env.REACT_APP_FB_APP_ID}`
 }
 

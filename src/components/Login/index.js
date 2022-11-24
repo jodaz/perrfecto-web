@@ -18,6 +18,7 @@ import vars from '../../vars'
 import { apiProvider } from '../../api'
 import getSearchParams from '../../utils/getSearchParams';
 import PhoneInput from '../Forms/PhoneInput';
+import { useAuth, loginUser } from '../../context/AuthContext'
 
 const validations = {
     email: {
@@ -25,7 +26,19 @@ const validations = {
         pattern: "Email inválido"
     },
     password: {
-        required: "Ingrese su contraseña"
+        required: "Ingrese una contraseña",
+        minLength: "Mínimo 6 caracteres"
+    }
+}
+
+const rules = {
+    email: {
+        required: true,
+        pattern: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
+    },
+    password: {
+        required: true,
+        minLength: 6
     }
 }
 
@@ -38,11 +51,12 @@ export default function Login({ location }) {
     }} = useForm({
         reValidateMode: "onBlur"
     });
+    const { dispatch } = useAuth();
 
     const onSubmit = async (data) => {
         setError(false);
 
-        const response = await apiProvider.post('/api/auth', {
+        const res = await apiProvider.post('/api/auth', {
             ...data
         }).catch(error => {
             if (error.response.status == 400) {
@@ -50,10 +64,10 @@ export default function Login({ location }) {
             }
         });
 
-        if (response) {
-            const { data: result } = response;
+        if (res.status >= 200 && res.status < 300) {
+            const { data } = res;
+            loginUser(dispatch, data)
 
-            localStorage.setItem(vars.authToken, result.access_token);
             navigate('/detect-location')
         }
     };
@@ -125,10 +139,7 @@ export default function Login({ location }) {
                                 control={control}
                                 name="email"
                                 type="email"
-                                rules={{
-                                    required: true,
-                                    pattern: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
-                                }}
+                                rules={rules.email}
                                 validations={validations}
                                 disabled={isSubmitting}
                                 placeholder='Ingresar correo electrónico'
@@ -151,9 +162,7 @@ export default function Login({ location }) {
                             control={control}
                             name="password"
                             disabled={isSubmitting}
-                            rules={{
-                                required: true
-                            }}
+                            rules={rules.password}
                             validations={validations}
                             placeholder='Ingresar contraseña'
                         />
