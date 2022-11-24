@@ -34,7 +34,7 @@ const Landing = () => {
                 margin: '0 auto',
                 color: '#DFDFDF',
                 textAlign: 'center',
-                zIndex: 1000,
+                zIndex: 1,
                 alignItems: 'center',
                 '& > *': {
                     margin: '1.1rem 0'
