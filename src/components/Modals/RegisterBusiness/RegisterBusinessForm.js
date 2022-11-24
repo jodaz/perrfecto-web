@@ -17,15 +17,23 @@ const validations = {
     lastName: {
         required: "Ingrese su apellido"
     },
+    business_name: {
+        required: "Ingrese el nombre de su negocio."
+    },
+    business_dir: {
+        required: "Ingrese la dirección su negocio."
+    },
     email: {
         required: "Ingrese su correo",
         pattern: "Email inválido"
     },
     password: {
-        required: "Ingrese su contraseña"
+        required: "Ingrese una contraseña",
+        minLength: "Mínimo 6 caracteres"
     },
     confirm: {
         required: "Repita la contraseña",
+        minLength: "Mínimo 6 caracteres",
         validate: "Las contraseñas no coinciden."
     }
 }
@@ -37,15 +45,23 @@ const rules = {
     lastName: {
         required: true,
     },
+    business_name: {
+        required: true,
+    },
+    business_dir: {
+        required: true,
+    },
     email: {
         required: true,
         pattern: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
     },
     password: {
         required: true,
+        minLength: 6
     },
     confirm: {
         required: true,
+        minLength: 6
     }
 }
 
@@ -62,8 +78,10 @@ const RegisterBusinessForm = ({ location }) => {
     const onSubmit = async (data) => {
         setError(false);
 
-        const response = await apiProvider.post('/api/auth/new', {
-            ...data
+        const response = await apiProvider.post('/api/auth/new-business', {
+            ...data,
+            code_phone: '+58',
+            phone: '12345678110'
         }).catch(error => {
             if (error.response.status == 401) {
                 setError(true)
@@ -71,7 +89,7 @@ const RegisterBusinessForm = ({ location }) => {
         });
 
         localStorage.setItem(vars.authToken, response.token);
-        navigate('/register/welcome')
+        navigate('/home')
     };
 
     return (
@@ -87,9 +105,9 @@ const RegisterBusinessForm = ({ location }) => {
                     <TextInput
                         label="Nombre"
                         control={control}
-                        name="name"
+                        name="business_name"
                         placeholder='Ingresar nombre de tu negocio'
-                        rules={rules.name}
+                        rules={rules.business_name}
                         validations={validations}
                         disabled={isSubmitting}
                     />
@@ -106,6 +124,17 @@ const RegisterBusinessForm = ({ location }) => {
                     />
                 </Box>
                 <Box sx={{ p: 1 }}>
+                    <TextInput
+                        label="Apellido del encargado"
+                        control={control}
+                        name="lastName"
+                        placeholder='Ingresar apellido del propietario'
+                        rules={rules.lastName}
+                        validations={validations}
+                        disabled={isSubmitting}
+                    />
+                </Box>
+                <Box sx={{ p: 1 }}>
                     <PhoneInput
                         label="Teléfono"
                         control={control}
@@ -117,7 +146,7 @@ const RegisterBusinessForm = ({ location }) => {
                     <TextInput
                         label="Dirección"
                         control={control}
-                        name="name"
+                        name="business_dir"
                         placeholder='Ingresar nombre del propietario'
                         rules={rules.name}
                         validations={validations}
