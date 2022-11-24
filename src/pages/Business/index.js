@@ -2,6 +2,8 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import LinkBehavior from '../../components/LinkBehavior';
+import { Outlet } from 'react-router-dom'
 // Images
 import Dog1 from '../../assets/images/Dog1.png'
 import Dog2 from '../../assets/images/Dog2.png'
@@ -54,7 +56,7 @@ const Business = () => {
                             borderRadius: '10px',
                             top: 0,
                             left: 0,
-                            zIndex: 1000
+                            zIndex: 1
                         }} />
                         <Box component='div' sx={{
                             background: `url(${Dog2}) no-repeat center center`,
@@ -68,12 +70,13 @@ const Business = () => {
                         }} />
                     </Box>
                     <Box sx={{ p: 1 }}>
-                        <Button variant="contained">
+                        <Button variant="contained" component={LinkBehavior} to="register">
                             Registrar negocio
                         </Button>
                     </Box>
                 </Box>
             </Box>
+            <Outlet />
         </Box>
     );
 }

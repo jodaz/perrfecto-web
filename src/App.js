@@ -26,6 +26,7 @@ import AskCode from './components/Modals/AskCode';
 import Notifications from './pages/Notifications'
 import CreateProfileWelcome from './components/CreateProfileWelcome';
 import Business from './pages/Business';
+import RegisterBusiness from './components/Modals/RegisterBusiness';
 
 function App() {
     let location = useLocation();
@@ -106,15 +107,7 @@ function App() {
                         <Business />
                     </LandingLayout>
                 }>
-                    <Route path="/business/register" element={<SignUp location={location} />} />
-                </Route>
-
-                <Route path="/business" element={
-                    <LandingLayout dark>
-                        <Business />
-                    </LandingLayout>
-                }>
-                    <Route path="/business/register" element={<SignUp location={location} />} />
+                    <Route path="/business/register" element={<RegisterBusiness location={location} />} />
                 </Route>
 
                 <Route path="/introduction" element={<Intro />} />
