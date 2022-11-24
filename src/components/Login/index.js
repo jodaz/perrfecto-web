@@ -111,9 +111,7 @@ export default function Login({ location }) {
                         ¿Aún no tienes una cuenta? <Link href="#" underline="none" component={LinkBehavior} to='/register'>Crear cuenta</Link>
                     </Box>
                 </Box>
-                <Divider orientation='vertical'>
-                    o
-                </Divider>
+                <Divider orientation="vertical" flexItem>o</Divider>
                 <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ m: 1, flex: 1 }}>
                     {(error) && (
                         <Alert severity="error" sx={{ marginBottom: '1.5rem' }}>

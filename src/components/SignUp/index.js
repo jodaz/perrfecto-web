@@ -29,10 +29,12 @@ const validations = {
         pattern: "Email inválido"
     },
     password: {
-        required: "Ingrese su contraseña"
+        required: "Ingrese una contraseña",
+        minLength: "Mínimo 6 caracteres"
     },
     confirm: {
         required: "Repita la contraseña",
+        minLength: "Mínimo 6 caracteres",
         validate: "Las contraseñas no coinciden."
     }
 }
@@ -50,9 +52,11 @@ const rules = {
     },
     password: {
         required: true,
+        minLength: 6
     },
     confirm: {
         required: true,
+        minLength: 6
     }
 }
 
@@ -136,9 +140,7 @@ export default function SignUp({ location }) {
                         </Link>
                     </Box>
                 </Box>
-                <Divider orientation='vertical'>
-                    o
-                </Divider>
+                <Divider orientation="vertical" flexItem>o</Divider>
                 <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ m: 1, flex: 1 }}>
                     <Box sx={{ p: 1 }}>
                         <TextInput
