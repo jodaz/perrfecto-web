@@ -11,9 +11,9 @@ import LinkBehavior from '../LinkBehavior';
 import { useNavigate } from 'react-router-dom';
 import SocialLogin from '../SocialLogin'
 import PhoneInput from '../Forms/PhoneInput'
-import vars from '../../vars'
 import { apiProvider } from '../../api'
 import { Divider } from '@mui/material';
+import { useAuth, loginUser } from '../../context/AuthContext'
 import getSearchParams from '../../utils/getSearchParams';
 // Other components
 
@@ -62,6 +62,7 @@ const rules = {
 
 export default function SignUp({ location }) {
     const navigate = useNavigate()
+    const { dispatch } = useAuth();
     const [error, setError] = React.useState(false)
     const { control, handleSubmit, watch, formState: {
         isSubmitting
@@ -74,7 +75,7 @@ export default function SignUp({ location }) {
     const onSubmit = async (data) => {
         setError(false);
 
-        const response = await apiProvider.post('/api/auth/new', {
+        const res = await apiProvider.post('/api/auth/new', {
             ...data
         }).catch(error => {
             if (error.response.status == 401) {
@@ -82,8 +83,12 @@ export default function SignUp({ location }) {
             }
         });
 
-        localStorage.setItem(vars.authToken, response.token);
-        navigate('/register/welcome')
+        if (res.status >= 200 && res.status < 300) {
+            const { data } = res;
+
+            loginUser(dispatch, data)
+            navigate('/register/welcome')
+        }
     };
 
     const handleClose = () => navigate('/')

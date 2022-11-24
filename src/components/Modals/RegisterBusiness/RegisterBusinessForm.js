@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import TextInput from '../../Forms/TextInput';
 import { useNavigate } from 'react-router-dom';
 import PhoneInput from '../../Forms/PhoneInput'
-import vars from '../../../vars'
+import { useAuth, loginUser } from '../../../context/AuthContext'
 import { fileProvider } from '../../../api'
 
 const validations = {
@@ -68,6 +68,7 @@ const RegisterBusinessForm = ({ location }) => {
         reValidateMode: "onBlur"
     });
     const password = watch("password", "");
+    const { dispatch } = useAuth();
 
     const onSubmit = async (data) => {
         setError(false);
@@ -80,15 +81,19 @@ const RegisterBusinessForm = ({ location }) => {
         formData.append('code_phone', '+58')
         formData.append('phone', '04161234567')
 
-        const response = await fileProvider.post('/api/auth/new-business', formData)
+        const res = await fileProvider.post('/api/auth/new-business', formData)
             .catch(error => {
             if (error.response.status == 401) {
                 setError(true)
             }
         });
 
-        localStorage.setItem(vars.authToken, response.token);
-        navigate('/home')
+        if (res.status >= 200 && res.status < 300) {
+            const { data } = res;
+
+            loginUser(dispatch, data)
+            navigate('/home')
+        }
     };
 
     return (

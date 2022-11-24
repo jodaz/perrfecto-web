@@ -66,7 +66,6 @@ function useAuth() {
 
 async function loginUser(dispatch, values) {
     try {
-        console.log("in dispatch action ", values)
         const { data, token } = values
 
         dispatch({
