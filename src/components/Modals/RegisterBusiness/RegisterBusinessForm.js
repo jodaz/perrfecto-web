@@ -8,14 +8,11 @@ import TextInput from '../../Forms/TextInput';
 import { useNavigate } from 'react-router-dom';
 import PhoneInput from '../../Forms/PhoneInput'
 import vars from '../../../vars'
-import { apiProvider } from '../../../api'
+import { fileProvider } from '../../../api'
 
 const validations = {
     name: {
         required: "Ingrese su nombre"
-    },
-    lastName: {
-        required: "Ingrese su apellido"
     },
     business_name: {
         required: "Ingrese el nombre de su negocio."
@@ -40,9 +37,6 @@ const validations = {
 
 const rules = {
     name: {
-        required: true,
-    },
-    lastName: {
         required: true,
     },
     business_name: {
@@ -77,12 +71,17 @@ const RegisterBusinessForm = ({ location }) => {
 
     const onSubmit = async (data) => {
         setError(false);
+        const formData = new FormData()
 
-        const response = await apiProvider.post('/api/auth/new-business', {
-            ...data,
-            code_phone: '+58',
-            phone: '12345678110'
-        }).catch(error => {
+        await Object.keys(data).forEach((key) => {
+            formData.append(key, data[key])
+        })
+        formData.append('role', 'business')
+        formData.append('code_phone', '+58')
+        formData.append('phone', '04161234567')
+
+        const response = await fileProvider.post('/api/auth/new-business', formData)
+            .catch(error => {
             if (error.response.status == 401) {
                 setError(true)
             }
@@ -123,31 +122,20 @@ const RegisterBusinessForm = ({ location }) => {
                         disabled={isSubmitting}
                     />
                 </Box>
-                <Box sx={{ p: 1 }}>
-                    <TextInput
-                        label="Apellido del encargado"
-                        control={control}
-                        name="lastName"
-                        placeholder='Ingresar apellido del propietario'
-                        rules={rules.lastName}
-                        validations={validations}
-                        disabled={isSubmitting}
-                    />
-                </Box>
-                <Box sx={{ p: 1 }}>
+                {/* <Box sx={{ p: 1 }}>
                     <PhoneInput
                         label="Teléfono"
                         control={control}
                         name="phone"
                         placeholder='Ingresar teléfono'
                     />
-                </Box>
+                </Box> */}
                 <Box sx={{ p: 1 }}>
                     <TextInput
                         label="Dirección"
                         control={control}
                         name="business_dir"
-                        placeholder='Ingresar nombre del propietario'
+                        placeholder='Ingresar la dirección de tu negocio'
                         rules={rules.name}
                         validations={validations}
                         disabled={isSubmitting}
@@ -162,7 +150,7 @@ const RegisterBusinessForm = ({ location }) => {
                         rules={rules.email}
                         validations={validations}
                         disabled={isSubmitting}
-                        placeholder='Ingresar correo electrónico'
+                        placeholder='Ingresar el correo de tu negocio'
                     />
                 </Box>
                 <Box sx={{ p: 1 }}>
@@ -173,7 +161,7 @@ const RegisterBusinessForm = ({ location }) => {
                         rules={rules.password}
                         validations={validations}
                         disabled={isSubmitting}
-                        placeholder='Ingresar contraseña'
+                        placeholder='Ingresar una contraseña'
                     />
                 </Box>
                 <Box sx={{ p: 1 }}>
