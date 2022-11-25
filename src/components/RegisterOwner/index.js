@@ -8,6 +8,8 @@ import DialogTitle from '../DialogTitle';
 import Divider from '@mui/material/Divider';
 import PhotoInput from '../Forms/PhotoInput';
 import DateInput from '../Forms/DateInput';
+import { fileProvider } from '../../api'
+import { useAuth } from '../../context/AuthContext';
 
 const validations = {
     date_birth: {
@@ -28,14 +30,33 @@ const rules = {
 }
 
 const RegisterOwner = ({ open, handleClose }) => {
+    const [error, setError] = React.useState(false)
     const { control, handleSubmit, formState: {
         isSubmitting
     }} = useForm({
         reValidateMode: "onBlur"
     });
+    const { state: { user } } = useAuth();
 
     const onSubmit = async (data) => {
-        console.log(data)
+        const formData = new FormData()
+
+        await Object.keys(data).forEach((key) => {
+            formData.append(key, data[key])
+        })
+
+        const res = await fileProvider.put(`/api/auth/user-edit/1`, formData)
+            .catch(error => {
+            if (error.response.status == 401) {
+                setError(true)
+            }
+        });
+
+        if (res.status >= 200 && res.status < 300) {
+            const { data } = res;
+
+            handleClose();
+        }
     }
 
     return (
