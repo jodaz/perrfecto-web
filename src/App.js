@@ -5,6 +5,9 @@ import {
     Routes,
     useLocation
 } from 'react-router-dom'
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import esLocale from 'date-fns/locale/es';
 // Layouts
 import AppLayout from './layouts/App';
 import LandingLayout from './layouts/LandingLayout';
@@ -34,89 +37,91 @@ function App() {
     let location = useLocation();
 
     return (
-        <ThemeProvider theme={theme}>
-            <AuthProvider>
-                <Routes>
-                    <Route
-                        path='*'
-                        element=<NotFound />
-                    />
-                    <Route
-                        path='/home'
-                        element={
-                            <AppLayout>
-                                <Home />
-                            </AppLayout>
-                        }
-                    />
-                    <Route
-                        path='/market'
-                        element={
-                            <AppLayout>
-                                <Market />
-                            </AppLayout>
-                        }
-                    />
-                    <Route
-                        path='/chat'
-                        element={
-                            <AppLayout>
-                                <Chat />
-                            </AppLayout>
-                        }
-                    />
-                    <Route
-                        path='/blog'
-                        element={
-                            <AppLayout>
-                                <Blog />
-                            </AppLayout>
-                        }
-                    />
-                    <Route
-                        path='/profile'
-                        element={
-                            <AppLayout>
-                                <Profile />
-                            </AppLayout>
-                        }
-                    />
+        <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={esLocale}>
+            <ThemeProvider theme={theme}>
+                <AuthProvider>
+                    <Routes>
+                        <Route
+                            path='*'
+                            element=<NotFound />
+                        />
+                        <Route
+                            path='/home'
+                            element={
+                                <AppLayout>
+                                    <Home />
+                                </AppLayout>
+                            }
+                        />
+                        <Route
+                            path='/market'
+                            element={
+                                <AppLayout>
+                                    <Market />
+                                </AppLayout>
+                            }
+                        />
+                        <Route
+                            path='/chat'
+                            element={
+                                <AppLayout>
+                                    <Chat />
+                                </AppLayout>
+                            }
+                        />
+                        <Route
+                            path='/blog'
+                            element={
+                                <AppLayout>
+                                    <Blog />
+                                </AppLayout>
+                            }
+                        />
+                        <Route
+                            path='/profile'
+                            element={
+                                <AppLayout>
+                                    <Profile />
+                                </AppLayout>
+                            }
+                        />
 
-                    <Route
-                        path='/notifications'
-                        element={
-                            <AppLayout>
-                                <Notifications />
-                            </AppLayout>
-                        }
-                    />
+                        <Route
+                            path='/notifications'
+                            element={
+                                <AppLayout>
+                                    <Notifications />
+                                </AppLayout>
+                            }
+                        />
 
-                    <Route path="/" element={
-                        <LandingLayout>
-                            <Landing />
-                        </LandingLayout>
-                    }>
-                        <Route path="/login" element={<Login location={location} />} />
-                        <Route path="/detect-location" element={<DetectLocation location={location} />} />
-                        <Route path="/register" element={<SignUp location={location} />} />
-                        <Route path="/recover-password" element={<RecoverPassword location={location} />} />
-                        <Route path="/recover-password/new" element={<NewPassword location={location} />} />
-                        <Route path="/recover-password/code" element={<AskCode location={location} />} />
-                    </Route>
-                    <Route path="/register/welcome" element={<CreateProfileWelcome location={location} />} />
+                        <Route path="/" element={
+                            <LandingLayout>
+                                <Landing />
+                            </LandingLayout>
+                        }>
+                            <Route path="/login" element={<Login location={location} />} />
+                            <Route path="/detect-location" element={<DetectLocation location={location} />} />
+                            <Route path="/register" element={<SignUp location={location} />} />
+                            <Route path="/recover-password" element={<RecoverPassword location={location} />} />
+                            <Route path="/recover-password/new" element={<NewPassword location={location} />} />
+                            <Route path="/recover-password/code" element={<AskCode location={location} />} />
+                        </Route>
+                        <Route path="/register/welcome" element={<CreateProfileWelcome location={location} />} />
 
-                    <Route path="/business" element={
-                        <LandingLayout dark>
-                            <Business />
-                        </LandingLayout>
-                    }>
-                        <Route path="/business/register" element={<RegisterBusiness location={location} />} />
-                    </Route>
+                        <Route path="/business" element={
+                            <LandingLayout dark>
+                                <Business />
+                            </LandingLayout>
+                        }>
+                            <Route path="/business/register" element={<RegisterBusiness location={location} />} />
+                        </Route>
 
-                    <Route path="/introduction" element={<Intro />} />
-                </Routes>
-            </AuthProvider>
-        </ThemeProvider>
+                        <Route path="/introduction" element={<Intro />} />
+                    </Routes>
+                </AuthProvider>
+            </ThemeProvider>
+        </LocalizationProvider>
     );
 }
 

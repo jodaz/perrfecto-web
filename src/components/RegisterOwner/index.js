@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import DialogTitle from '../DialogTitle';
 import Divider from '@mui/material/Divider';
 import PhotoInput from '../Forms/PhotoInput';
+import DateInput from '../Forms/DateInput';
 
 const validations = {
     birth_date: {
@@ -14,6 +15,15 @@ const validations = {
     },
     picture: {
         required: 'Seleccione una imagen.'
+    }
+}
+
+const rules = {
+    birth_date: {
+        required: true
+    },
+    picture: {
+        required: true
     }
 }
 
@@ -61,10 +71,17 @@ const RegisterOwner = ({ open, handleClose }) => {
                             <PhotoInput
                                 name="img_profile"
                                 control={control}
-                                rules={{
-                                    required: true
-                                }}
+                                rules={rules.picture}
                                 validations={validations.picture}
+                            />
+                        </Box>
+                        <Box sx={{ p: 3 }}>
+                            <DateInput
+                                name='date_birth'
+                                control={control}
+                                rules={rules.birth_date}
+                                validations={validations.birth_date}
+                                label='Fecha de cumpleaños'
                             />
                         </Box>
                         <Button
