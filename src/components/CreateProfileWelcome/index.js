@@ -48,6 +48,7 @@ const CallToProfile = () => {
                                 <Button
                                     variant="contained"
                                     fullWidth
+                                    onClick={() => setOpen(true)}
                                 >
                                     Completar perfil
                                 </Button>

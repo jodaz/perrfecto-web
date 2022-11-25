@@ -51,7 +51,7 @@ const years = [
     { value: 3, label: "2022" }
 ];
 
-const RegisterDog = (open, handleClose) => {
+const RegisterDog = ({ open, handleClose }) => {
     const { control, handleSubmit, formState: {
         isSubmitting
     }} = useForm({
@@ -148,7 +148,7 @@ const RegisterDog = (open, handleClose) => {
                         <SelectInput
                             label="Año de nacimiento"
                             control={control}
-                            options={types}
+                            options={years}
                             validations={validations}
                             disabled={isSubmitting}
                             rules={{
