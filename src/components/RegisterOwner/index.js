@@ -71,6 +71,7 @@ const RegisterOwner = ({ open, handleClose }) => {
                             <PhotoInput
                                 name="img_profile"
                                 control={control}
+                                disabled={isSubmitting}
                                 rules={rules.img_profile}
                                 validations={validations}
                             />
@@ -79,6 +80,7 @@ const RegisterOwner = ({ open, handleClose }) => {
                             <DateInput
                                 name='date_birth'
                                 control={control}
+                                disabled={isSubmitting}
                                 rules={rules.date_birth}
                                 validations={validations}
                                 label='Fecha de cumpleaños'

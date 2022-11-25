@@ -12,10 +12,7 @@ const DateInput = ({
     name,
     defaultValue,
     rules,
-    type,
     validations,
-    placeholder,
-    InputProps,
     disabled,
     label
 }) => (
@@ -30,32 +27,31 @@ const DateInput = ({
                 <>
                     <DatePicker
                         value={value}
+                        disabled={disabled}
                         onChange={value => onChange(value)}
-                        renderInput={({ inputRef, inputProps, InputProps }) => {
-                            return (
-                                <Box sx={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    width: 'fit-content',
-                                    height: 'fit-content'
-                                }}>
-                                    <Box
-                                        ref={inputRef}
-                                        sx={{
-                                            backgroundColor: theme => theme.palette.primary.main,
-                                            display: 'flex',
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                            width: '2.5rem',
-                                            height: '2.5rem'
-                                        }}
-                                    >
-                                        {InputProps?.endAdornment}
-                                    </Box>
-                                    <InputBase {...inputProps} />
+                        renderInput={({ inputRef, inputProps, InputProps }) => (
+                            <Box sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                width: 'fit-content',
+                                height: 'fit-content'
+                            }}>
+                                <Box
+                                    ref={inputRef}
+                                    sx={{
+                                        backgroundColor: theme => theme.palette.primary.main,
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        width: '2.5rem',
+                                        height: '2.5rem'
+                                    }}
+                                >
+                                    {InputProps?.endAdornment}
                                 </Box>
-                            )
-                        }}
+                                <InputBase {...inputProps} />
+                            </Box>
+                        )}
                         {...restField}
                     />
                     {error && (

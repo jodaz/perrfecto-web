@@ -27,7 +27,8 @@ const Dropzone = ({
                     })
                 )
             );
-        }
+        },
+        disabled: disabled
     })
 
     const thumbs = () => (
@@ -53,7 +54,7 @@ const Dropzone = ({
 
     return (
         <div {...getRootProps()}>
-            <input {...restFieldProps} {...getInputProps({ onChange })} />
+            <input disabled={disabled} {...restFieldProps} {...getInputProps({ onChange })} />
             <Box component="div" sx={{
                 display: 'flex',
                 alignItems: 'center',
@@ -107,34 +108,33 @@ const PhotoInput = ({
     name,
     control,
     rules,
+    disabled,
     validations,
     ...rest
-}) => {
-    console.log(rules, validations)
-    return (
-        <Controller
-            rules={rules}
-            render={({ field, fieldState: { error }, onChange }) => (
-                <>
-                    <Dropzone
-                        {...field}
-                        onChange={e =>
-                            onChange(e.target.files[0])
-                        }
-                        {...rest}
-                    />
-                    {error && (
-                        <FormHelperText error>
-                            {validations[name][error.type]}
-                        </FormHelperText>
-                    )}
-                </>
-            )}
-            name={name}
-            control={control}
-            defaultValue=''
-        />
-    )
-}
+}) => (
+    <Controller
+        rules={rules}
+        render={({ field, fieldState: { error }, onChange }) => (
+            <>
+                <Dropzone
+                    {...field}
+                    onChange={e =>
+                        onChange(e.target.files[0])
+                    }
+                    disabled={disabled}
+                    {...rest}
+                />
+                {error && (
+                    <FormHelperText error>
+                        {validations[name][error.type]}
+                    </FormHelperText>
+                )}
+            </>
+        )}
+        name={name}
+        control={control}
+        defaultValue=''
+    />
+)
 
 export default PhotoInput;
