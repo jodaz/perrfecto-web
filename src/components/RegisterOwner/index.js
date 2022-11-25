@@ -10,19 +10,19 @@ import PhotoInput from '../Forms/PhotoInput';
 import DateInput from '../Forms/DateInput';
 
 const validations = {
-    birth_date: {
+    date_birth: {
         required: "Ingrese su fecha de nacimiento."
     },
-    picture: {
+    img_profile: {
         required: 'Seleccione una imagen.'
     }
 }
 
 const rules = {
-    birth_date: {
+    date_birth: {
         required: true
     },
-    picture: {
+    img_profile: {
         required: true
     }
 }
@@ -71,16 +71,16 @@ const RegisterOwner = ({ open, handleClose }) => {
                             <PhotoInput
                                 name="img_profile"
                                 control={control}
-                                rules={rules.picture}
-                                validations={validations.picture}
+                                rules={rules.img_profile}
+                                validations={validations}
                             />
                         </Box>
                         <Box sx={{ p: 3 }}>
                             <DateInput
                                 name='date_birth'
                                 control={control}
-                                rules={rules.birth_date}
-                                validations={validations.birth_date}
+                                rules={rules.date_birth}
+                                validations={validations}
                                 label='Fecha de cumpleaños'
                             />
                         </Box>

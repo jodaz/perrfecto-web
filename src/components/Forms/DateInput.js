@@ -18,59 +18,55 @@ const DateInput = ({
     InputProps,
     disabled,
     label
-}) => {
-    // const [value, setValue] = React.useState(null);
-
-    return (
-        <FormControl>
-            {label && <InputLabel shrink>{label}</InputLabel>}
-            <Controller
-                control={control}
-                name={name}
-                defaultValue={defaultValue}
-                rules={rules}
-                render={({ field: { onChange, ...restField }, fieldState: { error, value } }) => (
-                    <>
-                        <DatePicker
-                            value={value}
-                            onChange={value => onChange(value)}
-                            renderInput={({ inputRef, inputProps, InputProps }) => {
-                                return (
-                                    <Box sx={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        width: 'fit-content',
-                                        height: 'fit-content'
-                                    }}>
-                                        <Box
-                                            ref={inputRef}
-                                            sx={{
-                                                backgroundColor: theme => theme.palette.primary.main,
-                                                display: 'flex',
-                                                justifyContent: 'center',
-                                                alignItems: 'center',
-                                                width: '2.5rem',
-                                                height: '2.5rem'
-                                            }}
-                                        >
-                                            {InputProps?.endAdornment}
-                                        </Box>
-                                        <InputBase {...inputProps} />
+}) => (
+    <FormControl>
+        {label && <InputLabel shrink>{label}</InputLabel>}
+        <Controller
+            control={control}
+            name={name}
+            defaultValue={defaultValue}
+            rules={rules}
+            render={({ field: { onChange, ...restField }, fieldState: { error, value } }) => (
+                <>
+                    <DatePicker
+                        value={value}
+                        onChange={value => onChange(value)}
+                        renderInput={({ inputRef, inputProps, InputProps }) => {
+                            return (
+                                <Box sx={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    width: 'fit-content',
+                                    height: 'fit-content'
+                                }}>
+                                    <Box
+                                        ref={inputRef}
+                                        sx={{
+                                            backgroundColor: theme => theme.palette.primary.main,
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            width: '2.5rem',
+                                            height: '2.5rem'
+                                        }}
+                                    >
+                                        {InputProps?.endAdornment}
                                     </Box>
-                                )
-                            }}
-                            {...restField}
-                        />
-                        {error && (
-                            <FormHelperText error>
-                                {validations[name][error.type]}
-                            </FormHelperText>
-                        )}
-                    </>
-                )}
-            />
-        </FormControl>
-    )
-}
+                                    <InputBase {...inputProps} />
+                                </Box>
+                            )
+                        }}
+                        {...restField}
+                    />
+                    {error && (
+                        <FormHelperText error>
+                            {validations[name][error.type]}
+                        </FormHelperText>
+                    )}
+                </>
+            )}
+        />
+    </FormControl>
+)
 
 export default DateInput
