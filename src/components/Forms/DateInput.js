@@ -10,7 +10,7 @@ import { Controller } from 'react-hook-form'
 const DateInput = ({
     control,
     name,
-    defaultValue,
+    defaultValue = new Date(),
     rules,
     validations,
     disabled,

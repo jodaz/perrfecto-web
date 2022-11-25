@@ -9,8 +9,7 @@ import { Controller } from 'react-hook-form'
 
 const Dropzone = ({
     onChange,
-    disabled,
-    ...restFieldProps
+    disabled
 }) => {
     const [file, setFile] = React.useState(null);
     const { getRootProps, getInputProps } = useDropzone({
@@ -20,20 +19,19 @@ const Dropzone = ({
         maxFiles: 1,
         multiple: false,
         onDrop: (acceptedFiles) => {
-            setFile(
-                acceptedFiles.map((file) =>
-                    Object.assign(file, {
-                        preview: URL.createObjectURL(file)
-                    })
-                )
-            );
+            const fileObject = Object.assign(acceptedFiles[0], {
+                preview: URL.createObjectURL(acceptedFiles[0])
+            })
+
+            setFile(fileObject);
+            onChange(acceptedFiles)
         },
         disabled: disabled
     })
 
     const thumbs = () => (
         <Avatar
-            src={file[0].preview}
+            src={file.preview}
             // Revoke data uri after image is loaded
             onLoad={() => { URL.revokeObjectURL(file.preview) }}
             sx={{
@@ -54,7 +52,9 @@ const Dropzone = ({
 
     return (
         <div {...getRootProps()}>
-            <input disabled={disabled} {...restFieldProps} {...getInputProps({ onChange })} />
+            <input
+                disabled={disabled} {...getInputProps()}
+            />
             <Box component="div" sx={{
                 display: 'flex',
                 alignItems: 'center',
@@ -114,13 +114,11 @@ const PhotoInput = ({
 }) => (
     <Controller
         rules={rules}
-        render={({ field, fieldState: { error }, onChange }) => (
+        render={({ field: { onChange, ...restField }, fieldState: { error, value } }) => (
             <>
                 <Dropzone
-                    {...field}
-                    onChange={e =>
-                        onChange(e.target.files[0])
-                    }
+                    {...restField}
+                    onChange={v => onChange(v)}
                     disabled={disabled}
                     {...rest}
                 />
@@ -133,7 +131,6 @@ const PhotoInput = ({
         )}
         name={name}
         control={control}
-        defaultValue=''
     />
 )
 
