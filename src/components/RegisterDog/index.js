@@ -9,6 +9,7 @@ import TextInput from '../Forms/TextInput';
 import SelectInput from '../Forms/SelectInput';
 import { ReactComponent as CalendarIcon } from '../../assets/icons/Calendar.svg'
 import InputAdornment from '@mui/material/InputAdornment';
+import Divider from '@mui/material/Divider';
 
 const validations = {
     name: {
@@ -70,10 +71,9 @@ const RegisterDog = ({ open, handleClose }) => {
                 minWidth: '400px',
                 height: 'fit-content',
                 p: 2,
-                color: theme => theme.palette.text.secondary,
-                flexDirection: 'column'
+                color: theme => theme.palette.text.secondary
             }}>
-                <Box sx={{ p: 2 }}>
+                <Box sx={{ flex: 1, p: 2 }}>
                     <Typography variant="h4" gutterBottom>
                         Datos de tu perro
                     </Typography>
@@ -81,6 +81,7 @@ const RegisterDog = ({ open, handleClose }) => {
                         Completa la siguiente información de tu mascota para añadir al perfil.
                     </Typography>
                 </Box>
+                <Divider orientation="vertical" flexItem>o</Divider>
                 <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ flex: 1 }}>
                     <Box sx={{ p: 2 }}>
                         <TextInput

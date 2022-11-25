@@ -7,10 +7,12 @@ import PupiRectangle from '../../assets/images/PupiRectangle.png'
 import useMediaQuery from '@mui/material/useMediaQuery';
 import LinkBehavior from '../LinkBehavior';
 import RegisterDog from '../RegisterDog';
+import RegisterOwner from '../RegisterOwner';
 
 const CallToProfile = () => {
     const matches = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const [open, setOpen] = React.useState(false)
+    const [openProfileRegister, setOpenProfileRegister] = React.useState(false)
 
     return (
         <Box sx={{
@@ -57,6 +59,15 @@ const CallToProfile = () => {
                                 <Button
                                     variant="contained"
                                     fullWidth
+                                    onClick={() => setOpenProfileRegister(true)}
+                                >
+                                    Completar perfil (propietario)
+                                </Button>
+                            </Box>
+                            <Box sx={{ p: 1 }}>
+                                <Button
+                                    variant="contained"
+                                    fullWidth
                                     component={LinkBehavior}
                                     to='/home'
                                     sx={{
@@ -89,6 +100,7 @@ const CallToProfile = () => {
                 }} />
             </Box>
             <RegisterDog open={open} handleClose={() => setOpen(false)} />
+            <RegisterOwner open={openProfileRegister} handleClose={() => setOpenProfileRegister(false)} />
         </Box>
     );
 }
