@@ -8,6 +8,7 @@ import DialogTitle from '../DialogTitle';
 import Divider from '@mui/material/Divider';
 import PhotoInput from '../Forms/PhotoInput';
 import DateInput from '../Forms/DateInput';
+import formDataHandler from '../../utils/formDataHandler';
 import { fileProvider } from '../../api'
 import { useAuth } from '../../context/AuthContext';
 
@@ -15,7 +16,7 @@ const validations = {
     date_birth: {
         required: "Ingrese su fecha de nacimiento."
     },
-    img_profile: {
+    files: {
         required: 'Seleccione una imagen.'
     }
 }
@@ -24,7 +25,7 @@ const rules = {
     date_birth: {
         required: true
     },
-    img_profile: {
+    files: {
         required: true
     }
 }
@@ -39,13 +40,9 @@ const RegisterOwner = ({ open, handleClose }) => {
     const { state: { user } } = useAuth();
 
     const onSubmit = async (data) => {
-        const formData = new FormData()
+        const formData = await formDataHandler(data, 'files')
 
-        await Object.keys(data).forEach((key) => {
-            formData.append(key, data[key])
-        })
-
-        const res = await fileProvider.put(`/api/auth/user-edit/1`, formData)
+        const res = await fileProvider.put(`/api/auth/user-edit/${user.id}`, formData)
             .catch(error => {
             if (error.response.status == 401) {
                 setError(true)
@@ -90,10 +87,10 @@ const RegisterOwner = ({ open, handleClose }) => {
                         </Box>
                         <Box sx={{ p: 3 }}>
                             <PhotoInput
-                                name="img_profile"
+                                name="files"
                                 control={control}
                                 disabled={isSubmitting}
-                                rules={rules.img_profile}
+                                rules={rules.files}
                                 validations={validations}
                             />
                         </Box>
