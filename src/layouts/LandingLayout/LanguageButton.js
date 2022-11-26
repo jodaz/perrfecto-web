@@ -3,20 +3,20 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import useMediaQuery from '@mui/material/useMediaQuery';
 // Icons
-import { ReactComponent as WorldIcon } from '../../assets/icons/World.svg'
+import { Globe } from 'lucide-react';
 
 const LanguageButton = () => {
     const matches = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
     if (matches) return (
         <IconButton>
-            <WorldIcon />
+            <Globe />
         </IconButton>
     )
 
     return (
         <Button variant="contained" color="secondary">
-            <WorldIcon />
+            <Globe />
             Español
         </Button>
     )

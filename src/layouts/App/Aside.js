@@ -5,8 +5,8 @@ import Divider from '@mui/material/Divider';
 import Box from '@mui/material/Box';
 import Navigation from './Navigation';
 import { useAuth } from '../../context/AuthContext'
+import { Camera } from 'lucide-react';
 // Icons
-import { ReactComponent as CamaraIcon } from '../../assets/icons/Camara.svg'
 import NotificationButton from './NotificationButton';
 
 const drawerWidth = '350px';
@@ -32,7 +32,7 @@ const Sidebar = ({ children }) => {
                 display: 'flex',
                 justifyContent: (user.role == 'user') ? 'space-between' : 'end'
             }}>
-                {(user.role == 'user') && <CamaraIcon />}
+                {(user.role == 'user') && <Camera color="#fff" />}
                 <NotificationButton />
             </Toolbar>
             <Divider />

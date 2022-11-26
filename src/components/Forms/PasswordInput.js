@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { InputAdornment, IconButton } from '@mui/material';
-import { ReactComponent as EyeIcon } from '../../assets/icons/Eye.svg';
-import { ReactComponent as EyeOffIcon } from '../../assets/icons/EyeOff.svg';
+import { Eye, EyeOff } from 'lucide-react';
 import TextInput from './TextInput';
 
 const PasswordInput = ({
@@ -42,8 +41,8 @@ const PasswordInput = ({
 };
 
 PasswordInput.defaultProps = {
-    visibilityIcon: <EyeIcon />,
-    visibilityOffIcon: <EyeOffIcon />
+    visibilityIcon: <Eye />,
+    visibilityOffIcon: <EyeOff />
 }
 
 export default PasswordInput
