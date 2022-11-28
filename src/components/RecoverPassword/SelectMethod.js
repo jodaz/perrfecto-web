@@ -1,15 +1,14 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
-import EmailSendIcon from '../../assets/icons/EmailSend'
 import MuiListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
-import { ReactComponent as MessageIcon2 } from '../../assets/icons/Message2.svg'
 import LinkBehavior from '../LinkBehavior';
 import { styled } from '@mui/material/styles';
+import { Mail, MessageCircle } from 'lucide-react';
 
 const ListItem = styled(MuiListItem)(({ theme }) => ({
     color: theme.palette.text.secondary
@@ -28,7 +27,7 @@ const SelectMethod = () => (
             >
                 <ListItemButton>
                     <ListItemIcon>
-                        <EmailSendIcon />
+                        <Mail />
                     </ListItemIcon>
                     <ListItemText primary="Enviar un correo electrónico" />
                 </ListItemButton>
@@ -41,7 +40,7 @@ const SelectMethod = () => (
             >
                 <ListItemButton>
                     <ListItemIcon>
-                        <MessageIcon2 />
+                        <MessageCircle />
                     </ListItemIcon>
                     <ListItemText primary="Enviar un SMS" />
                 </ListItemButton>
