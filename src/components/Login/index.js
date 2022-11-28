@@ -26,7 +26,7 @@ const validations = {
     },
     phone: {
         required: "Ingrese su teléfono",
-        pattern: 'Formato inválido'
+        pattern: 'Introduzca un número de teléfono válido'
     },
     email: {
         required: "Ingrese su correo",
@@ -45,7 +45,7 @@ const rules = {
     },
     phone: {
         required: true,
-        pattern: '^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$'
+        pattern: /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/
     },
     password: {
         required: true,

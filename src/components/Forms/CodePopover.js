@@ -134,6 +134,7 @@ const CodePopover = ({ control, rules }) => {
                                 onChange(`(${data.code})`)
                                 handleClose();
                             }}
+                            required={true}
                             PopperComponent={StyledAutocompletePopper}
                             getOptionLabel={(option) => option.name}
                             renderOption={(props, option) => (
@@ -143,6 +144,7 @@ const CodePopover = ({ control, rules }) => {
                             )}
                             renderInput={(params) => (
                                 <StyledInput
+                                    required={true}
                                     sx={{
                                         width: '94%'
                                     }}
