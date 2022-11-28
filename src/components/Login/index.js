@@ -25,7 +25,8 @@ const validations = {
         required: "Seleccione su pais"
     },
     phone: {
-        required: "Ingrese su teléfono"
+        required: "Ingrese su teléfono",
+        pattern: 'Formato inválido'
     },
     email: {
         required: "Ingrese su correo",
@@ -41,6 +42,10 @@ const rules = {
     email: {
         required: true,
         pattern: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
+    },
+    phone: {
+        required: true,
+        pattern: '^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$'
     },
     password: {
         required: true,
@@ -158,9 +163,7 @@ export default function Login({ location }) {
                                 control={control}
                                 name="phone"
                                 placeholder='Ingresar teléfono'
-                                rules={{
-                                    required: true
-                                }}
+                                rules={rules.phone}
                                 validations={validations}
                             />
                         </Box>
