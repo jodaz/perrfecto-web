@@ -3,7 +3,7 @@ import Badge from '@mui/material/Badge';
 import IconButton from '@mui/material/IconButton';
 import LinkBehavior from '../../components/LinkBehavior';
 // Icons
-import { ReactComponent as NotificationIcon } from '../../assets/icons/Notification.svg'
+import { Bell } from 'lucide-react';
 
 const NotificationButton = ({ children }) => (
     <IconButton
@@ -11,7 +11,7 @@ const NotificationButton = ({ children }) => (
         to='/notifications'
     >
         <Badge badgeContent={4} color="error">
-            <NotificationIcon />
+            <Bell color='#fff' />
         </Badge>
     </IconButton>
 )

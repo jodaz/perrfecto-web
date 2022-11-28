@@ -5,17 +5,14 @@ import { useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext'
 // Icons
 import { ReactComponent as HuellaIcon } from '../../assets/icons/Huella.svg'
-import { ReactComponent as HomeIcon } from '../../assets/icons/Home.svg'
-import { ReactComponent as ProfileIcon } from '../../assets/icons/Profile.svg'
 import { ReactComponent as HuellaActiveIcon } from '../../assets/icons/HuellaActive.svg'
 import { ReactComponent as StoreIcon } from '../../assets/icons/Store.svg'
 import { ReactComponent as StoreActiveIcon } from '../../assets/icons/StoreActive.svg'
-import { ReactComponent as DogIcon } from '../../assets/icons/Dog.svg'
-import { ReactComponent as NewspaperIcon } from '../../assets/icons/Newspaper.svg'
-import { ReactComponent as DogActiveIcon } from '../../assets/icons/DogActive.svg'
-import { ReactComponent as EditIcon } from '../../assets/icons/Edit.svg'
-import { ReactComponent as Message2Icon } from '../../assets/icons/Message2.svg'
-import { ReactComponent as PostActiveIcon } from '../../assets/icons/PostActive.svg'
+import { Newspaper } from 'lucide-react';
+import { MessageCircle } from 'lucide-react';
+import { Home } from 'lucide-react';
+import { User } from 'lucide-react';
+import { Dog } from 'lucide-react';
 
 const icons = [
     {
@@ -32,20 +29,20 @@ const icons = [
     },
     {
         label: 'Blog',
-        icon: <NewspaperIcon />,
-        active: <PostActiveIcon />,
+        icon: <Newspaper />,
+        active: <Newspaper color='#A167C9' />,
         route: '/blog'
     },
     {
         label: 'Chat',
-        icon: <Message2Icon />,
-        active: <Message2Icon />,
+        icon: <MessageCircle />,
+        active: <MessageCircle color='#A167C9' />,
         route: '/chat'
     },
     {
         label: 'Perfil',
-        icon: <DogIcon />,
-        active: <DogActiveIcon />,
+        icon: <Dog />,
+        active: <Dog color='#A167C9' />,
         route: '/profile'
     }
 ]
@@ -53,13 +50,14 @@ const icons = [
 const businessIcons = [
     {
         label: 'Inicio',
-        icon: <HomeIcon />,
+        icon: <Home />,
+        active: <Home color='#A167C9' />,
         route: '/home'
     },
     {
         label: 'Blog',
-        icon: <NewspaperIcon />,
-        active: <PostActiveIcon />,
+        icon: <Newspaper />,
+        active: <Newspaper color='#A167C9' />,
         route: '/blog'
     },
     {
@@ -70,8 +68,8 @@ const businessIcons = [
     },
     {
         label: 'Perfil',
-        icon: <ProfileIcon />,
-        active: <ProfileIcon />,
+        icon: <User />,
+        active: <User color='#A167C9' />,
         route: '/profile'
     }
 ]
@@ -84,8 +82,7 @@ const Navigation = () => {
         <Tooltip key={i} title={icon.label}>
             <IconButton component={LinkBehavior} to={icon.route}>
                 {React.cloneElement(
-                    // (location.pathname == icon.route) ? icon.active : icon.icon,
-                    icon.icon,
+                    (location.pathname == icon.route) ? icon.active : icon.icon,
                     {}
                 )}
             </IconButton>
@@ -96,8 +93,7 @@ const Navigation = () => {
         <Tooltip key={i} title={icon.label}>
             <IconButton component={LinkBehavior} to={icon.route}>
                 {React.cloneElement(
-                    // (location.pathname == icon.route) ? icon.active : icon.icon,
-                    icon.icon,
+                    (location.pathname == icon.route) ? icon.active : icon.icon,
                     {}
                 )}
             </IconButton>
