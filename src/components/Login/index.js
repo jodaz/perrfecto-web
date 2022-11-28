@@ -21,6 +21,12 @@ import PhoneInput from '../Forms/PhoneInput';
 import { useAuth, loginUser } from '../../context/AuthContext'
 
 const validations = {
+    code_phone: {
+        required: "Seleccione su pais"
+    },
+    phone: {
+        required: "Ingrese su teléfono"
+    },
     email: {
         required: "Ingrese su correo",
         pattern: "Email inválido"
@@ -152,6 +158,10 @@ export default function Login({ location }) {
                                 control={control}
                                 name="phone"
                                 placeholder='Ingresar teléfono'
+                                rules={{
+                                    required: true
+                                }}
+                                validations={validations}
                             />
                         </Box>
                     )}

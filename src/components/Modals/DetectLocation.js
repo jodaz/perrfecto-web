@@ -40,7 +40,7 @@ export default function DetectLocation({ location }) {
                     justifyContent: 'space-between'
                 }}>
                     <Box component='h2' margin='0 0 1rem 0' color="text.primary">
-                        Recuperar contraseña
+                        Detectar ubicación
                     </Box>
                     <Box margin='0 auto' width='75%' textAlign='center'>
                         <MapPinIcon height='100px' width='100px' />

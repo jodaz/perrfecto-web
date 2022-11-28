@@ -6,8 +6,15 @@ import { apiProvider } from '../../api'
 import { useNavigate } from 'react-router-dom';
 import Button from '../Button';
 import CircularProgress from '@mui/material/CircularProgress';
+import PhoneInput from '../Forms/PhoneInput';
 
 const validations = {
+    code_phone: {
+        required: "Seleccione su pais"
+    },
+    phone: {
+        required: "Ingrese su teléfono"
+    },
     email: {
         required: "Ingrese su correo",
         pattern: "Email inválido"
@@ -73,19 +80,29 @@ const RecoverPasswordForm = ({ method }) => {
                 ) : (
                     <>
                         <Box sx={{ p: 1 }}>
-                            <TextInput
-                                label="Email"
-                                control={control}
-                                name="email"
-                                type="email"
-                                rules={{
-                                    required: true,
-                                    pattern: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
-                                }}
-                                validations={validations}
-                                disabled={isSubmitting}
-                                placeholder='Ingresar correo electrónico'
-                            />
+                            {method == 'sms' ? (
+                                <PhoneInput
+                                    control={control}
+                                    rules={{
+                                        required: true
+                                    }}
+                                    validations={validations}
+                                />
+                            ) : (
+                                <TextInput
+                                    label="Email"
+                                    control={control}
+                                    name="email"
+                                    type="email"
+                                    rules={{
+                                        required: true,
+                                        pattern: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
+                                    }}
+                                    validations={validations}
+                                    disabled={isSubmitting}
+                                    placeholder='Ingresar correo electrónico'
+                                />
+                            )}
                         </Box>
                         <Box sx={{ p: 1 }}>
                             <Button

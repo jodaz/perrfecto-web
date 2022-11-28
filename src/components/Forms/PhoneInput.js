@@ -71,7 +71,7 @@ const StyledInput = styled(TextField)(({ theme }) => ({
     },
 }));
 
-const PhoneInput = ({ control }) => {
+const PhoneInput = ({ control, validations, rules }) => {
     const [value, setValue] = React.useState(null)
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -84,88 +84,94 @@ const PhoneInput = ({ control }) => {
     };
 
     const open = Boolean(anchorEl);
-
+    console.log(rules)
     return (
-        <TextInput
-            label='Teléfono'
-            name="phone"
-            control={control}
-            sx={{ paddingLeft: '2rem' }}
-            InputProps={{
-                startAdornment: (
-                    <>
-                        <Box sx={{
-                            color: value ? 'rgba(31, 44, 56, 1)' : '#A6A6A6',
-                            cursor: 'pointer',
-                            pointerEvents: 'all !important',
-                            marginRight: '2rem'
-                        }} onClick={handleClick}>
-                            {value ? <>{value}</> : <>Cód.</>}
-                        </Box>
-                        <Box component="hr"
-                            sx={{
-                                color: 'black',
-                                borderRight: '1px solid #ccc',
-                                height: '50px',
-                                position: 'absolute',
-                                left: '70px',
-                            }}
-                        />
-                        <Popover
-                            hideBackdrop
-                            open={open}
-                            anchorEl={anchorEl}
-                            onClose={handleClose}
-                            anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'left',
-                            }}
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'left',
-                            }}
-                            onAbort={handleClose}
-                            handleClose={handleClose}
-                        >
-                            <Controller
-                                control={control}
-                                name='phone_code'
-                                render={({ field: { ref, onChange, ...fieldRest } }) => (
-                                    <Autocomplete
-                                        open={open}
-                                        options={phonecodes}
-                                        autoHighlight
-                                        sx={{ width: 300 }}
-                                        onChange={(_, data) => {
-                                            setValue(`(${data.code})`)
-                                            onChange(`(${data.code})`)
-                                            handleClose();
-                                        }}
-                                        PopperComponent={StyledAutocompletePopper}
-                                        getOptionLabel={(option) => option.name}
-                                        renderOption={(props, option) => (
-                                            <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-                                                {option.label} ({option.code}) {option.name}
-                                            </Box>
-                                        )}
-                                        renderInput={(params) => (
-                                            <StyledInput
-                                                sx={{
-                                                    width: '94%'
-                                                }}
-                                                {...fieldRest}
-                                                {...params}
-                                            />
-                                        )}
-                                        clearIcon={<></>}
-                                        popupIcon={<></>}
-                                    />
-                                )} />
-                        </Popover>
-                    </>
-                ),
-            }}
-        />
+        <>
+            <TextInput
+                label='Teléfono'
+                name="phone"
+                control={control}
+                rules={rules}
+                validations={validations}
+                sx={{ paddingLeft: '2rem' }}
+                InputProps={{
+                    startAdornment: (
+                        <>
+                            <Box sx={{
+                                color: value ? 'rgba(31, 44, 56, 1)' : '#A6A6A6',
+                                cursor: 'pointer',
+                                pointerEvents: 'all !important',
+                                marginRight: '2rem'
+                            }} onClick={handleClick}>
+                                {value ? <>{value}</> : <>Cód.</>}
+                            </Box>
+                            <Box component="hr"
+                                sx={{
+                                    color: 'black',
+                                    borderRight: '1px solid #ccc',
+                                    height: '50px',
+                                    position: 'absolute',
+                                    left: '70px',
+                                }}
+                            />
+                            <Popover
+                                hideBackdrop
+                                open={open}
+                                anchorEl={anchorEl}
+                                onClose={handleClose}
+                                anchorOrigin={{
+                                    vertical: 'bottom',
+                                    horizontal: 'left',
+                                }}
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'left',
+                                }}
+                                onAbort={handleClose}
+                                handleClose={handleClose}
+                            >
+                                <Controller
+                                    control={control}
+                                    name='code_phone'
+                                    rules={rules}
+                                    render={({ field: { ref, onChange, ...fieldRest } }) => (
+                                        <Autocomplete
+                                            open={open}
+                                            options={phonecodes}
+                                            autoHighlight
+                                            sx={{ width: 300 }}
+                                            onChange={(_, data) => {
+                                                setValue(`(${data.code})`)
+                                                onChange(`(${data.code})`)
+                                                handleClose();
+                                            }}
+                                            PopperComponent={StyledAutocompletePopper}
+                                            getOptionLabel={(option) => option.name}
+                                            renderOption={(props, option) => (
+                                                <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                                                    {option.label} ({option.code}) {option.name}
+                                                </Box>
+                                            )}
+                                            renderInput={(params) => (
+                                                <StyledInput
+                                                    sx={{
+                                                        width: '94%'
+                                                    }}
+                                                    {...fieldRest}
+                                                    {...params}
+                                                />
+                                            )}
+                                            clearIcon={<></>}
+                                            popupIcon={<></>}
+                                        />
+                                    )} />
+                            </Popover>
+                        </>
+                    ),
+                }}
+            />
+
+        </>
     );
 }
 
