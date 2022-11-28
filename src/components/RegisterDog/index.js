@@ -3,31 +3,24 @@ import Button from '../Button';
 import Dialog from '@mui/material/Dialog';
 import { useForm } from "react-hook-form";
 import Box from '@mui/material/Box';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import Chip from '@mui/material/Chip';
 import Typography from '@mui/material/Typography';
 import DialogTitle from '../DialogTitle';
+import Checkbox from '../Forms/Checkbox';
 import TextInput from '../Forms/TextInput';
 import SelectInput from '../Forms/SelectInput';
-import { ReactComponent as CalendarIcon } from '../../assets/icons/Calendar.svg'
+import { Calendar } from 'lucide-react'
 import InputAdornment from '@mui/material/InputAdornment';
 import Divider from '@mui/material/Divider';
-
-const validations = {
-    name: {
-        required: "Ingrese el nombre de su perro"
-    },
-    type: {
-        required: 'Seleccione un tipo de raza.'
-    },
-    gender: {
-        required: 'Seleccione el género de su perro'
-    },
-    breed: {
-        required: 'Seleccione la raza de su perro.'
-    },
-    dogAge: {
-        required: 'Seleccione el año de nacimiento.'
-    }
-}
+import {
+    DOG_AGE,
+    BREED,
+    DOG_GENDER,
+    DOG_TYPE,
+    NAME
+} from '../../validations';
 
 const razas = [
     { value: 1, label: "Bulldog Frances" },
@@ -51,6 +44,11 @@ const years = [
     { value: 2, label: "2021" },
     { value: 3, label: "2022" }
 ];
+
+const features = [
+    'Hembra', 'Macho', 'Ambos', 'Pelaje oscuro', 'Pelaje claro',
+    'Raza', 'Tamaño pequeño', 'Tamaño grande', 'Pelaje largo', 'Pelaje corto'
+]
 
 const RegisterDog = ({ open, handleClose }) => {
     const { control, handleSubmit, formState: {
@@ -89,10 +87,8 @@ const RegisterDog = ({ open, handleClose }) => {
                             control={control}
                             name="name"
                             type="text"
-                            rules={{
-                                required: true
-                            }}
-                            validations={validations}
+                            rules={NAME.rules}
+                            validations={NAME.messages}
                             disabled={isSubmitting}
                             placeholder='Ingresar nombre de tu perro'
                         />
@@ -102,11 +98,9 @@ const RegisterDog = ({ open, handleClose }) => {
                             label="Raza"
                             control={control}
                             options={types}
-                            validations={validations}
+                            validations={DOG_TYPE.messages}
                             disabled={isSubmitting}
-                            rules={{
-                                required: true
-                            }}
+                            rules={DOG_TYPE.rules}
                             name="type"
                             InputProps={{
                                 placeholder: 'Seleccione el tipo de raza'
@@ -118,11 +112,9 @@ const RegisterDog = ({ open, handleClose }) => {
                             label="Raza"
                             control={control}
                             options={razas}
-                            validations={validations}
+                            validations={BREED.messages}
                             disabled={isSubmitting}
-                            rules={{
-                                required: true
-                            }}
+                            rules={BREED.rules}
                             name="breed"
                             InputProps={{
                                 placeholder: 'Seleccione la raza'
@@ -135,11 +127,9 @@ const RegisterDog = ({ open, handleClose }) => {
                             control={control}
                             options={genders}
                             disabled={isSubmitting}
-                            validations={validations}
+                            rules={DOG_GENDER.rules}
+                            validations={DOG_GENDER.messages}
                             name="gender"
-                            rules={{
-                                required: true
-                            }}
                             InputProps={{
                                 placeholder: 'Seleccione el sexo'
                             }}
@@ -150,17 +140,45 @@ const RegisterDog = ({ open, handleClose }) => {
                             label="Año de nacimiento"
                             control={control}
                             options={years}
-                            validations={validations}
+                            rules={DOG_AGE.rules}
+                            validations={DOG_AGE.messages}
                             disabled={isSubmitting}
-                            rules={{
-                                required: true
-                            }}
                             name="dogAge"
                             InputProps={{
                                 placeholder: 'Seleccionar fecha',
-                                startAdornment: <InputAdornment position="start"><CalendarIcon /></InputAdornment>
+                                startAdornment: <InputAdornment position="start"><Calendar /></InputAdornment>
                             }}
                         />
+                    </Box>
+                    <Box sx={{ p: 2 }}>
+                        <FormControl>
+                            <InputLabel color="divider" shrink>Características de tu mascota</InputLabel>
+                            <Box sx={{
+                                marginTop: '1rem',
+                                display: 'flex',
+                            }}>
+                                {features.map(feature => (
+                                    <Checkbox
+                                        control={control}
+                                        name={feature}
+                                        icon={
+                                            <Chip
+                                                label={feature}
+                                                variant="outlined"
+                                                color="primary"
+                                            />
+                                        }
+                                        checkedIcon={
+                                            <Chip
+                                                label={feature}
+                                                variant='filled'
+                                                color="primary"
+                                            />
+                                        }
+                                    />
+                                ))}
+                            </Box>
+                        </FormControl>
                     </Box>
                     <Button
                         disabled={isSubmitting}

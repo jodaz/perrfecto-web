@@ -53,7 +53,7 @@ const TextInput = ({
                     />
                     {error && (
                         <FormHelperText error>
-                            {validations[name][error.type]}
+                            {validations[error.type]}
                         </FormHelperText>
                     )}
                 </>
