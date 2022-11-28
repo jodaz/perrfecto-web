@@ -7,8 +7,12 @@ import Typography from '@mui/material/Typography';
 import DialogTitle from '../DialogTitle';
 import TextInput from '../Forms/TextInput';
 import SelectInput from '../Forms/SelectInput';
-import { ReactComponent as CalendarIcon } from '../../assets/icons/Calendar.svg'
+import { Calendar } from 'lucide-react'
 import InputAdornment from '@mui/material/InputAdornment';
+import Chip from '@mui/material/Chip';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+import Checkbox from '../Forms/Checkbox';
 
 const validations = {
     name: {
@@ -50,6 +54,11 @@ const years = [
     { value: 2, label: "2021" },
     { value: 3, label: "2022" }
 ];
+
+const features = [
+    'Hembra', 'Macho', 'Ambos', 'Pelaje oscuro', 'Pelaje claro',
+    'Raza', 'Tamaño pequeño', 'Tamaño grande', 'Pelaje largo', 'Pelaje corto'
+]
 
 const RegisterDog = ({ open, handleClose }) => {
     const { control, handleSubmit, formState: {
@@ -157,9 +166,39 @@ const RegisterDog = ({ open, handleClose }) => {
                             name="dogAge"
                             InputProps={{
                                 placeholder: 'Seleccionar fecha',
-                                startAdornment: <InputAdornment position="start"><CalendarIcon /></InputAdornment>
+                                startAdornment: <InputAdornment position="start"><Calendar /></InputAdornment>
                             }}
                         />
+                    </Box>
+                    <Box sx={{ p: 2 }}>
+                        <FormControl>
+                            <InputLabel shrink>Características de tu mascota</InputLabel>
+                            <Box sx={{
+                                marginTop: '1rem',
+                                display: 'flex',
+                            }}>
+                                {features.map(feature => (
+                                    <Checkbox
+                                        control={control}
+                                        name={feature}
+                                        icon={
+                                            <Chip
+                                                label={feature}
+                                                variant="outlined"
+                                                color="primary"
+                                            />
+                                        }
+                                        checkedIcon={
+                                            <Chip
+                                                label={feature}
+                                                variant='filled'
+                                                color="primary"
+                                            />
+                                        }
+                                    />
+                                ))}
+                            </Box>
+                        </FormControl>
                     </Box>
                     <Button
                         disabled={isSubmitting}
