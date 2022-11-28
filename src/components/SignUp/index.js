@@ -16,49 +16,7 @@ import { Divider } from '@mui/material';
 import { useAuth, loginUser } from '../../context/AuthContext'
 import getSearchParams from '../../utils/getSearchParams';
 // Other components
-
-const validations = {
-    name: {
-        required: "Ingrese su nombre"
-    },
-    lastName: {
-        required: "Ingrese su apellido"
-    },
-    email: {
-        required: "Ingrese su correo",
-        pattern: "Email inválido"
-    },
-    password: {
-        required: "Ingrese una contraseña",
-        minLength: "Mínimo 6 caracteres"
-    },
-    confirm: {
-        required: "Repita la contraseña",
-        minLength: "Mínimo 6 caracteres",
-        validate: "Las contraseñas no coinciden."
-    }
-}
-
-const rules = {
-    name: {
-        required: true,
-    },
-    lastName: {
-        required: true,
-    },
-    email: {
-        required: true,
-        pattern: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
-    },
-    password: {
-        required: true,
-        minLength: 6
-    },
-    confirm: {
-        required: true,
-        minLength: 6
-    }
-}
+import { NAME, LAST_NAME, PHONE, EMAIL, CONFIRM_PASSWORD, PASSWORD } from '../../validations'
 
 export default function SignUp({ location }) {
     const navigate = useNavigate()
@@ -153,8 +111,8 @@ export default function SignUp({ location }) {
                             control={control}
                             name="name"
                             placeholder='Ingresar nombre'
-                            rules={rules.name}
-                            validations={validations}
+                            rules={NAME.rules}
+                            validations={NAME.messages}
                             disabled={isSubmitting}
                         />
                     </Box>
@@ -164,8 +122,8 @@ export default function SignUp({ location }) {
                             control={control}
                             name="lastName"
                             placeholder='Ingresar apellido'
-                            rules={rules.lastName}
-                            validations={validations}
+                            rules={LAST_NAME.rules}
+                            validations={LAST_NAME.messages}
                             disabled={isSubmitting}
                         />
                     </Box>
@@ -176,6 +134,8 @@ export default function SignUp({ location }) {
                                     label="Teléfono"
                                     control={control}
                                     name="phone"
+                                    rules={PHONE.rules}
+                                    validations={PHONE.messages}
                                     placeholder='Ingresar teléfono'
                                 />
                             </Box>
@@ -187,8 +147,8 @@ export default function SignUp({ location }) {
                                 control={control}
                                 name="email"
                                 type="email"
-                                rules={rules.email}
-                                validations={validations}
+                                rules={EMAIL.rules}
+                                validations={EMAIL.messages}
                                 disabled={isSubmitting}
                                 placeholder='Ingresar correo electrónico'
                             />
@@ -199,8 +159,8 @@ export default function SignUp({ location }) {
                             label='Contraseña'
                             control={control}
                             name="password"
-                            rules={rules.password}
-                            validations={validations}
+                            rules={PASSWORD.rules}
+                            validations={PASSWORD.messages}
                             disabled={isSubmitting}
                             placeholder='Ingresar contraseña'
                         />
@@ -211,10 +171,10 @@ export default function SignUp({ location }) {
                             control={control}
                             name="confirm"
                             rules={{
-                                ...rules.confirm,
+                                ...CONFIRM_PASSWORD.rules,
                                 validate: value => value === password
                             }}
-                            validations={validations}
+                            validations={CONFIRM_PASSWORD.messages}
                             disabled={isSubmitting}
                             placeholder='Repita la contraseña'
                         />

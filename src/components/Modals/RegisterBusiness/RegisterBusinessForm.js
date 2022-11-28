@@ -9,55 +9,15 @@ import { useNavigate } from 'react-router-dom';
 import PhoneInput from '../../Forms/PhoneInput'
 import { useAuth, loginUser } from '../../../context/AuthContext'
 import { fileProvider } from '../../../api'
-
-const validations = {
-    name: {
-        required: "Ingrese su nombre"
-    },
-    business_name: {
-        required: "Ingrese el nombre de su negocio."
-    },
-    business_dir: {
-        required: "Ingrese la dirección su negocio."
-    },
-    email: {
-        required: "Ingrese su correo",
-        pattern: "Email inválido"
-    },
-    password: {
-        required: "Ingrese una contraseña",
-        minLength: "Mínimo 6 caracteres"
-    },
-    confirm: {
-        required: "Repita la contraseña",
-        minLength: "Mínimo 6 caracteres",
-        validate: "Las contraseñas no coinciden."
-    }
-}
-
-const rules = {
-    name: {
-        required: true,
-    },
-    business_name: {
-        required: true,
-    },
-    business_dir: {
-        required: true,
-    },
-    email: {
-        required: true,
-        pattern: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
-    },
-    password: {
-        required: true,
-        minLength: 6
-    },
-    confirm: {
-        required: true,
-        minLength: 6
-    }
-}
+import {
+    BUSINESS_ADDRESS,
+    BUSINESS_NAME,
+    NAME,
+    EMAIL,
+    PASSWORD,
+    PHONE,
+    CONFIRM_PASSWORD
+} from '../../../validations';
 
 const RegisterBusinessForm = ({ location }) => {
     const navigate = useNavigate()
@@ -111,8 +71,8 @@ const RegisterBusinessForm = ({ location }) => {
                         control={control}
                         name="business_name"
                         placeholder='Ingresar nombre de tu negocio'
-                        rules={rules.business_name}
-                        validations={validations}
+                        rules={BUSINESS_NAME.rules}
+                        validations={BUSINESS_NAME.messages}
                         disabled={isSubmitting}
                     />
                 </Box>
@@ -122,27 +82,29 @@ const RegisterBusinessForm = ({ location }) => {
                         control={control}
                         name="name"
                         placeholder='Ingresar nombre del propietario'
-                        rules={rules.name}
-                        validations={validations}
+                        rules={NAME.rules}
+                        validations={NAME.messages}
                         disabled={isSubmitting}
                     />
                 </Box>
-                {/* <Box sx={{ p: 1 }}>
+                <Box sx={{ p: 1 }}>
                     <PhoneInput
                         label="Teléfono"
                         control={control}
                         name="phone"
+                        rules={PHONE.rules}
+                        validations={PHONE.messages}
                         placeholder='Ingresar teléfono'
                     />
-                </Box> */}
+                </Box>
                 <Box sx={{ p: 1 }}>
                     <TextInput
                         label="Dirección"
                         control={control}
                         name="business_dir"
                         placeholder='Ingresar la dirección de tu negocio'
-                        rules={rules.name}
-                        validations={validations}
+                        rules={BUSINESS_ADDRESS.rules}
+                        validations={BUSINESS_ADDRESS.messages}
                         disabled={isSubmitting}
                     />
                 </Box>
@@ -152,8 +114,8 @@ const RegisterBusinessForm = ({ location }) => {
                         control={control}
                         name="email"
                         type="email"
-                        rules={rules.email}
-                        validations={validations}
+                        rules={EMAIL.rules}
+                        validations={EMAIL.messages}
                         disabled={isSubmitting}
                         placeholder='Ingresar el correo de tu negocio'
                     />
@@ -163,8 +125,8 @@ const RegisterBusinessForm = ({ location }) => {
                         label='Contraseña'
                         control={control}
                         name="password"
-                        rules={rules.password}
-                        validations={validations}
+                        rules={PASSWORD.rules}
+                        validations={PASSWORD.messages}
                         disabled={isSubmitting}
                         placeholder='Ingresar una contraseña'
                     />
@@ -175,10 +137,10 @@ const RegisterBusinessForm = ({ location }) => {
                         control={control}
                         name="confirm"
                         rules={{
-                            ...rules.confirm,
+                            ...CONFIRM_PASSWORD.rules,
                             validate: value => value === password
                         }}
-                        validations={validations}
+                        validations={CONFIRM_PASSWORD.messages}
                         disabled={isSubmitting}
                         placeholder='Repita la contraseña'
                     />

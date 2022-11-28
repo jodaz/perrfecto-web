@@ -7,29 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../../Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
-
-const validations = {
-    password: {
-        required: "Ingrese una contraseña",
-        minLength: "Mínimo 6 caracteres"
-    },
-    confirm: {
-        required: "Repita la contraseña",
-        minLength: "Mínimo 6 caracteres",
-        validate: "Las contraseñas no coinciden."
-    }
-}
-
-const rules = {
-    password: {
-        required: true,
-        minLength: 6
-    },
-    confirm: {
-        required: true,
-        minLength: 6
-    }
-}
+import { CONFIRM_PASSWORD, PASSWORD } from '../../../validations'
 
 const NewPasswordForm = ({ location }) => {
     const navigate = useNavigate()
@@ -75,13 +53,13 @@ const NewPasswordForm = ({ location }) => {
                     Tu contraseña debe tener mínimo  8 caracteres.
                     Recomendable un carácter especial y un carácter numérico
                 </Typography>
-                <Box sx={{ p: 1, mt: 2 }}>
+                <Box sx={{ p: 1 }}>
                     <PasswordInput
                         label='Contraseña'
                         control={control}
                         name="password"
-                        rules={rules.password}
-                        validations={validations}
+                        rules={PASSWORD.rules}
+                        validations={PASSWORD.messages}
                         disabled={isSubmitting}
                         placeholder='Ingresar contraseña'
                     />
@@ -92,10 +70,10 @@ const NewPasswordForm = ({ location }) => {
                         control={control}
                         name="confirm"
                         rules={{
-                            ...rules.confirm,
+                            ...CONFIRM_PASSWORD.rules,
                             validate: value => value === password
                         }}
-                        validations={validations}
+                        validations={CONFIRM_PASSWORD.messages}
                         disabled={isSubmitting}
                         placeholder='Repita la contraseña'
                     />
