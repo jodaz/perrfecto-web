@@ -19,28 +19,7 @@ import { apiProvider } from '../../api'
 import getSearchParams from '../../utils/getSearchParams';
 import PhoneInput from '../Forms/PhoneInput';
 import { useAuth, loginUser } from '../../context/AuthContext'
-
-const validations = {
-    email: {
-        required: "Ingrese su correo",
-        pattern: "Email inválido"
-    },
-    password: {
-        required: "Ingrese una contraseña",
-        minLength: "Mínimo 6 caracteres"
-    }
-}
-
-const rules = {
-    email: {
-        required: true,
-        pattern: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
-    },
-    password: {
-        required: true,
-        minLength: 6
-    }
-}
+import { PHONE, EMAIL, PASSWORD } from '../../validations'
 
 export default function Login({ location }) {
     const navigate = useNavigate()
@@ -139,8 +118,8 @@ export default function Login({ location }) {
                                 control={control}
                                 name="email"
                                 type="email"
-                                rules={rules.email}
-                                validations={validations}
+                                rules={EMAIL.rules}
+                                validations={EMAIL.messages}
                                 disabled={isSubmitting}
                                 placeholder='Ingresar correo electrónico'
                             />
@@ -152,6 +131,8 @@ export default function Login({ location }) {
                                 control={control}
                                 name="phone"
                                 placeholder='Ingresar teléfono'
+                                rules={PHONE.rules}
+                                validations={PHONE.messages}
                             />
                         </Box>
                     )}
@@ -162,8 +143,8 @@ export default function Login({ location }) {
                             control={control}
                             name="password"
                             disabled={isSubmitting}
-                            rules={rules.password}
-                            validations={validations}
+                            rules={PASSWORD.rules}
+                            validations={PASSWORD.messages}
                             placeholder='Ingresar contraseña'
                         />
                     </Box>

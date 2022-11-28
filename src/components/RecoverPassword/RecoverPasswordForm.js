@@ -6,13 +6,8 @@ import { apiProvider } from '../../api'
 import { useNavigate } from 'react-router-dom';
 import Button from '../Button';
 import CircularProgress from '@mui/material/CircularProgress';
-
-const validations = {
-    email: {
-        required: "Ingrese su correo",
-        pattern: "Email inválido"
-    }
-}
+import PhoneInput from '../Forms/PhoneInput';
+import { PHONE, EMAIL } from '../../validations'
 
 const endpoints = [
     '/api/auth/reset-password',
@@ -73,19 +68,27 @@ const RecoverPasswordForm = ({ method }) => {
                 ) : (
                     <>
                         <Box sx={{ p: 1 }}>
-                            <TextInput
-                                label="Email"
-                                control={control}
-                                name="email"
-                                type="email"
-                                rules={{
-                                    required: true,
-                                    pattern: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
-                                }}
-                                validations={validations}
-                                disabled={isSubmitting}
-                                placeholder='Ingresar correo electrónico'
-                            />
+                            {method == 'sms' ? (
+                                <PhoneInput
+                                    label="Teléfono"
+                                    control={control}
+                                    name="phone"
+                                    placeholder='Ingresar teléfono'
+                                    rules={PHONE.rules}
+                                    validations={PHONE.messages}
+                                />
+                            ) : (
+                                <TextInput
+                                    label="Email"
+                                    control={control}
+                                    name="email"
+                                    type="email"
+                                    rules={EMAIL.rules}
+                                    validations={EMAIL.messages}
+                                    disabled={isSubmitting}
+                                    placeholder='Ingresar correo electrónico'
+                                />
+                            )}
                         </Box>
                         <Box sx={{ p: 1 }}>
                             <Button
