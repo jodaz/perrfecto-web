@@ -55,7 +55,7 @@ const PhoneInput = ({
                         />
                         {error && (
                             <FormHelperText error>
-                                {validations['phone'][error.type]}
+                                {validations[error.type]}
                             </FormHelperText>
                         )}
                     </>

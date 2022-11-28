@@ -19,39 +19,7 @@ import { apiProvider } from '../../api'
 import getSearchParams from '../../utils/getSearchParams';
 import PhoneInput from '../Forms/PhoneInput';
 import { useAuth, loginUser } from '../../context/AuthContext'
-
-const validations = {
-    code_phone: {
-        required: "Seleccione su pais"
-    },
-    phone: {
-        required: "Ingrese su teléfono",
-        pattern: 'Introduzca un número de teléfono válido'
-    },
-    email: {
-        required: "Ingrese su correo",
-        pattern: "Email inválido"
-    },
-    password: {
-        required: "Ingrese una contraseña",
-        minLength: "Mínimo 6 caracteres"
-    }
-}
-
-const rules = {
-    email: {
-        required: true,
-        pattern: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
-    },
-    phone: {
-        required: true,
-        pattern: /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/
-    },
-    password: {
-        required: true,
-        minLength: 6
-    }
-}
+import { PHONE, EMAIL, PASSWORD } from '../../validations'
 
 export default function Login({ location }) {
     const navigate = useNavigate()
@@ -150,8 +118,8 @@ export default function Login({ location }) {
                                 control={control}
                                 name="email"
                                 type="email"
-                                rules={rules.email}
-                                validations={validations}
+                                rules={EMAIL.rules}
+                                validations={EMAIL.messages}
                                 disabled={isSubmitting}
                                 placeholder='Ingresar correo electrónico'
                             />
@@ -163,8 +131,8 @@ export default function Login({ location }) {
                                 control={control}
                                 name="phone"
                                 placeholder='Ingresar teléfono'
-                                rules={rules.phone}
-                                validations={validations}
+                                rules={PHONE.rules}
+                                validations={PHONE.messages}
                             />
                         </Box>
                     )}
@@ -175,8 +143,8 @@ export default function Login({ location }) {
                             control={control}
                             name="password"
                             disabled={isSubmitting}
-                            rules={rules.password}
-                            validations={validations}
+                            rules={PASSWORD.rules}
+                            validations={PASSWORD.messages}
                             placeholder='Ingresar contraseña'
                         />
                     </Box>
