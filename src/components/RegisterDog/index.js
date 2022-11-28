@@ -172,7 +172,7 @@ const RegisterDog = ({ open, handleClose }) => {
                     </Box>
                     <Box sx={{ p: 2 }}>
                         <FormControl>
-                            <InputLabel shrink>Características de tu mascota</InputLabel>
+                            <InputLabel color="divider" shrink>Características de tu mascota</InputLabel>
                             <Box sx={{
                                 marginTop: '1rem',
                                 display: 'flex',
