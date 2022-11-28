@@ -3,11 +3,10 @@ import { styled } from '@mui/material/styles';
 import Autocomplete, { autocompleteClasses } from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-import Dialog from '@mui/material/Dialog';
 import TextInput from '../Forms/TextInput';
-import DialogTitle from '../DialogTitle';
 import phonecodes from '../../utils/phonecodes'
-import { ReactComponent as SearchIcon } from '../../assets/icons/Search.svg'
+import { Controller } from 'react-hook-form'
+import Popover from '@mui/material/Popover';
 
 const StyledAutocompletePopper = styled('div')(({ theme }) => ({
     [`& .${autocompleteClasses.paper}`]: {
@@ -15,6 +14,7 @@ const StyledAutocompletePopper = styled('div')(({ theme }) => ({
         margin: 0,
         color: 'inherit',
         fontSize: 13,
+        width: 300
     },
     [`& .${autocompleteClasses.listbox}`]: {
         scrollbarWidth: 0,
@@ -71,81 +71,102 @@ const StyledInput = styled(TextField)(({ theme }) => ({
     },
 }));
 
-export default function PhoneInput(rest) {
-    const [value, setValue] = React.useState('')
-    const [open, setOpen] = React.useState(false)
+const PhoneInput = ({ control }) => {
+    const [value, setValue] = React.useState(null)
+    const [anchorEl, setAnchorEl] = React.useState(null);
 
-    const handleClick = () => setOpen(true)
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
 
-    const handleClose = () => setOpen(false);
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const open = Boolean(anchorEl);
 
     return (
-        <React.Fragment>
-            <TextInput
-                {...rest}
-                defaultValue={value}
-                InputProps={{
-                    startAdornment: (
-                        <>
-                            <Box sx={{
-                                color: '#A6A6A6',
-                                padding: '0 8px 0 0px',
-                                marginRight: '0.5rem',
-                                cursor: 'pointer'
-                            }} onClick={handleClick}>
-                                Cód.
-                            </Box>
-                            <Box component="hr"
-                                sx={{
-                                    color: 'black',
-                                    borderRight: '1px solid #ccc',
-                                    height: '50px',
-                                    position: 'absolute',
-                                    left: '50px',
-                                }}
-                            />
-                        </>
-                    ),
-                }}
-            />
-            <Dialog open={open} onClose={handleClose}>
-                <DialogTitle onClose={handleClose}>
-                    Seleccionar otro país
-                </DialogTitle>
-                <Box width='300'>
-                    <Box sx={{ p: 3, width: 280 }}>
-                        <Autocomplete
-                            open
-                            options={phonecodes}
-                            PopperComponent={StyledAutocompletePopper}
-                            getOptionLabel={(option) => option.name}
-                            renderOption={(props, option) => (
-                                <Box component="li" sx={{
-                                    p: 1,
-                                    border: 'none',
-                                    fontSize: '1rem'
-                                }} {...props}>
-                                    {option.name} ({option.code})
-                                </Box>
-                            )}
-                            renderInput={({ InputProps, ...params }) => (
-                                <StyledInput
-                                    placeholder="Buscar"
-                                    fullWidth
-                                    InputProps={{
-                                        ...InputProps,
-                                        startAdornment: (
-                                            <SearchIcon />
-                                        )
-                                    }}
-                                    {...params}
-                                />
-                            )}
-                            popupIcon={<></>}
+        <TextInput
+            label='Teléfono'
+            name="phone"
+            control={control}
+            sx={{ paddingLeft: '2rem' }}
+            InputProps={{
+                startAdornment: (
+                    <>
+                        <Box sx={{
+                            color: value ? 'rgba(31, 44, 56, 1)' : '#A6A6A6',
+                            cursor: 'pointer',
+                            pointerEvents: 'all !important',
+                            marginRight: '2rem'
+                        }} onClick={handleClick}>
+                            {value ? <>{value}</> : <>Cód.</>}
+                        </Box>
+                        <Box component="hr"
+                            sx={{
+                                color: 'black',
+                                borderRight: '1px solid #ccc',
+                                height: '50px',
+                                position: 'absolute',
+                                left: '70px',
+                            }}
                         />
-                    </Box>
-                </Box>
-            </Dialog>
-        </React.Fragment>
+                        <Popover
+                            hideBackdrop
+                            open={open}
+                            anchorEl={anchorEl}
+                            onClose={handleClose}
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'left',
+                            }}
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'left',
+                            }}
+                            onAbort={handleClose}
+                            handleClose={handleClose}
+                        >
+                            <Controller
+                                control={control}
+                                name='phone_code'
+                                render={({ field: { ref, onChange, ...fieldRest } }) => (
+                                    <Autocomplete
+                                        open={open}
+                                        options={phonecodes}
+                                        autoHighlight
+                                        sx={{ width: 300 }}
+                                        onChange={(_, data) => {
+                                            setValue(`(${data.code})`)
+                                            onChange(`(${data.code})`)
+                                            handleClose();
+                                        }}
+                                        PopperComponent={StyledAutocompletePopper}
+                                        getOptionLabel={(option) => option.name}
+                                        renderOption={(props, option) => (
+                                            <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                                                {option.label} ({option.code}) {option.name}
+                                            </Box>
+                                        )}
+                                        renderInput={(params) => (
+                                            <StyledInput
+                                                sx={{
+                                                    width: '94%'
+                                                }}
+                                                {...fieldRest}
+                                                {...params}
+                                            />
+                                        )}
+                                        clearIcon={<></>}
+                                        popupIcon={<></>}
+                                    />
+                                )} />
+                        </Popover>
+                    </>
+                ),
+            }}
+        />
     );
 }
+
+export default PhoneInput
