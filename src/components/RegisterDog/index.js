@@ -51,11 +51,12 @@ const features = [
 ]
 
 const RegisterDog = ({ open, handleClose }) => {
-    const { control, handleSubmit, formState: {
+    const { control, handleSubmit, watch, formState: {
         isSubmitting
     }} = useForm({
         reValidateMode: "onBlur"
     });
+    const isBreed = watch('type')
 
     const onSubmit = async (data) => {
         console.log(data)
@@ -95,7 +96,7 @@ const RegisterDog = ({ open, handleClose }) => {
                     </Box>
                     <Box sx={{ p: 2 }}>
                         <SelectInput
-                            label="Raza"
+                            label="Tipo"
                             control={control}
                             options={types}
                             validations={DOG_TYPE.messages}
@@ -107,20 +108,22 @@ const RegisterDog = ({ open, handleClose }) => {
                             }}
                         />
                     </Box>
-                    <Box sx={{ p: 2 }}>
-                        <SelectInput
-                            label="Raza"
-                            control={control}
-                            options={razas}
-                            validations={BREED.messages}
-                            disabled={isSubmitting}
-                            rules={BREED.rules}
-                            name="breed"
-                            InputProps={{
-                                placeholder: 'Seleccione la raza'
-                            }}
-                        />
-                    </Box>
+                    {(isBreed.label == 'Raza') && (
+                        <Box sx={{ p: 2 }}>
+                            <SelectInput
+                                label="Raza"
+                                control={control}
+                                options={razas}
+                                validations={BREED.messages}
+                                disabled={isSubmitting}
+                                rules={BREED.rules}
+                                name="breed"
+                                InputProps={{
+                                    placeholder: 'Seleccione la raza'
+                                }}
+                            />
+                        </Box>
+                    )}
                     <Box sx={{ p: 2 }}>
                         <SelectInput
                             label="Sexo"
@@ -156,6 +159,7 @@ const RegisterDog = ({ open, handleClose }) => {
                             <Box sx={{
                                 marginTop: '1rem',
                                 display: 'flex',
+                                width: '200px'
                             }}>
                                 {features.map(feature => (
                                     <Checkbox
