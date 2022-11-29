@@ -21,6 +21,9 @@ import {
     DOG_TYPE,
     NAME
 } from '../../validations';
+import formDataHandler from '../../utils/formDataHandler';
+import { apiProvider } from '../../api';
+import { useAuth } from '../../context/AuthContext';
 
 const razas = [
     { value: 1, label: "Bulldog Frances" },
@@ -56,10 +59,46 @@ const RegisterDog = ({ open, handleClose }) => {
     }} = useForm({
         reValidateMode: "onBlur"
     });
-    const isBreed = watch('type')
+    const type = watch('type') ? watch('type').label : undefined;
+    const { state: { user } } = useAuth();
 
     const onSubmit = async (data) => {
-        console.log(data)
+        try {
+            let {
+                type,
+                breed,
+                gender,
+                name,
+                dogAge,
+                ...features
+            } = data;
+            const elements = Object.entries(features).filter((feature) => {
+                if (feature[1]) return feature[0]
+            }).map(item => item[0])
+
+            const parsedData = {
+                name: name,
+                type: type.label,
+                breed: breed.label,
+                dogAge: dogAge.label,
+                gender: gender.label,
+                user_id: user.id,
+                features: elements
+            }
+
+            const formData = await formDataHandler(parsedData)
+
+            const res = await apiProvider.post('/api/dog/new', formData)
+
+            if (res.status >= 200 && res.status < 300) {
+                console.log(res.data);
+                // const { data } = res;
+
+                // handleClose();
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return (
@@ -108,7 +147,7 @@ const RegisterDog = ({ open, handleClose }) => {
                             }}
                         />
                     </Box>
-                    {(isBreed.label == 'Raza') && (
+                    {(type == 'Raza') && (
                         <Box sx={{ p: 2 }}>
                             <SelectInput
                                 label="Raza"
