@@ -14,6 +14,7 @@ import SelectInput from '../Forms/SelectInput';
 import { Calendar } from 'lucide-react'
 import InputAdornment from '@mui/material/InputAdornment';
 import Divider from '@mui/material/Divider';
+import Alert from '@mui/material/Alert';
 import {
     DOG_AGE,
     BREED,
@@ -24,6 +25,7 @@ import {
 import formDataHandler from '../../utils/formDataHandler';
 import { apiProvider } from '../../api';
 import { useAuth } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const razas = [
     { value: 1, label: "Bulldog Frances" },
@@ -54,6 +56,7 @@ const features = [
 ]
 
 const RegisterDog = ({ open, handleClose }) => {
+    const [error, setError] = React.useState(false)
     const { control, handleSubmit, watch, formState: {
         isSubmitting
     }} = useForm({
@@ -61,6 +64,7 @@ const RegisterDog = ({ open, handleClose }) => {
     });
     const type = watch('type') ? watch('type').label : undefined;
     const { state: { user } } = useAuth();
+    const navigate = useNavigate();
 
     const onSubmit = async (data) => {
         try {
@@ -91,13 +95,10 @@ const RegisterDog = ({ open, handleClose }) => {
             const res = await apiProvider.post('/api/dog/new', formData)
 
             if (res.status >= 200 && res.status < 300) {
-                console.log(res.data);
-                // const { data } = res;
-
-                // handleClose();
+                navigate('?profile=true')
             }
         } catch (error) {
-            console.log(error)
+            setError('Ha ocurrido un error inesperado.')
         }
     }
 
@@ -121,6 +122,11 @@ const RegisterDog = ({ open, handleClose }) => {
                 </Box>
                 <Divider orientation="vertical" flexItem>o</Divider>
                 <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ flex: 1 }}>
+                    {(error) && (
+                        <Alert severity="error" sx={{ marginBottom: '1.5rem' }}>
+                            {error}
+                        </Alert>
+                    )}
                     <Box sx={{ p: 2 }}>
                         <TextInput
                             label="Nombre"
