@@ -13,6 +13,7 @@ const Landing = () => {
             height: '100vh',
             transition: 'all 0.3s ease-out 0s',
             position: 'relative',
+            backgroundColor: theme => theme.palette.text.secondary,
             display: 'flex',
             '&:before': {
                 content: '""',

@@ -14,7 +14,7 @@ export default function AppLayout({ children }) {
             <Aside>
                 {children}
             </Aside>
-            {(user.role == 'user') ? <UsersHome /> : <BusinessHome />}
+            {(user.role == 'business') ? <BusinessHome /> : <UsersHome />}
         </Box>
     );
 }

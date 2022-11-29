@@ -14,11 +14,10 @@ import { useNavigate } from 'react-router-dom';
 import SocialLogin from '../SocialLogin'
 import Alert from '@mui/material/Alert';
 import Checkbox from '../Forms/Checkbox';
-import vars from '../../vars'
 import { apiProvider } from '../../api'
 import getSearchParams from '../../utils/getSearchParams';
 import PhoneInput from '../Forms/PhoneInput';
-import { useAuth, loginUser } from '../../context/AuthContext'
+import { useAuth, loginUser, guestUser } from '../../context/AuthContext'
 import { PHONE, EMAIL, PASSWORD } from '../../validations'
 import useMediaQuery from '@mui/material/useMediaQuery';
 
@@ -56,11 +55,8 @@ export default function Login({ location }) {
     const handleClose = () => navigate('/')
 
     const handleGuestButton = () => {
-        if (!localStorage.getItem(vars.intro)) {
-            return navigate('/introduction')
-        } else {
-            return navigate('/home')
-        }
+        guestUser(dispatch)
+        navigate('/home')
     }
 
     return (
