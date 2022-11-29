@@ -5,9 +5,10 @@ import Box from '@mui/material/Box';
 import { useNavigate } from 'react-router-dom';
 import RegisterBusinessForm from './RegisterBusinessForm';
 import { Typography } from '@mui/material';
-// Other components
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const RegisterBusiness = ({ location }) => {
+    const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const navigate = useNavigate()
     const handleClose = () => navigate('/business')
 
@@ -18,35 +19,37 @@ const RegisterBusiness = ({ location }) => {
         >
             <Box sx={{
                 display: 'flex',
-                width: '800px',
+                width: isSmall ? 'fit-content' : '800px',
                 height: 'fit-content',
                 color: theme => theme.palette.text.secondary
             }}>
-                <Box sx={{
-                    flex: 1,
-                    backgroundColor: '#A167C9'
-                }}>
+                {!isSmall && (
                     <Box sx={{
-                        margin: 5
+                        flex: 1,
+                        backgroundColor: '#A167C9'
                     }}>
-                        <Typography variant="h4" color="secondary.main" sx={{ pb: 4, fontWeight: 500 }}>
-                            Registra tu negocio
-                        </Typography>
-                        <Typography variant="body2" color="secondary.main">
-                        Al iniciar sesión en TinderDogs estás aceptando
-                            continuar de acuerdo a nuestros
-                            <strong> Términos y condiciones </strong> y con nuestra
-                            <strong> Política de Privacidad </strong>
-                        </Typography>
+                        <Box sx={{
+                            margin: 5
+                        }}>
+                            <Typography variant="h4" color="secondary.main" sx={{ pb: 4, fontWeight: 500 }}>
+                                Registra tu negocio
+                            </Typography>
+                            <Typography variant="body2" color="secondary.main">
+                            Al iniciar sesión en TinderDogs estás aceptando
+                                continuar de acuerdo a nuestros
+                                <strong> Términos y condiciones </strong> y con nuestra
+                                <strong> Política de Privacidad </strong>
+                            </Typography>
+                        </Box>
                     </Box>
-                </Box>
+                )}
                 <Box sx={{
                     flex: 1,
                     display: 'flex',
                     flexDirection: 'column',
                 }}>
                     <DialogTitle onClose={handleClose} />
-                    <RegisterBusinessForm />
+                    <RegisterBusinessForm isSmall={isSmall} />
                 </Box>
             </Box>
         </Dialog>
