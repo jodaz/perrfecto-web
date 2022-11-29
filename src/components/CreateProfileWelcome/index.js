@@ -59,15 +59,6 @@ const CallToProfile = () => {
                                 <Button
                                     variant="contained"
                                     fullWidth
-                                    onClick={() => setOpenProfileRegister(true)}
-                                >
-                                    Completar perfil (propietario)
-                                </Button>
-                            </Box>
-                            <Box sx={{ p: 1 }}>
-                                <Button
-                                    variant="contained"
-                                    fullWidth
                                     component={LinkBehavior}
                                     to='/home'
                                     sx={{
@@ -88,10 +79,10 @@ const CallToProfile = () => {
                     flex: 2,
                     position: 'relative',
                     height: '100%',
-                    boxShadow: '0px 2px 10px rgba(0, 0, 0, 0.25)',
                     '&:before': {
                         content: '""',
-                        background: `url(${PupiRectangle}) no-repeat center center`,
+                        background: `url(${PupiRectangle}) center center`,
+                        boxShadow: '0px 2px 10px rgba(0, 0, 0, 0.25)',
                         position: 'absolute',
                         height: '100%',
                         width: '100%',
