@@ -76,7 +76,7 @@ export default function Login({ location }) {
                 display: 'flex',
                 width: isSmall ? 'fit-content' : '800px',
                 height: 'fit-content',
-                p: 3,
+                p: isSmall ? 1 : 3,
                 color: theme => theme.palette.text.secondary
             }}>
                 {!isSmall && (
@@ -201,14 +201,31 @@ export default function Login({ location }) {
                             </Link>
                         </Box>
                     </Box>
-                    {isSmall &&  (
-                        <Box marginTop='2rem'>
-                            <Divider orientation="horizontal" flexItem>o iniciar sesión con</Divider>
-                            <SocialLogin />
-                        </Box>
-                    )}
                 </Box>
             </Box>
+            {isSmall &&  (
+                <Box marginTop='1rem' sx={{
+                    display: 'flex',
+                    flexDirection: 'column'
+                }}>
+                    <Box pl={2} pr={2}>
+                        <Divider orientation="horizontal" flexItem>o iniciar sesión con</Divider>
+                    </Box>
+                    <SocialLogin />
+                    <Box sx={{ margin: '0 auto 2rem auto' }}>
+                        ¿Ya tienes una cuenta?
+                        <Link
+                            href="/register"
+                            underline="none"
+                            component={LinkBehavior}
+                            to='/register'
+                            sx={{ marginLeft: '0.5rem' }}
+                        >
+                            Inicia sesión
+                        </Link>
+                    </Box>
+                </Box>
+            )}
         </Dialog>
     );
 }

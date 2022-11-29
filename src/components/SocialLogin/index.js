@@ -51,7 +51,7 @@ const SocialLogin = ({ hidePhone }) => {
         <Box sx={{
             display: 'flex',
             width: 'fit-content',
-            margin: '1rem 0',
+            margin: '1rem auto',
             justifyContent: 'space-between'
         }}>
             <LoginSocialFacebook

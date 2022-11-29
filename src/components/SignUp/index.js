@@ -15,10 +15,12 @@ import { apiProvider } from '../../api'
 import { Divider } from '@mui/material';
 import { useAuth, loginUser } from '../../context/AuthContext'
 import getSearchParams from '../../utils/getSearchParams';
+import useMediaQuery from '@mui/material/useMediaQuery';
 // Other components
 import { NAME, LAST_NAME, PHONE, EMAIL, CONFIRM_PASSWORD, PASSWORD } from '../../validations'
 
 export default function SignUp({ location }) {
+    const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const navigate = useNavigate()
     const { dispatch } = useAuth();
     const [error, setError] = React.useState(false)
@@ -56,55 +58,64 @@ export default function SignUp({ location }) {
             onClose={handleClose}
             open={location.pathname == '/register'}
         >
-            <DialogTitle id="customized-dialog-title" onClose={handleClose} />
+            <DialogTitle onClose={handleClose} />
             <Box sx={{
                 m: 1,
                 display: 'flex',
-                width: '800px',
+                width: isSmall ? 'fit-content' : '800px',
                 height: 'fit-content',
-                p: 3,
+                p: isSmall ? 1 : 3,
                 color: theme => theme.palette.text.secondary
             }}>
-                <Box sx={{
-                    flex: 1,
-                    m: 1,
-                    display: 'flex',
-                    flexDirection: 'column',
-                }}>
-                    <Box component='h1' margin='0 0 1rem 0' color="text.primary">
-                        Crear cuenta
-                    </Box>
-                    <Box>
-                    Al crear una cuenta TinderDogs estás aceptando continuar de acuerdo a
-                        nuestros <Link href="#" underline="none">Términos y condiciones</Link> y con nuestra
-                            <Link href="#" underline="none">  Política de Privacidad</Link>
-                    </Box>
-                    <Box sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        margin: '3rem auto'
-                    }}>
-                        <Box>
-                            Continuar con
+                {!isSmall && (
+                    <>
+                        <Box sx={{
+                            flex: 1,
+                            m: 1,
+                            display: 'flex',
+                            flexDirection: 'column',
+                        }}>
+                            <Box component='h1' margin='0 0 1rem 0' color="text.primary">
+                                Crear cuenta
+                            </Box>
+                            <Box>
+                            Al crear una cuenta TinderDogs estás aceptando continuar de acuerdo a
+                                nuestros <Link href="#" underline="none">Términos y condiciones</Link> y con nuestra
+                                    <Link href="#" underline="none">  Política de Privacidad</Link>
+                            </Box>
+                            <Box sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                margin: '3rem auto'
+                            }}>
+                                <Box>
+                                    Continuar con
+                                </Box>
+                                <SocialLogin hidePhone={isPhoneRegister} />
+                            </Box>
+                            <Box>
+                                ¿Ya tienes una cuenta?
+                                <Link
+                                    href="/login"
+                                    underline="none"
+                                    component={LinkBehavior}
+                                    to='/login'
+                                    sx={{ marginLeft: '1rem' }}
+                                >
+                                    Inicia sesión
+                                </Link>
+                            </Box>
                         </Box>
-                        <SocialLogin hidePhone={isPhoneRegister} />
-                    </Box>
-                    <Box>
-                        ¿Ya tienes una cuenta?
-                        <Link
-                            href="/login"
-                            underline="none"
-                            component={LinkBehavior}
-                            to='/login'
-                            sx={{ marginLeft: '1rem' }}
-                        >
-                            Inicia sesión
-                        </Link>
-                    </Box>
-                </Box>
-                <Divider orientation="vertical" flexItem>o</Divider>
+                        <Divider orientation="vertical" flexItem>o</Divider>
+                    </>
+                )}
                 <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ m: 1, flex: 1 }}>
+                    {(isSmall) && (
+                        <Box component='h2' margin='0 0 1rem 0' color="text.primary">
+                            Crear cuenta
+                        </Box>
+                    )}
                     <Box sx={{ p: 1 }}>
                         <TextInput
                             label="Nombre"
@@ -194,6 +205,29 @@ export default function SignUp({ location }) {
                     </Box>
                 </Box>
             </Box>
+            {isSmall &&  (
+                <Box marginTop='1rem' sx={{
+                    display: 'flex',
+                    flexDirection: 'column'
+                }}>
+                    <Box pl={2} pr={2}>
+                        <Divider orientation="horizontal" flexItem>o crear cuenta con</Divider>
+                    </Box>
+                    <SocialLogin />
+                    <Box sx={{ margin: '0 auto 2rem auto' }}>
+                        ¿Ya tienes una cuenta?
+                        <Link
+                            href="/login"
+                            underline="none"
+                            component={LinkBehavior}
+                            to='/login'
+                            sx={{ marginLeft: '0.5rem' }}
+                        >
+                            Inicia sesión
+                        </Link>
+                    </Box>
+                </Box>
+            )}
         </Dialog>
     );
 }
