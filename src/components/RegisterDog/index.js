@@ -26,6 +26,7 @@ import formDataHandler from '../../utils/formDataHandler';
 import { apiProvider } from '../../api';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const razas = [
     { value: 1, label: "Bulldog Frances" },
@@ -56,6 +57,7 @@ const features = [
 ]
 
 const RegisterDog = ({ open, handleClose }) => {
+    const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const [error, setError] = React.useState(false)
     const { control, handleSubmit, watch, formState: {
         isSubmitting
@@ -76,6 +78,7 @@ const RegisterDog = ({ open, handleClose }) => {
                 dogAge,
                 ...features
             } = data;
+            // Convert features object to array before sending
             const elements = Object.entries(features).filter((feature) => {
                 if (feature[1]) return feature[0]
             }).map(item => item[0])
@@ -107,21 +110,35 @@ const RegisterDog = ({ open, handleClose }) => {
             <DialogTitle onClose={handleClose} />
             <Box sx={{
                 display: 'flex',
-                minWidth: '400px',
+                minWidth: isSmall ? 'fit-content' : '400px',
                 height: 'fit-content',
                 p: 2,
                 color: theme => theme.palette.text.secondary
             }}>
-                <Box sx={{ flex: 1, p: 2 }}>
-                    <Typography variant="h4" gutterBottom>
-                        Datos de tu perro
-                    </Typography>
-                    <Typography variant="body1" gutterBottom>
-                        Completa la siguiente información de tu mascota para añadir al perfil.
-                    </Typography>
-                </Box>
-                <Divider orientation="vertical" flexItem>o</Divider>
-                <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ flex: 1 }}>
+                {!isSmall && (
+                    <>
+                        <Box sx={{ flex: 1, p: 2 }}>
+                            <Typography variant="h4" gutterBottom>
+                                Datos de tu perro
+                            </Typography>
+                            <Typography variant="body1" gutterBottom>
+                                Completa la siguiente información de tu mascota para añadir al perfil.
+                            </Typography>
+                        </Box>
+                        <Divider orientation="vertical" flexItem>o</Divider>
+                    </>
+                )}
+                <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+                    {(isSmall) && (
+                        <Box mb={4}>
+                            <Typography variant="h6" gutterBottom>
+                                Datos de tu perro
+                            </Typography>
+                            <Typography variant="body1" gutterBottom>
+                                Completa la siguiente información de tu mascota para añadir al perfil.
+                            </Typography>
+                        </Box>
+                    )}
                     {(error) && (
                         <Alert severity="error" sx={{ marginBottom: '1.5rem' }}>
                             {error}

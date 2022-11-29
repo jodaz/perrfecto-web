@@ -6,6 +6,7 @@ import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel';
 import Box from '@mui/material/Box';
 import { Controller } from 'react-hook-form'
+import { Calendar } from 'lucide-react'
 
 const DateInput = ({
     control,
@@ -18,39 +19,27 @@ const DateInput = ({
 }) => (
     <FormControl>
         {label && <InputLabel shrink>{label}</InputLabel>}
+
         <Controller
             control={control}
             name={name}
             defaultValue={defaultValue}
             rules={rules}
             render={({ field: { onChange, ...restField }, fieldState: { error, value } }) => (
-                <>
+                <Box mt={2}>
                     <DatePicker
                         value={value}
                         disabled={disabled}
                         onChange={value => onChange(value)}
+                        components={{
+                            OpenPickerIcon: Calendar
+                        }}
                         renderInput={({ inputRef, inputProps, InputProps }) => (
-                            <Box sx={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                width: 'fit-content',
-                                height: 'fit-content'
-                            }}>
-                                <Box
-                                    ref={inputRef}
-                                    sx={{
-                                        backgroundColor: theme => theme.palette.primary.main,
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        width: '2.5rem',
-                                        height: '2.5rem'
-                                    }}
-                                >
-                                    {InputProps?.endAdornment}
-                                </Box>
-                                <InputBase {...inputProps} />
-                            </Box>
+                            <InputBase
+                                ref={inputRef}
+                                {...inputProps}
+                                {...InputProps}
+                            />
                         )}
                         {...restField}
                     />
@@ -59,7 +48,7 @@ const DateInput = ({
                             {validations[name][error.type]}
                         </FormHelperText>
                     )}
-                </>
+                </Box>
             )}
         />
     </FormControl>

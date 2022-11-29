@@ -91,7 +91,7 @@ export default function Login({ location }) {
                                 Iniciar sesión
                             </Box>
                             <Box>
-                            Al iniciar sesión en TinderDogs estás aceptando continuar de acuerdo a
+                                Al iniciar sesión en TinderDogs estás aceptando continuar de acuerdo a
                                 nuestros <Link href="#" underline="none">Términos y condiciones</Link> y con nuestra
                                     <Link href="#" underline="none">  Política de Privacidad</Link>
                             </Box>

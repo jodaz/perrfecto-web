@@ -11,6 +11,10 @@ import DateInput from '../Forms/DateInput';
 import formDataHandler from '../../utils/formDataHandler';
 import { fileProvider } from '../../api'
 import { useAuth } from '../../context/AuthContext';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useNavigate } from 'react-router-dom'
+import Alert from '@mui/material/Alert';
+import { Calendar } from 'lucide-react'
 
 const validations = {
     date_birth: {
@@ -31,28 +35,30 @@ const rules = {
 }
 
 const RegisterOwner = ({ open, handleClose }) => {
+    const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const [error, setError] = React.useState(false)
     const { control, handleSubmit, formState: {
         isSubmitting
     }} = useForm({
         reValidateMode: "onBlur"
     });
+    const navigate = useNavigate();
     const { state: { user } } = useAuth();
 
     const onSubmit = async (data) => {
-        const formData = await formDataHandler(data, 'files')
+        try {
+            const formData = await formDataHandler(data, 'files')
 
-        const res = await fileProvider.put(`/api/auth/user-edit/${user.id}`, formData)
-            .catch(error => {
-            if (error.response.status == 401) {
-                setError(true)
+            const res = await fileProvider.put(`/api/auth/user-edit/${user.id}`, formData)
+
+            if (res.status >= 200 && res.status < 300) {
+                const { data } = res;
+
+                handleClose();
+                navigate('/home')
             }
-        });
-
-        if (res.status >= 200 && res.status < 300) {
-            const { data } = res;
-
-            handleClose();
+        } catch (error) {
+            setError('Ha ocurrido un error inesperado.')
         }
     }
 
@@ -61,21 +67,40 @@ const RegisterOwner = ({ open, handleClose }) => {
             <DialogTitle onClose={handleClose} />
             <Box sx={{
                 display: 'flex',
-                width: '800px',
+                width: isSmall ? 'fit-content' : '800px',
                 height: 'fit-content',
                 p: 2,
                 color: theme => theme.palette.text.secondary
             }}>
-                <Box sx={{ flex: 1, p: 2 }}>
-                    <Typography variant="h4" gutterBottom>
-                        Datos del propietario
-                    </Typography>
-                    <Typography variant="body1" gutterBottom>
-                        Completa la siguiente información personal para añadir a tu perfil.
-                    </Typography>
-                </Box>
-                <Divider orientation="vertical" flexItem>o</Divider>
-                <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ flex: 1 }}>
+                {!isSmall && (
+                    <>
+                        <Box sx={{ flex: 1, p: 2 }}>
+                            <Typography variant="h4" gutterBottom>
+                                Datos del propietario
+                            </Typography>
+                            <Typography variant="body1" gutterBottom>
+                                Completa la siguiente información personal para añadir a tu perfil.
+                            </Typography>
+                        </Box>
+                        <Divider orientation="vertical" flexItem>o</Divider>
+                    </>
+                )}
+                <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+                    {(isSmall) && (
+                        <Box mb={4}>
+                            <Typography variant="h6" gutterBottom>
+                                Datos del propietario
+                            </Typography>
+                            <Typography variant="body1" gutterBottom>
+                                Completa la siguiente información personal para añadir a tu perfil.
+                            </Typography>
+                        </Box>
+                    )}
+                    {(error) && (
+                        <Alert severity="error" sx={{ marginBottom: '1.5rem' }}>
+                            {error}
+                        </Alert>
+                    )}
                     <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column', p: 2 }}>
                         <Box width='200px' textAlign='center'>
                             <Typography variant="h6" color="text.main" gutterBottom>
