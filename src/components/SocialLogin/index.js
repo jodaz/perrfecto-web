@@ -64,7 +64,9 @@ const SocialLogin = ({ hidePhone }) => {
                     console.log(err);
                 }}
             >
-                <IconButton>
+                <IconButton sx={{
+                    margin: '0 !important'
+                }}>
                     <FacebookIcon />
                 </IconButton>
             </LoginSocialFacebook>
@@ -80,7 +82,9 @@ const SocialLogin = ({ hidePhone }) => {
                     console.log(err);
                 }}
             >
-                <IconButton>
+                <IconButton sx={{
+                    margin: '0 !important'
+                }}>
                     <GoogleIcon />
                 </IconButton>
             </LoginSocialGoogle>
