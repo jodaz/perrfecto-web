@@ -36,9 +36,9 @@ const razas = [
 ];
 
 const types = [
-    { value: 1, label: "Raza" },
-    { value: 2, label: "Mestizo" },
-    { value: 3, label: "Otro" }
+    { value: "breed", label: "Raza" },
+    { value: "mongrel", label: "Mestizo" },
+    { value: "other", label: "Otro" }
 ];
 
 const genders = [
@@ -87,7 +87,7 @@ const RegisterDog = ({ open, handleClose }) => {
 
             const parsedData = {
                 name: name,
-                type: type.label,
+                type: type.value,
                 breed: breed.label,
                 dogAge: dogAge.label,
                 gender: gender.label,
