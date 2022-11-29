@@ -38,8 +38,6 @@ const RegisterBusinessForm = ({ isSmall }) => {
             formData.append(key, data[key])
         })
         formData.append('role', 'business')
-        formData.append('code_phone', '+58')
-        formData.append('phone', '04161234567')
 
         const res = await fileProvider.post('/api/auth/new-business', formData)
             .catch(error => {

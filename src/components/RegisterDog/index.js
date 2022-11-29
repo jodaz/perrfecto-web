@@ -27,6 +27,7 @@ import { apiProvider } from '../../api';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import PhotoInput from '../Forms/PhotoInput';
 
 const razas = [
     { value: 1, label: "Bulldog Frances" },
@@ -35,9 +36,9 @@ const razas = [
 ];
 
 const types = [
-    { value: 1, label: "Raza" },
-    { value: 2, label: "Mestizo" },
-    { value: 3, label: "Otro" }
+    { value: "breed", label: "Raza" },
+    { value: "mongrel", label: "Mestizo" },
+    { value: "other", label: "Otro" }
 ];
 
 const genders = [
@@ -75,6 +76,7 @@ const RegisterDog = ({ open, handleClose }) => {
                 breed,
                 gender,
                 name,
+                files,
                 dogAge,
                 ...features
             } = data;
@@ -85,15 +87,16 @@ const RegisterDog = ({ open, handleClose }) => {
 
             const parsedData = {
                 name: name,
-                type: type.label,
+                type: type.value,
                 breed: breed.label,
                 dogAge: dogAge.label,
                 gender: gender.label,
-                user_id: user.id,
-                features: elements
+                id_user: user.id,
+                features: elements,
+                files: files
             }
 
-            const formData = await formDataHandler(parsedData)
+            const formData = await formDataHandler(parsedData, 'files')
 
             const res = await apiProvider.post('/api/dog/new', formData)
 
@@ -124,6 +127,23 @@ const RegisterDog = ({ open, handleClose }) => {
                             <Typography variant="body1" gutterBottom>
                                 Completa la siguiente información de tu mascota para añadir al perfil.
                             </Typography>
+                            <Box sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                p: 4
+                            }}>
+                                <Typography variant="h6" color="text.main" gutterBottom>
+                                    Sube tu foto de perfil
+                                </Typography>
+                                <Box sx={{ p: 3 }}>
+                                    <PhotoInput
+                                        name="files"
+                                        control={control}
+                                        disabled={isSubmitting}
+                                    />
+                                </Box>
+                            </Box>
                         </Box>
                         <Divider orientation="vertical" flexItem>o</Divider>
                     </>

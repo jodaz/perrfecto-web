@@ -19,32 +19,11 @@ const SocialLogin = ({ hidePhone }) => {
     const navigate = useNavigate();
 
     const processResponse = (provider, data) => {
-        console.log(provider, data)
-        navigate('/home')
+        console.log(data)
+        // const { access_token } = data
 
-
-        // return apiProvider.post('', {
-        //     email: email,
-        //     provider: 'facebook',
-        //     key: userID
-        // })
-        //     .then(res => {
-        //         const { token } = res.data;
-
-        //         window.location.href =
-        //             `${process.env.REACT_APP_LOCATION}/auth?token=${token}`;
-        //     }).catch(err => {
-        //         if (err.response.status === 422) {
-        //             set({
-        //                 email: email,
-        //                 provider: 'facebook',
-        //                 key: userID,
-        //                 names: name
-        //             })
-
-        //             return history.push('/register');
-        //         }
-        //     });
+        // return apiProvider.get(`/auth/facebook/token`)
+        //     .then(res => console.log(res.data)).catch(err => console.log(err));
     }
 
     return (
