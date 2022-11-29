@@ -92,7 +92,7 @@ export default function SignUp({ location }) {
                                 <Box>
                                     Continuar con
                                 </Box>
-                                <SocialLogin hidePhone={isPhoneRegister} />
+                                <SocialLogin hidePhone={isPhoneRegister} location={location} />
                             </Box>
                             <Box>
                                 ¿Ya tienes una cuenta?

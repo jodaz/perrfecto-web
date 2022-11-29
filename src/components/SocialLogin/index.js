@@ -13,38 +13,37 @@ import LinkBehavior from '../LinkBehavior';
 import { apiProvider } from '../../api'
 import vars from '../../vars';
 
-const facebookFields = 'id,first_name,last_name,middle_name,name,name_format,picture,short_name,email,gender'
+const facebookFields = 'id,first_name,last_name,name,name_format,picture,email'
 
-const SocialLogin = ({ hidePhone }) => {
+const SocialLogin = ({ hidePhone, location }) => {
+    const { pathname } = location
     const navigate = useNavigate();
 
-    const processResponse = (provider, data) => {
-        console.log(provider, data)
-        navigate('/home')
+    const facebookHandler = ({ accessToken, ...rest }) => {
+        return apiProvider
+            .get(`/auth/facebook/token?access_token=${accessToken}`)
+            .then(res => {
+                // navigate('/home')
+            })
+            .catch(err => console.log(err));
+    }
 
+    const googleRegister = (data) => {
+        return apiProvider
+            .get(`/auth/google`)
+            .then(res => {
+                // navigate('/home')
+            })
+            .catch(err => console.log(err));
+    }
 
-        // return apiProvider.post('', {
-        //     email: email,
-        //     provider: 'facebook',
-        //     key: userID
-        // })
-        //     .then(res => {
-        //         const { token } = res.data;
-
-        //         window.location.href =
-        //             `${process.env.REACT_APP_LOCATION}/auth?token=${token}`;
-        //     }).catch(err => {
-        //         if (err.response.status === 422) {
-        //             set({
-        //                 email: email,
-        //                 provider: 'facebook',
-        //                 key: userID,
-        //                 names: name
-        //             })
-
-        //             return history.push('/register');
-        //         }
-        //     });
+    const googleSignIn = (data) => {
+        return apiProvider
+            .get(`/auth/google/signup`)
+            .then(res => {
+                // navigate('/home')
+            })
+            .catch(err => console.log(err));
     }
 
     return (
@@ -57,9 +56,7 @@ const SocialLogin = ({ hidePhone }) => {
             <LoginSocialFacebook
                 appId={vars.FacebookID}
                 fieldsProfile={facebookFields}
-                onResolve={({ provider, data }) => {
-                    processResponse(provider, data)
-                }}
+                onResolve={({ data }) => facebookHandler(data)}
                 onReject={err => {
                     console.log(err);
                 }}
@@ -75,9 +72,9 @@ const SocialLogin = ({ hidePhone }) => {
                 scope="openid profile email"
                 discoveryDocs="claims_supported"
                 access_type="offline"
-                onResolve={({ provider, data }) => {
-                    processResponse(provider, data)
-                }}
+                onResolve={({ data }) => (pathname == '/login')
+                    ? googleSignIn(data) : googleRegister(data)
+                }
                 onReject={err => {
                     console.log(err);
                 }}
