@@ -13,6 +13,8 @@ import TextInput from '../Forms/TextInput';
 import SelectInput from '../Forms/SelectInput';
 import { Calendar } from 'lucide-react'
 import InputAdornment from '@mui/material/InputAdornment';
+import Divider from '@mui/material/Divider';
+import Alert from '@mui/material/Alert';
 import {
     DOG_AGE,
     BREED,
@@ -20,6 +22,11 @@ import {
     DOG_TYPE,
     NAME
 } from '../../validations';
+import formDataHandler from '../../utils/formDataHandler';
+import { apiProvider } from '../../api';
+import { useAuth } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const razas = [
     { value: 1, label: "Bulldog Frances" },
@@ -50,14 +57,52 @@ const features = [
 ]
 
 const RegisterDog = ({ open, handleClose }) => {
-    const { control, handleSubmit, formState: {
+    const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+    const [error, setError] = React.useState(false)
+    const { control, handleSubmit, watch, formState: {
         isSubmitting
     }} = useForm({
         reValidateMode: "onBlur"
     });
+    const type = watch('type') ? watch('type').label : undefined;
+    const { state: { user } } = useAuth();
+    const navigate = useNavigate();
 
     const onSubmit = async (data) => {
-        console.log(data)
+        try {
+            let {
+                type,
+                breed,
+                gender,
+                name,
+                dogAge,
+                ...features
+            } = data;
+            // Convert features object to array before sending
+            const elements = Object.entries(features).filter((feature) => {
+                if (feature[1]) return feature[0]
+            }).map(item => item[0])
+
+            const parsedData = {
+                name: name,
+                type: type.label,
+                breed: breed.label,
+                dogAge: dogAge.label,
+                gender: gender.label,
+                user_id: user.id,
+                features: elements
+            }
+
+            const formData = await formDataHandler(parsedData)
+
+            const res = await apiProvider.post('/api/dog/new', formData)
+
+            if (res.status >= 200 && res.status < 300) {
+                navigate('?profile=true')
+            }
+        } catch (error) {
+            setError('Ha ocurrido un error inesperado.')
+        }
     }
 
     return (
@@ -65,21 +110,40 @@ const RegisterDog = ({ open, handleClose }) => {
             <DialogTitle onClose={handleClose} />
             <Box sx={{
                 display: 'flex',
-                minWidth: '400px',
+                minWidth: isSmall ? 'fit-content' : '400px',
                 height: 'fit-content',
                 p: 2,
-                color: theme => theme.palette.text.secondary,
-                flexDirection: 'column'
+                color: theme => theme.palette.text.secondary
             }}>
-                <Box sx={{ p: 2 }}>
-                    <Typography variant="h4" gutterBottom>
-                        Datos de tu perro
-                    </Typography>
-                    <Typography variant="body1" gutterBottom>
-                        Completa la siguiente información de tu mascota para añadir al perfil.
-                    </Typography>
-                </Box>
-                <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ flex: 1 }}>
+                {!isSmall && (
+                    <>
+                        <Box sx={{ flex: 1, p: 2 }}>
+                            <Typography variant="h4" gutterBottom>
+                                Datos de tu perro
+                            </Typography>
+                            <Typography variant="body1" gutterBottom>
+                                Completa la siguiente información de tu mascota para añadir al perfil.
+                            </Typography>
+                        </Box>
+                        <Divider orientation="vertical" flexItem>o</Divider>
+                    </>
+                )}
+                <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+                    {(isSmall) && (
+                        <Box mb={4}>
+                            <Typography variant="h6" gutterBottom>
+                                Datos de tu perro
+                            </Typography>
+                            <Typography variant="body1" gutterBottom>
+                                Completa la siguiente información de tu mascota para añadir al perfil.
+                            </Typography>
+                        </Box>
+                    )}
+                    {(error) && (
+                        <Alert severity="error" sx={{ marginBottom: '1.5rem' }}>
+                            {error}
+                        </Alert>
+                    )}
                     <Box sx={{ p: 2 }}>
                         <TextInput
                             label="Nombre"
@@ -94,7 +158,7 @@ const RegisterDog = ({ open, handleClose }) => {
                     </Box>
                     <Box sx={{ p: 2 }}>
                         <SelectInput
-                            label="Raza"
+                            label="Tipo"
                             control={control}
                             options={types}
                             validations={DOG_TYPE.messages}
@@ -106,20 +170,22 @@ const RegisterDog = ({ open, handleClose }) => {
                             }}
                         />
                     </Box>
-                    <Box sx={{ p: 2 }}>
-                        <SelectInput
-                            label="Raza"
-                            control={control}
-                            options={razas}
-                            validations={BREED.messages}
-                            disabled={isSubmitting}
-                            rules={BREED.rules}
-                            name="breed"
-                            InputProps={{
-                                placeholder: 'Seleccione la raza'
-                            }}
-                        />
-                    </Box>
+                    {(type == 'Raza') && (
+                        <Box sx={{ p: 2 }}>
+                            <SelectInput
+                                label="Raza"
+                                control={control}
+                                options={razas}
+                                validations={BREED.messages}
+                                disabled={isSubmitting}
+                                rules={BREED.rules}
+                                name="breed"
+                                InputProps={{
+                                    placeholder: 'Seleccione la raza'
+                                }}
+                            />
+                        </Box>
+                    )}
                     <Box sx={{ p: 2 }}>
                         <SelectInput
                             label="Sexo"
@@ -155,6 +221,7 @@ const RegisterDog = ({ open, handleClose }) => {
                             <Box sx={{
                                 marginTop: '1rem',
                                 display: 'flex',
+                                width: '200px'
                             }}>
                                 {features.map(feature => (
                                     <Checkbox

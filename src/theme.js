@@ -1,4 +1,5 @@
 import { createTheme, alpha } from '@mui/material/styles';
+import { esES } from '@mui/x-date-pickers';
 
 const palette = {
     primary: {
@@ -137,8 +138,13 @@ const theme = createTheme({
                     fontWeight: 500
                 }
             }
+        },
+        MuiPickersCalendarHeader: {
+            label: {
+                textTransform: 'uppercase'
+            }
         }
     }
-});
+}, esES);
 
 export default theme;

@@ -7,10 +7,15 @@ import PupiRectangle from '../../assets/images/PupiRectangle.png'
 import useMediaQuery from '@mui/material/useMediaQuery';
 import LinkBehavior from '../LinkBehavior';
 import RegisterDog from '../RegisterDog';
+import RegisterOwner from '../RegisterOwner';
+import getSearchParams from '../../utils/getSearchParams';
+import { useNavigate } from 'react-router-dom';
 
-const CallToProfile = () => {
+const CallToProfile = ({ location }) => {
     const matches = useMediaQuery((theme) => theme.breakpoints.down('sm'));
-    const [open, setOpen] = React.useState(false)
+    const navigate = useNavigate();
+    const registerDog = getSearchParams(location, 'dog');
+    const updateProfile = getSearchParams(location, 'profile');
 
     return (
         <Box sx={{
@@ -48,7 +53,8 @@ const CallToProfile = () => {
                                 <Button
                                     variant="contained"
                                     fullWidth
-                                    onClick={() => setOpen(true)}
+                                    component={LinkBehavior}
+                                    to='?dog=true'
                                 >
                                     Completar perfil
                                 </Button>
@@ -77,10 +83,10 @@ const CallToProfile = () => {
                     flex: 2,
                     position: 'relative',
                     height: '100%',
-                    boxShadow: '0px 2px 10px rgba(0, 0, 0, 0.25)',
                     '&:before': {
                         content: '""',
-                        background: `url(${PupiRectangle}) no-repeat center center`,
+                        background: `url(${PupiRectangle}) center center`,
+                        boxShadow: '0px 2px 10px rgba(0, 0, 0, 0.25)',
                         position: 'absolute',
                         height: '100%',
                         width: '100%',
@@ -88,7 +94,8 @@ const CallToProfile = () => {
                     }
                 }} />
             </Box>
-            <RegisterDog open={open} handleClose={() => setOpen(false)} />
+            <RegisterDog open={registerDog} handleClose={() => navigate('/register/welcome')} />
+            <RegisterOwner open={updateProfile} handleClose={() => navigate('/register/welcome')} />
         </Box>
     );
 }
