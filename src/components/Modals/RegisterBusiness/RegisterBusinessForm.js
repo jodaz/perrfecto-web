@@ -19,7 +19,7 @@ import {
     CONFIRM_PASSWORD
 } from '../../../validations';
 
-const RegisterBusinessForm = ({ location }) => {
+const RegisterBusinessForm = ({ isSmall }) => {
     const navigate = useNavigate()
     const [error, setError] = React.useState(false)
     const { control, handleSubmit, watch, formState: {
@@ -61,10 +61,15 @@ const RegisterBusinessForm = ({ location }) => {
             m: 1,
             display: 'flex',
             height: 'fit-content',
-            p: 3,
+            p: isSmall ? 1 : 3,
             color: theme => theme.palette.text.secondary
         }}>
             <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ m: 1, flex: 1 }}>
+                {isSmall && (
+                    <Box component='h2' margin='0 0 1rem 0' color="text.primary">
+                        Registrar negocio
+                    </Box>
+                )}
                 <Box sx={{ p: 1 }}>
                     <TextInput
                         label="Nombre"

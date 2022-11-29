@@ -33,6 +33,7 @@ const Landing = () => {
                 flex: matches ? 1 : 0.5,
                 margin: '0 auto',
                 color: '#DFDFDF',
+                padding: matches ? '0 1rem' : 0,
                 textAlign: 'center',
                 zIndex: 1,
                 alignItems: 'center',
@@ -42,7 +43,7 @@ const Landing = () => {
             }}>
                 <Box sx={{
                     fontWeight: 700,
-                    fontSize: '4rem',
+                    fontSize: matches ? '3rem' : '4rem',
                     lineHeight: '76px'
                 }}>
                     Conecta con todos los perros del mundo

@@ -20,8 +20,10 @@ import getSearchParams from '../../utils/getSearchParams';
 import PhoneInput from '../Forms/PhoneInput';
 import { useAuth, loginUser } from '../../context/AuthContext'
 import { PHONE, EMAIL, PASSWORD } from '../../validations'
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 export default function Login({ location }) {
+    const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const navigate = useNavigate()
     const isPhoneRegister = getSearchParams(location, 'withPhone');
     const [error, setError] = React.useState(false)
@@ -66,46 +68,57 @@ export default function Login({ location }) {
             onClose={handleClose}
             open={location.pathname == '/login'}
         >
-            <DialogTitle id="customized-dialog-title" onClose={handleClose} />
+            <DialogTitle
+                onClose={handleClose}
+            />
             <Box sx={{
                 m: 1,
                 display: 'flex',
-                width: '800px',
+                width: isSmall ? 'fit-content' : '800px',
                 height: 'fit-content',
-                p: 3,
+                p: isSmall ? 1 : 3,
                 color: theme => theme.palette.text.secondary
             }}>
-                <Box sx={{
-                    flex: 1,
-                    m: 1,
-                    display: 'flex',
-                    flexDirection: 'column',
-                }}>
-                    <Box component='h1' margin='0 0 1rem 0' color="text.primary">
-                        Iniciar sesión
-                    </Box>
-                    <Box>
-                    Al iniciar sesión en TinderDogs estás aceptando continuar de acuerdo a
-                        nuestros <Link href="#" underline="none">Términos y condiciones</Link> y con nuestra
-                            <Link href="#" underline="none">  Política de Privacidad</Link>
-                    </Box>
-                    <Box sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        margin: '3rem auto'
-                    }}>
-                        <Box>
-                            Continuar con
+                {!isSmall && (
+                    <>
+                        <Box sx={{
+                            flex: 1,
+                            m: 1,
+                            display: 'flex',
+                            flexDirection: 'column',
+                        }}>
+                            <Box component='h1' margin='0 0 1rem 0' color="text.primary">
+                                Iniciar sesión
+                            </Box>
+                            <Box>
+                            Al iniciar sesión en TinderDogs estás aceptando continuar de acuerdo a
+                                nuestros <Link href="#" underline="none">Términos y condiciones</Link> y con nuestra
+                                    <Link href="#" underline="none">  Política de Privacidad</Link>
+                            </Box>
+                            <Box sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                margin: '3rem auto'
+                            }}>
+                                <Box>
+                                    Continuar con
+                                </Box>
+                                <SocialLogin />
+                            </Box>
+                            <Box>
+                                ¿Aún no tienes una cuenta? <Link href="#" underline="none" component={LinkBehavior} to='/register'>Crear cuenta</Link>
+                            </Box>
                         </Box>
-                        <SocialLogin />
-                    </Box>
-                    <Box>
-                        ¿Aún no tienes una cuenta? <Link href="#" underline="none" component={LinkBehavior} to='/register'>Crear cuenta</Link>
-                    </Box>
-                </Box>
-                <Divider orientation="vertical" flexItem>o</Divider>
+                        <Divider orientation="vertical" flexItem>o</Divider>
+                    </>
+                )}
                 <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ m: 1, flex: 1 }}>
+                    {(isSmall) && (
+                        <Box component='h2' margin='0 0 1rem 0' color="text.primary">
+                            Iniciar sesión
+                        </Box>
+                    )}
                     {(error) && (
                         <Alert severity="error" sx={{ marginBottom: '1.5rem' }}>
                             No estás registrado. Crea una cuenta para poder comenzar en TinderDogs.
@@ -190,6 +203,29 @@ export default function Login({ location }) {
                     </Box>
                 </Box>
             </Box>
+            {isSmall &&  (
+                <Box marginTop='1rem' sx={{
+                    display: 'flex',
+                    flexDirection: 'column'
+                }}>
+                    <Box pl={2} pr={2}>
+                        <Divider orientation="horizontal" flexItem>o iniciar sesión con</Divider>
+                    </Box>
+                    <SocialLogin />
+                    <Box sx={{ margin: '0 auto 2rem auto' }}>
+                        ¿Ya tienes una cuenta?
+                        <Link
+                            href="/register"
+                            underline="none"
+                            component={LinkBehavior}
+                            to='/register'
+                            sx={{ marginLeft: '0.5rem' }}
+                        >
+                            Inicia sesión
+                        </Link>
+                    </Box>
+                </Box>
+            )}
         </Dialog>
     );
 }
