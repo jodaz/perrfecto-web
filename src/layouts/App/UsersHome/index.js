@@ -13,13 +13,14 @@ const UsersHome = () => {
             sx={{
                 flexGrow: 1,
                 bgcolor: 'background.default',
-                height: '100%',
+                height: '100vh',
+                width: '100%',
                 display: 'flex',
                 alignItems: 'center',
                 flexDirection: 'column',
                 '&:before': {
                     content: '""',
-                    background: `url(${PawPrints}) no-repeat center center fixed`,
+                    background: `url(${PawPrints}) center center fixed`,
                     backgroundSize: 'cover',
                     position: 'absolute',
                     bottom: 0,
