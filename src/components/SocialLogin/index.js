@@ -12,39 +12,36 @@ import { ReactComponent as PhoneIcon } from '../../assets/icons/Phone.svg'
 import LinkBehavior from '../LinkBehavior';
 import { apiProvider } from '../../api'
 import vars from '../../vars';
+import { useAuth, loginUser } from '../../context/AuthContext'
 
 const facebookFields = 'id,first_name,last_name,name,name_format,picture,email'
 
-const SocialLogin = ({ hidePhone, location }) => {
-    const { pathname } = location
+const SocialLogin = ({ hidePhone }) => {
+    const [error, setError] = React.useState(false)
     const navigate = useNavigate();
+    const { dispatch } = useAuth();
 
-    const facebookHandler = ({ accessToken, ...rest }) => {
-        return apiProvider
-            .get(`/auth/facebook/token?access_token=${accessToken}`)
-            .then(res => {
-                // navigate('/home')
-            })
-            .catch(err => console.log(err));
-    }
+    const onSubmit = async (data) => {
+        setError(false);
 
-    const googleRegister = (data) => {
-        return apiProvider
-            .get(`/auth/google`)
-            .then(res => {
-                // navigate('/home')
-            })
-            .catch(err => console.log(err));
-    }
+        const res = await apiProvider.post('/api/auth/social-network', {
+            ...data
+        }).catch(error => {
+            if (error.response.status == 400) {
+                setError(true)
+            }
+        });
 
-    const googleSignIn = (data) => {
-        return apiProvider
-            .get(`/auth/google/signup`)
-            .then(res => {
-                // navigate('/home')
-            })
-            .catch(err => console.log(err));
-    }
+        if (res.status >= 200 && res.status < 300) {
+            const { data } = res;
+
+            loginUser(dispatch, data)
+
+            if (data.data.role == 'user') {
+                navigate('/detect-location')
+            }
+        }
+    };
 
     return (
         <Box sx={{
@@ -56,7 +53,7 @@ const SocialLogin = ({ hidePhone, location }) => {
             <LoginSocialFacebook
                 appId={vars.FacebookID}
                 fieldsProfile={facebookFields}
-                onResolve={({ data }) => facebookHandler(data)}
+                onResolve={({ data }) => onSubmit(data)}
                 onReject={err => {
                     console.log(err);
                 }}
@@ -72,9 +69,7 @@ const SocialLogin = ({ hidePhone, location }) => {
                 scope="openid profile email"
                 discoveryDocs="claims_supported"
                 access_type="offline"
-                onResolve={({ data }) => (pathname == '/login')
-                    ? googleSignIn(data) : googleRegister(data)
-                }
+                onResolve={({ data }) => onSubmit(data)}
                 onReject={err => {
                     console.log(err);
                 }}

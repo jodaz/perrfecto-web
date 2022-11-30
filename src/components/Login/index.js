@@ -48,7 +48,9 @@ export default function Login({ location }) {
             const { data } = res;
             loginUser(dispatch, data)
 
-            navigate('/detect-location')
+            if (data.data.role == 'user') {
+                navigate('/detect-location')
+            }
         }
     };
 
