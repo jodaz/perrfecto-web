@@ -34,6 +34,12 @@ function authReducer(state, action) {
                     isAuth: true
                 }
             }
+            case 'GUEST': {
+                return {
+                    ...state,
+                    user: action.payload.user,
+                }
+            }
             case 'LOGOUT': {
                 return initialState
             }
@@ -82,6 +88,25 @@ async function loginUser(dispatch, values) {
     }
 }
 
+async function guestUser(dispatch) {
+    try {
+        const data = {
+            role: 'guest'
+        }
+
+        dispatch({
+            type: 'GUEST',
+            payload: {
+                user: data
+            }
+        });
+
+        await localStorage.setItem(vars.user, JSON.stringify(data));
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 async function logout(dispatch) {
     try {
         dispatch({ type: 'LOGOUT' })
@@ -93,4 +118,4 @@ async function logout(dispatch) {
     }
 }
 
-export { useAuth, AuthProvider, loginUser, logout }
+export { useAuth, AuthProvider, loginUser, logout, guestUser }

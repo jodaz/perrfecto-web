@@ -14,11 +14,10 @@ import { useNavigate } from 'react-router-dom';
 import SocialLogin from '../SocialLogin'
 import Alert from '@mui/material/Alert';
 import Checkbox from '../Forms/Checkbox';
-import vars from '../../vars'
 import { apiProvider } from '../../api'
 import getSearchParams from '../../utils/getSearchParams';
 import PhoneInput from '../Forms/PhoneInput';
-import { useAuth, loginUser } from '../../context/AuthContext'
+import { useAuth, loginUser, guestUser } from '../../context/AuthContext'
 import { PHONE, EMAIL, PASSWORD } from '../../validations'
 import useMediaQuery from '@mui/material/useMediaQuery';
 
@@ -49,18 +48,17 @@ export default function Login({ location }) {
             const { data } = res;
             loginUser(dispatch, data)
 
-            navigate('/detect-location')
+            if (data.data.role == 'user') {
+                navigate('/detect-location')
+            }
         }
     };
 
     const handleClose = () => navigate('/')
 
     const handleGuestButton = () => {
-        if (!localStorage.getItem(vars.intro)) {
-            return navigate('/introduction')
-        } else {
-            return navigate('/home')
-        }
+        guestUser(dispatch)
+        navigate('/home')
     }
 
     return (
@@ -104,7 +102,7 @@ export default function Login({ location }) {
                                 <Box>
                                     Continuar con
                                 </Box>
-                                <SocialLogin />
+                                <SocialLogin hidePhone={isPhoneRegister} location={location} />
                             </Box>
                             <Box>
                                 ¿Aún no tienes una cuenta? <Link href="#" underline="none" component={LinkBehavior} to='/register'>Crear cuenta</Link>
