@@ -131,7 +131,7 @@ const CodePopover = ({ control, rules }) => {
                             sx={{ width: 300 }}
                             onChange={(_, data) => {
                                 setValue(`(${data.code})`)
-                                onChange(`(${data.code})`)
+                                onChange(`${data.code}`)
                                 handleClose();
                             }}
                             required={true}

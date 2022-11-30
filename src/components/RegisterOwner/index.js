@@ -14,7 +14,6 @@ import { useAuth } from '../../context/AuthContext';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useNavigate } from 'react-router-dom'
 import Alert from '@mui/material/Alert';
-import { Calendar } from 'lucide-react'
 
 const validations = {
     date_birth: {

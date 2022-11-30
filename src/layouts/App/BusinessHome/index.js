@@ -30,6 +30,7 @@ const BusinessHome = () => {
                 zIndex: '100',
                 position: 'absolute',
                 top: '5vh',
+                padding: '0 1rem',
                 color: '#fff'
             }}>
                 <Typography variant="h3">

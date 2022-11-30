@@ -27,6 +27,7 @@ import { apiProvider } from '../../api';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import PhotoInput from '../Forms/PhotoInput';
 
 const razas = [
     { value: 1, label: "Bulldog Frances" },
@@ -35,9 +36,9 @@ const razas = [
 ];
 
 const types = [
-    { value: 1, label: "Raza" },
-    { value: 2, label: "Mestizo" },
-    { value: 3, label: "Otro" }
+    { value: "breed", label: "Raza" },
+    { value: "mongrel", label: "Mestizo" },
+    { value: "other", label: "Otro" }
 ];
 
 const genders = [
@@ -52,8 +53,8 @@ const years = [
 ];
 
 const features = [
-    'Hembra', 'Macho', 'Ambos', 'Pelaje oscuro', 'Pelaje claro',
-    'Raza', 'Tamaño pequeño', 'Tamaño grande', 'Pelaje largo', 'Pelaje corto'
+    'Pelaje oscuro', 'Pelaje claro',
+    'Tamaño pequeño', 'Tamaño grande', 'Pelaje largo', 'Pelaje corto'
 ]
 
 const RegisterDog = ({ open, handleClose }) => {
@@ -75,6 +76,7 @@ const RegisterDog = ({ open, handleClose }) => {
                 breed,
                 gender,
                 name,
+                files,
                 dogAge,
                 ...features
             } = data;
@@ -85,15 +87,16 @@ const RegisterDog = ({ open, handleClose }) => {
 
             const parsedData = {
                 name: name,
-                type: type.label,
+                type: type.value,
                 breed: breed.label,
                 dogAge: dogAge.label,
                 gender: gender.label,
-                user_id: user.id,
-                features: elements
+                id_user: user.id,
+                features: elements,
+                files: files
             }
 
-            const formData = await formDataHandler(parsedData)
+            const formData = await formDataHandler(parsedData, 'files')
 
             const res = await apiProvider.post('/api/dog/new', formData)
 
@@ -104,6 +107,26 @@ const RegisterDog = ({ open, handleClose }) => {
             setError('Ha ocurrido un error inesperado.')
         }
     }
+
+    const generatePhotoProfile = () => (
+        <Box sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            p: 4
+        }}>
+            <Typography variant="h6" color="text.main" gutterBottom>
+                Sube tu foto de perfil
+            </Typography>
+            <Box sx={{ p: 3 }}>
+                <PhotoInput
+                    name="files"
+                    control={control}
+                    disabled={isSubmitting}
+                />
+            </Box>
+        </Box>
+    )
 
     return (
         <Dialog open={open} onClose={handleClose}>
@@ -117,18 +140,20 @@ const RegisterDog = ({ open, handleClose }) => {
             }}>
                 {!isSmall && (
                     <>
-                        <Box sx={{ flex: 1, p: 2 }}>
+                        <Box sx={{ flex: 1, p: 1 }}>
                             <Typography variant="h4" gutterBottom>
                                 Datos de tu perro
                             </Typography>
                             <Typography variant="body1" gutterBottom>
-                                Completa la siguiente información de tu mascota para añadir al perfil.
+                                Completa la siguiente información de tu
+                                <br /> mascota para añadir al perfil.
                             </Typography>
+                            {generatePhotoProfile()}
                         </Box>
                         <Divider orientation="vertical" flexItem>o</Divider>
                     </>
                 )}
-                <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+                <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ flex: 1 }}>
                     {(isSmall) && (
                         <Box mb={4}>
                             <Typography variant="h6" gutterBottom>
@@ -144,6 +169,7 @@ const RegisterDog = ({ open, handleClose }) => {
                             {error}
                         </Alert>
                     )}
+                    {(isSmall) && generatePhotoProfile()}
                     <Box sx={{ p: 2 }}>
                         <TextInput
                             label="Nombre"
@@ -221,7 +247,7 @@ const RegisterDog = ({ open, handleClose }) => {
                             <Box sx={{
                                 marginTop: '1rem',
                                 display: 'flex',
-                                width: '200px'
+                                flexWrap: 'wrap'
                             }}>
                                 {features.map(feature => (
                                     <Checkbox
@@ -246,13 +272,15 @@ const RegisterDog = ({ open, handleClose }) => {
                             </Box>
                         </FormControl>
                     </Box>
-                    <Button
-                        disabled={isSubmitting}
-                        variant="contained"
-                        type="submit"
-                    >
-                        Siguiente
-                    </Button>
+                    <Box sx={{ p: 2 }}>
+                        <Button
+                            disabled={isSubmitting}
+                            variant="contained"
+                            type="submit"
+                        >
+                            Siguiente
+                        </Button>
+                    </Box>
                 </Box>
             </Box>
         </Dialog>
