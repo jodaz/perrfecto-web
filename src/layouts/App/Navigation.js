@@ -5,9 +5,8 @@ import { useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext'
 // Icons
 import { ReactComponent as HuellaIcon } from '../../assets/icons/Huella.svg'
-import { ReactComponent as HuellaActiveIcon } from '../../assets/icons/HuellaActive.svg'
+import { ReactComponent as HuellaActiveIcon } from '../../assets/icons/PawHouseActive.svg'
 import { ReactComponent as StoreIcon } from '../../assets/icons/Store.svg'
-import { ReactComponent as StoreActiveIcon } from '../../assets/icons/StoreActive.svg'
 import { Newspaper } from 'lucide-react';
 import { MessageCircle } from 'lucide-react';
 import { Home } from 'lucide-react';
@@ -24,24 +23,24 @@ const icons = [
     {
         label: 'Marketplace',
         icon: <StoreIcon />,
-        active: <StoreActiveIcon />,
+        active: <StoreIcon />,
         route: '/market'
     },
     {
         label: 'Blog',
-        icon: <Newspaper />,
+        icon: <Newspaper color='#ccc' />,
         active: <Newspaper color='#A167C9' />,
         route: '/blog'
     },
     {
         label: 'Chat',
-        icon: <MessageCircle />,
+        icon: <MessageCircle color='#ccc' />,
         active: <MessageCircle color='#A167C9' />,
         route: '/chat'
     },
     {
         label: 'Perfil',
-        icon: <Dog />,
+        icon: <Dog color='#ccc' />,
         active: <Dog color='#A167C9' />,
         route: '/profile'
     }
@@ -50,25 +49,25 @@ const icons = [
 const businessIcons = [
     {
         label: 'Inicio',
-        icon: <Home />,
+        icon: <Home color='#ccc' />,
         active: <Home color='#A167C9' />,
         route: '/home'
     },
     {
         label: 'Blog',
-        icon: <Newspaper />,
+        icon: <Newspaper color='#ccc' />,
         active: <Newspaper color='#A167C9' />,
         route: '/blog'
     },
     {
         label: 'Marketplace',
-        icon: <StoreIcon />,
+        icon: <StoreIcon color='#ccc' />,
         active: <StoreIcon />,
         route: '/market'
     },
     {
         label: 'Perfil',
-        icon: <User />,
+        icon: <User color='#ccc' />,
         active: <User color='#A167C9' />,
         route: '/profile'
     }
