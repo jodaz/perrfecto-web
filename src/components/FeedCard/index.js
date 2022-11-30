@@ -10,9 +10,9 @@ import Box from '@mui/material/Box';
 import Badge from '@mui/material/Badge';
 
 // Icons
-import PawIcon from '../../assets/icons/Huella2.png'
+import { ReactComponent as PawIcon } from '../../assets/icons/Paw.svg'
 import { ReactComponent as StarIcon } from '../../assets/icons/Star.svg'
-import CloseIcon from '../../assets/icons/Close'
+import { ReactComponent as HuesitoIcon } from '../../assets/icons/Huesito.svg'
 
 const FeedCard = ({
     height,
@@ -66,14 +66,15 @@ const FeedCard = ({
                         justifyContent: 'space-between'
                     }}>
                         <IconButton sx={{
-                            background: 'linear-gradient(180deg, #8C8C8C 0%, #4B4B4B 100%)',
-                            padding: '1rem'
+                            background: 'url(/images/default/pasto_feo.png)',
+                            padding: '0.6rem',
+                            boxShadow: '0px 2px 5px rgba(51, 51, 51, 0.15)'
                         }}>
-                            <CloseIcon color="#fff" />
+                            <HuesitoIcon />
                         </IconButton>
                         <IconButton sx={{
-                            background: 'linear-gradient(180deg, #F8DD62 0%, #F5AA50 100%)',
-                            padding: '1rem'
+                            background: '#fff',
+                            boxShadow: '0px 2px 5px rgba(51, 51, 51, 0.15)'
                         }}>
                             <StarIcon />
                         </IconButton>
@@ -90,15 +91,15 @@ const FeedCard = ({
                                     width: '25px !important',
                                     borderRadius: '100px',
                                     color: '#fff',
-                                    backgroundColor: theme => theme.palette.warning.main
+                                    backgroundColor: theme => theme.palette.primary.main
                                 }
                             }}
                         >
                             <IconButton sx={{
-                                background: 'linear-gradient(135deg, #F6C056 0%, #F65555 49.48%, #CC295F 100%)',
-                                padding: '0.6rem'
+                                background: '#fff',
+                                boxShadow: '0px 2px 5px rgba(51, 51, 51, 0.15)'
                             }}>
-                                <img src={PawIcon} />
+                                <PawIcon />
                             </IconButton>
                         </Badge>
                     </CardActions>

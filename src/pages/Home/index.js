@@ -14,12 +14,12 @@ const Home = () => {
             flexDirection: 'column',
             alignItems: 'center'
         }}>
-            {(user.role == 'business')
+            {/* {(user.role == 'business')
             ? <></>
             : <>
                 <FeaturedCard title="Mascota del día" />
                 <FeaturedCard title="Mascota de la semana" />
-            </>}
+            </>} */}
         </Box>
     );
 }
