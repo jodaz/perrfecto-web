@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { useAuth, logout } from '../../context/AuthContext'
 import LinkBehavior from '../../components/LinkBehavior';
+import BasicTabs from '../../components/Tabs';
 // import RegisterOwner from '../../components/RegisterOwner';
 
 export default function Profile() {
@@ -10,6 +11,7 @@ export default function Profile() {
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', p: 3 }}>
+            <BasicTabs />
             <Button
                 variant="contained"
                 color="error"
