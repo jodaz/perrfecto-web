@@ -10,9 +10,19 @@ export default function Profile() {
     const { dispatch } = useAuth();
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', p: 3 }}>
+        <Box sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            p: 3,
+            backgroundColor: '#f6f6f6'
+        }}>
             <BasicTabs />
-            <Button
+            <Box sx={{
+                marginTop: '1rem'
+            }}>
+
+            </Box>
+            {/* <Button
                 variant="contained"
                 color="error"
                 fullWidth
@@ -21,7 +31,7 @@ export default function Profile() {
                 to='/'
             >
                 Cerrar sesión
-            </Button>
+            </Button> */}
         </Box>
     );
 }
