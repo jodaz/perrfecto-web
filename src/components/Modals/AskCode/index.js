@@ -94,8 +94,8 @@ const AskCode = ({ location }) => {
             title="Recuperar contraseña"
         >
             <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-                {(success || error) && (
-                    <Fade in={success || error}>
+                {(success) && (
+                    <Fade in={success}>
                         <Alert severity='success' sx={{ marginBottom: '1.5rem' }}>
                             {success}
                         </Alert>
