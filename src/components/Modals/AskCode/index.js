@@ -10,6 +10,7 @@ import { apiProvider } from '../../../api'
 import Alert from '@mui/material/Alert';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Fade from '@mui/material/Fade';
+import { alpha } from '@mui/material';
 
 const endpoints = [
     '/api/auth/reset-password',
@@ -18,6 +19,7 @@ const endpoints = [
 
 const AskCode = ({ location }) => {
     const [success, setSuccess] = React.useState('')
+    const [disabledLink, setDisabledLink] = React.useState(true)
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const navigate = useNavigate();
     const { state } = location;
@@ -56,6 +58,7 @@ const AskCode = ({ location }) => {
      */
     const onSubmitNewCode = async () => {
         setError(false)
+        setDisabledLink(true)
         const endpoint = (state.method == 'email') ? endpoints[0] : endpoints[1];
 
         await apiProvider.post(endpoint, state)
@@ -77,6 +80,12 @@ const AskCode = ({ location }) => {
             setTimeout(() => setSuccess(''), 3000)
         }
     }, [success])
+
+    React.useEffect(() => {
+        if (disabledLink) {
+            setTimeout(() => setDisabledLink(false), 30000)
+        }
+    }, [disabledLink])
 
     return (
         <Modal
@@ -126,9 +135,10 @@ const AskCode = ({ location }) => {
                         No has recibido el código?
                     </Typography>
                     <Box sx={{
-                        color: theme => theme.palette.info.main,
+                        transition: '0.3s',
+                        color: theme => (!disabledLink) ? theme.palette.info.main : `${alpha(theme.palette.info.main, 0.5)}`,
                         textDecoration: 'underline',
-                        cursor: 'pointer'
+                        cursor: disabledLink ? 'not-allowed' : 'pointer',
                     }} onClick={onSubmitNewCode}>
                         Reenviar código
                     </Box>
