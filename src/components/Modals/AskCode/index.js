@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { apiProvider } from '../../../api'
 import Alert from '@mui/material/Alert';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import Fade from '@mui/material/Fade';
 
 const endpoints = [
     '/api/auth/reset-password',
@@ -16,6 +17,7 @@ const endpoints = [
 ]
 
 const AskCode = ({ location }) => {
+    const [success, setSuccess] = React.useState('')
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const navigate = useNavigate();
     const { state } = location;
@@ -53,10 +55,15 @@ const AskCode = ({ location }) => {
      * y el campo deshabilitado
      */
     const onSubmitNewCode = async () => {
+        setError(false)
         const endpoint = (state.method == 'email') ? endpoints[0] : endpoints[1];
 
         await apiProvider.post(endpoint, state)
+            .then(() => {
+                setSuccess('Su código de recuperación ha sido enviado.')
+            })
             .catch(error => {
+                setSuccess(false)
                 setError(true)
             });
     };
@@ -65,6 +72,12 @@ const AskCode = ({ location }) => {
         setIsCompletted(true)
     }
 
+    React.useEffect(() => {
+        if (success) {
+            setTimeout(() => setSuccess(''), 3000)
+        }
+    }, [success])
+
     return (
         <Modal
             location={location}
@@ -72,10 +85,12 @@ const AskCode = ({ location }) => {
             title="Recuperar contraseña"
         >
             <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-                {(error) && (
-                    <Alert severity="error" sx={{ marginBottom: '1.5rem' }}>
-                        Ha ocurrido un error en su solicitud
-                    </Alert>
+                {(success || error) && (
+                    <Fade in={success || error}>
+                        <Alert severity='success' sx={{ marginBottom: '1.5rem' }}>
+                            {success}
+                        </Alert>
+                    </Fade>
                 )}
                 <Box sx={{ margin: '2rem 0', textAlign: 'center' }}>
                     <Controller
