@@ -13,15 +13,12 @@ export default function Profile() {
         <Box sx={{
             display: 'flex',
             flexDirection: 'column',
+            alignItems: 'center',
             p: 3,
             backgroundColor: '#f6f6f6'
         }}>
             <BasicTabs />
-            <Box sx={{
-                marginTop: '1rem'
-            }}>
 
-            </Box>
             {/* <Button
                 variant="contained"
                 color="error"
