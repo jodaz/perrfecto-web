@@ -7,8 +7,16 @@ import { Typography } from '@mui/material';
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from 'react-router-dom';
 import { apiProvider } from '../../../api'
+import Alert from '@mui/material/Alert';
+import useMediaQuery from '@mui/material/useMediaQuery';
+
+const endpoints = [
+    '/api/auth/reset-password',
+    '/api/auth/reset-password-phone'
+]
 
 const AskCode = ({ location }) => {
+    const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const navigate = useNavigate();
     const { state } = location;
     const [isCompletted, setIsCompletted] = React.useState(false)
@@ -21,23 +29,19 @@ const AskCode = ({ location }) => {
 
     const onSubmit = async (data) => {
         setError(false);
-        const { email } = state;
 
         const res = await apiProvider.post('/api/auth/verify-code', {
             ...data,
-            email: email
-        })
-            .catch(error => {
-                if (error.response.status == 401) {
-                    setError(true)
-                }
-            });
+            ...state
+        }).catch(error => {
+            if (error.response.status == 400) {
+                setError(true)
+            }
+        });
 
         if (res.status >= 200 && res.status < 300) {
             return navigate(`/recover-password/new`, {
-                state: {
-                    email: email
-                }
+                state: state
             })
         } else {
             setError(true)
@@ -48,20 +52,13 @@ const AskCode = ({ location }) => {
      * Cuando pida un nuevo codigo, el boton submit debe quedar cargando
      * y el campo deshabilitado
      */
-    const onSubmitNewCode = (data) => {
-        // console.log(data)
-        // setError(false);
+    const onSubmitNewCode = async () => {
+        const endpoint = (state.method == 'email') ? endpoints[0] : endpoints[1];
 
-        // // const response = await apiProvider.post('/api/auth/signin', {
-        // //     ...data,
-        // //     tipo: 1
-        // // }).catch(error => {
-        // //     if (error.response.status == 401) {
-        // //         setError(true)
-        // //     }
-        // // });
-
-        // // const { data: result } = response;
+        await apiProvider.post(endpoint, state)
+            .catch(error => {
+                setError(true)
+            });
     };
 
     const onCompletedCodeHandler = () => {
@@ -75,6 +72,11 @@ const AskCode = ({ location }) => {
             title="Recuperar contraseña"
         >
             <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+                {(error) && (
+                    <Alert severity="error" sx={{ marginBottom: '1.5rem' }}>
+                        Ha ocurrido un error en su solicitud
+                    </Alert>
+                )}
                 <Box sx={{ margin: '2rem 0', textAlign: 'center' }}>
                     <Controller
                         control={control}
@@ -100,7 +102,11 @@ const AskCode = ({ location }) => {
                         )}
                     />
                 </Box>
-                <Box display="flex" justifyContent='space-between'>
+                <Box sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    flexDirection: isSmall ? 'column' : 'row'
+                }}>
                     <Typography color="text.secondary" variant="body2">
                         No has recibido el código?
                     </Typography>

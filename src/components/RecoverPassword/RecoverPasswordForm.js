@@ -22,22 +22,25 @@ const RecoverPasswordForm = ({ method }) => {
         reValidateMode: "onBlur"
     });
 
-    const onSubmit = async (data) => {
+    const onSubmit = async (formData) => {
         const endpoint = (method == 'email') ? endpoints[0] : endpoints[1];
 
-        const response = await apiProvider.post(endpoint, data)
+        const response = await apiProvider.post(endpoint, formData)
             .catch(error => {
                 console.log(error)
             });
 
-        navigate(
-            `?method=${method}&success=true`,
-            {
-                state: {
-                    email: "jesuodz@gmail.com"
+        if (response.status >= 200 || response.status < 300) {
+            navigate(
+                `?method=${method}&success=true`,
+                {
+                    state: {
+                        ...formData,
+                        method: method
+                    }
                 }
-            }
-        )
+            )
+        }
     };
 
     return (
