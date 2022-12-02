@@ -23,9 +23,8 @@ export default function SignUp({ location }) {
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const navigate = useNavigate()
     const { dispatch } = useAuth();
-    const [error, setError] = React.useState(false)
-    const { control, handleSubmit, watch, formState: {
-        isSubmitting
+    const { control, handleSubmit, watch, setError, formState: {
+        isSubmitting, errors
     }} = useForm({
         reValidateMode: "onBlur"
     });
@@ -33,21 +32,27 @@ export default function SignUp({ location }) {
     const isPhoneRegister = getSearchParams(location, 'withPhone');
 
     const onSubmit = async (data) => {
-        setError(false);
+        try {
+            const res = await apiProvider.post('/api/auth/new', {
+                ...data
+            })
 
-        const res = await apiProvider.post('/api/auth/new', {
-            ...data
-        }).catch(error => {
-            if (error.response.status == 401) {
-                setError(true)
+            if (res.status >= 200 || res.status < 300) {
+                const { data } = res;
+
+                loginUser(dispatch, data)
+                navigate('/register/welcome')
             }
-        });
+        } catch (error) {
+            if (error.response.data.msg) {
+                const message = error.response.data.msg;
 
-        if (res.status >= 200 && res.status < 300) {
-            const { data } = res;
-
-            loginUser(dispatch, data)
-            navigate('/register/welcome')
+                if (message.includes('There is a user with the provided email')) {
+                    setError('email', {
+                       type: 'unique'
+                    })
+                }
+            }
         }
     };
 

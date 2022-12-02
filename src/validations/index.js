@@ -60,9 +60,11 @@ export const CONFIRM_PASSWORD = {
 export const EMAIL = {
     rules: {
         required: true,
-        pattern: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
+        pattern: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
+        unique: true
     },
     messages: {
+        unique: 'El correo ha sido registrado.',
         required: "Ingrese su correo",
         pattern: "Email inválido"
     }
