@@ -278,6 +278,7 @@ const RegisterDog = ({ open, handleClose }) => {
                             disabled={isSubmitting}
                             variant="contained"
                             type="submit"
+                            fullWidth
                         >
                             Siguiente
                         </Button>
