@@ -73,11 +73,13 @@ export const EMAIL = {
 export const PASSWORD = {
     rules: {
         required: true,
-        minLength: 6
+        minLength: 6,
+        invalid: true
     },
     messages: {
-        required: "Ingrese una contraseña",
-        minLength: "Mínimo 6 caracteres"
+        required: "Ingrese una contraseña.",
+        minLength: "Mínimo 6 caracteres.",
+        invalid: 'Credenciales inválidas.'
     }
 }
 

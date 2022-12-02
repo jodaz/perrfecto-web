@@ -25,8 +25,8 @@ export default function Login({ location }) {
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const navigate = useNavigate()
     const isPhoneRegister = getSearchParams(location, 'withPhone');
-    const [error, setError] = React.useState('')
-    const { control, handleSubmit, formState: {
+    const [errorAlert, setErrorAlert] = React.useState('')
+    const { control, handleSubmit, setError, formState: {
         isSubmitting
     }} = useForm({
         reValidateMode: "onBlur"
@@ -34,7 +34,7 @@ export default function Login({ location }) {
     const { dispatch } = useAuth();
 
     const onSubmit = async (data) => {
-        setError('');
+        setErrorAlert('');
         try {
             const res = await apiProvider.post('/api/auth', {
                 ...data
@@ -53,7 +53,12 @@ export default function Login({ location }) {
                 const message = error.response.data.msg;
 
                 if (message.includes('The user does not exist with that email')) {
-                    setError('No estás registrado. Crea una cuenta para poder comenzar en TinderDogs.')
+                    setErrorAlert('No estás registrado. Crea una cuenta para poder comenzar en TinderDogs.')
+                }
+                if (message.includes('Wrong Password')) {
+                    setError('password', {
+                        type: 'invalid'
+                    })
                 }
             }
         }
@@ -122,9 +127,9 @@ export default function Login({ location }) {
                             Iniciar sesión
                         </Box>
                     )}
-                    {(error) && (
+                    {(errorAlert) && (
                         <Alert severity="error" sx={{ marginBottom: '1.5rem' }}>
-                            No estás registrado. Crea una cuenta para poder comenzar en TinderDogs.
+                            {errorAlert}
                         </Alert>
                     )}
                     {(!isPhoneRegister) ? (
