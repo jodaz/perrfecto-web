@@ -141,7 +141,7 @@ const RegisterDog = ({ open, handleClose }) => {
                 {!isSmall && (
                     <>
                         <Box sx={{ flex: 1, p: 1 }}>
-                            <Typography variant="h4" gutterBottom>
+                            <Typography variant="h4" gutterBottom sx={{ fontWeight: '500' }}>
                                 Datos de tu perro
                             </Typography>
                             <Typography variant="body1" gutterBottom>
@@ -247,7 +247,8 @@ const RegisterDog = ({ open, handleClose }) => {
                             <Box sx={{
                                 marginTop: '1rem',
                                 display: 'flex',
-                                flexWrap: 'wrap'
+                                flexWrap: 'wrap',
+                                width: isSmall ? '200px' : '400px'
                             }}>
                                 {features.map(feature => (
                                     <Checkbox
