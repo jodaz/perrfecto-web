@@ -25,7 +25,7 @@ export default function Login({ location }) {
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const navigate = useNavigate()
     const isPhoneRegister = getSearchParams(location, 'withPhone');
-    const [error, setError] = React.useState(false)
+    const [error, setError] = React.useState('')
     const { control, handleSubmit, formState: {
         isSubmitting
     }} = useForm({
@@ -34,22 +34,27 @@ export default function Login({ location }) {
     const { dispatch } = useAuth();
 
     const onSubmit = async (data) => {
-        setError(false);
+        setError('');
+        try {
+            const res = await apiProvider.post('/api/auth', {
+                ...data
+            })
 
-        const res = await apiProvider.post('/api/auth', {
-            ...data
-        }).catch(error => {
-            if (error.response.status == 400) {
-                setError(true)
+            if (res.status >= 200 && res.status < 300) {
+                const { data } = res;
+                loginUser(dispatch, data)
+
+                if (data.data.role == 'user') {
+                    navigate('/detect-location')
+                }
             }
-        });
+        } catch (error) {
+            if (error.response.data.msg) {
+                const message = error.response.data.msg;
 
-        if (res.status >= 200 && res.status < 300) {
-            const { data } = res;
-            loginUser(dispatch, data)
-
-            if (data.data.role == 'user') {
-                navigate('/detect-location')
+                if (message.includes('The user does not exist with that email')) {
+                    setError('No estás registrado. Crea una cuenta para poder comenzar en TinderDogs.')
+                }
             }
         }
     };
