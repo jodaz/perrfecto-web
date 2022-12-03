@@ -3,7 +3,8 @@ import theme from './theme';
 import {
     Route,
     Routes,
-    useLocation
+    useLocation,
+    Navigate
 } from 'react-router-dom'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -77,11 +78,12 @@ function App() {
                                 </AppLayout>
                             }
                         />
+
                         <Route
                             path='/profile'
                             element={
                                 <AppLayout>
-                                    <Profile />
+                                    <Profile location={location} />
                                 </AppLayout>
                             }
                         />
@@ -109,6 +111,7 @@ function App() {
                         </Route>
                         <Route path="/register/welcome" element={<CreateProfileWelcome location={location} />} />
 
+                        {/** Bussiness routes */}
                         <Route path="/business" element={
                             <LandingLayout dark>
                                 <Business />

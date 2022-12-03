@@ -2,7 +2,8 @@ import * as React from 'react';
 import MuiToggleButton from '@mui/material/ToggleButton';
 import MuiToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { styled, alpha } from '@mui/material/styles';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import getSearchParams from '../utils/getSearchParams';
 
 const ToggleButton = styled(MuiToggleButton)(({ theme }) => ({
     backgroundColor: 'transparent',
@@ -35,18 +36,20 @@ const ToggleButtonGroup = styled(MuiToggleButtonGroup)(({ theme }) => ({
     width: 'fit-content',
 }));
 
-export default function ToggleButtons() {
-    const [alignment, setAlignment] = React.useState('profile')
+const ToggleButtons = () => {
+    const location = useLocation();
+    const currentTab = getSearchParams(location, 'tab');
     const navigate = useNavigate();
 
     const handleAlignment = (event, newAlignment) => {
-        setAlignment(newAlignment)
-        navigate(`?q=${newAlignment}`);
+        navigate(`?tab=${newAlignment}`);
     };
+
+    console.log(location)
 
     return (
         <ToggleButtonGroup
-            value={alignment}
+            value={currentTab}
             exclusive
             onChange={handleAlignment}
         >
@@ -59,3 +62,5 @@ export default function ToggleButtons() {
         </ToggleButtonGroup>
     );
 }
+
+export default ToggleButtons
