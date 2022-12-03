@@ -38,25 +38,22 @@ const ToggleButtonGroup = styled(MuiToggleButtonGroup)(({ theme }) => ({
 
 const ToggleButtons = () => {
     const location = useLocation();
-    const currentTab = getSearchParams(location, 'tab');
     const navigate = useNavigate();
 
     const handleAlignment = (event, newAlignment) => {
-        navigate(`?tab=${newAlignment}`);
+        navigate(`${newAlignment}`);
     };
-
-    console.log(location)
 
     return (
         <ToggleButtonGroup
-            value={currentTab}
+            value={location.pathname}
             exclusive
             onChange={handleAlignment}
         >
-            <ToggleButton value="pet" onClick={handleAlignment}>
+            <ToggleButton value="/profile" onClick={handleAlignment}>
                 Perfil mascota
             </ToggleButton>
-            <ToggleButton value="owner" onClick={handleAlignment}>
+            <ToggleButton value="/profile/owner" onClick={handleAlignment}>
                 Perfil persona
             </ToggleButton>
         </ToggleButtonGroup>

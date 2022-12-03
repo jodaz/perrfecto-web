@@ -5,14 +5,16 @@ import { Navigate } from 'react-router-dom'
 import { useAuth, logout } from '../../context/AuthContext'
 import LinkBehavior from '../../components/LinkBehavior';
 import BasicTabs from '../../components/Tabs';
+import getSearchParams from '../../utils/getSearchParams';
 // import RegisterOwner from '../../components/RegisterOwner';
 
-export default function Profile({ location }) {
+const Profile = ({ location }) => {
     const { dispatch } = useAuth();
+    const tab = getSearchParams(location, 'tab')
 
-    if (location.pathname == '/profile' && !location.search) {
-        return <Navigate replace to='/profile?tab=pet' />;
-    }
+    // if (location.pathname == '/profile' && !location.search) {
+    //     return <Navigate replace to='/profile?tab=pet' />;
+    // }
 
     return (
         <Box sx={{
@@ -23,6 +25,8 @@ export default function Profile({ location }) {
             backgroundColor: '#f6f6f6'
         }}>
             <BasicTabs />
+
+
 
             {/* <Button
                 variant="contained"
@@ -37,3 +41,5 @@ export default function Profile({ location }) {
         </Box>
     );
 }
+
+export default Profile

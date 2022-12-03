@@ -3,8 +3,7 @@ import theme from './theme';
 import {
     Route,
     Routes,
-    useLocation,
-    Navigate
+    useLocation
 } from 'react-router-dom'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -79,8 +78,19 @@ function App() {
                             }
                         />
 
+                        {/**
+                         * Profile routes
+                         */}
                         <Route
                             path='/profile'
+                            element={
+                                <AppLayout>
+                                    <Profile location={location} />
+                                </AppLayout>
+                            }
+                        />
+                        <Route
+                            path='/profile/owner'
                             element={
                                 <AppLayout>
                                     <Profile location={location} />
