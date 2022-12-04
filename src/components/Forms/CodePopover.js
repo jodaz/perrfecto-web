@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import phonecodes from '../../utils/phonecodes'
 import { Controller } from 'react-hook-form'
 import Popover from '@mui/material/Popover';
+import phoneCodes from '../../utils/phonecodes';
 
 const StyledAutocompletePopper = styled('div')(({ theme }) => ({
     [`& .${autocompleteClasses.paper}`]: {
@@ -71,7 +72,7 @@ const StyledInput = styled(TextField)(({ theme }) => ({
 }));
 
 const CodePopover = ({ control, rules }) => {
-    const [value, setValue] = React.useState(null)
+    const [value, setValue] = React.useState(phoneCodes[66])
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleClick = (event) => {
@@ -92,7 +93,7 @@ const CodePopover = ({ control, rules }) => {
                 pointerEvents: 'all !important',
                 marginRight: '2rem'
             }} onClick={handleClick}>
-                {value ? <>{value}</> : <>Cód.</>}
+                {(value) ? `(${value.code})` : <>Cód.</>}
             </Box>
             <Box component="hr"
                 sx={{
@@ -123,16 +124,20 @@ const CodePopover = ({ control, rules }) => {
                     control={control}
                     name='code_phone'
                     rules={rules}
+                    defaultValue={phoneCodes[66]}
                     render={({ field: { ref, onChange, ...fieldRest } }) => (
                         <Autocomplete
                             open={open}
                             options={phonecodes}
                             autoHighlight
                             sx={{ width: 300 }}
+                            defaultValue={value}
                             onChange={(_, data) => {
-                                setValue(`(${data.code})`)
-                                onChange(`${data.code}`)
-                                handleClose();
+                                if (data) {
+                                    setValue(data)
+                                    onChange(`${data.code}`)
+                                    handleClose();
+                                }
                             }}
                             required={true}
                             PopperComponent={StyledAutocompletePopper}
