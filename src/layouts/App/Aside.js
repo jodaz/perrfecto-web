@@ -24,6 +24,7 @@ const Sidebar = ({ children }) => {
                     width: drawerWidth,
                     boxSizing: 'border-box',
                 },
+                zIndex: 1000
             }}
             variant="permanent"
             anchor="left"

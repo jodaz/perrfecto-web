@@ -16,7 +16,7 @@ export default function AppLayout({ children }) {
         <Box sx={{
             position: 'relative',
             display: 'flex',
-            flexDirection: 'column'
+            flexDirection: isSmall ? 'column' : 'row'
         }}>
             {(!isSmall) && (
                 <Aside>
