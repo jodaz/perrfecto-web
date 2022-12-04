@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Button from '../../Button';
 import PasswordInput from '../../Forms/PasswordInput'
-import Checkbox from '../../Forms/Checkbox'
 import { useForm } from "react-hook-form";
 import Box from '@mui/material/Box';
 import TextInput from '../../Forms/TextInput';
@@ -154,13 +153,6 @@ const RegisterBusinessForm = ({ isSmall }) => {
                         validations={CONFIRM_PASSWORD.messages}
                         disabled={isSubmitting}
                         placeholder='Repita la contraseña'
-                    />
-                </Box>
-                <Box sx={{ p: 1 }}>
-                    <Checkbox
-                        control={control}
-                        name='remember_me'
-                        label='Recordar contraseña'
                     />
                 </Box>
                 <Box textAlign='center'>

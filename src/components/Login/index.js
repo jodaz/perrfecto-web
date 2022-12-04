@@ -13,7 +13,6 @@ import LinkBehavior from '../LinkBehavior';
 import { useNavigate } from 'react-router-dom';
 import SocialLogin from '../SocialLogin'
 import Alert from '@mui/material/Alert';
-import Checkbox from '../Forms/Checkbox';
 import { apiProvider } from '../../api'
 import getSearchParams from '../../utils/getSearchParams';
 import PhoneInput from '../Forms/PhoneInput';
@@ -167,13 +166,6 @@ export default function Login({ location }) {
                             rules={PASSWORD.rules}
                             validations={PASSWORD.messages}
                             placeholder='Ingresar contraseña'
-                        />
-                    </Box>
-                    <Box sx={{ p: 1 }}>
-                        <Checkbox
-                            control={control}
-                            name='remember_me'
-                            label='Recordar contraseña'
                         />
                     </Box>
                     <Box textAlign='center'>
