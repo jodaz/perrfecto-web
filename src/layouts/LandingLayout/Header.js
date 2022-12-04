@@ -5,11 +5,12 @@ import { Link, Button } from '@mui/material';
 import LinkBehavior from '../../components/LinkBehavior';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import LanguageButton from './LanguageButton';
+import Logo from '../../components/Logo';
 
 const BoxContainer = styled(Box)(({ theme }) => ({
     display: 'flex',
     width: '100%',
-    justifyContent: 'end',
+    justifyContent: 'space-between',
     padding: '0 1rem',
     position: 'fixed',
     alignItems: 'center',
@@ -59,6 +60,7 @@ const Header = ({ dark }) => {
 
     return (
         <BoxContainer component='navbar'>
+            <Logo />
             <Box sx={{
                 display: 'flex',
                 fontWeight: '300',
