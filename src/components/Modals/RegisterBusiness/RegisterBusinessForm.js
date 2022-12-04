@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Button from '../../Button';
 import PasswordInput from '../../Forms/PasswordInput'
-import Checkbox from '../../Forms/Checkbox'
 import { useForm } from "react-hook-form";
 import Box from '@mui/material/Box';
 import TextInput from '../../Forms/TextInput';
@@ -21,8 +20,7 @@ import {
 
 const RegisterBusinessForm = ({ isSmall }) => {
     const navigate = useNavigate()
-    const [error, setError] = React.useState(false)
-    const { control, handleSubmit, watch, formState: {
+    const { control, handleSubmit, watch, setError, formState: {
         isSubmitting
     }} = useForm({
         reValidateMode: "onBlur"
@@ -31,26 +29,35 @@ const RegisterBusinessForm = ({ isSmall }) => {
     const { dispatch } = useAuth();
 
     const onSubmit = async (data) => {
-        setError(false);
-        const formData = new FormData()
+        try {
+            const formData = new FormData()
 
-        await Object.keys(data).forEach((key) => {
-            formData.append(key, data[key])
-        })
-        formData.append('role', 'business')
+            await Object.keys(data).forEach((key) => {
+                formData.append(key, data[key])
+            })
+            formData.append('role', 'business')
 
-        const res = await fileProvider.post('/api/auth/new-business', formData)
-            .catch(error => {
-            if (error.response.status == 401) {
-                setError(true)
+            const res = await fileProvider.post('/api/auth/new-business', formData)
+
+            if (res.status >= 200 && res.status < 300) {
+                const { data } = res;
+
+                loginUser(dispatch, data)
+                navigate('/home')
             }
-        });
+        } catch (error) {
+            const err = await error.response.data.text()
+            const parsedError = JSON.parse(err);
 
-        if (res.status >= 200 && res.status < 300) {
-            const { data } = res;
+            if (parsedError.msg) {
+                const message = parsedError.msg;
 
-            loginUser(dispatch, data)
-            navigate('/home')
+                if (message.includes('There is a user with the provided email')) {
+                    setError('email', {
+                       type: 'unique'
+                    })
+                }
+            }
         }
     };
 
@@ -146,13 +153,6 @@ const RegisterBusinessForm = ({ isSmall }) => {
                         validations={CONFIRM_PASSWORD.messages}
                         disabled={isSubmitting}
                         placeholder='Repita la contraseña'
-                    />
-                </Box>
-                <Box sx={{ p: 1 }}>
-                    <Checkbox
-                        control={control}
-                        name='remember_me'
-                        label='Recordar contraseña'
                     />
                 </Box>
                 <Box textAlign='center'>

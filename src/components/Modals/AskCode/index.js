@@ -33,23 +33,31 @@ const AskCode = ({ location }) => {
 
     const onSubmit = async (data) => {
         setError(false);
+        try {
+            const res = await apiProvider.post('/api/auth/verify-code', {
+                ...data,
+                ...state
+            })
 
-        const res = await apiProvider.post('/api/auth/verify-code', {
-            ...data,
-            ...state
-        }).catch(error => {
-            if (error.response.status == 400) {
+            if (res.status >= 200 && res.status < 300) {
+                return navigate(`/recover-password/new`, {
+                    state: state
+                })
+            } else {
                 setError(true)
             }
-        });
+        } catch(error) {
+            const data = error.response.data;
 
-        if (res.status >= 200 && res.status < 300) {
-            return navigate(`/recover-password/new`, {
-                state: state
-            })
-        } else {
-            setError(true)
-        }
+            if (data) {
+                if (data.msg == 'invalid') {
+                    setError('Código inválido.')
+                }
+                if (data.msg == 'expired') {
+                    setError('Código expirado.')
+                }
+            }
+        };
     };
 
     /**
@@ -101,6 +109,13 @@ const AskCode = ({ location }) => {
                         </Alert>
                     </Fade>
                 )}
+                {(error) && (
+                    <Fade in={error}>
+                        <Alert severity='error' sx={{ marginBottom: '1.5rem' }}>
+                            {error}
+                        </Alert>
+                    </Fade>
+                )}
                 <Box sx={{ margin: '2rem 0', textAlign: 'center' }}>
                     <Controller
                         control={control}
@@ -115,6 +130,7 @@ const AskCode = ({ location }) => {
                                 inputStyle={{ borderColor: 'red' }}
                                 inputFocusStyle={{ borderColor: 'blue' }}
                                 onChange={value => {
+                                    setError(null)
                                     onChange(value);
                                     setIsCompletted(false)
                                 }}

@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import Navigation from './Navigation';
 import { useAuth } from '../../context/AuthContext'
 import { Camera } from 'lucide-react';
+import Logo from '../../components/Logo';
 // Icons
 import NotificationButton from './NotificationButton';
 
@@ -30,9 +31,10 @@ const Sidebar = ({ children }) => {
             <Toolbar sx={{
                 backgroundColor: theme => theme.palette.primary.main,
                 display: 'flex',
-                justifyContent: (user.role == 'user') ? 'space-between' : 'end'
+                justifyContent: 'space-between'
             }}>
                 {(user.role == 'user') && <Camera color="#fff" />}
+                <Logo />
                 <NotificationButton />
             </Toolbar>
             <Divider />
