@@ -103,8 +103,8 @@ export default function Login({ location }) {
                             </Box>
                             <Box>
                                 Al iniciar sesión en TinderDogs estás aceptando continuar de acuerdo a
-                                nuestros <Link href="#" underline="none">Términos y condiciones</Link> y con nuestra
-                                    <Link href="#" underline="none">  Política de Privacidad</Link>
+                                nuestros <Link href="/terms-conditions" underline="none">Términos y condiciones</Link> y con nuestra
+                                    <Link href="/privacy" underline="none">  Política de Privacidad</Link>
                             </Box>
                             <Box sx={{
                                 display: 'flex',
