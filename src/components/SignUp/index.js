@@ -218,7 +218,7 @@ export default function SignUp({ location }) {
                     <Box pl={2} pr={2}>
                         <Divider orientation="horizontal" flexItem>o crear cuenta con</Divider>
                     </Box>
-                    <SocialLogin />
+                    <SocialLogin location={location} />
                     <Box sx={{ margin: '0 auto 2rem auto' }}>
                         ¿Ya tienes una cuenta?
                         <Link

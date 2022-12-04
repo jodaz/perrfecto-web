@@ -1,11 +1,13 @@
 export const PHONE = {
     rules: {
         required: true,
-        pattern: /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/
+        pattern: /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/,
+        notfound: true
     },
     messages: {
         required: "Ingrese su teléfono",
-        pattern: 'Introduzca un número de teléfono válido'
+        pattern: 'Introduzca un número de teléfono válido',
+        notfound: 'El usuario no ha sido encontrado.'
     }
 }
 
@@ -61,12 +63,14 @@ export const EMAIL = {
     rules: {
         required: true,
         pattern: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
-        unique: true
+        unique: true,
+        notfound: true,
     },
     messages: {
         unique: 'El correo ha sido registrado.',
         required: "Ingrese su correo",
-        pattern: "Email inválido"
+        pattern: "Email inválido",
+        notfound: 'El usuario no ha sido encontrado.'
     }
 }
 
