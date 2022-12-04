@@ -28,6 +28,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import PhotoInput from '../Forms/PhotoInput';
+import generateYears from '../../utils/generateYears';
 
 const razas = [
     { value: 1, label: "Bulldog Frances" },
@@ -46,11 +47,7 @@ const genders = [
     { value: 2, label: "Hembra" }
 ];
 
-const years = [
-    { value: 1, label: "2020" },
-    { value: 2, label: "2021" },
-    { value: 3, label: "2022" }
-];
+const years = generateYears();
 
 const features = [
     'Pelaje oscuro', 'Pelaje claro',
@@ -209,6 +206,20 @@ const RegisterDog = ({ open, handleClose }) => {
                                 InputProps={{
                                     placeholder: 'Seleccione la raza'
                                 }}
+                            />
+                        </Box>
+                    )}
+                    {(type == 'Otro') && (
+                        <Box sx={{ p: 2 }}>
+                            <TextInput
+                                label="Raza"
+                                control={control}
+                                name="name"
+                                type="text"
+                                rules={NAME.rules}
+                                validations={NAME.messages}
+                                disabled={isSubmitting}
+                                placeholder='Ingresar nombre de la raza'
                             />
                         </Box>
                     )}

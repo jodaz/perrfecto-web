@@ -23,7 +23,7 @@ export const NAME = {
         required: true
     },
     messages: {
-        required: "Ingrese su nombre."
+        required: "Ingresar nombre."
     }
 }
 
