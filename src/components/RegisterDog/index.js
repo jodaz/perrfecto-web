@@ -3,12 +3,8 @@ import Button from '../Button';
 import Dialog from '@mui/material/Dialog';
 import { useForm } from "react-hook-form";
 import Box from '@mui/material/Box';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import Chip from '@mui/material/Chip';
 import Typography from '@mui/material/Typography';
 import DialogTitle from '../DialogTitle';
-import Checkbox from '../Forms/Checkbox';
 import TextInput from '../Forms/TextInput';
 import SelectInput from '../Forms/SelectInput';
 import { Calendar } from 'lucide-react'
@@ -20,7 +16,9 @@ import {
     BREED,
     DOG_GENDER,
     DOG_TYPE,
-    NAME
+    NAME,
+    FEATURES,
+    PHOTO
 } from '../../validations';
 import formDataHandler from '../../utils/formDataHandler';
 import { apiProvider } from '../../api';
@@ -29,6 +27,7 @@ import { useNavigate } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import PhotoInput from '../Forms/PhotoInput';
 import generateYears from '../../utils/generateYears';
+import ChipArrayInput from '../Forms/ChipArrayInput';
 
 const razas = [
     { value: 1, label: "Bulldog Frances" },
@@ -75,12 +74,8 @@ const RegisterDog = ({ open, handleClose }) => {
                 name,
                 files,
                 dogAge,
-                ...features
+                features
             } = data;
-            // Convert features object to array before sending
-            const elements = Object.entries(features).filter((feature) => {
-                if (feature[1]) return feature[0]
-            }).map(item => item[0])
 
             const parsedData = {
                 name: name,
@@ -89,8 +84,9 @@ const RegisterDog = ({ open, handleClose }) => {
                 dogAge: dogAge.label,
                 gender: gender.label,
                 id_user: user.id,
-                features: elements,
-                files: files
+                features: features,
+                files: files,
+                features: features
             }
 
             const formData = await formDataHandler(parsedData, 'files')
@@ -105,7 +101,7 @@ const RegisterDog = ({ open, handleClose }) => {
         }
     }
 
-    const generatePhotoProfile = () => (
+    const generatePhotoProfile = ({ isSubmitting }) => (
         <Box sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -120,6 +116,8 @@ const RegisterDog = ({ open, handleClose }) => {
                     name="files"
                     control={control}
                     disabled={isSubmitting}
+                    rules={PHOTO.rules}
+                    validations={PHOTO.messages}
                 />
             </Box>
         </Box>
@@ -134,7 +132,7 @@ const RegisterDog = ({ open, handleClose }) => {
                 height: 'fit-content',
                 p: 2,
                 color: theme => theme.palette.text.secondary
-            }}>
+            }} component="form" onSubmit={handleSubmit(onSubmit)}>
                 {!isSmall && (
                     <>
                         <Box sx={{ flex: 1, p: 1 }}>
@@ -145,12 +143,12 @@ const RegisterDog = ({ open, handleClose }) => {
                                 Completa la siguiente información de tu
                                 <br /> mascota para añadir al perfil.
                             </Typography>
-                            {generatePhotoProfile()}
+                            {generatePhotoProfile(isSubmitting)}
                         </Box>
                         <Divider orientation="vertical" flexItem>o</Divider>
                     </>
                 )}
-                <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ flex: 1 }}>
+                <Box sx={{ flex: 1 }}>
                     {(isSmall) && (
                         <Box mb={4}>
                             <Typography variant="h6" gutterBottom>
@@ -253,36 +251,15 @@ const RegisterDog = ({ open, handleClose }) => {
                         />
                     </Box>
                     <Box sx={{ p: 2 }}>
-                        <FormControl>
-                            <InputLabel color="divider" shrink>Características de tu mascota</InputLabel>
-                            <Box sx={{
-                                marginTop: '1rem',
-                                display: 'flex',
-                                flexWrap: 'wrap',
-                                width: isSmall ? '200px' : '400px'
-                            }}>
-                                {features.map(feature => (
-                                    <Checkbox
-                                        control={control}
-                                        name={feature}
-                                        icon={
-                                            <Chip
-                                                label={feature}
-                                                variant="outlined"
-                                                color="primary"
-                                            />
-                                        }
-                                        checkedIcon={
-                                            <Chip
-                                                label={feature}
-                                                variant='filled'
-                                                color="primary"
-                                            />
-                                        }
-                                    />
-                                ))}
-                            </Box>
-                        </FormControl>
+                        <ChipArrayInput
+                            control={control}
+                            name='features'
+                            labels={features}
+                            rules={FEATURES.rules}
+                            validations={FEATURES.messages}
+                            disabled={isSubmitting}
+                            label='Características de tu mascota'
+                        />
                     </Box>
                     <Box sx={{ p: 2 }}>
                         <Button
