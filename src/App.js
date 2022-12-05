@@ -34,7 +34,8 @@ import RegisterBusiness from './components/Modals/RegisterBusiness';
 import { AuthProvider } from './context/AuthContext'
 import Terms from './pages/Terms';
 import PetProfile from './pages/Profile/PetProfile';
-import UserProfile from './pages/Profile/UserProfile';
+import PetOwner from './pages/Profile/PetOwner';
+import Settings from './pages/Settings';
 
 function App() {
     let location = useLocation();
@@ -99,7 +100,17 @@ function App() {
                             element={
                                 <AppLayout>
                                     <Profile location={location}>
-                                        <UserProfile />
+                                        <PetOwner />
+                                    </Profile>
+                                </AppLayout>
+                            }
+                        />
+                        <Route
+                            path='/profile/settings'
+                            element={
+                                <AppLayout>
+                                    <Profile location={location}>
+                                        <Settings title='Configuración' />
                                     </Profile>
                                 </AppLayout>
                             }

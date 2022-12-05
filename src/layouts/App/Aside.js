@@ -40,7 +40,7 @@ const Sidebar = ({ children }) => {
             </Toolbar>
             <Divider />
             <Navigation />
-            <Box>
+            <Box sx={{ height: '100%', maxWidth: 'inherit' }}>
                 {children}
             </Box>
         </Drawer>
