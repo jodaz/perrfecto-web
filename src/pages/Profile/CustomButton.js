@@ -7,7 +7,10 @@ const CustomButton = ({
     icon,
     title,
     color,
-    p = 2
+    size,
+    p = 2,
+    sx,
+    ...rest
 }) => (
     <Box sx={{
         display: 'flex',
@@ -17,20 +20,33 @@ const CustomButton = ({
         width: 'fit-content',
         p: p
     }}>
-        <Button variant="contained" sx={{
-            borderRadius: '24px',
-            height: '4rem',
-            width: '4rem',
-            padding: 0
-        }} color={color}>
+        <Button
+            variant="contained"
+            color={color}
+            sx={{
+                borderRadius: '24px',
+                height: '4rem',
+                width: '4rem',
+                padding: 0,
+                boxShadow: '0px 2px 12px rgba(161, 103, 201, 0.36)',
+                ...sx
+            }}
+        >
             {React.cloneElement(icon, {
                 size: 32
             })}
         </Button>
-        <Typography variant="subtitle1" sx={{
-            textTransform: 'uppercase',
-            marginTop: '1rem'
-        }} color="text.tertiary" fontWeight={500} fontSize='12px'>
+        <Typography
+            variant="subtitle1"
+            sx={{
+                textTransform: 'uppercase',
+                marginTop: '1rem'
+            }}
+            color="text.tertiary"
+            fontWeight={500}
+            fontSize='12px'
+            textAlign='center'
+        >
             {title}
         </Typography>
     </Box>
