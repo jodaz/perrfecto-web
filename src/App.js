@@ -33,6 +33,7 @@ import RegisterBusiness from './components/Modals/RegisterBusiness';
 // Contexts
 import { AuthProvider } from './context/AuthContext'
 import Terms from './pages/Terms';
+import PetProfile from './pages/Profile/PetProfile';
 
 function App() {
     let location = useLocation();
@@ -86,7 +87,9 @@ function App() {
                             path='/profile'
                             element={
                                 <AppLayout>
-                                    <Profile location={location} />
+                                    <Profile location={location}>
+                                        <PetProfile />
+                                    </Profile>
                                 </AppLayout>
                             }
                         />
@@ -94,7 +97,9 @@ function App() {
                             path='/profile/owner'
                             element={
                                 <AppLayout>
-                                    <Profile location={location} />
+                                    <Profile location={location}>
+                                        <PetProfile />
+                                    </Profile>
                                 </AppLayout>
                             }
                         />

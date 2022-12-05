@@ -16,7 +16,8 @@ export default function AppLayout({ children }) {
         <Box sx={{
             position: 'relative',
             display: 'flex',
-            flexDirection: isSmall ? 'column' : 'row'
+            flexDirection: isSmall ? 'column' : 'row',
+            height: '100%'
         }}>
             {(!isSmall) && (
                 <Aside>
@@ -26,10 +27,8 @@ export default function AppLayout({ children }) {
             {(user.role == 'user' || !isAuth) ? <UsersHome /> : <BusinessHome />}
             {(isSmall) && (
                 <Box sx={{
-                    position: 'fixed',
                     width: '100%',
-                    bottom: 0,
-                    left: 0,
+                    height: '10vh'
                 }}>
                     <Navigation />
                 </Box>

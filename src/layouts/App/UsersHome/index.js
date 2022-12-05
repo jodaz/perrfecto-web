@@ -17,7 +17,7 @@ const UsersHome = () => {
                 position: 'relative',
                 flexGrow: 1,
                 bgcolor: 'background.default',
-                height: '100vh',
+                heigth: '100%',
                 width: isSmall ? '100%' : 'calc(100vw - 350px)',
                 display: 'flex',
                 alignItems: 'center',
@@ -35,7 +35,7 @@ const UsersHome = () => {
             }}
         >
             <React.Suspense>
-                <Box width={isSmall ? '300px' : '450px'} margin='2rem 0'>
+                <Box width={isSmall ? '300px' : '450px'} height='20vh' margin='2rem 0'>
                     <PopularMembers />
                 </Box>
             </React.Suspense>
@@ -44,7 +44,8 @@ const UsersHome = () => {
                 flexDirection: 'column',
                 position: 'relative',
                 width: 'fit-content',
-                margin: '0 auto'
+                margin: '0 auto',
+                height: '100%'
             }}>
                 <FeedCard />
                 <Fab
@@ -52,8 +53,9 @@ const UsersHome = () => {
                     aria-label="add"
                     sx={{
                         position: 'absolute',
-                        bottom: 0,
-                        right: '-80px'
+                        bottom: isSmall ? 0 : 0,
+                        right: isSmall ? '-25px' : '-80px',
+                        zIndex: 0
                     }}
                 >
                     <Filter2Icon />

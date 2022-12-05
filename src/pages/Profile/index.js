@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import BasicTabs from '../../components/Tabs';
 import PetProfile from './PetProfile';
 
-const Profile = () => (
+const Profile = ({ children }) => (
     <Box sx={{
         display: 'flex',
         flexDirection: 'column',
@@ -12,7 +12,7 @@ const Profile = () => (
         backgroundColor: '#f6f6f6'
     }}>
         <BasicTabs />
-        <PetProfile />
+        {children}
 
 
         {/* <Button

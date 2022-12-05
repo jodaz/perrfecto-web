@@ -8,39 +8,39 @@ import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Badge from '@mui/material/Badge';
+import { useMediaQuery } from '@mui/material';
 
 // Icons
 import { ReactComponent as PawIcon } from '../../assets/icons/Paw.svg'
 import { ReactComponent as StarIcon } from '../../assets/icons/Star.svg'
 import { ReactComponent as HuesitoIcon } from '../../assets/icons/Huesito.svg'
 
-const FeedCard = ({
-    height,
-    width
-}) => {
+const FeedCard = () => {
+    const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
+
     return (
         <Box sx={{ position: 'relative' }}>
             <Box sx={{
                 display: 'flex',
                 alignItems: 'center',
                 position: 'absolute',
-                top: '-50px',
-                left: '10px',
+                top: isSmall ? '-40px' : '-50px',
+                left: 0,
                 zIndex: 1000
             }}>
                 <Avatar sx={{
-                    width: '70px',
-                    height: '70px',
+                    width: isSmall ? '50px' : '70px',
+                    height: isSmall ? '50px' : '70px',
                     marginRight: '1rem',
-                    border: '1.6875px solid #F59E0B'
+                    border: '2px solid #F59E0B'
                 }} src='/images/samples/sexy-woman.png' />
-                <Typography gutterBottom variant="h5" component="div">
+                <Typography gutterBottom variant={isSmall ? 'body1' : "h5"} component="div">
                     Carmen Pires
                 </Typography>
             </Box>
             <Card sx={{
-                height: height,
-                maxWidth: width,
+                height: isSmall ? '450px' : '500px',
+                width: !isSmall ? '300px' : '300px',
                 borderRadius: '20px',
                 position: 'relative',
                 filter: 'drop-shadow(0px 2px 12px rgba(0, 0, 0, 0.24));'
