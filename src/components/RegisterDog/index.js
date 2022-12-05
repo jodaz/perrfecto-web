@@ -17,7 +17,8 @@ import {
     DOG_GENDER,
     DOG_TYPE,
     NAME,
-    FEATURES
+    FEATURES,
+    PHOTO
 } from '../../validations';
 import formDataHandler from '../../utils/formDataHandler';
 import { apiProvider } from '../../api';
@@ -100,7 +101,7 @@ const RegisterDog = ({ open, handleClose }) => {
         }
     }
 
-    const generatePhotoProfile = () => (
+    const generatePhotoProfile = ({ isSubmitting }) => (
         <Box sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -115,6 +116,8 @@ const RegisterDog = ({ open, handleClose }) => {
                     name="files"
                     control={control}
                     disabled={isSubmitting}
+                    rules={PHOTO.rules}
+                    validations={PHOTO.messages}
                 />
             </Box>
         </Box>
@@ -129,7 +132,7 @@ const RegisterDog = ({ open, handleClose }) => {
                 height: 'fit-content',
                 p: 2,
                 color: theme => theme.palette.text.secondary
-            }}>
+            }} component="form" onSubmit={handleSubmit(onSubmit)}>
                 {!isSmall && (
                     <>
                         <Box sx={{ flex: 1, p: 1 }}>
@@ -140,12 +143,12 @@ const RegisterDog = ({ open, handleClose }) => {
                                 Completa la siguiente información de tu
                                 <br /> mascota para añadir al perfil.
                             </Typography>
-                            {generatePhotoProfile()}
+                            {generatePhotoProfile(isSubmitting)}
                         </Box>
                         <Divider orientation="vertical" flexItem>o</Divider>
                     </>
                 )}
-                <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ flex: 1 }}>
+                <Box sx={{ flex: 1 }}>
                     {(isSmall) && (
                         <Box mb={4}>
                             <Typography variant="h6" gutterBottom>

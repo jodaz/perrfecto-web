@@ -14,24 +14,7 @@ import { useAuth } from '../../context/AuthContext';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useNavigate } from 'react-router-dom'
 import Alert from '@mui/material/Alert';
-
-const validations = {
-    date_birth: {
-        required: "Ingrese su fecha de nacimiento."
-    },
-    files: {
-        required: 'Seleccione una imagen.'
-    }
-}
-
-const rules = {
-    date_birth: {
-        required: true
-    },
-    files: {
-        required: true
-    }
-}
+import { PHOTO, DATE_BIRTH } from '../../validations';
 
 const RegisterOwner = ({ open, handleClose }) => {
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
@@ -114,8 +97,8 @@ const RegisterOwner = ({ open, handleClose }) => {
                                 name="files"
                                 control={control}
                                 disabled={isSubmitting}
-                                rules={rules.files}
-                                validations={validations}
+                                rules={PHOTO.rules}
+                                validations={PHOTO.messages}
                             />
                         </Box>
                         <Box sx={{ p: 3 }}>
@@ -123,8 +106,8 @@ const RegisterOwner = ({ open, handleClose }) => {
                                 name='date_birth'
                                 control={control}
                                 disabled={isSubmitting}
-                                rules={rules.date_birth}
-                                validations={validations}
+                                rules={DATE_BIRTH.rules}
+                                validations={DATE_BIRTH.messages}
                                 label='Fecha de cumpleaños'
                             />
                         </Box>

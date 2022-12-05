@@ -116,6 +116,24 @@ export const DOG_GENDER = {
     }
 }
 
+export const PHOTO = {
+    rules: {
+        required: true,
+    },
+    messages: {
+        required: 'Seleccione una imagen.'
+    }
+}
+
+export const DATE_BIRTH = {
+    rules: {
+        required: true,
+    },
+    messages: {
+        required: "Ingrese su fecha de nacimiento."
+    }
+}
+
 export const BREED = {
     rules: {
         required: true,
