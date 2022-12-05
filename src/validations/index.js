@@ -74,6 +74,17 @@ export const EMAIL = {
     }
 }
 
+export const FEATURES = {
+    rules: {
+        required: true,
+        minLength: 1
+    },
+    messages: {
+        required: "Seleccione al menos una característica.",
+        minLength: "Seleccione al menos una característica."
+    }
+}
+
 export const PASSWORD = {
     rules: {
         required: true,
