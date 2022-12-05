@@ -9,8 +9,14 @@ import {
     Star
 } from 'lucide-react';
 import CustomButton from './CustomButton';
+import RegisterDog from '../../components/RegisterDog';
+import getSearchParams from '../../utils/getSearchParams';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const PetProfile = () => {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const registerDog = getSearchParams(location, 'dog');
 
     return (
         <Box sx={{
@@ -46,8 +52,11 @@ const PetProfile = () => {
                     icon={<PlusSquare />}
                     title='Crear anuncio'
                     color="info"
+                    component={LinkBehavior}
+                    to='?dog=true'
                 />
             </Box>
+            <RegisterDog open={registerDog} handleClose={() => navigate('/profile')} />
         </Box>
     );
 }

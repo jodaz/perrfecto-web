@@ -10,6 +10,8 @@ const CustomButton = ({
     size,
     p = 2,
     sx,
+    component,
+    to,
     ...rest
 }) => (
     <Box sx={{
@@ -21,6 +23,8 @@ const CustomButton = ({
         p: p
     }}>
         <Button
+            component={component}
+            to={to}
             variant="contained"
             color={color}
             sx={{
@@ -43,7 +47,7 @@ const CustomButton = ({
                 marginTop: '1rem'
             }}
             color="text.tertiary"
-            fontWeight={500}
+            fontWeight={400}
             fontSize='12px'
             textAlign='center'
         >

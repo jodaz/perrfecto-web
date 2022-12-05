@@ -10,8 +10,14 @@ import {
     Image
 } from 'lucide-react';
 import CustomButton from './CustomButton';
+import getSearchParams from '../../utils/getSearchParams';
+import { useLocation, useNavigate } from 'react-router-dom';
+import RegisterOwner from '../../components/RegisterOwner';
 
-const UserProfile = () => {
+const PetOwner = () => {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const registerOwner = getSearchParams(location, 'register');
 
     return (
         <Box sx={{
@@ -53,12 +59,15 @@ const UserProfile = () => {
                 <CustomButton
                     size={32}
                     icon={<PlusSquare />}
-                    title='Crear anuncio'
+                    title='Añadir información'
                     color="info"
+                    component={LinkBehavior}
+                    to='?register=true'
                 />
             </Box>
+            <RegisterOwner open={registerOwner} handleClose={() => navigate('/profile/owner')} />
         </Box>
     );
 }
 
-export default UserProfile
+export default PetOwner
