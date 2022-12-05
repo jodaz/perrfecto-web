@@ -7,8 +7,20 @@ import { Typography } from '@mui/material';
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from 'react-router-dom';
 import { apiProvider } from '../../../api'
+import Alert from '@mui/material/Alert';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import Fade from '@mui/material/Fade';
+import { alpha } from '@mui/material';
+
+const endpoints = [
+    '/api/auth/reset-password',
+    '/api/auth/reset-password-phone'
+]
 
 const AskCode = ({ location }) => {
+    const [success, setSuccess] = React.useState('')
+    const [disabledLink, setDisabledLink] = React.useState(true)
+    const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const navigate = useNavigate();
     const { state } = location;
     const [isCompletted, setIsCompletted] = React.useState(false)
@@ -21,52 +33,67 @@ const AskCode = ({ location }) => {
 
     const onSubmit = async (data) => {
         setError(false);
-        const { email } = state;
-
-        const res = await apiProvider.post('/api/auth/verify-code', {
-            ...data,
-            email: email
-        })
-            .catch(error => {
-                if (error.response.status == 401) {
-                    setError(true)
-                }
-            });
-
-        if (res.status >= 200 && res.status < 300) {
-            return navigate(`/recover-password/new`, {
-                state: {
-                    email: email
-                }
+        try {
+            const res = await apiProvider.post('/api/auth/verify-code', {
+                ...data,
+                ...state
             })
-        } else {
-            setError(true)
-        }
+
+            if (res.status >= 200 && res.status < 300) {
+                return navigate(`/recover-password/new`, {
+                    state: state
+                })
+            } else {
+                setError(true)
+            }
+        } catch(error) {
+            const data = error.response.data;
+
+            if (data) {
+                if (data.msg == 'invalid') {
+                    setError('Código inválido.')
+                }
+                if (data.msg == 'expired') {
+                    setError('Código expirado.')
+                }
+            }
+        };
     };
 
     /**
      * Cuando pida un nuevo codigo, el boton submit debe quedar cargando
      * y el campo deshabilitado
      */
-    const onSubmitNewCode = (data) => {
-        // console.log(data)
-        // setError(false);
+    const onSubmitNewCode = async () => {
+        setError(false)
+        setDisabledLink(true)
+        const endpoint = (state.method == 'email') ? endpoints[0] : endpoints[1];
 
-        // // const response = await apiProvider.post('/api/auth/signin', {
-        // //     ...data,
-        // //     tipo: 1
-        // // }).catch(error => {
-        // //     if (error.response.status == 401) {
-        // //         setError(true)
-        // //     }
-        // // });
-
-        // // const { data: result } = response;
+        await apiProvider.post(endpoint, state)
+            .then(() => {
+                setSuccess('Su código de recuperación ha sido enviado.')
+            })
+            .catch(error => {
+                setSuccess(false)
+                setError(true)
+            });
     };
 
     const onCompletedCodeHandler = () => {
         setIsCompletted(true)
     }
+
+    React.useEffect(() => {
+        if (success) {
+            setTimeout(() => setSuccess(''), 3000)
+        }
+    }, [success])
+
+    React.useEffect(() => {
+        if (disabledLink) {
+            setTimeout(() => setDisabledLink(false), 30000)
+        }
+    }, [disabledLink])
 
     return (
         <Modal
@@ -75,6 +102,20 @@ const AskCode = ({ location }) => {
             title="Recuperar contraseña"
         >
             <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+                {(success) && (
+                    <Fade in={success}>
+                        <Alert severity='success' sx={{ marginBottom: '1.5rem' }}>
+                            {success}
+                        </Alert>
+                    </Fade>
+                )}
+                {(error) && (
+                    <Fade in={error}>
+                        <Alert severity='error' sx={{ marginBottom: '1.5rem' }}>
+                            {error}
+                        </Alert>
+                    </Fade>
+                )}
                 <Box sx={{ margin: '2rem 0', textAlign: 'center' }}>
                     <Controller
                         control={control}
@@ -89,6 +130,7 @@ const AskCode = ({ location }) => {
                                 inputStyle={{ borderColor: 'red' }}
                                 inputFocusStyle={{ borderColor: 'blue' }}
                                 onChange={value => {
+                                    setError(null)
                                     onChange(value);
                                     setIsCompletted(false)
                                 }}
@@ -100,14 +142,19 @@ const AskCode = ({ location }) => {
                         )}
                     />
                 </Box>
-                <Box display="flex" justifyContent='space-between'>
+                <Box sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    flexDirection: isSmall ? 'column' : 'row'
+                }}>
                     <Typography color="text.secondary" variant="body2">
                         No has recibido el código?
                     </Typography>
                     <Box sx={{
-                        color: theme => theme.palette.info.main,
+                        transition: '0.3s',
+                        color: theme => (!disabledLink) ? theme.palette.info.main : `${alpha(theme.palette.info.main, 0.5)}`,
                         textDecoration: 'underline',
-                        cursor: 'pointer'
+                        cursor: disabledLink ? 'not-allowed' : 'pointer',
                     }} onClick={onSubmitNewCode}>
                         Reenviar código
                     </Box>

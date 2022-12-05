@@ -9,21 +9,21 @@ import { useMediaQuery } from '@mui/material';
 import Navigation from './Navigation';
 
 export default function AppLayout({ children }) {
-    const { state: { user } } = useAuth();
+    const { state: { user, isAuth } } = useAuth();
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
 
     return (
         <Box sx={{
             position: 'relative',
             display: 'flex',
-            flexDirection: 'column'
+            flexDirection: isSmall ? 'column' : 'row'
         }}>
             {(!isSmall) && (
                 <Aside>
                     {children}
                 </Aside>
             )}
-            {(user.role == 'user') ? <UsersHome /> : <BusinessHome />}
+            {(user.role == 'user' || !isAuth) ? <UsersHome /> : <BusinessHome />}
             {(isSmall) && (
                 <Box sx={{
                     position: 'fixed',

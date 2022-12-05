@@ -3,8 +3,10 @@ import Dialog from '@mui/material/Dialog';
 import Box from '@mui/material/Box';
 import { useNavigate } from 'react-router-dom';
 import DialogTitle from '../DialogTitle'
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 export default function Modal({ location, title, pathname, children }) {
+    const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const navigate = useNavigate()
 
     const handleClose = () => navigate('/')
@@ -18,7 +20,7 @@ export default function Modal({ location, title, pathname, children }) {
             <Box sx={{
                 m: 1,
                 display: 'flex',
-                width: '400px',
+                width: isSmall ? 'fit-content' : '400px',
                 height: 'fit-content',
                 p: 3,
                 color: theme => theme.palette.text.secondary

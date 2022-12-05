@@ -74,7 +74,7 @@ const RegisterOwner = ({ open, handleClose }) => {
                 {!isSmall && (
                     <>
                         <Box sx={{ flex: 1, p: 2 }}>
-                            <Typography variant="h4" gutterBottom>
+                            <Typography variant="h4" gutterBottom sx={{ fontWeight: '500' }}>
                                 Datos del propietario
                             </Typography>
                             <Typography variant="body1" gutterBottom>

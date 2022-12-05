@@ -13,7 +13,6 @@ import LinkBehavior from '../LinkBehavior';
 import { useNavigate } from 'react-router-dom';
 import SocialLogin from '../SocialLogin'
 import Alert from '@mui/material/Alert';
-import Checkbox from '../Forms/Checkbox';
 import { apiProvider } from '../../api'
 import getSearchParams from '../../utils/getSearchParams';
 import PhoneInput from '../Forms/PhoneInput';
@@ -25,8 +24,8 @@ export default function Login({ location }) {
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const navigate = useNavigate()
     const isPhoneRegister = getSearchParams(location, 'withPhone');
-    const [error, setError] = React.useState(false)
-    const { control, handleSubmit, formState: {
+    const [errorAlert, setErrorAlert] = React.useState('')
+    const { control, handleSubmit, setError, formState: {
         isSubmitting
     }} = useForm({
         reValidateMode: "onBlur"
@@ -34,22 +33,37 @@ export default function Login({ location }) {
     const { dispatch } = useAuth();
 
     const onSubmit = async (data) => {
-        setError(false);
+        setErrorAlert('');
+        try {
+            const res = await apiProvider.post('/api/auth', {
+                ...data
+            })
 
-        const res = await apiProvider.post('/api/auth', {
-            ...data
-        }).catch(error => {
-            if (error.response.status == 400) {
-                setError(true)
+            if (res.status >= 200 && res.status < 300) {
+                const { data } = res;
+                loginUser(dispatch, data)
+
+                if (data.data.role == 'user') {
+                    navigate('/detect-location')
+                } else {
+                    navigate('/home')
+                }
             }
-        });
+        } catch (error) {
+            if (error.response.data.msg) {
+                const message = error.response.data.msg;
 
-        if (res.status >= 200 && res.status < 300) {
-            const { data } = res;
-            loginUser(dispatch, data)
-
-            if (data.data.role == 'user') {
-                navigate('/detect-location')
+                if (message.includes('The user does not exist with that email')) {
+                    setErrorAlert('No estás registrado. Crea una cuenta para poder comenzar en TinderDogs.')
+                }
+                if (message.includes('The user does not exist with that phone')) {
+                    setErrorAlert('No estás registrado. Crea una cuenta para poder comenzar en TinderDogs.')
+                }
+                if (message.includes('Wrong Password')) {
+                    setError('password', {
+                        type: 'invalid'
+                    })
+                }
             }
         }
     };
@@ -90,8 +104,8 @@ export default function Login({ location }) {
                             </Box>
                             <Box>
                                 Al iniciar sesión en TinderDogs estás aceptando continuar de acuerdo a
-                                nuestros <Link href="#" underline="none">Términos y condiciones</Link> y con nuestra
-                                    <Link href="#" underline="none">  Política de Privacidad</Link>
+                                nuestros <Link href="/terms-conditions" underline="none">Términos y condiciones</Link> y con nuestra
+                                    <Link href="/privacy" underline="none">  Política de Privacidad</Link>
                             </Box>
                             <Box sx={{
                                 display: 'flex',
@@ -117,9 +131,9 @@ export default function Login({ location }) {
                             Iniciar sesión
                         </Box>
                     )}
-                    {(error) && (
+                    {(errorAlert) && (
                         <Alert severity="error" sx={{ marginBottom: '1.5rem' }}>
-                            No estás registrado. Crea una cuenta para poder comenzar en TinderDogs.
+                            {errorAlert}
                         </Alert>
                     )}
                     {(!isPhoneRegister) ? (
@@ -157,13 +171,6 @@ export default function Login({ location }) {
                             rules={PASSWORD.rules}
                             validations={PASSWORD.messages}
                             placeholder='Ingresar contraseña'
-                        />
-                    </Box>
-                    <Box sx={{ p: 1 }}>
-                        <Checkbox
-                            control={control}
-                            name='remember_me'
-                            label='Recordar contraseña'
                         />
                     </Box>
                     <Box textAlign='center'>
@@ -209,7 +216,7 @@ export default function Login({ location }) {
                     <Box pl={2} pr={2}>
                         <Divider orientation="horizontal" flexItem>o iniciar sesión con</Divider>
                     </Box>
-                    <SocialLogin />
+                    <SocialLogin location={location} />
                     <Box sx={{ margin: '0 auto 2rem auto' }}>
                         ¿Ya tienes una cuenta?
                         <Link

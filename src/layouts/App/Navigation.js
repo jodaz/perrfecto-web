@@ -104,7 +104,8 @@ const Navigation = () => {
         <Toolbar sx={{
             display: 'flex',
             justifyContent: 'space-between',
-            boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.08)'
+            boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.08)',
+            backgroundColor: '#fff'
         }}>
             {(user.role == 'user') ? renderUserLinks() : renderBussinessLinks()}
         </Toolbar>

@@ -32,6 +32,7 @@ import Business from './pages/Business';
 import RegisterBusiness from './components/Modals/RegisterBusiness';
 // Contexts
 import { AuthProvider } from './context/AuthContext'
+import Terms from './pages/Terms';
 
 function App() {
     let location = useLocation();
@@ -131,6 +132,10 @@ function App() {
                         </Route>
 
                         <Route path="/introduction" element={<Intro />} />
+
+                        <Route path="/terms-conditions" element={<Terms />} />
+
+                        <Route path="/privacy" element={<Terms />} />
                     </Routes>
                 </AuthProvider>
             </ThemeProvider>

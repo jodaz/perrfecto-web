@@ -16,28 +16,40 @@ const endpoints = [
 
 const RecoverPasswordForm = ({ method }) => {
     const navigate = useNavigate()
-    const { control, handleSubmit, formState: {
+    const { control, handleSubmit, setError, formState: {
         isSubmitting
     }} = useForm({
         reValidateMode: "onBlur"
     });
 
-    const onSubmit = async (data) => {
-        const endpoint = (method == 'email') ? endpoints[0] : endpoints[1];
+    const onSubmit = async (formData) => {
+        try {
+            const endpoint = (method == 'email') ? endpoints[0] : endpoints[1];
 
-        const response = await apiProvider.post(endpoint, data)
-            .catch(error => {
-                console.log(error)
-            });
+            const response = await apiProvider.post(endpoint, formData)
 
-        navigate(
-            `?method=${method}&success=true`,
-            {
-                state: {
-                    email: "jesuodz@gmail.com"
+            if (response.status >= 200 || response.status < 300) {
+                navigate(
+                    `?method=${method}&success=true`,
+                    {
+                        state: {
+                            ...formData,
+                            method: method
+                        }
+                    }
+                )
+            }
+        } catch (error) {
+            const data = error.response.data;
+
+            if (data) {
+                if (data.msg == 'User not found') {
+                    setError(method, {
+                        type: 'notfound'
+                    })
                 }
             }
-        )
+        }
     };
 
     return (

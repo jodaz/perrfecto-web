@@ -104,7 +104,7 @@ const theme = createTheme({
                 root: {
                     borderRadius: '12px',
                     fontWeight: 500,
-                    color: '#F24747'
+                    // color: '#F24747'
                 }
             }
         },

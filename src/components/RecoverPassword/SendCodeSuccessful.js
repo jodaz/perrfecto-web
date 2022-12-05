@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import LinkBehavior from '../LinkBehavior';
+import useMediaQuery from '@mui/material/useMediaQuery';
 // Icons
 import { ReactComponent as EmailSendGreenIcon } from '../../assets/icons/EmailSendGreen.svg'
 import { ReactComponent as MessagePhoneGreenIcon } from '../../assets/icons/MessagePhoneGreen.svg'
@@ -15,6 +16,7 @@ const SendCodeSuccessful = ({
         flex: 1,
         display: 'flex',
         flexDirection: 'column',
+        width: 'fit-content'
     }}>
         <Box sx={{ m: 1, flex: 1, p: 1 }}>
             <Typography variant='h6' align='center' color='text.primary'>

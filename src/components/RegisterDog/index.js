@@ -28,6 +28,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import PhotoInput from '../Forms/PhotoInput';
+import generateYears from '../../utils/generateYears';
 
 const razas = [
     { value: 1, label: "Bulldog Frances" },
@@ -46,11 +47,7 @@ const genders = [
     { value: 2, label: "Hembra" }
 ];
 
-const years = [
-    { value: 1, label: "2020" },
-    { value: 2, label: "2021" },
-    { value: 3, label: "2022" }
-];
+const years = generateYears();
 
 const features = [
     'Pelaje oscuro', 'Pelaje claro',
@@ -141,7 +138,7 @@ const RegisterDog = ({ open, handleClose }) => {
                 {!isSmall && (
                     <>
                         <Box sx={{ flex: 1, p: 1 }}>
-                            <Typography variant="h4" gutterBottom>
+                            <Typography variant="h4" gutterBottom sx={{ fontWeight: '500' }}>
                                 Datos de tu perro
                             </Typography>
                             <Typography variant="body1" gutterBottom>
@@ -212,6 +209,20 @@ const RegisterDog = ({ open, handleClose }) => {
                             />
                         </Box>
                     )}
+                    {(type == 'Otro') && (
+                        <Box sx={{ p: 2 }}>
+                            <TextInput
+                                label="Raza"
+                                control={control}
+                                name="name"
+                                type="text"
+                                rules={NAME.rules}
+                                validations={NAME.messages}
+                                disabled={isSubmitting}
+                                placeholder='Ingresar nombre de la raza'
+                            />
+                        </Box>
+                    )}
                     <Box sx={{ p: 2 }}>
                         <SelectInput
                             label="Sexo"
@@ -247,7 +258,8 @@ const RegisterDog = ({ open, handleClose }) => {
                             <Box sx={{
                                 marginTop: '1rem',
                                 display: 'flex',
-                                flexWrap: 'wrap'
+                                flexWrap: 'wrap',
+                                width: isSmall ? '200px' : '400px'
                             }}>
                                 {features.map(feature => (
                                     <Checkbox
@@ -277,6 +289,7 @@ const RegisterDog = ({ open, handleClose }) => {
                             disabled={isSubmitting}
                             variant="contained"
                             type="submit"
+                            fullWidth
                         >
                             Siguiente
                         </Button>
