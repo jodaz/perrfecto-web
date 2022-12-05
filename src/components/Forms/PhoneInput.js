@@ -51,7 +51,7 @@ const PhoneInput = ({
                                     <CodePopover control={control} />
                                 </InputAdornment>
                             }
-                            inputProps={{ maxLength: 11 }}
+                            inputProps={{ maxLength: 15 }}
                         />
                         {error && (
                             <FormHelperText error>
