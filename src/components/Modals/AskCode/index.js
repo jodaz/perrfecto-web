@@ -30,6 +30,7 @@ const AskCode = ({ location }) => {
     }} = useForm({
         reValidateMode: "onBlur"
     });
+    let pin = React.useRef();
 
     const onSubmit = async (data) => {
         setError(false);
@@ -47,6 +48,7 @@ const AskCode = ({ location }) => {
                 setError(true)
             }
         } catch(error) {
+            pin.current.clear();
             const data = error.response.data;
 
             if (data) {
@@ -78,10 +80,6 @@ const AskCode = ({ location }) => {
                 setError(true)
             });
     };
-
-    const onCompletedCodeHandler = () => {
-        setIsCompletted(true)
-    }
 
     React.useEffect(() => {
         if (success) {
@@ -120,7 +118,7 @@ const AskCode = ({ location }) => {
                     <Controller
                         control={control}
                         name="code"
-                        render={({ field: { onChange, onBlur, value, ref } }) => (
+                        render={({ field: { onChange, onBlur } }) => (
                             <PinInput
                                 length={5}
                                 type="numeric"
@@ -134,10 +132,14 @@ const AskCode = ({ location }) => {
                                     onChange(value);
                                     setIsCompletted(false)
                                 }}
-                                onComplete={onCompletedCodeHandler}
+                                onComplete={value => {
+                                    onChange(value);
+                                    setIsCompletted(true);
+                                }}
                                 onBlur={onBlur}
                                 autoSelect={true}
                                 regexCriteria={/^[ A-Za-z0-9_@./#&+-]*$/}
+                                ref={p => (pin.current = p)}
                             />
                         )}
                     />
