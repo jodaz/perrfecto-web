@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Slide from '@mui/material/Slide';
 import Button from '@mui/material/Button';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -8,9 +7,9 @@ import ListItemText from '@mui/material/ListItemText';
 import MuiList from '@mui/material/List';
 import { logout, useAuth } from '../../context/AuthContext';
 import LinkBehavior from '../../components/LinkBehavior';
-import ProfileToolbar from '../../components/ProfileToolbar';
 import { ListItemIcon } from '@mui/material';
 import { ChevronRight } from 'lucide-react';
+import SettingsLayout from '../../layouts/SettingsLayout';
 
 const List = ({ children }) => (
     <MuiList sx={{
@@ -62,11 +61,11 @@ const ListItemLink = ({ to, title }) => (
     </ListItem>
 )
 
-const Settings = ({ children, title }) => {
+const Settings = ({ title }) => {
     const { dispatch } = useAuth();
 
     return (
-        <Slide direction="left" in={true} mountOnEnter unmountOnExit>
+        <SettingsLayout title="Configuraciones">
             <Box sx={{
                 height: '100%',
                 width: '100%',
@@ -75,8 +74,6 @@ const Settings = ({ children, title }) => {
                 justifyContent: 'space-between'
             }}>
                 <Box>
-                    <ProfileToolbar title={title} />
-                    {children}
                     <List>
                         <ListTitle>
                             Cuenta
@@ -100,7 +97,7 @@ const Settings = ({ children, title }) => {
                     </Button>
                 </Box>
             </Box>
-        </Slide>
+        </SettingsLayout>
     );
 }
 

@@ -110,9 +110,7 @@ function App() {
                             path='/profile/settings'
                             element={
                                 <AppLayout>
-                                    <Profile location={location}>
-                                        <Settings title='Configuración' />
-                                    </Profile>
+                                    <Settings />
                                 </AppLayout>
                             }
                         />
