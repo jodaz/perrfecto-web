@@ -5,9 +5,17 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { XSquare } from 'lucide-react';
 import Stack from '@mui/material/Stack';
+import { logout, useAuth } from '../../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
-const DeleteAccount = ({ open, handleClose }) => {
+const AccountDeleteWarning = ({ open, handleClose }) => {
+    const navigate = useNavigate();
+    const { dispatch } = useAuth();
+
     const submitDelete = async (data) => {
+        navigate('/?delete=true')
+        logout(dispatch);
+
         // setErrorAlert('');
         // try {
         //     const res = await apiProvider.post('/api/auth', {
@@ -85,4 +93,4 @@ const DeleteAccount = ({ open, handleClose }) => {
     );
 }
 
-export default DeleteAccount
+export default AccountDeleteWarning

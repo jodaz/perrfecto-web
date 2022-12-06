@@ -11,6 +11,8 @@ import esLocale from 'date-fns/locale/es';
 // Layouts
 import AppLayout from './layouts/App';
 import LandingLayout from './layouts/LandingLayout';
+// Contexts
+import { AuthProvider } from './context/AuthContext'
 // Pages
 import NotFound from "./pages/NotFound";
 import Landing from "./pages/Landing";
@@ -30,15 +32,12 @@ import Notifications from './pages/Notifications'
 import CreateProfileWelcome from './components/CreateProfileWelcome';
 import Business from './pages/Business';
 import RegisterBusiness from './components/Modals/RegisterBusiness';
-// Contexts
-import { AuthProvider } from './context/AuthContext'
 import Terms from './pages/Terms';
 import PetProfile from './pages/Profile/PetProfile';
 import PetOwner from './pages/Profile/PetOwner';
 import Settings from './pages/Settings';
 import Favourites from './pages/Favourites';
 import Account from './pages/account';
-import DeleteAccount from './components/Modals/DeleteAccount';
 
 function App() {
     let location = useLocation();
@@ -146,7 +145,7 @@ function App() {
 
                         <Route path="/" element={
                             <LandingLayout>
-                                <Landing />
+                                <Landing location={location} />
                             </LandingLayout>
                         }>
                             <Route path="/login" element={<Login location={location} />} />

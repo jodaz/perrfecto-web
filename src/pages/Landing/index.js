@@ -3,9 +3,13 @@ import BackgroundDogs from '../../assets/images/background-dogs.png'
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Button } from '@mui/material';
 import LinkBehavior from '../../components/LinkBehavior';
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
+import getSearchParams from '../../utils/getSearchParams';
+import DeletedAccount from '../../components/Modals/DeletedAccount';
 
-const Landing = () => {
+const Landing = ({ location }) => {
+    const navigate = useNavigate();
+    const openDeleteModal = getSearchParams(location, 'delete')
     const matches = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
     return (
@@ -65,6 +69,7 @@ const Landing = () => {
                 </Button>
                 <Outlet />
             </Box>
+            <DeletedAccount open={openDeleteModal} handleClose={() => navigate('/')} />
         </Box>
     );
 }
