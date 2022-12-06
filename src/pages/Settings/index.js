@@ -82,6 +82,10 @@ const Settings = ({ title }) => {
                             to="account"
                             title="Cuenta de acceso"
                         />
+                        <ListItemLink
+                            to="information"
+                            title="Información personal"
+                        />
                     </List>
                 </Box>
                 <Box sx={{ p: 2 }}>

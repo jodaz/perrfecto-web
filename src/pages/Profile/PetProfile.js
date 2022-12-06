@@ -6,13 +6,17 @@ import {
     Newspaper
 } from 'lucide-react';
 import CustomButton from './CustomButton';
-import RegisterDog from '../../components/RegisterDog';
 import getSearchParams from '../../utils/getSearchParams';
 import { useLocation, useNavigate } from 'react-router-dom';
 import BasicTabs from '../../components/Tabs';
 import ProfileOptions from './ProfileOptions';
+import { useAuth } from '../../context/AuthContext'
+
+const RegisterDog = React.lazy(() => import('../../components/RegisterDog'));
 
 const PetProfile = () => {
+    const { state: { user } } = useAuth();
+    const { dog } = user;
     const location = useLocation();
     const navigate = useNavigate();
     const registerDog = getSearchParams(location, 'dog');
@@ -42,10 +46,14 @@ const PetProfile = () => {
                         title='Crear anuncio'
                         color="info"
                         component={LinkBehavior}
-                        to='?dog=true'
+                        to={Object.entries(dog).length ? 'create-ad' : '?dog=true'}
                     />
                 </Box>
-                <RegisterDog open={registerDog} handleClose={() => navigate('/profile')} />
+                {(!Object.entries(dog).length) && (
+                    <React.Suspense>
+                        <RegisterDog open={registerDog} handleClose={() => navigate('/profile')} />
+                    </React.Suspense>
+                )}
             </Box>
         </Box>
     );

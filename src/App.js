@@ -38,6 +38,7 @@ import PetOwner from './pages/Profile/PetOwner';
 import Settings from './pages/Settings';
 import Favourites from './pages/Favourites';
 import Account from './pages/account';
+import CreateAd from './pages/Ad/CreateAd';
 
 function App() {
     let location = useLocation();
@@ -80,6 +81,17 @@ function App() {
                             element={
                                 <AppLayout>
                                     <Blog />
+                                </AppLayout>
+                            }
+                        />
+                        {/**
+                         * Ad routes
+                         */}
+                        <Route
+                            path='/profile/ads/create'
+                            element={
+                                <AppLayout>
+                                    <CreateAd location={location} />
                                 </AppLayout>
                             }
                         />
