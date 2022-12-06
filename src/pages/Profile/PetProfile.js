@@ -46,7 +46,7 @@ const PetProfile = () => {
                         title='Crear anuncio'
                         color="info"
                         component={LinkBehavior}
-                        to={Object.entries(dog).length ? 'create-ad' : '?dog=true'}
+                        to={Object.entries(dog).length ? 'ads/create' : '?dog=true'}
                     />
                 </Box>
                 {(!Object.entries(dog).length) && (
