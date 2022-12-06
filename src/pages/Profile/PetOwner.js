@@ -10,11 +10,14 @@ import {
 import CustomButton from './CustomButton';
 import getSearchParams from '../../utils/getSearchParams';
 import { useLocation, useNavigate } from 'react-router-dom';
-import RegisterOwner from '../../components/RegisterOwner';
 import BasicTabs from '../../components/Tabs';
 import ProfileOptions from './ProfileOptions';
+import { useAuth } from '../../context/AuthContext'
+
+const RegisterOwner = React.lazy(() => import('../../components/RegisterOwner'));
 
 const PetOwner = () => {
+    const { state: { user } } = useAuth();
     const location = useLocation();
     const navigate = useNavigate();
     const registerOwner = getSearchParams(location, 'register');
@@ -47,16 +50,22 @@ const PetOwner = () => {
                         title='Crear publicación'
                         color="primary"
                     />
-                    <CustomButton
-                        size={32}
-                        icon={<PlusSquare />}
-                        title='Añadir información'
-                        color="info"
-                        component={LinkBehavior}
-                        to='?register=true'
-                    />
+                    {!(user.img_profile) && (
+                        <CustomButton
+                            size={32}
+                            icon={<PlusSquare />}
+                            title='Añadir información'
+                            color="info"
+                            component={LinkBehavior}
+                            to='?register=true'
+                        />
+                    )}
                 </Box>
-                <RegisterOwner open={registerOwner} handleClose={() => navigate('/profile/owner')} />
+                {!(user.img_profile) && (
+                    <React.Suspense>
+                        <RegisterOwner open={registerOwner} handleClose={() => navigate('/profile/owner')} />
+                    </React.Suspense>
+                )}
             </Box>
         </Box>
     );
