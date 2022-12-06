@@ -38,6 +38,7 @@ import PetOwner from './pages/Profile/PetOwner';
 import Settings from './pages/Settings';
 import Favourites from './pages/Favourites';
 import Account from './pages/account';
+import DeleteAccount from './components/Modals/DeleteAccount';
 
 function App() {
     let location = useLocation();
@@ -119,7 +120,7 @@ function App() {
                             path='/profile/settings/account'
                             element={
                                 <AppLayout>
-                                    <Account />
+                                    <Account location={location} />
                                 </AppLayout>
                             }
                         />

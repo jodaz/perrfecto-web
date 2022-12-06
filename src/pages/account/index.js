@@ -3,14 +3,15 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { logout, useAuth } from '../../context/AuthContext';
 import SettingsLayout from '../../layouts/SettingsLayout';
+import DeleteAccount from '../../components/Modals/DeleteAccount';
+import LinkBehavior from '../../components/LinkBehavior';
+import getSearchParams from '../../utils/getSearchParams';
+import { useNavigate } from 'react-router-dom';
 
-const Account = () => {
-    const [openDeleteModal, setOpenDeleteModal] = React.useState(false)
+const Account = ({ location }) => {
+    const openDeleteModal = getSearchParams(location, 'delete')
+    const navigate = useNavigate();
     const { dispatch } = useAuth();
-
-    const handleDeleteAccount = () => {
-        setOpenDeleteModal(!openDeleteModal)
-    }
 
     return (
         <SettingsLayout title="Cuenta de acceso">
@@ -28,12 +29,14 @@ const Account = () => {
                         variant="contained"
                         color="error"
                         fullWidth
-                        onClick={handleDeleteAccount}
+                        component={LinkBehavior}
+                        to='?delete=true'
                     >
                         Eliminar cuenta
                     </Button>
                 </Box>
             </Box>
+            <DeleteAccount open={openDeleteModal} handleClose={() => navigate(-1)} />
         </SettingsLayout>
     );
 }
