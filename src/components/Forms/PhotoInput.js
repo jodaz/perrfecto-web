@@ -115,7 +115,7 @@ const PhotoInput = ({
 }) => (
     <Controller
         rules={rules}
-        render={({ field: { onChange, ...restField }, fieldState: { error, value } }) => (
+        render={({ field: { onChange, ...restField }, fieldState: { error } }) => (
             <>
                 <Dropzone
                     {...restField}
@@ -125,7 +125,7 @@ const PhotoInput = ({
                 />
                 {error && (
                     <FormHelperText error>
-                        {validations[name][error.type]}
+                        {validations[error.type]}
                     </FormHelperText>
                 )}
             </>

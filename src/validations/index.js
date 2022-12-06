@@ -74,6 +74,17 @@ export const EMAIL = {
     }
 }
 
+export const FEATURES = {
+    rules: {
+        required: true,
+        minLength: 1
+    },
+    messages: {
+        required: "Seleccione al menos una característica.",
+        minLength: "Seleccione al menos una característica."
+    }
+}
+
 export const PASSWORD = {
     rules: {
         required: true,
@@ -102,6 +113,24 @@ export const DOG_GENDER = {
     },
     messages: {
         required: "Seleccione el género de su perro.",
+    }
+}
+
+export const PHOTO = {
+    rules: {
+        required: true,
+    },
+    messages: {
+        required: 'Seleccione una imagen.'
+    }
+}
+
+export const DATE_BIRTH = {
+    rules: {
+        required: true,
+    },
+    messages: {
+        required: "Ingrese su fecha de nacimiento."
     }
 }
 
