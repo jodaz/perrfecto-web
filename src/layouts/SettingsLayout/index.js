@@ -12,10 +12,8 @@ const SettingsLayout = ({ children, title }) => (
             flexDirection: 'column',
             justifyContent: 'space-between'
         }}>
-            <Box>
-                <ProfileToolbar title={title} />
-                {children}
-            </Box>
+            <ProfileToolbar title={title} />
+            {children}
         </Box>
     </Slide>
 );

@@ -79,14 +79,14 @@ const Settings = ({ title }) => {
                             Cuenta
                         </ListTitle>
                         <ListItemLink
-                            to="/profile/account"
+                            to="account"
                             title="Cuenta de acceso"
                         />
                     </List>
                 </Box>
                 <Box sx={{ p: 2 }}>
                     <Button
-                        variant="contained"
+                        variant="outlined"
                         color="error"
                         fullWidth
                         onClick={() => logout(dispatch)}

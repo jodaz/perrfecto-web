@@ -37,6 +37,7 @@ import PetProfile from './pages/Profile/PetProfile';
 import PetOwner from './pages/Profile/PetOwner';
 import Settings from './pages/Settings';
 import Favourites from './pages/Favourites';
+import Account from './pages/account';
 
 function App() {
     let location = useLocation();
@@ -111,6 +112,14 @@ function App() {
                             element={
                                 <AppLayout>
                                     <Settings />
+                                </AppLayout>
+                            }
+                        />
+                        <Route
+                            path='/profile/settings/account'
+                            element={
+                                <AppLayout>
+                                    <Account />
                                 </AppLayout>
                             }
                         />
