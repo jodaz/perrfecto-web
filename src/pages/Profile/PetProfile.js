@@ -1,12 +1,9 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
 import LinkBehavior from '../../components/LinkBehavior';
 import {
     PlusSquare,
-    Newspaper,
-    Settings,
-    Star
+    Newspaper
 } from 'lucide-react';
 import CustomButton from './CustomButton';
 import RegisterDog from '../../components/RegisterDog';
