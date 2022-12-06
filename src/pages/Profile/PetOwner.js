@@ -5,8 +5,6 @@ import LinkBehavior from '../../components/LinkBehavior';
 import {
     PlusSquare,
     Newspaper,
-    Settings,
-    Star,
     Image
 } from 'lucide-react';
 import CustomButton from './CustomButton';
@@ -14,6 +12,7 @@ import getSearchParams from '../../utils/getSearchParams';
 import { useLocation, useNavigate } from 'react-router-dom';
 import RegisterOwner from '../../components/RegisterOwner';
 import BasicTabs from '../../components/Tabs';
+import ProfileOptions from './ProfileOptions';
 
 const PetOwner = () => {
     const location = useLocation();
@@ -27,19 +26,7 @@ const PetOwner = () => {
                 marginTop: '1rem',
                 width: '100%'
             }}>
-                <Box sx={{
-                    display: 'flex',
-                    flex: 1,
-                    pt: 1,
-                    justifyContent: 'space-between'
-                }}>
-                    <IconButton LinkComponent={LinkBehavior} to='settings'>
-                        <Settings />
-                    </IconButton>
-                    <IconButton LinkComponent={LinkBehavior} to='favourites'>
-                        <Star />
-                    </IconButton>
-                </Box>
+                <ProfileOptions />
                 <Box sx={{
                     display: 'flex',
                     justifyContent: 'space-around',

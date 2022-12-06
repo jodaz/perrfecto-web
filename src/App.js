@@ -36,6 +36,7 @@ import Terms from './pages/Terms';
 import PetProfile from './pages/Profile/PetProfile';
 import PetOwner from './pages/Profile/PetOwner';
 import Settings from './pages/Settings';
+import Favourites from './pages/Favourites';
 
 function App() {
     let location = useLocation();
@@ -111,6 +112,16 @@ function App() {
                                 <AppLayout>
                                     <Profile location={location}>
                                         <Settings title='Configuración' />
+                                    </Profile>
+                                </AppLayout>
+                            }
+                        />
+                        <Route
+                            path='/profile/favourites'
+                            element={
+                                <AppLayout>
+                                    <Profile location={location}>
+                                        <Favourites title="Favoritos" />
                                     </Profile>
                                 </AppLayout>
                             }

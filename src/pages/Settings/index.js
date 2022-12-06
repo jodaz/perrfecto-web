@@ -4,14 +4,10 @@ import Slide from '@mui/material/Slide';
 import Button from '@mui/material/Button';
 import { logout, useAuth } from '../../context/AuthContext';
 import LinkBehavior from '../../components/LinkBehavior';
-import { Divider, Toolbar } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import IconButton from '@mui/material/IconButton';
-import { ChevronLeft } from 'lucide-react';
+import ProfileToolbar from '../../components/ProfileToolbar';
 
 const Settings = ({ children, title }) => {
     const { dispatch } = useAuth();
-    const navigate = useNavigate();
 
     return (
         <Slide direction="left" in={true} mountOnEnter unmountOnExit>
@@ -21,23 +17,7 @@ const Settings = ({ children, title }) => {
                 display: 'flex',
                 flexDirection: 'column'
             }}>
-                <Box sx={{ flex: 1 }}>
-                    <Toolbar sx={{
-                        width: '100%',
-                        p: '0 !important',
-                        boxShadow: 'inset 0px -1px 0px rgba(0, 0, 0, 0.12)'
-                    }}>
-                        <Box>
-                            <IconButton onClick={() => navigate(-1)}>
-                                <ChevronLeft />
-                            </IconButton>
-                        </Box>
-                        <Box sx={{ fontWeight: 500, flex: 1, textAlign: 'center' }}>
-                            {title}
-                        </Box>
-                    </Toolbar>
-                    <Divider />
-                </Box>
+                <ProfileToolbar title={title} />
                 {children}
                 <Box sx={{ p: 2 }}>
                     <Button

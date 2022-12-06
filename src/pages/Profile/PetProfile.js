@@ -13,6 +13,7 @@ import RegisterDog from '../../components/RegisterDog';
 import getSearchParams from '../../utils/getSearchParams';
 import { useLocation, useNavigate } from 'react-router-dom';
 import BasicTabs from '../../components/Tabs';
+import ProfileOptions from './ProfileOptions';
 
 const PetProfile = () => {
     const location = useLocation();
@@ -25,19 +26,7 @@ const PetProfile = () => {
             <Box sx={{
                 marginTop: '1rem',
             }}>
-                <Box sx={{
-                    display: 'flex',
-                    flex: 1,
-                    justifyContent: 'space-between',
-                    p: 1
-                }}>
-                    <IconButton LinkComponent={LinkBehavior} to='settings'>
-                        <Settings />
-                    </IconButton>
-                    <IconButton LinkComponent={LinkBehavior} to='favourites'>
-                        <Star />
-                    </IconButton>
-                </Box>
+                <ProfileOptions />
                 <Box sx={{
                     display: 'flex',
                     justifyContent: 'space-around',
