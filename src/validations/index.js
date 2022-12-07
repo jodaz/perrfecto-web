@@ -65,8 +65,10 @@ export const EMAIL = {
         pattern: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
         unique: true,
         notfound: true,
+        deleted: true
     },
     messages: {
+        deleted: 'La cuenta asociada ha sido eliminada por el usuario.',
         unique: 'El correo ha sido registrado.',
         required: "Ingrese su correo",
         pattern: "Email inválido",
