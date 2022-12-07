@@ -1,29 +1,29 @@
-import * as React from 'react';
-import Button from '../Button';
-import { alpha } from '@mui/material/styles';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '../DialogTitle';
-import Link from '@mui/material/Link';
-import Divider from '@mui/material/Divider';
+import * as React from 'react'
+import Button from '../Button'
+import { alpha } from '@mui/material/styles'
+import Dialog from '@mui/material/Dialog'
+import DialogTitle from '../DialogTitle'
+import Link from '@mui/material/Link'
+import Divider from '@mui/material/Divider'
 import PasswordInput from '../Forms/PasswordInput'
-import { useForm } from "react-hook-form";
-import Box from '@mui/material/Box';
+import { useForm } from "react-hook-form"
+import Box from '@mui/material/Box'
 import TextInput from '../Forms/TextInput'
-import LinkBehavior from '../LinkBehavior';
-import { useNavigate } from 'react-router-dom';
+import LinkBehavior from '../LinkBehavior'
+import { useNavigate } from 'react-router-dom'
 import SocialLogin from '../SocialLogin'
-import Alert from '@mui/material/Alert';
+import Alert from '@mui/material/Alert'
 import { apiProvider } from '../../api'
-import getSearchParams from '../../utils/getSearchParams';
-import PhoneInput from '../Forms/PhoneInput';
+import getSearchParams from '../../utils/getSearchParams'
+import PhoneInput from '../Forms/PhoneInput'
 import { useAuth, loginUser, guestUser } from '../../context/AuthContext'
 import { PHONE, EMAIL, PASSWORD } from '../../validations'
-import useMediaQuery from '@mui/material/useMediaQuery';
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 export default function Login({ location }) {
-    const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+    const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'))
     const navigate = useNavigate()
-    const isPhoneRegister = getSearchParams(location, 'withPhone');
+    const isPhoneRegister = getSearchParams(location, 'withPhone')
     const [errorAlert, setErrorAlert] = React.useState('')
     const { control, handleSubmit, setError, formState: {
         isSubmitting

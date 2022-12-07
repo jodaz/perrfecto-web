@@ -27,6 +27,7 @@ const TextInput = ({
     placeholder,
     InputProps,
     disabled,
+    sx,
     label,
 }) => (
     <FormControl>
@@ -46,6 +47,7 @@ const TextInput = ({
                         {...InputProps}
                         disabled={disabled}
                         sx={{
+                            ...sx,
                             'error': {
                                 border: '1px solid red !important'
                             }
