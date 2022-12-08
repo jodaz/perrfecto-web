@@ -4,8 +4,16 @@ import DialogTitle from '../../DialogTitle';
 import Box from '@mui/material/Box';
 import { useNavigate } from 'react-router-dom';
 import RegisterBusinessForm from './RegisterBusinessForm';
-import { Typography } from '@mui/material';
+import { Typography, Link as MuiLink, styled } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
+
+const Link = styled(MuiLink)(({ theme }) => ({
+    color: theme.palette.primary.contrastText,
+    fontWeight: 500,
+    '&:hover': {
+        textDecoration: 'underline'
+    }
+}));
 
 const RegisterBusiness = ({ location }) => {
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
@@ -20,13 +28,13 @@ const RegisterBusiness = ({ location }) => {
             <Box sx={{
                 display: 'flex',
                 width: isSmall ? 'fit-content' : '800px',
-                height: 'fit-content',
-                color: theme => theme.palette.text.secondary
+                height: 'fit-content'
             }}>
                 {!isSmall && (
                     <Box sx={{
                         flex: 1,
-                        backgroundColor: '#A167C9'
+                        backgroundColor: '#A167C9',
+                        color: '#fff'
                     }}>
                         <Box sx={{
                             margin: 5
@@ -34,12 +42,11 @@ const RegisterBusiness = ({ location }) => {
                             <Typography variant="h4" color="secondary.main" sx={{ pb: 4, fontWeight: 500 }}>
                                 Registra tu negocio
                             </Typography>
-                            <Typography variant="body2" color="secondary.main">
-                            Al iniciar sesión en TinderDogs estás aceptando
-                                continuar de acuerdo a nuestros
-                                <strong> Términos y condiciones </strong> y con nuestra
-                                <strong> Política de Privacidad </strong>
-                            </Typography>
+                            <Box>
+                            Al crear una cuenta TinderDogs estás aceptando continuar de acuerdo a
+                                nuestros <Link href="terms-conditions" underline="none">Términos y condiciones</Link> y con nuestra
+                                    <Link href="privacy" underline="none">  Política de Privacidad</Link>
+                            </Box>
                         </Box>
                     </Box>
                 )}
