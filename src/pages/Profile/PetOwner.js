@@ -65,7 +65,11 @@ const PetOwner = () => {
                     flex: 1,
                     p: 2
                 }}>
-                    <PhotoInput name="files" control={control} />
+                    <PhotoInput
+                        name="files"
+                        control={control}
+                        defaultValue={user.img_profile}
+                    />
                 </Box>
                 <Box sx={{
                     display: 'flex',
