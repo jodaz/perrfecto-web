@@ -16,7 +16,7 @@ import { useAuth, loginUser } from '../../context/AuthContext'
 
 const facebookFields = 'id,first_name,last_name,name,name_format,picture,email'
 
-const SocialLogin = ({ hidePhone, location }) => {
+const SocialAuth = ({ hidePhone, location }) => {
     const { pathname } = location;
     const [error, setError] = React.useState(false)
     const navigate = useNavigate();
@@ -37,7 +37,6 @@ const SocialLogin = ({ hidePhone, location }) => {
             const { data } = res;
 
             loginUser(dispatch, data)
-
             if (pathname == '/register') {
                 return navigate('/register/welcome')
             }
@@ -93,9 +92,9 @@ const SocialLogin = ({ hidePhone, location }) => {
     )
 }
 
-SocialLogin.defaultProps = {
+SocialAuth.defaultProps = {
     hidePhone: false,
     path: '/register'
 }
 
-export default SocialLogin
+export default SocialAuth

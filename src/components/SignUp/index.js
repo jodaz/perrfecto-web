@@ -9,7 +9,7 @@ import Box from '@mui/material/Box';
 import TextInput from '../Forms/TextInput';
 import LinkBehavior from '../LinkBehavior';
 import { useNavigate } from 'react-router-dom';
-import SocialLogin from '../SocialLogin'
+import SocialAuth from '../SocialAuth'
 import PhoneInput from '../Forms/PhoneInput'
 import { apiProvider } from '../../api'
 import { Divider } from '@mui/material';
@@ -97,7 +97,7 @@ export default function SignUp({ location }) {
                                 <Box>
                                     Continuar con
                                 </Box>
-                                <SocialLogin hidePhone={isPhoneRegister} location={location} />
+                                <SocialAuth hidePhone={isPhoneRegister} location={location} />
                             </Box>
                             <Box>
                                 ¿Ya tienes una cuenta?
@@ -218,7 +218,7 @@ export default function SignUp({ location }) {
                     <Box pl={2} pr={2}>
                         <Divider orientation="horizontal" flexItem>o crear cuenta con</Divider>
                     </Box>
-                    <SocialLogin location={location} />
+                    <SocialAuth location={location} />
                     <Box sx={{ margin: '0 auto 2rem auto' }}>
                         ¿Ya tienes una cuenta?
                         <Link
