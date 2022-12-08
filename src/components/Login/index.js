@@ -33,6 +33,7 @@ export default function Login({ location }) {
     const { dispatch } = useAuth();
 
     const onSubmit = async (data) => {
+        console.log(data)
         setErrorAlert('');
         try {
             const res = await apiProvider.post('/api/auth', {
