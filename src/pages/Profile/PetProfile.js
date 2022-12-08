@@ -49,6 +49,8 @@ const PetProfile = () => {
     //     return () => subscription.unsubscribe();
     // }, [handleSubmit, watch])
 
+    console.log(user.dog)
+
     return (
         <Box sx={{ pt: 1, width: '100%', textAlign: 'center', backgroundColor: '#f6f6f6' }}>
             <BasicTabs />
