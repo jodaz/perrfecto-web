@@ -16,7 +16,7 @@ import { useNavigate } from 'react-router-dom'
 import Alert from '@mui/material/Alert';
 import { PHOTO, DATE_BIRTH } from '../../validations';
 
-const RegisterOwner = ({ open, handleClose }) => {
+const RegisterOwner = ({ open, handleClose, redirect = '/home' }) => {
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const [error, setError] = React.useState(false)
     const { control, handleSubmit, formState: {
@@ -37,7 +37,7 @@ const RegisterOwner = ({ open, handleClose }) => {
                 const { data } = res;
 
                 handleClose();
-                navigate('/home')
+                navigate(redirect)
             }
         } catch (error) {
             setError('Ha ocurrido un error inesperado.')

@@ -54,6 +54,11 @@ export default function Login({ location }) {
             if (error.response.data.msg) {
                 const message = error.response.data.msg;
 
+                if (message.includes('deleted')) {
+                    setError('email', {
+                        type: 'deleted'
+                    })
+                }
                 if (message.includes('The user does not exist with that email')) {
                     setErrorAlert('No estás registrado. Crea una cuenta para poder comenzar en TinderDogs.')
                 }

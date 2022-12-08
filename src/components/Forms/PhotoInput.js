@@ -3,16 +3,24 @@ import Box from '@mui/material/Box'
 import Avatar from '@mui/material/Avatar'
 import FormHelperText from '@mui/material/FormHelperText'
 import { useDropzone } from 'react-dropzone';
-import { ReactComponent as AvatarIcon } from '../../assets/icons/Avatar.svg'
 import { ReactComponent as PlusIcon } from '../../assets/icons/Plus.svg'
 import { ReactComponent as DeleteIcon } from '../../assets/icons/Delete.svg'
 import { Controller } from 'react-hook-form'
+import vars from '../../vars';
+
+const filePreviewOrigin = filepath => (`${vars.source}/public/${filepath}`)
 
 const Dropzone = ({
     onChange,
-    disabled
+    disabled,
+    defaultValue
 }) => {
-    const [file, setFile] = React.useState(null);
+    const [file, setFile] = React.useState((() => {
+        if (defaultValue) {
+            return { preview: filePreviewOrigin(defaultValue) }
+        }
+        return
+    })());
     const { getRootProps, getInputProps } = useDropzone({
         accept: {
             'image/*': ['.jpeg', '.jpg', '.png']
@@ -32,7 +40,7 @@ const Dropzone = ({
 
     const thumbs = () => (
         <Avatar
-            src={file ? file.preview : <AvatarIcon />}
+            src={file ? file.preview : '/images/Avatar.svg'}
             // Revoke data uri after image is loaded
             onLoad={() => { URL.revokeObjectURL(file.preview) }}
             sx={{

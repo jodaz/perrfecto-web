@@ -24,7 +24,8 @@ const palette = {
     },
     text: {
         primary: 'rgba(31, 44, 56, 1)',
-        secondary: '#4B4B4B'
+        secondary: '#4B4B4B',
+        tertiary: '#858585'
     },
     divider: '#ccc',
     background: {

@@ -75,13 +75,14 @@ const businessIcons = [
 
 const Navigation = () => {
     const location = useLocation();
+    const { pathname } = location;
     const { state: { user } } = useAuth();
 
     const renderUserLinks = () => icons.map((icon, i) => (
         <Tooltip key={i} title={icon.label}>
             <IconButton component={LinkBehavior} to={icon.route}>
                 {React.cloneElement(
-                    (location.pathname == icon.route) ? icon.active : icon.icon,
+                    (location.pathname.startsWith(icon.route)) ? icon.active : icon.icon,
                     {}
                 )}
             </IconButton>
@@ -92,7 +93,7 @@ const Navigation = () => {
         <Tooltip key={i} title={icon.label}>
             <IconButton component={LinkBehavior} to={icon.route}>
                 {React.cloneElement(
-                    (location.pathname == icon.route) ? icon.active : icon.icon,
+                    (location.pathname.startsWith(icon.route)) ? icon.active : icon.icon,
                     {}
                 )}
             </IconButton>

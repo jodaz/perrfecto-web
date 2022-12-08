@@ -11,6 +11,8 @@ import esLocale from 'date-fns/locale/es';
 // Layouts
 import AppLayout from './layouts/App';
 import LandingLayout from './layouts/LandingLayout';
+// Contexts
+import { AuthProvider } from './context/AuthContext'
 // Pages
 import NotFound from "./pages/NotFound";
 import Landing from "./pages/Landing";
@@ -30,9 +32,12 @@ import Notifications from './pages/Notifications'
 import CreateProfileWelcome from './components/CreateProfileWelcome';
 import Business from './pages/Business';
 import RegisterBusiness from './components/Modals/RegisterBusiness';
-// Contexts
-import { AuthProvider } from './context/AuthContext'
 import Terms from './pages/Terms';
+import PetProfile from './pages/Profile/PetProfile';
+import PetOwner from './pages/Profile/PetOwner';
+import Settings from './pages/Settings';
+import Favourites from './pages/Favourites';
+import Account from './pages/account';
 
 function App() {
     let location = useLocation();
@@ -78,11 +83,53 @@ function App() {
                                 </AppLayout>
                             }
                         />
+
+                        {/**
+                         * Profile routes
+                         */}
                         <Route
                             path='/profile'
                             element={
                                 <AppLayout>
-                                    <Profile />
+                                    <Profile location={location}>
+                                        <PetProfile />
+                                    </Profile>
+                                </AppLayout>
+                            }
+                        />
+                        <Route
+                            path='/profile/owner'
+                            element={
+                                <AppLayout>
+                                    <Profile location={location}>
+                                        <PetOwner />
+                                    </Profile>
+                                </AppLayout>
+                            }
+                        />
+                        <Route
+                            path='/profile/settings'
+                            element={
+                                <AppLayout>
+                                    <Settings />
+                                </AppLayout>
+                            }
+                        />
+                        <Route
+                            path='/profile/settings/account'
+                            element={
+                                <AppLayout>
+                                    <Account location={location} />
+                                </AppLayout>
+                            }
+                        />
+                        <Route
+                            path='/profile/favourites'
+                            element={
+                                <AppLayout>
+                                    <Profile location={location}>
+                                        <Favourites title="Favoritos" />
+                                    </Profile>
                                 </AppLayout>
                             }
                         />
@@ -98,7 +145,7 @@ function App() {
 
                         <Route path="/" element={
                             <LandingLayout>
-                                <Landing />
+                                <Landing location={location} />
                             </LandingLayout>
                         }>
                             <Route path="/login" element={<Login location={location} />} />
@@ -110,6 +157,7 @@ function App() {
                         </Route>
                         <Route path="/register/welcome" element={<CreateProfileWelcome location={location} />} />
 
+                        {/** Bussiness routes */}
                         <Route path="/business" element={
                             <LandingLayout dark>
                                 <Business />
