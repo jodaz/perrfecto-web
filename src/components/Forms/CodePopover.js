@@ -124,7 +124,7 @@ const CodePopover = ({ control, rules }) => {
                     control={control}
                     name='code_phone'
                     rules={rules}
-                    defaultValue={phoneCodes[66]}
+                    defaultValue={value}
                     render={({ field: { ref, onChange, ...fieldRest } }) => (
                         <Autocomplete
                             open={open}

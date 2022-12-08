@@ -122,7 +122,7 @@ export default function Login({ location }) {
                                 <Box>
                                     Continuar con
                                 </Box>
-                                <SocialAuth hidePhone={isPhoneRegister} location={location} />
+                                <SocialAuth hidePhone={isPhoneRegister} />
                             </Box>
                             <Box>
                                 ¿Aún no tienes una cuenta? <Link href="#" underline="none" component={LinkBehavior} to='/register'>Crear cuenta</Link>

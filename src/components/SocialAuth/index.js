@@ -16,8 +16,7 @@ import { useAuth, loginUser } from '../../context/AuthContext'
 
 const facebookFields = 'id,first_name,last_name,name,name_format,picture,email'
 
-const SocialAuth = ({ hidePhone, location }) => {
-    const { pathname } = location;
+const SocialAuth = ({ hidePhone }) => {
     const [error, setError] = React.useState(false)
     const navigate = useNavigate();
     const { dispatch } = useAuth();
@@ -37,10 +36,10 @@ const SocialAuth = ({ hidePhone, location }) => {
             const { data } = res;
 
             loginUser(dispatch, data)
-            if (pathname == '/register') {
+
+            if (data.data.register) {
                 return navigate('/register/welcome')
-            }
-            if (data.data.role == 'user') {
+            } else {
                 navigate('/detect-location')
             }
         }

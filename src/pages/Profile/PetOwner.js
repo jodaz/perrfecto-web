@@ -45,6 +45,8 @@ const PetOwner = () => {
         }
     }
 
+    console.log(user);
+
     React.useEffect(() => {
         const subscription = watch(handleSubmit(onSubmit))
 
