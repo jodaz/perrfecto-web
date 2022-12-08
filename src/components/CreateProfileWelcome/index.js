@@ -10,6 +10,7 @@ import RegisterDog from '../RegisterDog';
 import RegisterOwner from '../RegisterOwner';
 import getSearchParams from '../../utils/getSearchParams';
 import { useNavigate } from 'react-router-dom';
+import Logo from '../Logo';
 
 const CallToProfile = ({ location }) => {
     const matches = useMediaQuery((theme) => theme.breakpoints.down('sm'));
@@ -39,7 +40,16 @@ const CallToProfile = ({ location }) => {
                         flexDirection: 'column',
                         maxWidth: '400px',
                         minWidth: '300px',
+                        alignItems: 'center',
+                        justifyContent: 'center'
                     }}>
+                        <Box sx={{ p: 1, marginBottom: '2rem' }}>
+                            <Logo
+                                height='50px'
+                                width='50px'
+                                color="primary.main"
+                            />
+                        </Box>
                         <Box sx={{ p: 1 }}>
                             <Typography variant={matches ? 'h6' : 'h4' } align='center' sx={{ fontWeight: '500' }} gutterBottom>
                                 ¡Bienvenido a TinderDogs!
