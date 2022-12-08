@@ -8,7 +8,7 @@ import { ReactComponent as DeleteIcon } from '../../assets/icons/Delete.svg'
 import { Controller } from 'react-hook-form'
 import vars from '../../vars';
 
-const filePreviewOrigin = filepath => (`${vars.source}/uploads/${filepath}`)
+const filePreviewOrigin = filepath => (`${vars.source}/public/${filepath}`)
 
 const Dropzone = ({
     onChange,
