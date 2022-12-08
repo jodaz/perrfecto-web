@@ -32,7 +32,7 @@ const Dropzone = ({
 
     const thumbs = () => (
         <Avatar
-            src={file ? file.preview : <AvatarIcon />}
+            src={file ? file.preview : '/images/Avatar.svg'}
             // Revoke data uri after image is loaded
             onLoad={() => { URL.revokeObjectURL(file.preview) }}
             sx={{

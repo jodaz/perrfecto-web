@@ -13,14 +13,43 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import BasicTabs from '../../components/Tabs';
 import ProfileOptions from './ProfileOptions';
 import { useAuth } from '../../context/AuthContext'
+import { useForm } from 'react-hook-form';
+import PhotoInput from '../../components/Forms/PhotoInput';
+import { fileProvider } from '../../api'
+import formDataHandler from '../../utils/formDataHandler';
 
 const RegisterOwner = React.lazy(() => import('../../components/RegisterOwner'));
 
 const PetOwner = () => {
+    const [error, setError] = React.useState('')
     const { state: { user } } = useAuth();
     const location = useLocation();
     const navigate = useNavigate();
     const registerOwner = getSearchParams(location, 'register');
+    const { handleSubmit, control, watch } = useForm();
+
+    const onSubmit = async (data) => {
+        try {
+            const parsedData = {
+                files: data.files,
+                body: {
+                    img_delete: user.img_profile ? user.img_profile : null
+                }
+            }
+
+            const formData = await formDataHandler(parsedData, 'files')
+
+            await fileProvider.put('/api/user/img-profile', formData)
+        } catch (error) {
+            setError('Ha ocurrido un error inesperado.')
+        }
+    }
+
+    React.useEffect(() => {
+        const subscription = watch(handleSubmit(onSubmit))
+
+        return () => subscription.unsubscribe();
+    }, [handleSubmit, watch])
 
     return (
         <Box sx={{ p: 1, textAlign: 'center', backgroundColor: '#f6f6f6' }}>
@@ -30,6 +59,14 @@ const PetOwner = () => {
                 width: '100%'
             }}>
                 <ProfileOptions />
+                <Box sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    flex: 1,
+                    p: 2
+                }}>
+                    <PhotoInput name="files" control={control} />
+                </Box>
                 <Box sx={{
                     display: 'flex',
                     justifyContent: 'space-around',
