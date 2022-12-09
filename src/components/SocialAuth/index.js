@@ -58,7 +58,8 @@ const SocialAuth = ({ hidePhone }) => {
                 onResolve={({ data }) => onSubmit(data)}
             >
                 <IconButton sx={{
-                    margin: '0 !important'
+                    margin: '0 !important',
+                    padding: '0 !important'
                 }}>
                     <FacebookIcon />
                 </IconButton>
@@ -71,13 +72,17 @@ const SocialAuth = ({ hidePhone }) => {
                 onResolve={({ data }) => onSubmit(data)}
             >
                 <IconButton sx={{
-                    margin: '0 !important'
+                    margin: '0 !important',
+                    padding: '0 !important'
                 }}>
                     <GoogleIcon />
                 </IconButton>
             </LoginSocialGoogle>
             {(!hidePhone) && (
-                <IconButton component={LinkBehavior} to='?withPhone=true'>
+                <IconButton component={LinkBehavior} to='?withPhone=true' sx={{
+                    margin: '0 !important',
+                    padding: '0 !important'
+                }}>
                     <PhoneIcon />
                 </IconButton>
             )}
