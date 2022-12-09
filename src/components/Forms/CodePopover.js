@@ -87,6 +87,10 @@ const CodePopover = ({ control, rules }) => {
 
     const open = Boolean(anchorEl);
 
+    React.useEffect(() => {
+        setValue(phoneCodes[66])
+    }, [])
+
     return (
         <>
             <Box sx={{

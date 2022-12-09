@@ -56,9 +56,6 @@ const SocialAuth = ({ hidePhone }) => {
                 appId={vars.FacebookID}
                 fieldsProfile={facebookFields}
                 onResolve={({ data }) => onSubmit(data)}
-                onReject={err => {
-                    console.log(err);
-                }}
             >
                 <IconButton sx={{
                     margin: '0 !important'
@@ -72,9 +69,6 @@ const SocialAuth = ({ hidePhone }) => {
                 discoveryDocs="claims_supported"
                 access_type="offline"
                 onResolve={({ data }) => onSubmit(data)}
-                onReject={err => {
-                    console.log(err);
-                }}
             >
                 <IconButton sx={{
                     margin: '0 !important'

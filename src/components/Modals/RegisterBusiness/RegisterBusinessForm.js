@@ -40,10 +40,13 @@ const RegisterBusinessForm = ({ isSmall }) => {
             const res = await fileProvider.post('/api/auth/new-business', formData)
 
             if (res.status >= 200 && res.status < 300) {
-                const newResponse = await res.text()
-                const { data } = JSON.parse(newResponse);
+                const newResponse = await res.data.text()
+                const { data, token } = JSON.parse(newResponse);
 
-                loginUser(dispatch, data)
+                loginUser(dispatch, {
+                    data: data,
+                    token: token
+                })
                 navigate('/home')
             }
         } catch (error) {
@@ -56,6 +59,11 @@ const RegisterBusinessForm = ({ isSmall }) => {
                 if (message.includes('There is a user with the provided email')) {
                     setError('email', {
                        type: 'unique'
+                    })
+                }
+                if (message.includes('There is a user with the provided that phone')) {
+                    setError('phone', {
+                        type: 'unique'
                     })
                 }
             }
