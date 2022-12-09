@@ -53,7 +53,7 @@ const puppies = [
 
 const PopularMembers = () => {
     return (
-        <Box>
+        <Box height='20vh'>
             <Box sx={{
                 marginBottom: '1rem',
                 color: theme => theme.palette.text.secondary
@@ -63,7 +63,6 @@ const PopularMembers = () => {
             <Box sx={{
                 width: '100%',
                 display: 'flex',
-                marginBottom: '2rem',
                 zIndex: 1000
             }}>
                 <Swiper

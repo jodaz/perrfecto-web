@@ -48,7 +48,7 @@ const UsersHome = () => {
                 height: '100%'
             }}>
                 <FeedCard />
-                <Fab
+                {/* <Fab
                     color="primary"
                     aria-label="add"
                     sx={{
@@ -59,7 +59,7 @@ const UsersHome = () => {
                     }}
                 >
                     <Filter2Icon />
-                </Fab>
+                </Fab> */}
             </Box>
         </Box>
     );
