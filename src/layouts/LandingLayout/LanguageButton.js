@@ -5,17 +5,20 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 // Icons
 import { Globe } from 'lucide-react';
 
-const LanguageButton = () => {
+const LanguageButton = ({ dark }) => {
     const matches = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
     if (matches) return (
         <IconButton>
-            <Globe />
+            <Globe color={dark ? '#000' : '#fff'} />
         </IconButton>
     )
 
     return (
-        <Button variant="contained" color="secondary">
+        <Button variant="contained" color="secondary" sx={{
+            background: 'rgba(255, 255, 255, 0.12)',
+            color: dark ? '#000' : '#fff'
+        }}>
             <Globe />
             Español
         </Button>

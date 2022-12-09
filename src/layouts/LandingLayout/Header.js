@@ -60,7 +60,7 @@ const Header = ({ dark }) => {
 
     return (
         <BoxContainer component='navbar'>
-            <Logo />
+            {!matches && <Logo />}
             <Box sx={{
                 display: 'flex',
                 fontWeight: '300',
@@ -78,7 +78,7 @@ const Header = ({ dark }) => {
                                     aria-label={link.title}
                                     to={link.link}
                                     component={LinkBehavior}
-                                    dark={dark}
+                                    dark={dark || matches}
                                 >
                                     {link.title}
                                 </AnchorTag>
@@ -88,7 +88,7 @@ const Header = ({ dark }) => {
                 )}
                 <li>
                     <Box sx={{ marginRight: 2 }}>
-                        <LanguageButton />
+                        <LanguageButton dark={dark} />
                     </Box>
                 </li>
                 <li>
