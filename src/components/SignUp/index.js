@@ -23,10 +23,11 @@ export default function SignUp({ location }) {
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const navigate = useNavigate()
     const { dispatch } = useAuth();
-    const { control, handleSubmit, watch, setError, formState: {
-        isSubmitting, errors
+    const { control, handleSubmit, setError, watch, formState: {
+        isSubmitting
     }} = useForm({
-        reValidateMode: "onBlur"
+        reValidateMode: "onBlur",
+        defaultValues: React.useMemo(() => ({ 'code_phone': 34 }))
     });
     const password = watch("password", "");
     const isPhoneRegister = getSearchParams(location, 'withPhone');

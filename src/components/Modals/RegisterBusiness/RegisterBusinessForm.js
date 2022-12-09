@@ -20,10 +20,11 @@ import {
 
 const RegisterBusinessForm = ({ isSmall }) => {
     const navigate = useNavigate()
-    const { control, handleSubmit, watch, setError, formState: {
+    const { control, handleSubmit, setError, watch, formState: {
         isSubmitting
     }} = useForm({
-        reValidateMode: "onBlur"
+        reValidateMode: "onBlur",
+        defaultValues: React.useMemo(() => ({ 'code_phone': 34 }))
     });
     const password = watch("password", "");
     const { dispatch } = useAuth();

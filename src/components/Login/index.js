@@ -28,7 +28,8 @@ export default function Login({ location }) {
     const { control, handleSubmit, setError, formState: {
         isSubmitting
     }} = useForm({
-        reValidateMode: "onBlur"
+        reValidateMode: "onBlur",
+        defaultValues: React.useMemo(() => ({ 'code_phone': 34 }))
     });
     const { dispatch } = useAuth();
 
