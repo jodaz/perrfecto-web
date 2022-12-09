@@ -52,6 +52,11 @@ export default function SignUp({ location }) {
                        type: 'unique'
                     })
                 }
+                if (message.includes('There is a user with the provided that phone')) {
+                    setError('phone', {
+                        type: 'unique'
+                    })
+                }
             }
         }
     };
