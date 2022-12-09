@@ -101,7 +101,7 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
         }
     }
 
-    const generatePhotoProfile = ({ isSubmitting }) => (
+    const generatePhotoProfile = (isSubmitting) => (
         <Box sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -164,7 +164,7 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
                             {error}
                         </Alert>
                     )}
-                    {(isSmall) && generatePhotoProfile()}
+                    {(isSmall) && generatePhotoProfile(isSubmitting)}
                     <Box sx={{ p: 2 }}>
                         <TextInput
                             label="Nombre"
@@ -189,6 +189,7 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
                             InputProps={{
                                 placeholder: 'Seleccione el tipo de raza'
                             }}
+                            noOptionsText='Sin resultados'
                         />
                     </Box>
                     {(type == 'Raza') && (
@@ -204,6 +205,7 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
                                 InputProps={{
                                     placeholder: 'Seleccione la raza'
                                 }}
+                                noOptionsText='Sin resultados'
                             />
                         </Box>
                     )}
@@ -233,6 +235,7 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
                             InputProps={{
                                 placeholder: 'Seleccione el sexo'
                             }}
+                            noOptionsText='Sin resultados'
                         />
                     </Box>
                     <Box sx={{ p: 2 }}>
@@ -246,8 +249,8 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
                             name="dogAge"
                             InputProps={{
                                 placeholder: 'Seleccionar fecha',
-                                startAdornment: <InputAdornment position="start"><Calendar /></InputAdornment>
                             }}
+                            noOptionsText='Sin resultados'
                         />
                     </Box>
                     <Box sx={{ p: 2 }}>
