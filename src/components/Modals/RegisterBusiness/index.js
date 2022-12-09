@@ -73,8 +73,8 @@ const RegisterBusiness = ({ location }) => {
                             </Typography>
                             <Box>
                             Al crear una cuenta TinderDogs estás aceptando continuar de acuerdo a
-                                nuestros <Link href="terms-conditions" underline="none">Términos y condiciones</Link> y con nuestra
-                                    <Link href="privacy" underline="none">  Política de Privacidad</Link>
+                                nuestros <Link href="/terms-conditions" underline="none">Términos y condiciones</Link> y con nuestra
+                                    <Link href="/privacy" underline="none">  Política de Privacidad</Link>
                             </Box>
                         </Box>
                     </Box>
