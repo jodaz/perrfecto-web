@@ -53,7 +53,7 @@ const features = [
     'Tamaño pequeño', 'Tamaño grande', 'Pelaje largo', 'Pelaje corto'
 ]
 
-const RegisterDog = ({ open, handleClose }) => {
+const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const [error, setError] = React.useState(false)
     const { control, handleSubmit, watch, formState: {
@@ -94,7 +94,7 @@ const RegisterDog = ({ open, handleClose }) => {
             const res = await apiProvider.post('/api/dog/new', formData)
 
             if (res.status >= 200 && res.status < 300) {
-                navigate('?profile=true')
+                navigate(redirect)
             }
         } catch (error) {
             setError('Ha ocurrido un error inesperado.')

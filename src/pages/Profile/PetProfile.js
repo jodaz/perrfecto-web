@@ -49,8 +49,6 @@ const PetProfile = () => {
     //     return () => subscription.unsubscribe();
     // }, [handleSubmit, watch])
 
-    console.log(user.dog)
-
     return (
         <Box sx={{ pt: 1, width: '100%', textAlign: 'center', backgroundColor: '#f6f6f6' }}>
             <BasicTabs />
@@ -93,7 +91,11 @@ const PetProfile = () => {
                 </Box>
                 {!(user.img_profile) && (
                     <React.Suspense>
-                        <RegisterDog open={registerDog} handleClose={() => navigate('/profile')} />
+                        <RegisterDog
+                            open={registerDog}
+                            handleClose={() => navigate('/profile')}
+                            redirect='/profile/owner'
+                        />
                     </React.Suspense>
                 )}
             </Box>

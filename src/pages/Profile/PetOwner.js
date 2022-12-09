@@ -45,8 +45,6 @@ const PetOwner = () => {
         }
     }
 
-    console.log(user);
-
     React.useEffect(() => {
         const subscription = watch(handleSubmit(onSubmit))
 
@@ -106,7 +104,11 @@ const PetOwner = () => {
                 </Box>
                 {!(user.img_profile) && (
                     <React.Suspense>
-                        <RegisterOwner open={registerOwner} handleClose={() => navigate('/profile/owner')} />
+                        <RegisterOwner
+                            open={registerOwner}
+                            handleClose={() => navigate('/profile/owner')}
+                            redirect='/profile/owner'
+                        />
                     </React.Suspense>
                 )}
             </Box>

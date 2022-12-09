@@ -40,7 +40,8 @@ const RegisterBusinessForm = ({ isSmall }) => {
             const res = await fileProvider.post('/api/auth/new-business', formData)
 
             if (res.status >= 200 && res.status < 300) {
-                const { data } = res;
+                const newResponse = await res.text()
+                const { data } = JSON.parse(newResponse);
 
                 loginUser(dispatch, data)
                 navigate('/home')
@@ -155,18 +156,16 @@ const RegisterBusinessForm = ({ isSmall }) => {
                         placeholder='Repita la contraseña'
                     />
                 </Box>
-                <Box textAlign='center'>
-                    <Box sx={{ p: 1 }}>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            fullWidth
-                            type="submit"
-                            disabled={isSubmitting}
-                        >
-                            Siguiente
-                        </Button>
-                    </Box>
+                <Box sx={{ p: 1, width: '100%' }}>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        fullWidth
+                        type="submit"
+                        disabled={isSubmitting}
+                    >
+                        Siguiente
+                    </Button>
                 </Box>
             </Box>
         </Box>

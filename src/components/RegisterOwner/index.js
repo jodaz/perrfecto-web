@@ -34,8 +34,6 @@ const RegisterOwner = ({ open, handleClose, redirect = '/home' }) => {
             const res = await fileProvider.put(`/api/auth/user-edit/${user.id}`, formData)
 
             if (res.status >= 200 && res.status < 300) {
-                const { data } = res;
-
                 handleClose();
                 navigate(redirect)
             }
