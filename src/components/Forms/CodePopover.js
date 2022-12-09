@@ -107,7 +107,6 @@ const CodePopover = ({ control, rules }) => {
                 }}
             />
             <Popover
-                hideBackdrop
                 open={open}
                 anchorEl={anchorEl}
                 onClose={handleClose}
@@ -167,6 +166,7 @@ const CodePopover = ({ control, rules }) => {
                             )}
                             clearIcon={<></>}
                             popupIcon={<></>}
+                            noOptionsText='Sin resultados'
                         />
                     )} />
             </Popover>
