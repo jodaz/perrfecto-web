@@ -2,12 +2,14 @@ export const PHONE = {
     rules: {
         required: true,
         pattern: /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/,
-        notfound: true
+        notfound: true,
+        unique: true
     },
     messages: {
         required: "Ingrese su teléfono",
         pattern: 'Introduzca un número de teléfono válido',
-        notfound: 'El usuario no ha sido encontrado.'
+        notfound: 'El usuario no ha sido encontrado.',
+        unique: 'El teléfono ha sido registrado.'
     }
 }
 
@@ -65,8 +67,10 @@ export const EMAIL = {
         pattern: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
         unique: true,
         notfound: true,
+        deleted: true
     },
     messages: {
+        deleted: 'La cuenta asociada ha sido eliminada por el usuario.',
         unique: 'El correo ha sido registrado.',
         required: "Ingrese su correo",
         pattern: "Email inválido",

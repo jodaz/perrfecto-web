@@ -19,18 +19,26 @@ export default function AppLayout({ children }) {
             flexDirection: isSmall ? 'column' : 'row',
             height: '100%'
         }}>
-            {(!isSmall) && (
-                <Aside>
+            {(!isSmall) ? (
+                <>
+                    <Aside>
+                        {children}
+                    </Aside>
+                    {(user.role == 'user' || !isAuth) ? <UsersHome /> : <BusinessHome />}
+                </>
+            ) : (
+                <Box sx={{
+                    height: '90vh'
+                }}>
                     {children}
-                </Aside>
+                </Box>
             )}
-            {(user.role == 'user' || !isAuth) ? <UsersHome /> : <BusinessHome />}
             {(isSmall) && (
                 <Box sx={{
                     width: '100%',
                     height: '10vh'
                 }}>
-                    <Navigation />
+                    <Navigation isSmall={isSmall} />
                 </Box>
             )}
         </Box>

@@ -7,48 +7,30 @@ import { XSquare } from 'lucide-react';
 import Stack from '@mui/material/Stack';
 import { logout, useAuth } from '../../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { apiProvider } from '../../../api'
 
 const AccountDeleteWarning = ({ open, handleClose }) => {
+    const [errorAlert, setErrorAlert] = React.useState('')
     const navigate = useNavigate();
     const { dispatch } = useAuth();
 
-    const submitDelete = async (data) => {
-        navigate('/?delete=true')
-        logout(dispatch);
+    const submitDelete = async () => {
+        try {
+            const res = await apiProvider.delete('/api/user')
 
-        // setErrorAlert('');
-        // try {
-        //     const res = await apiProvider.post('/api/auth', {
-        //         ...data
-        //     })
+            if (res.status >= 200 && res.status < 300) {
+                logout(dispatch);
+                navigate('/?delete=true')
+            }
+        } catch (error) {
+            if (error.response.data.msg) {
+                const message = error.response.data.msg;
 
-        //     if (res.status >= 200 && res.status < 300) {
-        //         const { data } = res;
-        //         loginUser(dispatch, data)
-
-        //         if (data.data.role == 'user') {
-        //             navigate('/detect-location')
-        //         } else {
-        //             navigate('/home')
-        //         }
-        //     }
-        // } catch (error) {
-        //     if (error.response.data.msg) {
-        //         const message = error.response.data.msg;
-
-        //         if (message.includes('The user does not exist with that email')) {
-        //             setErrorAlert('No estás registrado. Crea una cuenta para poder comenzar en TinderDogs.')
-        //         }
-        //         if (message.includes('The user does not exist with that phone')) {
-        //             setErrorAlert('No estás registrado. Crea una cuenta para poder comenzar en TinderDogs.')
-        //         }
-        //         if (message.includes('Wrong Password')) {
-        //             setError('password', {
-        //                 type: 'invalid'
-        //             })
-        //         }
-        //     }
-        // }
+                if (message.includes('There is no token in the request')) {
+                    setErrorAlert('No estás registrado. Crea una cuenta para poder comenzar en TinderDogs.')
+                }
+            }
+        }
     };
 
     return (

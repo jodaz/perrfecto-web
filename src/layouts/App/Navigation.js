@@ -73,9 +73,8 @@ const businessIcons = [
     }
 ]
 
-const Navigation = () => {
+const Navigation = ({ isSmall }) => {
     const location = useLocation();
-    const { pathname } = location;
     const { state: { user } } = useAuth();
 
     const renderUserLinks = () => icons.map((icon, i) => (
@@ -105,9 +104,10 @@ const Navigation = () => {
             display: 'flex',
             justifyContent: 'space-between',
             boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.08)',
-            backgroundColor: '#fff'
+            backgroundColor: '#fff',
+            height: isSmall ? '100%' : 'unset'
         }}>
-            {(user.role == 'user') ? renderUserLinks() : renderBussinessLinks()}
+            {(user.role != 'business') ? renderUserLinks() : renderBussinessLinks()}
         </Toolbar>
     )
 }

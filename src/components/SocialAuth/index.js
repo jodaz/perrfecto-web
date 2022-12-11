@@ -16,8 +16,7 @@ import { useAuth, loginUser } from '../../context/AuthContext'
 
 const facebookFields = 'id,first_name,last_name,name,name_format,picture,email'
 
-const SocialLogin = ({ hidePhone, location }) => {
-    const { pathname } = location;
+const SocialAuth = ({ hidePhone }) => {
     const [error, setError] = React.useState(false)
     const navigate = useNavigate();
     const { dispatch } = useAuth();
@@ -38,10 +37,9 @@ const SocialLogin = ({ hidePhone, location }) => {
 
             loginUser(dispatch, data)
 
-            if (pathname == '/register') {
+            if (data.data.register) {
                 return navigate('/register/welcome')
-            }
-            if (data.data.role == 'user') {
+            } else {
                 navigate('/detect-location')
             }
         }
@@ -58,12 +56,10 @@ const SocialLogin = ({ hidePhone, location }) => {
                 appId={vars.FacebookID}
                 fieldsProfile={facebookFields}
                 onResolve={({ data }) => onSubmit(data)}
-                onReject={err => {
-                    console.log(err);
-                }}
             >
                 <IconButton sx={{
-                    margin: '0 !important'
+                    margin: '0 !important',
+                    padding: '0 !important'
                 }}>
                     <FacebookIcon />
                 </IconButton>
@@ -74,18 +70,19 @@ const SocialLogin = ({ hidePhone, location }) => {
                 discoveryDocs="claims_supported"
                 access_type="offline"
                 onResolve={({ data }) => onSubmit(data)}
-                onReject={err => {
-                    console.log(err);
-                }}
             >
                 <IconButton sx={{
-                    margin: '0 !important'
+                    margin: '0 !important',
+                    padding: '0 !important'
                 }}>
                     <GoogleIcon />
                 </IconButton>
             </LoginSocialGoogle>
             {(!hidePhone) && (
-                <IconButton component={LinkBehavior} to='?withPhone=true'>
+                <IconButton component={LinkBehavior} to='?withPhone=true' sx={{
+                    margin: '0 !important',
+                    padding: '0 !important'
+                }}>
                     <PhoneIcon />
                 </IconButton>
             )}
@@ -93,9 +90,9 @@ const SocialLogin = ({ hidePhone, location }) => {
     )
 }
 
-SocialLogin.defaultProps = {
+SocialAuth.defaultProps = {
     hidePhone: false,
     path: '/register'
 }
 
-export default SocialLogin
+export default SocialAuth

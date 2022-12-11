@@ -39,7 +39,7 @@ const FeedCard = () => {
                 </Typography>
             </Box>
             <Card sx={{
-                height: isSmall ? '450px' : '500px',
+                height: '60vh',
                 width: !isSmall ? '300px' : '300px',
                 borderRadius: '20px',
                 position: 'relative',
@@ -49,10 +49,13 @@ const FeedCard = () => {
                     component="img"
                     width='100%'
                     src="/images/samples/sad-pupi.png"
-                    alt="green iguana"
+                    sx={{
+                        height: '60%'
+                    }}
                 />
                 <CardContent sx={{
-                    position: 'relative'
+                    position: 'relative',
+                    height: '40%'
                 }}>
                     <CardActions sx={{
                         position: 'absolute',

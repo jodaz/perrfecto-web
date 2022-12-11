@@ -3,16 +3,23 @@ import Box from '@mui/material/Box'
 import Avatar from '@mui/material/Avatar'
 import FormHelperText from '@mui/material/FormHelperText'
 import { useDropzone } from 'react-dropzone';
-import { ReactComponent as AvatarIcon } from '../../assets/icons/Avatar.svg'
 import { ReactComponent as PlusIcon } from '../../assets/icons/Plus.svg'
 import { ReactComponent as DeleteIcon } from '../../assets/icons/Delete.svg'
 import { Controller } from 'react-hook-form'
+import getUserPhoto from '../../utils/getUserPhoto';
+import { CircularProgress } from '@mui/material';
 
 const Dropzone = ({
     onChange,
-    disabled
+    disabled,
+    defaultValue
 }) => {
-    const [file, setFile] = React.useState(null);
+    const [file, setFile] = React.useState((() => {
+        if (defaultValue) {
+            return { preview: getUserPhoto(defaultValue) }
+        }
+        return
+    })());
     const { getRootProps, getInputProps } = useDropzone({
         accept: {
             'image/*': ['.jpeg', '.jpg', '.png']
@@ -32,7 +39,7 @@ const Dropzone = ({
 
     const thumbs = () => (
         <Avatar
-            src={file ? file.preview : <AvatarIcon />}
+            src={file ? file.preview : '/images/Avatar.svg'}
             // Revoke data uri after image is loaded
             onLoad={() => { URL.revokeObjectURL(file.preview) }}
             sx={{
@@ -61,7 +68,7 @@ const Dropzone = ({
                 alignItems: 'center',
                 justifyContent: 'center',
                 background: 'transparent',
-                cursor: 'pointer',
+                cursor: disabled ? 'wait' : 'pointer',
                 textAlign: 'center',
                 color: theme => theme.palette.getContrastText(
                     theme.palette.background.default

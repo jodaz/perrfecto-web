@@ -9,7 +9,7 @@ import Box from '@mui/material/Box';
 import TextInput from '../Forms/TextInput';
 import LinkBehavior from '../LinkBehavior';
 import { useNavigate } from 'react-router-dom';
-import SocialLogin from '../SocialLogin'
+import SocialAuth from '../SocialAuth'
 import PhoneInput from '../Forms/PhoneInput'
 import { apiProvider } from '../../api'
 import { Divider } from '@mui/material';
@@ -23,10 +23,11 @@ export default function SignUp({ location }) {
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const navigate = useNavigate()
     const { dispatch } = useAuth();
-    const { control, handleSubmit, watch, setError, formState: {
-        isSubmitting, errors
+    const { control, handleSubmit, setError, watch, formState: {
+        isSubmitting
     }} = useForm({
-        reValidateMode: "onBlur"
+        reValidateMode: "onBlur",
+        defaultValues: React.useMemo(() => ({ 'code_phone': 34 }))
     });
     const password = watch("password", "");
     const isPhoneRegister = getSearchParams(location, 'withPhone');
@@ -50,6 +51,11 @@ export default function SignUp({ location }) {
                 if (message.includes('There is a user with the provided email')) {
                     setError('email', {
                        type: 'unique'
+                    })
+                }
+                if (message.includes('There is a user with the provided that phone')) {
+                    setError('phone', {
+                        type: 'unique'
                     })
                 }
             }
@@ -85,8 +91,8 @@ export default function SignUp({ location }) {
                             </Box>
                             <Box>
                             Al crear una cuenta TinderDogs estás aceptando continuar de acuerdo a
-                                nuestros <Link href="#" underline="none">Términos y condiciones</Link> y con nuestra
-                                    <Link href="#" underline="none">  Política de Privacidad</Link>
+                                nuestros <Link href="terms-conditions" underline="none">Términos y condiciones</Link> y con nuestra
+                                    <Link href="privacy" underline="none">  Política de Privacidad</Link>
                             </Box>
                             <Box sx={{
                                 display: 'flex',
@@ -97,7 +103,7 @@ export default function SignUp({ location }) {
                                 <Box>
                                     Continuar con
                                 </Box>
-                                <SocialLogin hidePhone={isPhoneRegister} location={location} />
+                                <SocialAuth hidePhone={isPhoneRegister} />
                             </Box>
                             <Box>
                                 ¿Ya tienes una cuenta?
@@ -218,7 +224,7 @@ export default function SignUp({ location }) {
                     <Box pl={2} pr={2}>
                         <Divider orientation="horizontal" flexItem>o crear cuenta con</Divider>
                     </Box>
-                    <SocialLogin location={location} />
+                    <SocialAuth location={location} />
                     <Box sx={{ margin: '0 auto 2rem auto' }}>
                         ¿Ya tienes una cuenta?
                         <Link

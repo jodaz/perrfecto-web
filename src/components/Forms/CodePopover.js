@@ -2,11 +2,13 @@ import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Autocomplete, { autocompleteClasses } from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
 import Box from '@mui/material/Box';
 import phonecodes from '../../utils/phonecodes'
 import { Controller } from 'react-hook-form'
 import Popover from '@mui/material/Popover';
 import phoneCodes from '../../utils/phonecodes';
+import { Search } from 'lucide-react';
 
 const StyledAutocompletePopper = styled('div')(({ theme }) => ({
     [`& .${autocompleteClasses.paper}`]: {
@@ -105,7 +107,6 @@ const CodePopover = ({ control, rules }) => {
                 }}
             />
             <Popover
-                hideBackdrop
                 open={open}
                 anchorEl={anchorEl}
                 onClose={handleClose}
@@ -124,7 +125,7 @@ const CodePopover = ({ control, rules }) => {
                     control={control}
                     name='code_phone'
                     rules={rules}
-                    defaultValue={phoneCodes[66]}
+                    defaultValue={value}
                     render={({ field: { ref, onChange, ...fieldRest } }) => (
                         <Autocomplete
                             open={open}
@@ -155,10 +156,17 @@ const CodePopover = ({ control, rules }) => {
                                     }}
                                     {...fieldRest}
                                     {...params}
+                                    InputProps={{
+                                        ...params.InputProps,
+                                        startAdornment: (
+                                            <InputAdornment position="start"><Search /></InputAdornment>
+                                        )
+                                    }}
                                 />
                             )}
                             clearIcon={<></>}
                             popupIcon={<></>}
+                            noOptionsText='Sin resultados'
                         />
                     )} />
             </Popover>

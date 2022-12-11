@@ -22,11 +22,8 @@ const PhoneInput = ({
     disabled,
     validations
 }) => {
-    const handleChange = (e, func) => {
-        const regex = /^[0-9\b]+$/;
-        if (e.target.value == "" || regex.test(e.target.value)) {
-            return func(e.target.value)
-        }
+    const allowOnlyNumber=(value)=>{
+        return value.replace(/[^0-9]/g, '')
     }
 
     return (
@@ -41,7 +38,7 @@ const PhoneInput = ({
                     <>
                         <Input
                             {...restField}
-                            onChange={e => handleChange(e, onChange)}
+                            onChange={e => onChange(allowOnlyNumber(e.target.value))}
                             placeholder='Ingrese su teléfono'
                             type={type}
                             error={error != undefined}

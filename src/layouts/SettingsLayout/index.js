@@ -4,7 +4,7 @@ import Slide from '@mui/material/Slide';
 import ProfileToolbar from '../../components/ProfileToolbar';
 
 const SettingsLayout = ({ children, title }) => (
-    <Slide direction="left" in={true} mountOnEnter unmountOnExit>
+    <Slide direction="left" in={true}>
         <Box sx={{
             height: '100%',
             width: '100%',

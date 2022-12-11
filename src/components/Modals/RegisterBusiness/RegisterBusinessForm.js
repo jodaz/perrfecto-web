@@ -20,10 +20,11 @@ import {
 
 const RegisterBusinessForm = ({ isSmall }) => {
     const navigate = useNavigate()
-    const { control, handleSubmit, watch, setError, formState: {
+    const { control, handleSubmit, setError, watch, formState: {
         isSubmitting
     }} = useForm({
-        reValidateMode: "onBlur"
+        reValidateMode: "onBlur",
+        defaultValues: React.useMemo(() => ({ 'code_phone': 34 }))
     });
     const password = watch("password", "");
     const { dispatch } = useAuth();
@@ -40,9 +41,13 @@ const RegisterBusinessForm = ({ isSmall }) => {
             const res = await fileProvider.post('/api/auth/new-business', formData)
 
             if (res.status >= 200 && res.status < 300) {
-                const { data } = res;
+                const newResponse = await res.data.text()
+                const { data, token } = JSON.parse(newResponse);
 
-                loginUser(dispatch, data)
+                loginUser(dispatch, {
+                    data: data,
+                    token: token
+                })
                 navigate('/home')
             }
         } catch (error) {
@@ -55,6 +60,11 @@ const RegisterBusinessForm = ({ isSmall }) => {
                 if (message.includes('There is a user with the provided email')) {
                     setError('email', {
                        type: 'unique'
+                    })
+                }
+                if (message.includes('There is a user with the provided that phone')) {
+                    setError('phone', {
+                        type: 'unique'
                     })
                 }
             }
@@ -155,18 +165,16 @@ const RegisterBusinessForm = ({ isSmall }) => {
                         placeholder='Repita la contraseña'
                     />
                 </Box>
-                <Box textAlign='center'>
-                    <Box sx={{ p: 1 }}>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            fullWidth
-                            type="submit"
-                            disabled={isSubmitting}
-                        >
-                            Siguiente
-                        </Button>
-                    </Box>
+                <Box sx={{ p: 1, width: '100%' }}>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        fullWidth
+                        type="submit"
+                        disabled={isSubmitting}
+                    >
+                        Siguiente
+                    </Button>
                 </Box>
             </Box>
         </Box>

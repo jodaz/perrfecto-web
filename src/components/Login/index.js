@@ -10,8 +10,8 @@ import { useForm } from "react-hook-form"
 import Box from '@mui/material/Box'
 import TextInput from '../Forms/TextInput'
 import LinkBehavior from '../LinkBehavior'
+import SocialAuth from '../SocialAuth'
 import { useNavigate } from 'react-router-dom'
-import SocialLogin from '../SocialLogin'
 import Alert from '@mui/material/Alert'
 import { apiProvider } from '../../api'
 import getSearchParams from '../../utils/getSearchParams'
@@ -28,7 +28,8 @@ export default function Login({ location }) {
     const { control, handleSubmit, setError, formState: {
         isSubmitting
     }} = useForm({
-        reValidateMode: "onBlur"
+        reValidateMode: "onBlur",
+        defaultValues: React.useMemo(() => ({ 'code_phone': 34 }))
     });
     const { dispatch } = useAuth();
 
@@ -53,6 +54,11 @@ export default function Login({ location }) {
             if (error.response.data.msg) {
                 const message = error.response.data.msg;
 
+                if (message.includes('deleted')) {
+                    setError('email', {
+                        type: 'deleted'
+                    })
+                }
                 if (message.includes('The user does not exist with that email')) {
                     setErrorAlert('No estás registrado. Crea una cuenta para poder comenzar en TinderDogs.')
                 }
@@ -116,7 +122,7 @@ export default function Login({ location }) {
                                 <Box>
                                     Continuar con
                                 </Box>
-                                <SocialLogin hidePhone={isPhoneRegister} location={location} />
+                                <SocialAuth hidePhone={isPhoneRegister} />
                             </Box>
                             <Box>
                                 ¿Aún no tienes una cuenta? <Link href="#" underline="none" component={LinkBehavior} to='/register'>Crear cuenta</Link>
@@ -216,7 +222,7 @@ export default function Login({ location }) {
                     <Box pl={2} pr={2}>
                         <Divider orientation="horizontal" flexItem>o iniciar sesión con</Divider>
                     </Box>
-                    <SocialLogin location={location} />
+                    <SocialAuth location={location} />
                     <Box sx={{ margin: '0 auto 2rem auto' }}>
                         ¿Ya tienes una cuenta?
                         <Link

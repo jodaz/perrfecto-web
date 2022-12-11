@@ -18,8 +18,7 @@ const Business = () => {
             position: 'relative',
             display: 'flex',
             justifyContent: 'center',
-            alignItems: 'center',
-            p: 2,
+            alignItems: matches ? 'end' : 'center',
             background: 'linear-gradient(0deg, rgba(161, 103, 201, 0.1), rgba(161, 103, 201, 0.1)), #FFFFFF;'
         }}>
             <Box sx={{
@@ -45,8 +44,7 @@ const Business = () => {
                     <Box sx={{
                         position: 'relative',
                         height: '350px',
-                        width: '100%',
-                        marginLeft: '1rem'
+                        width: '100%'
                     }}>
                         <Box component='div' sx={{
                             background: `url(${Dog1}) no-repeat center center`,

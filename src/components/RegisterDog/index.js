@@ -31,7 +31,7 @@ import ChipArrayInput from '../Forms/ChipArrayInput';
 
 const razas = [
     { value: 1, label: "Bulldog Frances" },
-    { value: 2, label: "PAstor aleman" },
+    { value: 2, label: "Pastor aleman" },
     { value: 3, label: "Dalmata" }
 ];
 
@@ -53,7 +53,7 @@ const features = [
     'Tamaño pequeño', 'Tamaño grande', 'Pelaje largo', 'Pelaje corto'
 ]
 
-const RegisterDog = ({ open, handleClose }) => {
+const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const [error, setError] = React.useState(false)
     const { control, handleSubmit, watch, formState: {
@@ -94,14 +94,14 @@ const RegisterDog = ({ open, handleClose }) => {
             const res = await apiProvider.post('/api/dog/new', formData)
 
             if (res.status >= 200 && res.status < 300) {
-                navigate('?profile=true')
+                navigate(redirect)
             }
         } catch (error) {
             setError('Ha ocurrido un error inesperado.')
         }
     }
 
-    const generatePhotoProfile = ({ isSubmitting }) => (
+    const generatePhotoProfile = (isSubmitting) => (
         <Box sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -164,7 +164,7 @@ const RegisterDog = ({ open, handleClose }) => {
                             {error}
                         </Alert>
                     )}
-                    {(isSmall) && generatePhotoProfile()}
+                    {(isSmall) && generatePhotoProfile(isSubmitting)}
                     <Box sx={{ p: 2 }}>
                         <TextInput
                             label="Nombre"
@@ -189,6 +189,7 @@ const RegisterDog = ({ open, handleClose }) => {
                             InputProps={{
                                 placeholder: 'Seleccione el tipo de raza'
                             }}
+                            noOptionsText='Sin resultados'
                         />
                     </Box>
                     {(type == 'Raza') && (
@@ -204,6 +205,7 @@ const RegisterDog = ({ open, handleClose }) => {
                                 InputProps={{
                                     placeholder: 'Seleccione la raza'
                                 }}
+                                noOptionsText='Sin resultados'
                             />
                         </Box>
                     )}
@@ -233,6 +235,7 @@ const RegisterDog = ({ open, handleClose }) => {
                             InputProps={{
                                 placeholder: 'Seleccione el sexo'
                             }}
+                            noOptionsText='Sin resultados'
                         />
                     </Box>
                     <Box sx={{ p: 2 }}>
@@ -246,8 +249,8 @@ const RegisterDog = ({ open, handleClose }) => {
                             name="dogAge"
                             InputProps={{
                                 placeholder: 'Seleccionar fecha',
-                                startAdornment: <InputAdornment position="start"><Calendar /></InputAdornment>
                             }}
+                            noOptionsText='Sin resultados'
                         />
                     </Box>
                     <Box sx={{ p: 2 }}>

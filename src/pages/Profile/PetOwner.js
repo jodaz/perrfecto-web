@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
 import LinkBehavior from '../../components/LinkBehavior';
 import {
     PlusSquare,
@@ -12,15 +11,50 @@ import getSearchParams from '../../utils/getSearchParams';
 import { useLocation, useNavigate } from 'react-router-dom';
 import BasicTabs from '../../components/Tabs';
 import ProfileOptions from './ProfileOptions';
-import { useAuth } from '../../context/AuthContext'
+import { renewToken, useAuth } from '../../context/AuthContext'
+import { useForm } from 'react-hook-form';
+import PhotoInput from '../../components/Forms/PhotoInput';
+import { fileProvider } from '../../api'
+import formDataHandler from '../../utils/formDataHandler';
 
 const RegisterOwner = React.lazy(() => import('../../components/RegisterOwner'));
 
 const PetOwner = () => {
-    const { state: { user } } = useAuth();
+    const [error, setError] = React.useState('')
+    const { state: { user }, dispatch } = useAuth();
     const location = useLocation();
     const navigate = useNavigate();
     const registerOwner = getSearchParams(location, 'register');
+    const { handleSubmit, control, watch, formState: {
+        isSubmitting
+    }} = useForm();
+
+    const onSubmit = async (data) => {
+        try {
+            const parsedData = {
+                files: data.files,
+                body: {
+                    img_delete: user.img_profile ? user.img_profile : null
+                }
+            }
+
+            const formData = await formDataHandler(parsedData, 'files')
+
+            const res = await fileProvider.put('/api/user/img-profile', formData)
+
+            if (res.status >= 200 && res.status < 300) {
+                renewToken(dispatch, user)
+            }
+        } catch (error) {
+            setError('Ha ocurrido un error inesperado.')
+        }
+    }
+
+    React.useEffect(() => {
+        const subscription = watch(handleSubmit(onSubmit))
+
+        return () => subscription.unsubscribe();
+    }, [handleSubmit, watch])
 
     return (
         <Box sx={{ p: 1, textAlign: 'center', backgroundColor: '#f6f6f6' }}>
@@ -30,6 +64,19 @@ const PetOwner = () => {
                 width: '100%'
             }}>
                 <ProfileOptions />
+                <Box sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    flex: 1,
+                    p: 2
+                }}>
+                    <PhotoInput
+                        name="files"
+                        control={control}
+                        defaultValue={user.img_profile}
+                        disabled={isSubmitting}
+                    />
+                </Box>
                 <Box sx={{
                     display: 'flex',
                     justifyContent: 'space-around',
@@ -50,7 +97,7 @@ const PetOwner = () => {
                         title='Crear publicación'
                         color="primary"
                     />
-                    {!(user.img_profile) && (
+                    {!(user.date_birth) && (
                         <CustomButton
                             size={32}
                             icon={<PlusSquare />}
@@ -61,9 +108,13 @@ const PetOwner = () => {
                         />
                     )}
                 </Box>
-                {!(user.img_profile) && (
+                {!(user.date_birth) && (
                     <React.Suspense>
-                        <RegisterOwner open={registerOwner} handleClose={() => navigate('/profile/owner')} />
+                        <RegisterOwner
+                            open={registerOwner}
+                            handleClose={() => navigate('/profile/owner')}
+                            redirect='/profile/owner'
+                        />
                     </React.Suspense>
                 )}
             </Box>
