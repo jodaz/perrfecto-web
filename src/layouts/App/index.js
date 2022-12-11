@@ -7,6 +7,7 @@ import BusinessHome from './BusinessHome';
 import UsersHome from './UsersHome';
 import { useMediaQuery } from '@mui/material';
 import Navigation from './Navigation';
+import RegisterWarning from '../../components/Modals/RegisterWarning';
 
 export default function AppLayout({ children }) {
     const { state: { user, isAuth } } = useAuth();
@@ -41,6 +42,7 @@ export default function AppLayout({ children }) {
                     <Navigation isSmall={isSmall} />
                 </Box>
             )}
+            <RegisterWarning />
         </Box>
     );
 }
