@@ -6,9 +6,7 @@ import { useDropzone } from 'react-dropzone';
 import { ReactComponent as PlusIcon } from '../../assets/icons/Plus.svg'
 import { ReactComponent as DeleteIcon } from '../../assets/icons/Delete.svg'
 import { Controller } from 'react-hook-form'
-import vars from '../../vars';
-
-const filePreviewOrigin = filepath => (`${vars.source}/${filepath}`)
+import getUserPhoto from '../../utils/getUserPhoto';
 
 const Dropzone = ({
     onChange,
@@ -17,7 +15,7 @@ const Dropzone = ({
 }) => {
     const [file, setFile] = React.useState((() => {
         if (defaultValue) {
-            return { preview: filePreviewOrigin(defaultValue) }
+            return { preview: getUserPhoto(defaultValue) }
         }
         return
     })());
