@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
 import LinkBehavior from '../../components/LinkBehavior';
 import {
     PlusSquare,
@@ -12,7 +11,7 @@ import getSearchParams from '../../utils/getSearchParams';
 import { useLocation, useNavigate } from 'react-router-dom';
 import BasicTabs from '../../components/Tabs';
 import ProfileOptions from './ProfileOptions';
-import { useAuth } from '../../context/AuthContext'
+import { renewToken, useAuth } from '../../context/AuthContext'
 import { useForm } from 'react-hook-form';
 import PhotoInput from '../../components/Forms/PhotoInput';
 import { fileProvider } from '../../api'
@@ -22,11 +21,13 @@ const RegisterOwner = React.lazy(() => import('../../components/RegisterOwner'))
 
 const PetOwner = () => {
     const [error, setError] = React.useState('')
-    const { state: { user } } = useAuth();
+    const { state: { user }, dispatch } = useAuth();
     const location = useLocation();
     const navigate = useNavigate();
     const registerOwner = getSearchParams(location, 'register');
-    const { handleSubmit, control, watch } = useForm();
+    const { handleSubmit, control, watch, formState: {
+        isSubmitting
+    }} = useForm();
 
     const onSubmit = async (data) => {
         try {
@@ -39,7 +40,11 @@ const PetOwner = () => {
 
             const formData = await formDataHandler(parsedData, 'files')
 
-            await fileProvider.put('/api/user/img-profile', formData)
+            const res = await fileProvider.put('/api/user/img-profile', formData)
+
+            if (res.status >= 200 && res.status < 300) {
+                renewToken(dispatch, user)
+            }
         } catch (error) {
             setError('Ha ocurrido un error inesperado.')
         }
@@ -69,6 +74,7 @@ const PetOwner = () => {
                         name="files"
                         control={control}
                         defaultValue={user.img_profile}
+                        disabled={isSubmitting}
                     />
                 </Box>
                 <Box sx={{
@@ -91,7 +97,7 @@ const PetOwner = () => {
                         title='Crear publicación'
                         color="primary"
                     />
-                    {!(user.img_profile) && (
+                    {!(user.date_birth) && (
                         <CustomButton
                             size={32}
                             icon={<PlusSquare />}
@@ -102,7 +108,7 @@ const PetOwner = () => {
                         />
                     )}
                 </Box>
-                {!(user.img_profile) && (
+                {!(user.date_birth) && (
                     <React.Suspense>
                         <RegisterOwner
                             open={registerOwner}

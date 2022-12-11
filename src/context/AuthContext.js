@@ -1,5 +1,11 @@
 import * as React from 'react'
 import vars from '../vars'
+import { apiProvider } from '../api'
+
+const setLocalCredentials = async (token, data) => {
+    await localStorage.setItem(vars.authToken, token)
+    await localStorage.setItem(vars.user, JSON.stringify(data));
+}
 
 const AuthContext = React.createContext()
 
@@ -40,6 +46,14 @@ function authReducer(state, action) {
                     user: action.payload.user,
                 }
             }
+            case 'RENEW_TOKEN': {
+                return {
+                    ...state,
+                    user: action.payload.user,
+                    token: action.payload.token,
+                    isAuth: true
+                }
+            }
             case 'LOGOUT': {
                 return initialState
             }
@@ -70,6 +84,33 @@ function useAuth() {
     return context
 }
 
+async function renewToken(dispatch, values) {
+    try {
+        const { id, name, role } = values;
+
+        const res = await apiProvider.get('/api/auth/renew', {
+            id: id,
+            name: name,
+            role: role
+        });
+
+        if (res.status >= 200 && res.status < 300) {
+            const { data } = res
+
+            dispatch({
+                type: 'RENEW_TOKEN',
+                payload: {
+                    user: data.data,
+                    token: data.token
+                }
+            })
+            await setLocalCredentials(data.token, data.data)
+        }
+    } catch (error) {
+        console.log("renew token error ", error)
+    }
+}
+
 async function loginUser(dispatch, values) {
     try {
         const { data, token } = values
@@ -81,8 +122,7 @@ async function loginUser(dispatch, values) {
                 token: token
             }
         })
-        await localStorage.setItem(vars.authToken, token)
-        await localStorage.setItem(vars.user, JSON.stringify(data));
+        await setLocalCredentials(token, data)
     } catch (e) {
         console.log(e);
     }
@@ -118,4 +158,4 @@ async function logout(dispatch) {
     }
 }
 
-export { useAuth, AuthProvider, loginUser, logout, guestUser }
+export { useAuth, AuthProvider, loginUser, logout, guestUser, renewToken }

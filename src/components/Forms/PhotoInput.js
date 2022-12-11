@@ -7,6 +7,7 @@ import { ReactComponent as PlusIcon } from '../../assets/icons/Plus.svg'
 import { ReactComponent as DeleteIcon } from '../../assets/icons/Delete.svg'
 import { Controller } from 'react-hook-form'
 import getUserPhoto from '../../utils/getUserPhoto';
+import { CircularProgress } from '@mui/material';
 
 const Dropzone = ({
     onChange,
@@ -67,7 +68,7 @@ const Dropzone = ({
                 alignItems: 'center',
                 justifyContent: 'center',
                 background: 'transparent',
-                cursor: 'pointer',
+                cursor: disabled ? 'wait' : 'pointer',
                 textAlign: 'center',
                 color: theme => theme.palette.getContrastText(
                     theme.palette.background.default

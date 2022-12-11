@@ -24,7 +24,9 @@ const PetProfile = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const registerDog = getSearchParams(location, 'dog');
-    const { handleSubmit, control, watch } = useForm();
+    const { handleSubmit, control, watch, formState: {
+        isSubmitting
+    }} = useForm();
 
     // const onSubmit = async (data) => {
     //     try {
@@ -48,6 +50,7 @@ const PetProfile = () => {
 
     //     return () => subscription.unsubscribe();
     // }, [handleSubmit, watch])
+
 
     return (
         <Box sx={{ pt: 1, width: '100%', textAlign: 'center', backgroundColor: '#f6f6f6' }}>
