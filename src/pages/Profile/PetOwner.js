@@ -68,8 +68,6 @@ const PetOwner = () => {
         return () => subscription.unsubscribe();
     }, [handleSubmit, watch])
 
-    console.log(user)
-
     return (
         <Box sx={{ p: 1, textAlign: 'center', backgroundColor: '#f6f6f6' }}>
             <BasicTabs />

@@ -11,38 +11,55 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import BasicTabs from '../../components/Tabs';
 import ProfileOptions from './ProfileOptions';
 import { useForm } from 'react-hook-form';
-import { useAuth } from '../../context/AuthContext'
+import { useAuth, renewToken } from '../../context/AuthContext'
 import PhotoInput from '../../components/Forms/PhotoInput';
-import { fileProvider } from '../../api'
+import { fileProvider, apiProvider } from '../../api'
 import formDataHandler from '../../utils/formDataHandler';
 
 const RegisterDog = React.lazy(() => import('../../components/RegisterDog'));
 
-const dogPhoto = data => JSON.parse(data)[0]
+const getCurrDogPhoto = data => JSON.parse(data)[0]
 
 const PetProfile = () => {
     const [error, setError] = React.useState('')
-    const { state: { user } } = useAuth();
+    const { state: { user }, dispatch } = useAuth();
     const location = useLocation();
     const navigate = useNavigate();
     const registerDog = getSearchParams(location, 'dog');
     const { handleSubmit, control, watch } = useForm();
 
     const onSubmit = async (data) => {
-        // try {
-        //     const parsedData = {
-        //         files: data.files,
-        //         body: {
-        //             img_delete: user.img_profile ? user.img_profile : null
-        //         }
-        //     }
+        try {
+            const parsedData = {
+                files: data.files,
+                body: {
+                    img_delete: user.img_profile ? user.img_profile : null
+                }
+            }
 
-        //     const formData = await formDataHandler(parsedData, 'files')
+            const formData = await formDataHandler(parsedData, 'files')
 
-        //     await fileProvider.put('/api/user/img-profile', formData)
-        // } catch (error) {
-        //     setError('Ha ocurrido un error inesperado.')
-        // }
+            const res = await fileProvider.put(`/api/dog/img-dog/${user.dog.id}`, formData)
+
+            if (res.status >= 200 && res.status < 300) {
+                renewToken(dispatch, user)
+            }
+        } catch (error) {
+            setError('Ha ocurrido un error inesperado.')
+        }
+    }
+
+    const deletePhoto = async () => {
+        try {
+            const dogPhoto = await getCurrDogPhoto(user.dog.dogPhotos)
+            const res = await apiProvider.delete(`/api/dog/img-dog/${user.dog.id}/${dogPhoto}`)
+
+            if (res.status >= 200 && res.status < 300) {
+                renewToken(dispatch, user)
+            }
+        } catch (error) {
+            setError('Ha ocurrido un error inesperado.')
+        }
     }
 
     React.useEffect(() => {
@@ -67,7 +84,8 @@ const PetProfile = () => {
                     <PhotoInput
                         name="files"
                         control={control}
-                        defaultValue={(user.dog) && dogPhoto(user.dog.dogPhotos)}
+                        defaultValue={(user.dog) && getCurrDogPhoto(user.dog.dogPhotos)}
+                        handleDelete={deletePhoto}
                     />
                 </Box>
                 <Box sx={{
