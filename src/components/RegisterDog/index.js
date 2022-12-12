@@ -7,8 +7,6 @@ import Typography from '@mui/material/Typography';
 import DialogTitle from '../DialogTitle';
 import TextInput from '../Forms/TextInput';
 import SelectInput from '../Forms/SelectInput';
-import { Calendar } from 'lucide-react'
-import InputAdornment from '@mui/material/InputAdornment';
 import Divider from '@mui/material/Divider';
 import Alert from '@mui/material/Alert';
 import {
@@ -48,11 +46,6 @@ const genders = [
 
 const years = generateYears();
 
-const features = [
-    'Pelaje oscuro', 'Pelaje claro',
-    'Tamaño pequeño', 'Tamaño grande', 'Pelaje largo', 'Pelaje corto'
-]
-
 const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const [error, setError] = React.useState(false)
@@ -64,6 +57,7 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
     const type = watch('type') ? watch('type').label : undefined;
     const { state: { user } } = useAuth();
     const navigate = useNavigate();
+    const [features, setFeatures] = React.useState([])
 
     const onSubmit = async (data) => {
         try {
@@ -74,8 +68,12 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
                 name,
                 files,
                 dogAge,
-                features
+                characteristics
             } = data;
+
+            // const mappedCharacteristics = characteristics.map(value => ({
+            //     id_charact: value
+            // }))
 
             const parsedData = {
                 name: name,
@@ -84,9 +82,8 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
                 dogAge: dogAge.label,
                 gender: gender.label,
                 id_user: user.id,
-                features: features,
-                files: files,
-                features: features
+                characteristics: characteristics,
+                files: files
             }
 
             const formData = await formDataHandler(parsedData, 'files')
@@ -100,6 +97,22 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
             setError('Ha ocurrido un error inesperado.')
         }
     }
+
+    const fetchFeatures = async () => {
+        try {
+            const res = await apiProvider.get('api/characteristic/characteristics')
+
+            if (res.status >= 200 && res.status < 300) {
+                const { data: { data } } = res;
+
+                setFeatures(data);
+            }
+        } catch (error) {
+            console.log("error ", error)
+        }
+    }
+
+    React.useEffect(() => { fetchFeatures() }, []);
 
     const generatePhotoProfile = (isSubmitting) => (
         <Box sx={{
@@ -253,10 +266,14 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
                             noOptionsText='Sin resultados'
                         />
                     </Box>
-                    <Box sx={{ p: 2 }}>
+                    <Box sx={{
+                        p: 2,
+                        maxWidth: '350px',
+                        minWidth: '350px'
+                    }}>
                         <ChipArrayInput
                             control={control}
-                            name='features'
+                            name='characteristics'
                             labels={features}
                             rules={FEATURES.rules}
                             validations={FEATURES.messages}
