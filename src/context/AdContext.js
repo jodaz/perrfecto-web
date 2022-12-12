@@ -9,13 +9,31 @@ const initialState = {
     vaccines: []
 }
 
-function authReducer(state, action) {
+function adReducer(state, action) {
     if (action) {
         switch (action.type) {
             case 'ADD_PHOTO': {
                 return {
                     ...state,
                     pictures: [...state.pictures, action.payload],
+                }
+            }
+            case 'ADD_VACCINE': {
+                return {
+                    ...state,
+                    vaccines: [...state.vaccines, action.payload],
+                }
+            }
+            case 'ADD_CERTIFICATE': {
+                return {
+                    ...state,
+                    certificates: [...state.certificates, action.payload],
+                }
+            }
+            case 'DELETE_VACINNE': {
+                return {
+                    ...state,
+                    vaccines: state.vaccines.filter((_, index) => index != action.payload),
                 }
             }
             default: {
@@ -26,7 +44,7 @@ function authReducer(state, action) {
 }
 
 function AdProvider({ children }) {
-    const [state, dispatch] = React.useReducer(authReducer, initialState)
+    const [state, dispatch] = React.useReducer(adReducer, initialState)
 
     return (
         <AdContext.Provider value={{ state, dispatch }}>
@@ -56,4 +74,38 @@ async function addPhoto(dispatch, data) {
     }
 }
 
-export { useAd, AdProvider, addPhoto }
+async function addVaccine(dispatch, data) {
+    try {
+        dispatch({
+            type: 'ADD_VACCINE',
+            payload: data
+        })
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+/**
+ * Delete vaccine
+ * @param {*} dispatch function
+ * @param {*} index inside array
+ */
+async function deleteVaccine(dispatch, index) {
+    try {
+        dispatch({
+            type: 'ADD_VACCINE',
+            payload: index
+        })
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+export {
+    useAd,
+    AdProvider,
+    addPhoto,
+    addVaccine,
+    deleteVaccine,
+    AdContext
+}
