@@ -11,11 +11,12 @@ import { useForm } from "react-hook-form";
 import { useAuth } from '../../context/AuthContext'
 import useMediaQuery from '@mui/material/useMediaQuery';
 import TextInput from '../../components/Forms/TextInput';
+import CreateAdLocation from './CreateAdLocation';
 
 const CreateAd = ({ location }) => {
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const navigate = useNavigate()
-    const isPhoneRegister = getSearchParams(location, 'withPhone');
+    // const tab = getSearchParams(location, 'location');
     const [errorAlert, setErrorAlert] = React.useState('')
     const { control, handleSubmit, setError, formState: {
         isSubmitting
@@ -61,73 +62,76 @@ const CreateAd = ({ location }) => {
         // }
     };
 
+    // <Box sx={{ p: 2 }}>
+    //                 <Typography
+    //                     variant="body2"
+    //                     fontWeight={500}
+    //                     color="text.secondary"
+    //                     textTransform='uppercase'
+    //                 >
+    //                     Información de la mascota
+    //                 </Typography>
+    //                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
+    //                     <Box sx={{
+    //                         display: 'flex',
+    //                         justifyContent: 'space-around',
+    //                     }}>
+    //                         {/** Raza */}
+    //                         <Typography color="primary.main">
+    //                             {dog.breed}
+    //                         </Typography>
+    //                         <Box
+    //                             sx={{
+    //                                 color: theme => theme.palette.primary.main
+    //                             }}
+    //                         >.</Box>
+    //                         {/** Edad */}
+    //                         <Typography color="primary.main">
+    //                             3 años
+    //                         </Typography>
+    //                         <Box
+    //                             sx={{
+    //                                 color: theme => theme.palette.primary.main
+    //                             }}
+    //                         >.</Box>
+    //                         {/** Ubicación */}
+    //                         <Typography
+    //                             color="info.main"
+    //                             sx={{ display: 'flex', alignItems: 'center' }}
+    //                         >
+    //                             <MapPin size={20} />
+    //                             Sevilla, España
+    //                         </Typography>
+    //                     </Box>
+    //                 </Box>
+    //                 <Box sx={{ pt: 2, color: 'black' }}>
+    //                     <TextInput
+    //                         name='description'
+    //                         control={control}
+    //                         label='Descripción:'
+    //                         placeholder='Escribir aquí'
+    //                         sx={{
+    //                             border: 'none !important',
+    //                             padding: 0,
+    //                             '&.Mui-focused': {
+    //                                 boxShadow: 'none',
+    //                                 borderColor: 'none'
+    //                             },
+    //                         }}
+    //                     />
+    //                 </Box>
+    //             </Box>
+
     return (
-        <SettingsLayout title="Crear anuncio">
+        // <SettingsLayout title={tab ? 'Ubicación' : 'Crear anuncio'}>
+        <SettingsLayout title='Crear anuncio'>
             <Box sx={{
                 height: '100%',
                 width: '100%',
                 display: 'flex',
                 flexDirection: 'column'
             }} component="form" onSubmit={handleSubmit(onSubmit)}>
-                <Box sx={{ p: 2 }}>
-                    <Typography
-                        variant="body2"
-                        fontWeight={500}
-                        color="text.secondary"
-                        textTransform='uppercase'
-                    >
-                        Información de la mascota
-                    </Typography>
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <Box sx={{
-                            display: 'flex',
-                            justifyContent: 'space-around',
-                        }}>
-                            {/** Raza */}
-                            <Typography color="primary.main">
-                                {dog.breed}
-                            </Typography>
-                            <Box
-                                sx={{
-                                    color: theme => theme.palette.primary.main
-                                }}
-                            >.</Box>
-                            {/** Edad */}
-                            <Typography color="primary.main">
-                                3 años
-                            </Typography>
-                            <Box
-                                sx={{
-                                    color: theme => theme.palette.primary.main
-                                }}
-                            >.</Box>
-                            {/** Ubicación */}
-                            <Typography
-                                color="info.main"
-                                sx={{ display: 'flex', alignItems: 'center' }}
-                            >
-                                <MapPin size={20} />
-                                Sevilla, España
-                            </Typography>
-                        </Box>
-                    </Box>
-                    <Box sx={{ pt: 2, color: 'black' }}>
-                        <TextInput
-                            name='description'
-                            control={control}
-                            label='Descripción:'
-                            placeholder='Escribir aquí'
-                            sx={{
-                                border: 'none !important',
-                                padding: 0,
-                                '&.Mui-focused': {
-                                    boxShadow: 'none',
-                                    borderColor: 'none'
-                                },
-                            }}
-                        />
-                    </Box>
-                </Box>
+                <CreateAdLocation control={control} />
             </Box>
         </SettingsLayout>
     );
