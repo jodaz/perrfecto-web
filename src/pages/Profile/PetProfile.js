@@ -51,6 +51,7 @@ const PetProfile = () => {
     //     return () => subscription.unsubscribe();
     // }, [handleSubmit, watch])
 
+    console.log(!user.dog)
 
     return (
         <Box sx={{ pt: 1, width: '100%', textAlign: 'center', backgroundColor: '#f6f6f6' }}>
@@ -89,15 +90,15 @@ const PetProfile = () => {
                         title='Crear anuncio'
                         color="info"
                         component={LinkBehavior}
-                        to={user.dog ? 'ads/create' : '?dog=true'}
+                        to={(user.dog) ? '/profile/ad/create' : '?dog=true'}
                     />
                 </Box>
-                {!(user.img_profile) && (
+                {(registerDog) && (
                     <React.Suspense>
                         <RegisterDog
                             open={registerDog}
                             handleClose={() => navigate('/profile')}
-                            redirect='/profile/owner'
+                            redirect='/profile/ad/create'
                         />
                     </React.Suspense>
                 )}
