@@ -64,6 +64,7 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
     const type = watch('type') ? watch('type').label : undefined;
     const { state: { user } } = useAuth();
     const navigate = useNavigate();
+    const [features, setFeatures] = React.useState([])
 
     const onSubmit = async (data) => {
         try {
@@ -100,6 +101,22 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
             setError('Ha ocurrido un error inesperado.')
         }
     }
+
+    const fetchFeatures = async () => {
+        try {
+            const res = await apiProvider.get('api/characteristic/characteristics')
+
+            if (res.status >= 200 && res.status < 300) {
+                const { data: { data } } = res;
+
+                setFeatures(data);
+            }
+        } catch (error) {
+            console.log("error ", error)
+        }
+    }
+
+    React.useEffect(() => { fetchFeatures() }, []);
 
     const generatePhotoProfile = (isSubmitting) => (
         <Box sx={{
@@ -253,7 +270,11 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
                             noOptionsText='Sin resultados'
                         />
                     </Box>
-                    <Box sx={{ p: 2 }}>
+                    <Box sx={{
+                        p: 2,
+                        maxWidth: '350px',
+                        minWidth: '350px'
+                    }}>
                         <ChipArrayInput
                             control={control}
                             name='features'
