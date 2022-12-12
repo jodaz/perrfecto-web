@@ -18,40 +18,38 @@ import formDataHandler from '../../utils/formDataHandler';
 
 const RegisterDog = React.lazy(() => import('../../components/RegisterDog'));
 
+const dogPhoto = data => JSON.parse(data)[0]
+
 const PetProfile = () => {
     const [error, setError] = React.useState('')
     const { state: { user } } = useAuth();
     const location = useLocation();
     const navigate = useNavigate();
     const registerDog = getSearchParams(location, 'dog');
-    const { handleSubmit, control, watch, formState: {
-        isSubmitting
-    }} = useForm();
+    const { handleSubmit, control, watch } = useForm();
 
-    // const onSubmit = async (data) => {
-    //     try {
-    //         const parsedData = {
-    //             files: data.files,
-    //             body: {
-    //                 img_delete: user.img_profile ? user.img_profile : null
-    //             }
-    //         }
+    const onSubmit = async (data) => {
+        // try {
+        //     const parsedData = {
+        //         files: data.files,
+        //         body: {
+        //             img_delete: user.img_profile ? user.img_profile : null
+        //         }
+        //     }
 
-    //         const formData = await formDataHandler(parsedData, 'files')
+        //     const formData = await formDataHandler(parsedData, 'files')
 
-    //         await fileProvider.put('/api/user/img-profile', formData)
-    //     } catch (error) {
-    //         setError('Ha ocurrido un error inesperado.')
-    //     }
-    // }
+        //     await fileProvider.put('/api/user/img-profile', formData)
+        // } catch (error) {
+        //     setError('Ha ocurrido un error inesperado.')
+        // }
+    }
 
-    // React.useEffect(() => {
-    //     const subscription = watch(handleSubmit(onSubmit))
+    React.useEffect(() => {
+        const subscription = watch(handleSubmit(onSubmit))
 
-    //     return () => subscription.unsubscribe();
-    // }, [handleSubmit, watch])
-
-    console.log(!user.dog)
+        return () => subscription.unsubscribe();
+    }, [handleSubmit, watch])
 
     return (
         <Box sx={{ pt: 1, width: '100%', textAlign: 'center', backgroundColor: '#f6f6f6' }}>
@@ -69,7 +67,7 @@ const PetProfile = () => {
                     <PhotoInput
                         name="files"
                         control={control}
-                        defaultValue={user.img_profile}
+                        defaultValue={(user.dog) && dogPhoto(user.dog.dogPhotos)}
                     />
                 </Box>
                 <Box sx={{
