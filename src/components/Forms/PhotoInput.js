@@ -11,7 +11,8 @@ import getUserPhoto from '../../utils/getUserPhoto';
 const Dropzone = ({
     onChange,
     disabled,
-    defaultValue
+    defaultValue,
+    handleDelete
 }) => {
     const [file, setFile] = React.useState((() => {
         if (defaultValue) {
@@ -109,7 +110,7 @@ const Dropzone = ({
                 right: 0,
                 color: '#fff',
                 cursor: 'pointer'
-            }} onClick={() => console.log("Here")}>
+            }} onClick={handleDelete}>
                 {(file) ? <DeleteIcon /> : <PlusIcon />}
             </Box>
         </Box>
