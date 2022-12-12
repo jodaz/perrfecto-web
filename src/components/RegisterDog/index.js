@@ -7,8 +7,6 @@ import Typography from '@mui/material/Typography';
 import DialogTitle from '../DialogTitle';
 import TextInput from '../Forms/TextInput';
 import SelectInput from '../Forms/SelectInput';
-import { Calendar } from 'lucide-react'
-import InputAdornment from '@mui/material/InputAdornment';
 import Divider from '@mui/material/Divider';
 import Alert from '@mui/material/Alert';
 import {
@@ -48,11 +46,6 @@ const genders = [
 
 const years = generateYears();
 
-const features = [
-    'Pelaje oscuro', 'Pelaje claro',
-    'Tamaño pequeño', 'Tamaño grande', 'Pelaje largo', 'Pelaje corto'
-]
-
 const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const [error, setError] = React.useState(false)
@@ -75,8 +68,12 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
                 name,
                 files,
                 dogAge,
-                features
+                characteristics
             } = data;
+
+            // const mappedCharacteristics = characteristics.map(value => ({
+            //     id_charact: value
+            // }))
 
             const parsedData = {
                 name: name,
@@ -85,9 +82,8 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
                 dogAge: dogAge.label,
                 gender: gender.label,
                 id_user: user.id,
-                features: features,
-                files: files,
-                features: features
+                characteristics: characteristics,
+                files: files
             }
 
             const formData = await formDataHandler(parsedData, 'files')
@@ -277,7 +273,7 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
                     }}>
                         <ChipArrayInput
                             control={control}
-                            name='features'
+                            name='characteristics'
                             labels={features}
                             rules={FEATURES.rules}
                             validations={FEATURES.messages}

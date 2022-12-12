@@ -81,12 +81,14 @@ const PetProfile = () => {
                     flex: 1,
                     p: 2
                 }}>
-                    <PhotoInput
-                        name="files"
-                        control={control}
-                        defaultValue={(user.dog) && getCurrDogPhoto(user.dog.dogPhotos)}
-                        handleDelete={deletePhoto}
-                    />
+                    {(user.dog) && (
+                        <PhotoInput
+                            name="files"
+                            control={control}
+                            defaultValue={(user.dog) && getCurrDogPhoto(user.dog.dogPhotos)}
+                            handleDelete={deletePhoto}
+                        />
+                    )}
                 </Box>
                 <Box sx={{
                     display: 'flex',
