@@ -14,12 +14,7 @@ const Dropzone = ({
     defaultValue,
     handleDelete
 }) => {
-    const [file, setFile] = React.useState((() => {
-        if (defaultValue) {
-            return { preview: getUserPhoto(defaultValue) }
-        }
-        return { preview: '/images/Avatar.svg' }
-    })());
+    const [file, setFile] = React.useState({preview: '/images/Avatar.svg' });
     const { getRootProps, getInputProps } = useDropzone({
         accept: {
             'image/*': ['.jpeg', '.jpg', '.png']
@@ -57,6 +52,13 @@ const Dropzone = ({
             }
         };
     }, []);
+
+    React.useEffect(() => {
+        if (defaultValue) {
+            return setFile({ preview: getUserPhoto(defaultValue) })
+        }
+        return  setFile({ preview: '/images/Avatar.svg' })
+    }, [defaultValue])
 
     return (
         <Box sx={{
@@ -103,7 +105,7 @@ const Dropzone = ({
                 height: '1rem',
                 padding: '0.5rem',
                 borderRadius: '50%',
-                background: theme => (!file) ? theme.palette.primary.main : theme.palette.error.main,
+                background: theme => (file.preview == '/images/Avatar.svg') ? theme.palette.primary.main : theme.palette.error.main,
                 zIndex: 1000,
                 position: 'absolute',
                 bottom: 0,
@@ -111,7 +113,7 @@ const Dropzone = ({
                 color: '#fff',
                 cursor: 'pointer'
             }} onClick={handleDelete}>
-                {(file) ? <DeleteIcon /> : <PlusIcon />}
+                {(file.preview != '/images/Avatar.svg') ? <DeleteIcon /> : <PlusIcon />}
             </Box>
         </Box>
     )

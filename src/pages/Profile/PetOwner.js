@@ -51,7 +51,6 @@ const PetOwner = () => {
     }
 
     const deletePhoto = async () => {
-        console.log(user.img_profile)
         try {
             const res = await apiProvider.delete(`/api/user/img-profile/${user.img_profile}`)
 
@@ -68,6 +67,8 @@ const PetOwner = () => {
 
         return () => subscription.unsubscribe();
     }, [handleSubmit, watch])
+
+    console.log(user)
 
     return (
         <Box sx={{ p: 1, textAlign: 'center', backgroundColor: '#f6f6f6' }}>
