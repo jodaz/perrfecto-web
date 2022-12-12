@@ -36,9 +36,13 @@ export default function Login({ location }) {
     const onSubmit = async (data) => {
         setErrorAlert('');
         try {
-            const res = await apiProvider.post('/api/auth', {
-                ...data
-            })
+            const { code_phone, ...restData } = data;
+
+            if (isPhoneRegister) {
+                restData.code_phone = data.code_phone
+            }
+
+            const res = await apiProvider.post('/api/auth', restData)
 
             if (res.status >= 200 && res.status < 300) {
                 const { data } = res;
