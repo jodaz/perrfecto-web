@@ -5,16 +5,17 @@ import Dialog from '@mui/material/Dialog';
 import LinkBehavior from '../../LinkBehavior';
 import Typography from '@mui/material/Typography';
 import DialogTitle from '../../DialogTitle';
+import { useGuest, closeGuestWarning } from '../../../context/GuestContext';
 
 const RegisterWarning = () => {
-    const [open, setOpen] = React.useState(true)
+    const { state: { isOpen }, dispatch } = useGuest();
 
     return (
         <Dialog
-            onClose={() => setOpen(false)}
-            open={open}
+            onClose={() => closeGuestWarning(dispatch)}
+            open={isOpen}
         >
-            <DialogTitle onClose={() => setOpen(false)} />
+            <DialogTitle onClose={() => closeGuestWarning(dispatch)} />
             <Box sx={{
                 display: 'flex',
                 justifyContent: 'space-between',

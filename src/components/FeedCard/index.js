@@ -9,6 +9,8 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Badge from '@mui/material/Badge';
 import { useMediaQuery } from '@mui/material';
+import { useAuth } from '../../context/AuthContext';
+import { openGuestWarning, useGuest } from '../../context/GuestContext';
 
 // Icons
 import { ReactComponent as PawIcon } from '../../assets/icons/Paw.svg'
@@ -16,7 +18,15 @@ import { ReactComponent as StarIcon } from '../../assets/icons/Star.svg'
 import { ReactComponent as HuesitoIcon } from '../../assets/icons/Huesito.svg'
 
 const FeedCard = () => {
+    const { state: { isAuth } } = useAuth();
+    const { dispatch } = useGuest();
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
+
+    const action = () => {
+        if (!isAuth) {
+            openGuestWarning(dispatch, 'Actualmente no tiene acceso a esta función.');
+        }
+    }
 
     return (
         <Box sx={{ position: 'relative' }}>
@@ -72,13 +82,13 @@ const FeedCard = () => {
                             background: 'url(/images/default/pasto_feo.png)',
                             padding: '0.6rem',
                             boxShadow: '0px 2px 5px rgba(51, 51, 51, 0.15)'
-                        }}>
+                        }} onClick={action}>
                             <HuesitoIcon />
                         </IconButton>
                         <IconButton sx={{
                             background: '#fff',
                             boxShadow: '0px 2px 5px rgba(51, 51, 51, 0.15)'
-                        }}>
+                        }} onClick={action}>
                             <StarIcon />
                         </IconButton>
                         <Badge
@@ -101,7 +111,7 @@ const FeedCard = () => {
                             <IconButton sx={{
                                 background: '#fff',
                                 boxShadow: '0px 2px 5px rgba(51, 51, 51, 0.15)'
-                            }}>
+                            }} onClick={action}>
                                 <PawIcon />
                             </IconButton>
                         </Badge>
