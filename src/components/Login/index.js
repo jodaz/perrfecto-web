@@ -59,6 +59,11 @@ export default function Login({ location }) {
                         type: 'deleted'
                     })
                 }
+                if (message.includes('without password')) {
+                    setError('email', {
+                        type: 'byrrss'
+                    })
+                }
                 if (message.includes('The user does not exist with that email')) {
                     setErrorAlert('No estás registrado. Crea una cuenta para poder comenzar en TinderDogs.')
                 }
