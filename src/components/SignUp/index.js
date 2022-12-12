@@ -34,9 +34,13 @@ export default function SignUp({ location }) {
 
     const onSubmit = async (data) => {
         try {
-            const res = await apiProvider.post('/api/auth/new', {
-                ...data
-            })
+            const { code_phone, ...restData } = data;
+
+            if (isPhoneRegister) {
+                restData.code_phone = data.code_phone
+            }
+
+            const res = await apiProvider.post('/api/auth/new', restData)
 
             if (res.status >= 200 || res.status < 300) {
                 const { data } = res;

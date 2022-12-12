@@ -11,46 +11,62 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import BasicTabs from '../../components/Tabs';
 import ProfileOptions from './ProfileOptions';
 import { useForm } from 'react-hook-form';
-import { useAuth } from '../../context/AuthContext'
+import { useAuth, renewToken } from '../../context/AuthContext'
 import PhotoInput from '../../components/Forms/PhotoInput';
-import { fileProvider } from '../../api'
+import { fileProvider, apiProvider } from '../../api'
 import formDataHandler from '../../utils/formDataHandler';
 
 const RegisterDog = React.lazy(() => import('../../components/RegisterDog'));
 
+const getCurrDogPhoto = data => JSON.parse(data)[0]
+
 const PetProfile = () => {
     const [error, setError] = React.useState('')
-    const { state: { user } } = useAuth();
+    const { state: { user }, dispatch } = useAuth();
     const location = useLocation();
     const navigate = useNavigate();
     const registerDog = getSearchParams(location, 'dog');
-    const { handleSubmit, control, watch, formState: {
-        isSubmitting
-    }} = useForm();
+    const { handleSubmit, control, watch } = useForm();
 
-    // const onSubmit = async (data) => {
-    //     try {
-    //         const parsedData = {
-    //             files: data.files,
-    //             body: {
-    //                 img_delete: user.img_profile ? user.img_profile : null
-    //             }
-    //         }
+    const onSubmit = async (data) => {
+        try {
+            const parsedData = {
+                files: data.files,
+                body: {
+                    img_delete: user.img_profile ? user.img_profile : null
+                }
+            }
 
-    //         const formData = await formDataHandler(parsedData, 'files')
+            const formData = await formDataHandler(parsedData, 'files')
 
-    //         await fileProvider.put('/api/user/img-profile', formData)
-    //     } catch (error) {
-    //         setError('Ha ocurrido un error inesperado.')
-    //     }
-    // }
+            const res = await fileProvider.put(`/api/dog/img-dog/${user.dog.id}`, formData)
 
-    // React.useEffect(() => {
-    //     const subscription = watch(handleSubmit(onSubmit))
+            if (res.status >= 200 && res.status < 300) {
+                renewToken(dispatch, user)
+            }
+        } catch (error) {
+            setError('Ha ocurrido un error inesperado.')
+        }
+    }
 
-    //     return () => subscription.unsubscribe();
-    // }, [handleSubmit, watch])
+    const deletePhoto = async () => {
+        try {
+            const dogPhoto = await getCurrDogPhoto(user.dog.dogPhotos)
+            const res = await apiProvider.delete(`/api/dog/img-dog/${user.dog.id}/${dogPhoto}`)
 
+            if (res.status >= 200 && res.status < 300) {
+                renewToken(dispatch, user)
+            }
+        } catch (error) {
+            setError('Ha ocurrido un error inesperado.')
+        }
+    }
+
+    React.useEffect(() => {
+        const subscription = watch(handleSubmit(onSubmit))
+
+        return () => subscription.unsubscribe();
+    }, [handleSubmit, watch])
 
     return (
         <Box sx={{ pt: 1, width: '100%', textAlign: 'center', backgroundColor: '#f6f6f6' }}>
@@ -65,11 +81,14 @@ const PetProfile = () => {
                     flex: 1,
                     p: 2
                 }}>
-                    <PhotoInput
-                        name="files"
-                        control={control}
-                        defaultValue={user.img_profile}
-                    />
+                    {(user.dog) && (
+                        <PhotoInput
+                            name="files"
+                            control={control}
+                            defaultValue={(user.dog) && getCurrDogPhoto(user.dog.dogPhotos)}
+                            handleDelete={deletePhoto}
+                        />
+                    )}
                 </Box>
                 <Box sx={{
                     display: 'flex',
@@ -89,15 +108,15 @@ const PetProfile = () => {
                         title='Crear anuncio'
                         color="info"
                         component={LinkBehavior}
-                        to='?dog=true'
+                        to={(user.dog) ? '/profile/ad/create' : '?dog=true'}
                     />
                 </Box>
-                {!(user.img_profile) && (
+                {(registerDog) && (
                     <React.Suspense>
                         <RegisterDog
                             open={registerDog}
                             handleClose={() => navigate('/profile')}
-                            redirect='/profile/owner'
+                            redirect='/profile/ad/create'
                         />
                     </React.Suspense>
                 )}

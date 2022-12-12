@@ -14,7 +14,7 @@ import ProfileOptions from './ProfileOptions';
 import { renewToken, useAuth } from '../../context/AuthContext'
 import { useForm } from 'react-hook-form';
 import PhotoInput from '../../components/Forms/PhotoInput';
-import { fileProvider } from '../../api'
+import { fileProvider, apiProvider } from '../../api'
 import formDataHandler from '../../utils/formDataHandler';
 
 const RegisterOwner = React.lazy(() => import('../../components/RegisterOwner'));
@@ -50,6 +50,18 @@ const PetOwner = () => {
         }
     }
 
+    const deletePhoto = async () => {
+        try {
+            const res = await apiProvider.delete(`/api/user/img-profile/${user.img_profile}`)
+
+            if (res.status >= 200 && res.status < 300) {
+                renewToken(dispatch, user)
+            }
+        } catch (error) {
+            setError('Ha ocurrido un error inesperado.')
+        }
+    }
+
     React.useEffect(() => {
         const subscription = watch(handleSubmit(onSubmit))
 
@@ -75,6 +87,7 @@ const PetOwner = () => {
                         control={control}
                         defaultValue={user.img_profile}
                         disabled={isSubmitting}
+                        handleDelete={deletePhoto}
                     />
                 </Box>
                 <Box sx={{
