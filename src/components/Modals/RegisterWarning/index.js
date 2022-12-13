@@ -8,7 +8,7 @@ import DialogTitle from '../../DialogTitle';
 import { useGuest, closeGuestWarning } from '../../../context/GuestContext';
 
 const RegisterWarning = () => {
-    const { state: { isOpen }, dispatch } = useGuest();
+    const { state: { isOpen, message }, dispatch } = useGuest();
 
     return (
         <Dialog
@@ -27,8 +27,8 @@ const RegisterWarning = () => {
                         ¡Registrate!
                     </Typography>
                     <Typography color="text.secondary" variant="body1" textAlign='center'>
-                        Actualmente tienes acceso <br />como invitado,
-                        para enviar <br />mensajes, pulsa el botón y <br />registrate.
+                        Actualmente tienes acceso <br />como invitado,<br />
+                        para {message},<br /> pulsa el botón y <br />registrate.
                     </Typography>
                     <Box sx={{ p: 3 }}>
                         <Button

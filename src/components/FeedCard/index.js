@@ -17,14 +17,21 @@ import { ReactComponent as PawIcon } from '../../assets/icons/Paw.svg'
 import { ReactComponent as StarIcon } from '../../assets/icons/Star.svg'
 import { ReactComponent as HuesitoIcon } from '../../assets/icons/Huesito.svg'
 
+const guestMessages = {
+    'message': 'enviar un mensaje',
+    'favourite': 'guardar un anuncio',
+    'like': 'dar me gusta',
+    'discard': 'descartar'
+}
+
 const FeedCard = () => {
     const { state: { isAuth } } = useAuth();
     const { dispatch } = useGuest();
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
 
-    const action = () => {
-        if (!isAuth) {
-            openGuestWarning(dispatch, 'Actualmente no tiene acceso a esta función.');
+    const action = message => {
+        if (!isAuth && message != 'descartar') {
+            openGuestWarning(dispatch, message);
         }
     }
 
@@ -82,13 +89,13 @@ const FeedCard = () => {
                             background: 'url(/images/default/pasto_feo.png)',
                             padding: '0.6rem',
                             boxShadow: '0px 2px 5px rgba(51, 51, 51, 0.15)'
-                        }} onClick={action}>
+                        }} onClick={() => action(guestMessages.discard)}>
                             <HuesitoIcon />
                         </IconButton>
                         <IconButton sx={{
                             background: '#fff',
                             boxShadow: '0px 2px 5px rgba(51, 51, 51, 0.15)'
-                        }} onClick={action}>
+                        }} onClick={() => action(guestMessages.favourite)}>
                             <StarIcon />
                         </IconButton>
                         <Badge
@@ -111,7 +118,7 @@ const FeedCard = () => {
                             <IconButton sx={{
                                 background: '#fff',
                                 boxShadow: '0px 2px 5px rgba(51, 51, 51, 0.15)'
-                            }} onClick={action}>
+                            }} onClick={() => action(guestMessages.like)}>
                                 <PawIcon />
                             </IconButton>
                         </Badge>
