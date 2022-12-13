@@ -2,7 +2,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import MuiDialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
-import CloseIcon from '../assets/icons/Close';
+import { X } from 'lucide-react'
 
 const DialogTitle = ({ children, onClose, ...other }) => (
     <MuiDialogTitle sx={{ m: 1, p: 1, border: 'none !important' }} {...other}>
@@ -18,7 +18,7 @@ const DialogTitle = ({ children, onClose, ...other }) => (
                     color: (theme) => theme.palette.grey[500],
                 }}
             >
-                <CloseIcon sx={{ stroke: "#5E5E5E" }} />
+                <X color="#5E5E5E"  />
             </IconButton>
         ) : null}
     </MuiDialogTitle>

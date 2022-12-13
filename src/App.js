@@ -13,6 +13,7 @@ import AppLayout from './layouts/App';
 import LandingLayout from './layouts/LandingLayout';
 // Contexts
 import { AuthProvider } from './context/AuthContext'
+import { GuestProvider } from './context/GuestContext'
 // Pages
 import NotFound from "./pages/NotFound";
 import Landing from "./pages/Landing";
@@ -46,132 +47,134 @@ function App() {
         <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={esLocale}>
             <ThemeProvider theme={theme}>
                 <AuthProvider>
-                    <Routes>
-                        <Route
-                            path='*'
-                            element=<NotFound />
-                        />
-                        <Route
-                            path='/home'
-                            element={
-                                <AppLayout>
-                                    <Home />
-                                </AppLayout>
-                            }
-                        />
-                        <Route
-                            path='/market'
-                            element={
-                                <AppLayout>
-                                    <Market />
-                                </AppLayout>
-                            }
-                        />
-                        <Route
-                            path='/chat'
-                            element={
-                                <AppLayout>
-                                    <Chat />
-                                </AppLayout>
-                            }
-                        />
-                        <Route
-                            path='/blog'
-                            element={
-                                <AppLayout>
-                                    <Blog />
-                                </AppLayout>
-                            }
-                        />
+                    <GuestProvider>
+                        <Routes>
+                            <Route
+                                path='*'
+                                element=<NotFound />
+                            />
+                            <Route
+                                path='/home'
+                                element={
+                                    <AppLayout>
+                                        <Home />
+                                    </AppLayout>
+                                }
+                            />
+                            <Route
+                                path='/market'
+                                element={
+                                    <AppLayout>
+                                        <Market />
+                                    </AppLayout>
+                                }
+                            />
+                            <Route
+                                path='/chat'
+                                element={
+                                    <AppLayout>
+                                        <Chat />
+                                    </AppLayout>
+                                }
+                            />
+                            <Route
+                                path='/blog'
+                                element={
+                                    <AppLayout>
+                                        <Blog />
+                                    </AppLayout>
+                                }
+                            />
 
-                        {/**
-                         * Profile routes
-                         */}
-                        <Route
-                            path='/profile'
-                            element={
-                                <AppLayout>
-                                    <Profile location={location}>
-                                        <PetProfile />
-                                    </Profile>
-                                </AppLayout>
-                            }
-                        />
-                        <Route
-                            path='/profile/owner'
-                            element={
-                                <AppLayout>
-                                    <Profile location={location}>
-                                        <PetOwner />
-                                    </Profile>
-                                </AppLayout>
-                            }
-                        />
-                        <Route
-                            path='/profile/settings'
-                            element={
-                                <AppLayout>
-                                    <Settings />
-                                </AppLayout>
-                            }
-                        />
-                        <Route
-                            path='/profile/settings/account'
-                            element={
-                                <AppLayout>
-                                    <Account location={location} />
-                                </AppLayout>
-                            }
-                        />
-                        <Route
-                            path='/profile/favourites'
-                            element={
-                                <AppLayout>
-                                    <Profile location={location}>
-                                        <Favourites title="Favoritos" />
-                                    </Profile>
-                                </AppLayout>
-                            }
-                        />
+                            {/**
+                             * Profile routes
+                             */}
+                            <Route
+                                path='/profile'
+                                element={
+                                    <AppLayout>
+                                        <Profile location={location}>
+                                            <PetProfile />
+                                        </Profile>
+                                    </AppLayout>
+                                }
+                            />
+                            <Route
+                                path='/profile/owner'
+                                element={
+                                    <AppLayout>
+                                        <Profile location={location}>
+                                            <PetOwner />
+                                        </Profile>
+                                    </AppLayout>
+                                }
+                            />
+                            <Route
+                                path='/profile/settings'
+                                element={
+                                    <AppLayout>
+                                        <Settings />
+                                    </AppLayout>
+                                }
+                            />
+                            <Route
+                                path='/profile/settings/account'
+                                element={
+                                    <AppLayout>
+                                        <Account location={location} />
+                                    </AppLayout>
+                                }
+                            />
+                            <Route
+                                path='/profile/favourites'
+                                element={
+                                    <AppLayout>
+                                        <Profile location={location}>
+                                            <Favourites title="Favoritos" />
+                                        </Profile>
+                                    </AppLayout>
+                                }
+                            />
 
-                        <Route
-                            path='/notifications'
-                            element={
-                                <AppLayout>
-                                    <Notifications />
-                                </AppLayout>
-                            }
-                        />
+                            <Route
+                                path='/notifications'
+                                element={
+                                    <AppLayout>
+                                        <Notifications />
+                                    </AppLayout>
+                                }
+                            />
 
-                        <Route path="/" element={
-                            <LandingLayout>
-                                <Landing location={location} />
-                            </LandingLayout>
-                        }>
-                            <Route path="/login" element={<Login location={location} />} />
-                            <Route path="/detect-location" element={<DetectLocation location={location} />} />
-                            <Route path="/register" element={<SignUp location={location} />} />
-                            <Route path="/recover-password" element={<RecoverPassword location={location} />} />
-                            <Route path="/recover-password/new" element={<NewPassword location={location} />} />
-                            <Route path="/recover-password/code" element={<AskCode location={location} />} />
-                        </Route>
-                        <Route path="/register/welcome" element={<CreateProfileWelcome location={location} />} />
+                            <Route path="/" element={
+                                <LandingLayout>
+                                    <Landing location={location} />
+                                </LandingLayout>
+                            }>
+                                <Route path="/login" element={<Login location={location} />} />
+                                <Route path="/detect-location" element={<DetectLocation location={location} />} />
+                                <Route path="/register" element={<SignUp location={location} />} />
+                                <Route path="/recover-password" element={<RecoverPassword location={location} />} />
+                                <Route path="/recover-password/new" element={<NewPassword location={location} />} />
+                                <Route path="/recover-password/code" element={<AskCode location={location} />} />
+                            </Route>
+                            <Route path="/register/welcome" element={<CreateProfileWelcome location={location} />} />
 
-                        {/** Bussiness routes */}
-                        <Route path="/business" element={
-                            <LandingLayout dark>
-                                <Business />
-                            </LandingLayout>
-                        }>
-                            <Route path="/business/register" element={<RegisterBusiness location={location} />} />
-                        </Route>
+                            {/** Bussiness routes */}
+                            <Route path="/business" element={
+                                <LandingLayout dark>
+                                    <Business />
+                                </LandingLayout>
+                            }>
+                                <Route path="/business/register" element={<RegisterBusiness location={location} />} />
+                            </Route>
 
-                        <Route path="/introduction" element={<Intro />} />
+                            <Route path="/introduction" element={<Intro />} />
 
-                        <Route path="/terms-conditions" element={<Terms />} />
+                            <Route path="/terms-conditions" element={<Terms />} />
 
-                        <Route path="/privacy" element={<Terms />} />
-                    </Routes>
+                            <Route path="/privacy" element={<Terms />} />
+                        </Routes>
+                    </GuestProvider>
                 </AuthProvider>
             </ThemeProvider>
         </LocalizationProvider>
