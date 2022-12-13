@@ -63,13 +63,13 @@ const ChipArrayInput = ({
                     >
                         {labels.map(label => (
                             <Chip
-                                value={label}
+                                value={label.id}
                                 aria-label={label}
                                 color="primary"
                                 size="small"
                                 disabled={disabled}
                             >
-                                {label}
+                                {label.name}
                             </Chip>
                         ))}
                     </ToggleButtonGroup>

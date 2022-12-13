@@ -7,26 +7,21 @@ import { ReactComponent as PlusIcon } from '../../assets/icons/Plus.svg'
 import { ReactComponent as DeleteIcon } from '../../assets/icons/Delete.svg'
 import { Controller } from 'react-hook-form'
 import getUserPhoto from '../../utils/getUserPhoto';
-import { CircularProgress } from '@mui/material';
 
 const Dropzone = ({
     onChange,
     disabled,
-    defaultValue
+    defaultValue,
+    handleDelete
 }) => {
-    const [file, setFile] = React.useState((() => {
-        if (defaultValue) {
-            return { preview: getUserPhoto(defaultValue) }
-        }
-        return
-    })());
+    const [file, setFile] = React.useState({preview: '/images/Avatar.svg' });
     const { getRootProps, getInputProps } = useDropzone({
         accept: {
             'image/*': ['.jpeg', '.jpg', '.png']
         },
         maxFiles: 1,
         multiple: false,
-        onDrop: (acceptedFiles) => {
+        onDrop: (acceptedFiles, event) => {
             const fileObject = Object.assign(acceptedFiles[0], {
                 preview: URL.createObjectURL(acceptedFiles[0])
             })
@@ -58,57 +53,69 @@ const Dropzone = ({
         };
     }, []);
 
+    React.useEffect(() => {
+        if (defaultValue) {
+            return setFile({ preview: getUserPhoto(defaultValue) })
+        }
+        return  setFile({ preview: '/images/Avatar.svg' })
+    }, [defaultValue])
+
     return (
-        <div {...getRootProps()}>
-            <input
-                disabled={disabled} {...getInputProps()}
-            />
-            <Box component="div" sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                background: 'transparent',
-                cursor: disabled ? 'wait' : 'pointer',
-                textAlign: 'center',
-                color: theme => theme.palette.getContrastText(
-                    theme.palette.background.default
-                ),
-                border: `1px solid #B7B7B7`,
-                borderRadius: '50%',
-                '& > *': {
-                    marginRight: '0.5rem',
-                    marginLeft: '0.5rem'
-                },
-                height: '7.5rem',
-                width: '7.5rem',
-                transition: '0.5s',
-                '&:hover': {
-                    opacity: '0.9'
-                },
-                zIndex: 10,
-                position: 'relative',
-                opacity: (disabled) ? 0.7 : 1
-            }}>
-                {thumbs()}
+        <Box sx={{
+            position: 'relative'
+        }}>
+            <div {...getRootProps()}>
+                <input
+                    disabled={disabled} {...getInputProps()}
+                />
                 <Box component="div" sx={{
                     display: 'flex',
-                    justifyContent: 'center',
                     alignItems: 'center',
-                    width: '1rem',
-                    height: '1rem',
-                    padding: '0.5rem',
+                    justifyContent: 'center',
+                    background: 'transparent',
+                    cursor: disabled ? 'wait' : 'pointer',
+                    textAlign: 'center',
+                    color: theme => theme.palette.getContrastText(
+                        theme.palette.background.default
+                    ),
+                    border: `1px solid #B7B7B7`,
                     borderRadius: '50%',
-                    background: theme => (!file) ? theme.palette.primary.main : theme.palette.error.main,
-                    zIndex: 1000,
-                    position: 'absolute',
-                    bottom: 0,
-                    right: 0,
-                    color: '#fff'
-                }} onClick={() => setFile(null)}>
-                    {(file) ? <DeleteIcon /> : <PlusIcon />}
+                    '& > *': {
+                        marginRight: '0.5rem',
+                        marginLeft: '0.5rem'
+                    },
+                    height: '7.5rem',
+                    width: '7.5rem',
+                    transition: '0.5s',
+                    '&:hover': {
+                        opacity: '0.9'
+                    },
+                    zIndex: 10,
+                    position: 'relative',
+                    opacity: (disabled) ? 0.7 : 1
+                }}>
+                    {thumbs()}
                 </Box>
+            </div>
+            <Box component="div" sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '1rem',
+                height: '1rem',
+                padding: '0.5rem',
+                borderRadius: '50%',
+                background: theme => (file.preview == '/images/Avatar.svg') ? theme.palette.primary.main : theme.palette.error.main,
+                zIndex: 1000,
+                position: 'absolute',
+                bottom: 0,
+                right: 0,
+                color: '#fff',
+                cursor: 'pointer'
+            }} onClick={handleDelete}>
+                {(file.preview != '/images/Avatar.svg') ? <DeleteIcon /> : <PlusIcon />}
             </Box>
-        </div>
+        </Box>
     )
 }
 
