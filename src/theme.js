@@ -20,7 +20,8 @@ const palette = {
         main: '#F59E0B'
     },
     success: {
-        main: '#10B981'
+        main: '#10B981',
+        contrastText: '#fff'
     },
     text: {
         primary: 'rgba(31, 44, 56, 1)',
