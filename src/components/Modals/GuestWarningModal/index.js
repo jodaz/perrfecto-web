@@ -1,26 +1,29 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
 import LinkBehavior from '../../LinkBehavior';
 import Typography from '@mui/material/Typography';
-import DialogTitle from '../../DialogTitle';
 import { useGuest, closeGuestWarning } from '../../../context/GuestContext';
+import InstagramModal from '../InstagramModal';
 
-const RegisterWarning = () => {
+const GuestWarningModal = () => {
     const { state: { isOpen, message }, dispatch } = useGuest();
 
     return (
-        <Dialog
+        <InstagramModal
             onClose={() => closeGuestWarning(dispatch)}
             open={isOpen}
         >
-            <DialogTitle onClose={() => closeGuestWarning(dispatch)} />
             <Box sx={{
                 display: 'flex',
                 justifyContent: 'space-between',
                 flexDirection: 'column',
-                p: 2
+                p: 2,
+                maxWidth: '280px',
+                alignItems: 'center',
+                background: '#fff',
+                borderRadius: 4,
+                marginRight: '1rem'
             }}>
                 <Box sx={{ p: 2 }}>
                     <Typography color="text.primary" variant="h4" fontWeight={500} gutterBottom>
@@ -45,8 +48,8 @@ const RegisterWarning = () => {
                     </Box>
                 </Box>
             </Box>
-        </Dialog>
+        </InstagramModal>
     );
 }
 
-export default RegisterWarning
+export default GuestWarningModal

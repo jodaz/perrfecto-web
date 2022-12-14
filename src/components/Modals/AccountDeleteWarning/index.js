@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Dialog from '@mui/material/Dialog';
+import InstagramModal from '../InstagramModal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -8,6 +8,7 @@ import Stack from '@mui/material/Stack';
 import { logout, useAuth } from '../../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { apiProvider } from '../../../api'
+import { alpha } from '@mui/material';
 
 const AccountDeleteWarning = ({ open, handleClose }) => {
     const [errorAlert, setErrorAlert] = React.useState('')
@@ -34,44 +35,48 @@ const AccountDeleteWarning = ({ open, handleClose }) => {
     };
 
     return (
-        <Dialog
-            onClose={handleClose}
-            open={open}
-        >
+        <InstagramModal handleClose={handleClose} open={open}>
             <Box sx={{
-                m: 1,
                 display: 'flex',
-                width: 'fit-content',
-                height: 'fit-content',
-                p: 3,
+                justifyContent: 'space-between',
                 flexDirection: 'column',
-                color: theme => theme.palette.text.secondary
+                p: 2,
+                maxWidth: '280px',
+                alignItems: 'center',
+                background: '#fff',
+                borderRadius: 4,
+                marginRight: '1rem',
+                textAlign: 'center',
+                color: theme => theme.palette.text.secondary,
             }}>
-                <Box sx={{ p: 2, textAlign: 'center' }}>
+                <Box sx={{ p: 1, textAlign: 'center' }}>
                     <XSquare size={48} />
                 </Box>
-                <Box sx={{ p: 2 }}>
-                    <Typography variant="subtitle1" gutterBottom>
+                <Box sx={{ p: 1 }}>
+                    <Typography variant="h6" gutterBottom fontWeight={500}>
                         ¿Estás seguro que deseas eliminar tu cuenta ?
                     </Typography>
                     <Typography variant="body2" gutterBottom>
                         Al eliminar tu cuenta se borrarán todos tus datos,
-                        <br />
                         fotos, lista de favoritos, mensajes y demás...
-                        <br />
                         de manera permanente y ya no podrá ser recuperado
                     </Typography>
                     <Stack direction="column">
                         <Button color="error" onClick={submitDelete}>
                             Eliminar cuenta
                         </Button>
-                        <Button color="info" onClick={handleClose}>
+                        <Button onClick={handleClose} sx={{
+                            color: '#858585',
+                            '&:hover': {
+                                backgroundColor: `${alpha('#858585', 0.1)}`
+                            }
+                        }}>
                             Volver
                         </Button>
                     </Stack>
                 </Box>
             </Box>
-        </Dialog>
+        </InstagramModal>
     );
 }
 
