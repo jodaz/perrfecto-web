@@ -268,8 +268,7 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
                     </Box>
                     <Box sx={{
                         p: 2,
-                        maxWidth: '350px',
-                        minWidth: '350px'
+                        maxWidth: isSmall ? '280px' : '350px',
                     }}>
                         <ChipArrayInput
                             control={control}
