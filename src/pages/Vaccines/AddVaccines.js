@@ -45,7 +45,7 @@ const AddVaccines = ({ control }) => {
                     <Box sx={{ flex: 1, p: 1 }}>
                         <SelectInput
                             control={control}
-                            name={`vaccines[${index}]name`}
+                            name={`vaccines[${index}]`}
                             options={vaccines}
                             optionLabel='name'
                         />

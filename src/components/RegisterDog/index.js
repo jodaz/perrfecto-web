@@ -70,7 +70,8 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
                 name,
                 files,
                 dogAge,
-                characteristics
+                characteristics,
+                vaccines
             } = data;
 
             // const mappedCharacteristics = characteristics.map(value => ({
@@ -85,9 +86,10 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
                 gender: gender.label,
                 id_user: user.id,
                 characteristics: characteristics,
-                files: files
+                files: files,
+                vaccines: vaccines
             }
-
+            console.log(parsedData)
             const formData = await formDataHandler(parsedData, 'files')
 
             const res = await apiProvider.post('/api/dog/new', formData)
