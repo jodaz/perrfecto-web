@@ -7,7 +7,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import LanguageButton from './LanguageButton';
 import Logo from '../../components/Logo';
 
-const BoxContainer = styled(Box)(({ theme }) => ({
+const BoxContainer = styled(Box)(({ theme, color }) => ({
     display: 'flex',
     width: '100%',
     justifyContent: 'space-between',
@@ -18,6 +18,7 @@ const BoxContainer = styled(Box)(({ theme }) => ({
     top: 0,
     left: 0,
     right: 0,
+    background: !color ? 'transparent' : color,
     boxShadow: '0px 2px 12px rgba(0, 0, 0, 0.16)',
     [theme.breakpoints.down('md')]: {
         justifyContent: 'end'
@@ -56,10 +57,13 @@ const internalLinks = [
 ]
 
 const Header = ({ dark }) => {
-    const matches = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+    const matches = useMediaQuery((theme) => theme.breakpoints.down('md'));
 
     return (
-        <BoxContainer component='navbar'>
+        <BoxContainer
+            component='navbar'
+            color={dark && 'linear-gradient(0deg, rgba(161, 103, 201, 0.1), rgba(161, 103, 201, 0.1)),#FFFFFF'}
+        >
             {!matches && <Logo />}
             <Box sx={{
                 display: 'flex',
