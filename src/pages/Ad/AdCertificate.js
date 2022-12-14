@@ -3,14 +3,24 @@ import Box from '@mui/material/Box';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/Typography';
 import Typography from '@mui/material/Typography';
-import { useNavigate } from 'react-router-dom';
-import useMediaQuery from '@mui/material/useMediaQuery';
+import Button from '@mui/material/Button';
 import TextInput from '../../components/Forms/TextInput'
-import { Camera } from 'lucide-react';
+import { Camera, Trash2 } from 'lucide-react';
 
 const AdCertificate = ({ control }) => {
-    const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
-    const navigate = useNavigate()
+    const [certificates, setCertificates] = React.useState([])
+    const [indexes, setIndexes] = React.useState([0]);
+    const [counter, setCounter] = React.useState(0);
+
+    const addCertificate = () => {
+        setIndexes(prevIndexes => [...prevIndexes, counter]);
+        setCounter(prevCounter => prevCounter + 1);
+    };
+
+    const removeCertificate = index => () => {
+        setIndexes(prevIndexes => [...prevIndexes.filter(item => item !== index)]);
+        setCounter(prevCounter => prevCounter - 1);
+    };
 
     return (
         <Box sx={{
@@ -22,23 +32,38 @@ const AdCertificate = ({ control }) => {
                     Certificados
                 </Typography>
             </Box>
-            <Box sx={{ p: 2 }}>
-                <TextInput
-                    control={control}
-                    name='name'
-                    placeholder='Subir archivo'
-                    InputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start">
-                                <IconButton color="warning" onClick={() => console.log("Click me")}>
-                                    <Camera />
-                                </IconButton>
-                            </InputAdornment>
-                        ),
-                    }}
-                    disabled
-                />
-            </Box>
+            {indexes.map((index) => (
+                <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
+                    <Box sx={{ flex: 1, p: 1 }}>
+                        <TextInput
+                            control={control}
+                            name='name'
+                            placeholder='Subir archivo'
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <IconButton color="warning">
+                                            <Camera />
+                                        </IconButton>
+                                    </InputAdornment>
+                                ),
+                            }}
+                            disabled
+                        />
+                    </Box>
+                    <Box>
+                        <IconButton
+                            onClick={removeCertificate(index)}
+                            disabled={indexes.length == 1}
+                        >
+                            <Trash2 color="black" />
+                        </IconButton>
+                    </Box>
+                </Box>
+            ))}
+            <Button onClick={addCertificate}>
+                Añadir certificado
+            </Button>
         </Box>
     );
 }

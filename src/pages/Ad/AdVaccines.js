@@ -1,16 +1,12 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { useNavigate } from 'react-router-dom';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import { apiProvider } from '../../api';
-import { useFieldArray } from 'react-hook-form';
 import SelectInput from '../../components/Forms/SelectInput';
 import { Button, IconButton } from '@mui/material';
+import { Trash2 } from 'lucide-react';
 
 const AdVaccines = ({ control }) => {
-    const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
-    const navigate = useNavigate()
     const [vaccines, setVaccines] = React.useState([])
     const [indexes, setIndexes] = React.useState([0]);
     const [counter, setCounter] = React.useState(0);
@@ -50,19 +46,26 @@ const AdVaccines = ({ control }) => {
                     Vacunas
                 </Typography>
                 {indexes.map((index) => (
-                    <Box key={index}>
-                        <SelectInput
-                            control={control}
-                            name={`vaccines[${index}]name`}
-                            options={vaccines}
-                            optionLabel='name'
-                        />
-                        <IconButton
-                            onClick={removeVaccine(index)}
-                            disabled={indexes.length == 1}
-                        >
-                            E
-                        </IconButton>
+                    <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Box sx={{ flex: 1, p: 1 }}>
+                            <SelectInput
+                                control={control}
+                                name={`vaccines[${index}]name`}
+                                options={vaccines}
+                                optionLabel='name'
+                            />
+                        </Box>
+                        <Box>
+                            <IconButton
+                                onClick={removeVaccine(index)}
+                                disabled={indexes.length == 1}
+                                sx={{
+                                    bgcolor: 'red'
+                                }}
+                            >
+                                <Trash2 color="black" />
+                            </IconButton>
+                        </Box>
                     </Box>
                 ))}
                 <Button onClick={addVaccine}>
