@@ -4,10 +4,13 @@ import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/Typography';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import FormHelperText from '@mui/material/FormHelperText'
 import TextInput from '../../components/Forms/TextInput'
-import { Camera, Trash2 } from 'lucide-react';
+import { Camera, Plus, Trash2 } from 'lucide-react';
+import AdCertificateModal from '../../components/Modals/AdCertificateModal';
 
-const AdCertificate = ({ control }) => {
+const AddCertificates = ({ control }) => {
+    const [isModalOpen, setIsModalOpen] = React.useState(false)
     const [certificates, setCertificates] = React.useState([])
     const [indexes, setIndexes] = React.useState([0]);
     const [counter, setCounter] = React.useState(0);
@@ -42,13 +45,12 @@ const AdCertificate = ({ control }) => {
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
-                                        <IconButton color="warning">
+                                        <IconButton color="warning" onClick={() => setIsModalOpen(true)}>
                                             <Camera />
                                         </IconButton>
                                     </InputAdornment>
                                 ),
                             }}
-                            disabled
                         />
                     </Box>
                     <Box>
@@ -61,11 +63,19 @@ const AdCertificate = ({ control }) => {
                     </Box>
                 </Box>
             ))}
-            <Button onClick={addCertificate}>
-                Añadir certificado
+            <Button onClick={addCertificate} disabled={counter == 3}>
+                <Plus /> Añadir más
             </Button>
+            {(counter == 3) && (
+                <Box sx={{ p: 2}}>
+                    <FormHelperText error>
+                        Haz alcanzado el límite de certificados.
+                    </FormHelperText>
+                </Box>
+            )}
+            <AdCertificateModal open={isModalOpen} handleClose={() => setIsModalOpen(false)}  />
         </Box>
     );
 }
 
-export default AdCertificate
+export default AddCertificates

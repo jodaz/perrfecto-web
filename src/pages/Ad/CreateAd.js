@@ -13,7 +13,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import TextInput from '../../components/Forms/TextInput';
 import CreateAdLocation from './CreateAdLocation';
 import AdVaccines from './AdVaccines';
-import AdCertificate from './AdCertificate';
+import AddCertificates from '../certificates/AddCertificates';
 
 const CreateAd = ({ location }) => {
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
@@ -135,7 +135,7 @@ const CreateAd = ({ location }) => {
             }} component="form" onSubmit={handleSubmit(onSubmit)}>
                 <CreateAdLocation control={control} />
                 <AdVaccines control={control} />
-                <AdCertificate control={control} />
+                <AddCertificates control={control} />
             </Box>
         </SettingsLayout>
     );
