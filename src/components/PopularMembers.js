@@ -1,8 +1,8 @@
-import React, { useRef, useCallback } from 'react'
+import * as React from 'react'
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+import { Navigation, Pagination, A11y } from 'swiper';
 
 const puppies = [
     {
