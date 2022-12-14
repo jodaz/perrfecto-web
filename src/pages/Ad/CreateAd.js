@@ -134,7 +134,7 @@ const CreateAd = ({ location }) => {
                 flexDirection: 'column'
             }} component="form" onSubmit={handleSubmit(onSubmit)}>
                 <CreateAdLocation control={control} />
-                <AdVaccines />
+                <AdVaccines control={control} />
                 <AdCertificate control={control} />
             </Box>
         </SettingsLayout>
