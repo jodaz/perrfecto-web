@@ -30,11 +30,6 @@ const AddCertificates = ({ control }) => {
             display: 'flex',
             flexDirection: 'column'
         }}>
-            <Box sx={{ p: 2 }}>
-                <Typography variant='h6' gutterBottom fontWeight={500} color="primary.main">
-                    Certificados
-                </Typography>
-            </Box>
             {indexes.map((index) => (
                 <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
                     <Box sx={{ flex: 1, p: 1 }}>
@@ -63,9 +58,11 @@ const AddCertificates = ({ control }) => {
                     </Box>
                 </Box>
             ))}
-            <Button onClick={addCertificate} disabled={counter == 3}>
-                <Plus /> Añadir más
-            </Button>
+            <Box>
+                <Button onClick={addCertificate} disabled={counter == 3} size='small' sx={{ fontSize: '14px' }}>
+                    <Plus size={18} /> Añadir más
+                </Button>
+            </Box>
             {(counter == 3) && (
                 <Box sx={{ p: 2}}>
                     <FormHelperText error>

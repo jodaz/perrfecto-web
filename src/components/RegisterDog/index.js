@@ -26,6 +26,8 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import PhotoInput from '../Forms/PhotoInput';
 import generateYears from '../../utils/generateYears';
 import ChipArrayInput from '../Forms/ChipArrayInput';
+import AddVaccines from '../../pages/Vaccines/AddVaccines';
+import AddCertificates from '../../pages/certificates/AddCertificates';
 
 const razas = [
     { value: 1, label: "Bulldog Frances" },
@@ -50,7 +52,7 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const [error, setError] = React.useState(false)
     const { control, handleSubmit, watch, formState: {
-        isSubmitting
+        isSubmitting, dirtyFields
     }} = useForm({
         reValidateMode: "onBlur"
     });
@@ -113,6 +115,8 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
     }
 
     React.useEffect(() => { fetchFeatures() }, []);
+
+    console.log(dirtyFields)
 
     const generatePhotoProfile = (isSubmitting) => (
         <Box sx={{
@@ -279,6 +283,22 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
                             disabled={isSubmitting}
                             label='Características de tu mascota'
                         />
+                    </Box>
+                    <Box sx={{
+                        p: 2
+                    }}>
+                        <Typography variant="subtitle1" gutterBottom>
+                            Añadir vacunas
+                        </Typography>
+                        <AddVaccines control={control} />
+                    </Box>
+                    <Box sx={{
+                        p: 2
+                    }}>
+                        <Typography variant="subtitle1" gutterBottom>
+                            Añadir certificados
+                        </Typography>
+                        <AddCertificates control={control} />
                     </Box>
                     <Box sx={{ p: 2 }}>
                         <Button

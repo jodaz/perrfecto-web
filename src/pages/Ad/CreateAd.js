@@ -12,7 +12,6 @@ import { useAuth } from '../../context/AuthContext'
 import useMediaQuery from '@mui/material/useMediaQuery';
 import TextInput from '../../components/Forms/TextInput';
 import CreateAdLocation from './CreateAdLocation';
-import AdVaccines from './AdVaccines';
 import AddCertificates from '../certificates/AddCertificates';
 
 const CreateAd = ({ location }) => {
@@ -134,7 +133,6 @@ const CreateAd = ({ location }) => {
                 flexDirection: 'column'
             }} component="form" onSubmit={handleSubmit(onSubmit)}>
                 <CreateAdLocation control={control} />
-                <AdVaccines control={control} />
                 <AddCertificates control={control} />
             </Box>
         </SettingsLayout>
