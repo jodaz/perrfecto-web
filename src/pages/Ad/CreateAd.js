@@ -14,8 +14,10 @@ import { apiProvider, fileProvider } from '../../api';
 import AdPhotoInput from '../../components/AdPhotoInput';
 import InterestInput from '../../components/InterestInput';
 import formDataHandler from '../../utils/formDataHandler';
+import PublicationWait from '../../components/Modals/PublicationWait';
 
 const CreateAd = () => {
+    const [openWarning, setOpenWarning] = React.useState(false)
     const [interests, setInterests] = React.useState([])
     const { control, handleSubmit, watch, formState: {
         isSubmitting
@@ -48,6 +50,7 @@ const CreateAd = () => {
                 const { data: { data } } = res;
 
                 setInterests(data);
+                setOpenWarning(true)
             }
         } catch (error) {
             console.log("error ", error)
@@ -55,6 +58,10 @@ const CreateAd = () => {
     }
 
     React.useEffect(() => { fetchInterests() }, []);
+
+    const handleCloseWarning = () => {
+        setOpenWarning(false);
+    }
 
     return (
         <SettingsLayout title='Crear anuncio' id="drawer-container">
@@ -156,6 +163,7 @@ const CreateAd = () => {
                     </Box>
                 </Box>
             </Box>
+            <PublicationWait open={openWarning} handleClose={handleCloseWarning} />
         </SettingsLayout>
     );
 }
