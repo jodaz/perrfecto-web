@@ -5,10 +5,30 @@ import PawPrints from '../../../assets/images/pawprints.svg'
 import FeedCard from '../../../components/FeedCard'
 import { ReactComponent as Filter2Icon } from '../../../assets/icons/Filter2.svg'
 import { useMediaQuery } from '@mui/material';
+import { apiProvider } from '../../../api';
 const PopularMembers = React.lazy(() => import('../../../components/PopularMembers'));
 
 const UsersHome = () => {
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
+    const [data, setData] = React.useState([])
+
+    const fetchPublications = async () => {
+        try {
+            const res = await apiProvider.get('api/publication/publications', {
+                country: 'Venezuela'
+            })
+
+            if (res.status >= 200 && res.status < 300) {
+                const { data: { data } } = res;
+
+                setData(data);
+            }
+        } catch (error) {
+            console.log("error ", error)
+        }
+    }
+
+    React.useEffect(() => { fetchPublications() }, []);
 
     return (
         <Box
