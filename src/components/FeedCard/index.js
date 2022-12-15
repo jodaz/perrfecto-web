@@ -43,7 +43,7 @@ const FeedCard = () => {
                 position: 'absolute',
                 top: isSmall ? '-40px' : '-50px',
                 left: 0,
-                zIndex: 1000
+                zIndex: 100
             }}>
                 <Avatar sx={{
                     width: isSmall ? '50px' : '70px',

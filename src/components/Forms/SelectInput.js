@@ -31,6 +31,7 @@ const SelectInput = ({
     InputProps,
     disabled,
     label,
+    optionLabel = 'label',
     ...rest
 }) => (
     <FormControl>
@@ -47,7 +48,7 @@ const SelectInput = ({
                         multiple={multiple}
                         options={options}
                         defaultValue={defaultValue}
-                        getOptionLabel={(option) => option.label}
+                        getOptionLabel={(option) => option[optionLabel]}
                         onChange={(_, data) => onChange(data)}
                         renderInput={params => (
                             <TextField

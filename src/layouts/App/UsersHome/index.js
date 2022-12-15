@@ -5,6 +5,7 @@ import PawPrints from '../../../assets/images/pawprints.svg'
 import FeedCard from '../../../components/FeedCard'
 import { ReactComponent as Filter2Icon } from '../../../assets/icons/Filter2.svg'
 import { useMediaQuery } from '@mui/material';
+import ContactDialog from '../../../components/Modals/ContactDialog';
 const PopularMembers = React.lazy(() => import('../../../components/PopularMembers'));
 
 const UsersHome = () => {
@@ -60,6 +61,7 @@ const UsersHome = () => {
                 >
                     <Filter2Icon />
                 </Fab> */}
+                {/* <ContactDialog /> */}
             </Box>
         </Box>
     );
