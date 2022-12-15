@@ -10,7 +10,7 @@ const Frame = styled.div`
     justify-content: center;
     align-items: center;
     position: relative;
-    zIndex: 1000;
+    height: 100%;
 `
 
 const Stack = ({ onVote, data, ...props }) => {

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import * as React from "react";
 import { motion, useMotionValue, useAnimation } from "framer-motion";
 import styled from "@emotion/styled";
 import Card from "./Card";
@@ -8,17 +8,18 @@ const StyledCard = styled(motion.div)`
 `;
 
 const FeedCard = ({ style, onVote, id, ...props }) => {
+    const flyAwayMin = 100;
     // motion stuff
-    const cardElem = useRef(null);
+    const cardElem = React.useRef(null);
 
     const x = useMotionValue(0);
     const controls = useAnimation();
 
-    const [constrained, setConstrained] = useState(true);
+    const [constrained, setConstrained] = React.useState(true);
 
-    const [direction, setDirection] = useState();
+    const [direction, setDirection] = React.useState();
 
-    const [velocity, setVelocity] = useState();
+    const [velocity, setVelocity] = React.useState();
 
     const getVote = (childNode, parentNode) => {
         const childRect = childNode.getBoundingClientRect();
@@ -42,32 +43,32 @@ const FeedCard = ({ style, onVote, id, ...props }) => {
         setDirection(getDirection());
     };
 
-    const flyAway = (min) => {
+    const flyAway = () => {
         const flyAwayDistance = (direction) => {
-        const parentWidth = cardElem.current.parentNode.getBoundingClientRect()
-            .width;
-        const childWidth = cardElem.current.getBoundingClientRect().width;
-        return direction === "left"
-            ? -parentWidth / 2 - childWidth / 2
-            : parentWidth / 2 + childWidth / 2;
+            const parentWidth = cardElem.current.parentNode.getBoundingClientRect()
+                .width;
+            const childWidth = cardElem.current.getBoundingClientRect().width;
+            return direction === "left"
+                ? -parentWidth / 2 - childWidth / 2
+                : parentWidth / 2 + childWidth / 2;
         };
 
-        if (direction && Math.abs(velocity) > min) {
-        setConstrained(false);
-        controls.start({
-            x: flyAwayDistance(direction)
-        });
+        if (direction && Math.abs(velocity) > flyAwayMin) {
+            setConstrained(false);
+            controls.start({
+                x: flyAwayDistance(direction)
+            });
         }
     };
 
-    useEffect(() => {
+    React.useEffect(() => {
         const unsubscribeX = x.onChange(() => {
-        if (cardElem.current) {
-            const childNode = cardElem.current;
-            const parentNode = cardElem.current.parentNode;
-            const result = getVote(childNode, parentNode);
-            result !== undefined && onVote(result);
-        }
+            if (cardElem.current) {
+                const childNode = cardElem.current;
+                const parentNode = cardElem.current.parentNode;
+                const result = getVote(childNode, parentNode);
+                result !== undefined && onVote(result);
+            }
         });
 
         return () => unsubscribeX();
@@ -81,7 +82,7 @@ const FeedCard = ({ style, onVote, id, ...props }) => {
             ref={cardElem}
             style={{ x }}
             onDrag={getTrajectory}
-            onDragEnd={() => flyAway(500)}
+            onDragEnd={flyAway}
             whileTap={{ scale: 1.1 }}
             {...props}
         >

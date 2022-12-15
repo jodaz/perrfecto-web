@@ -60,12 +60,11 @@ const UsersHome = () => {
             <Box sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                position: 'relative',
-                width: 'fit-content',
+                width: '100%',
                 margin: '0 auto',
                 height: '100%'
             }}>
-                <Stack data={cards} onVote={(item, vote) => console.log(item.props, vote)} />
+                <Stack data={cards} onVote={(item, vote) => console.log(item, vote)} />
                 {/* <Fab
                     color="primary"
                     aria-label="add"

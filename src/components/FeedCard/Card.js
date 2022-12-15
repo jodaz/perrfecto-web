@@ -36,7 +36,10 @@ const Card = () => {
     }
 
     return (
-        <Box sx={{ position: 'relative' }}>
+        <Box sx={{
+            position: 'relative',
+            userSelect: 'none'
+        }}>
             <Box sx={{
                 display: 'flex',
                 alignItems: 'center',

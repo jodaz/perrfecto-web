@@ -53,7 +53,7 @@ const puppies = [
 
 const PopularMembers = () => {
     return (
-        <Box height='20vh'>
+        <Box height='fit-content'>
             <Box sx={{
                 marginBottom: '1rem',
                 color: theme => theme.palette.text.secondary
@@ -63,7 +63,8 @@ const PopularMembers = () => {
             <Box sx={{
                 width: '100%',
                 display: 'flex',
-                zIndex: 1000
+                zIndex: 1,
+                height: 'fit-content'
             }}>
                 <Swiper
                     modules={[Navigation, Pagination, A11y]}
