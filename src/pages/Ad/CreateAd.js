@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
+import Chip from '@mui/material/Chip';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import SettingsLayout from '../../layouts/SettingsLayout';
@@ -9,24 +10,25 @@ import { useForm } from "react-hook-form";
 import { useAuth } from '../../context/AuthContext'
 import useMediaQuery from '@mui/material/useMediaQuery';
 import TextInput from '../../components/Forms/TextInput';
-import { IconButton } from '@mui/material';
+import { apiProvider } from '../../api';
 import AdPhotoInput from '../../components/AdPhotoInput';
+import InterestInput from '../../components/InterestInput';
 
 const CreateAd = ({ location }) => {
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const navigate = useNavigate()
-    // const tab = getSearchParams(location, 'location');
+    const [interests, setInterests] = React.useState([])
     const [errorAlert, setErrorAlert] = React.useState('')
-    const { control, handleSubmit, setError, formState: {
+    const { control, handleSubmit, watch, formState: {
         isSubmitting
     }} = useForm({
         reValidateMode: "onBlur"
     });
     const { state: { user } } = useAuth();
     const { dog } = user
+    const insterestsValues = watch('interests')
 
     const onSubmit = async (data) => {
-        setErrorAlert('');
         // try {
         //     const res = await apiProvider.post('/api/auth', {
         //         ...data
@@ -61,15 +63,35 @@ const CreateAd = ({ location }) => {
         // }
     };
 
+    const fetchInterests = async () => {
+        try {
+            const res = await apiProvider.get('api/interest/interests')
+
+            if (res.status >= 200 && res.status < 300) {
+                const { data: { data } } = res;
+
+                setInterests(data);
+            }
+        } catch (error) {
+            console.log("error ", error)
+        }
+    }
+
+    React.useEffect(() => { fetchInterests() }, []);
+
     return (
-        <SettingsLayout title='Crear anuncio'>
+        <SettingsLayout title='Crear anuncio' id="drawer-container">
             <Box sx={{
                 height: '100%',
                 width: '100%',
                 display: 'flex',
-                flexDirection: 'column'
+                flexDirection: 'column',
+                position: 'relative'
             }} component="form" onSubmit={handleSubmit(onSubmit)}>
-                <AdPhotoInput />
+                <AdPhotoInput
+                    control={control}
+                    name='multimedia'
+                />
                 <Box sx={{ p: 2 }}>
                     <Box sx={{ display: 'flex', }}>
                         <Typography
@@ -112,6 +134,14 @@ const CreateAd = ({ location }) => {
                                 Sevilla, España
                             </Typography>
                         </Box>
+                    </Box>
+                    <Box sx={{ pt: 2, pb: 2 }}>
+                        <InterestInput
+                            control={control}
+                            options={interests}
+                            currentValues={insterestsValues}
+                            isSubmitting={isSubmitting}
+                        />
                     </Box>
                     <Box sx={{ pt: 2, color: 'black' }}>
                         <TextInput
