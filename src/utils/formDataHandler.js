@@ -1,11 +1,10 @@
 const formDataHandler = (data, fieldFileName = 'file') => {
     const formData = new FormData();
     const { files, ...rest } = data;
-    const realFileName = typeof files == 'object' ? `${fieldFileName}[]` : fieldFileName;
 
     if (files) {
         for (let i = 0; i < files.length; i++) {
-            formData.append(realFileName, files[i]);
+            formData.append(fieldFileName, files[i]);
         }
     }
 
