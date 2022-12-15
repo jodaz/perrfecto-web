@@ -89,7 +89,7 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
                 files: files,
                 vaccines: vaccines
             }
-            console.log(parsedData)
+
             const formData = await formDataHandler(parsedData, 'files')
 
             const res = await apiProvider.post('/api/dog/new', formData)

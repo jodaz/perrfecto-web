@@ -10,15 +10,13 @@ import { useForm } from "react-hook-form";
 import { useAuth } from '../../context/AuthContext'
 import useMediaQuery from '@mui/material/useMediaQuery';
 import TextInput from '../../components/Forms/TextInput';
-import { apiProvider } from '../../api';
+import { apiProvider, fileProvider } from '../../api';
 import AdPhotoInput from '../../components/AdPhotoInput';
 import InterestInput from '../../components/InterestInput';
+import formDataHandler from '../../utils/formDataHandler';
 
-const CreateAd = ({ location }) => {
-    const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
-    const navigate = useNavigate()
+const CreateAd = () => {
     const [interests, setInterests] = React.useState([])
-    const [errorAlert, setErrorAlert] = React.useState('')
     const { control, handleSubmit, watch, formState: {
         isSubmitting
     }} = useForm({
@@ -29,38 +27,17 @@ const CreateAd = ({ location }) => {
     const insterestsValues = watch('interests')
 
     const onSubmit = async (data) => {
-        // try {
-        //     const res = await apiProvider.post('/api/auth', {
-        //         ...data
-        //     })
+        const formData = await formDataHandler(data, 'files')
 
-        //     if (res.status >= 200 && res.status < 300) {
-        //         const { data } = res;
-        //         loginUser(dispatch, data)
+        try {
+            const res = await fileProvider.post('/api/publication/new', formData)
 
-        //         if (data.data.role == 'user') {
-        //             navigate('/detect-location')
-        //         } else {
-        //             navigate('/home')
-        //         }
-        //     }
-        // } catch (error) {
-        //     if (error.response.data.msg) {
-        //         const message = error.response.data.msg;
-
-        //         if (message.includes('The user does not exist with that email')) {
-        //             setErrorAlert('No estás registrado. Crea una cuenta para poder comenzar en TinderDogs.')
-        //         }
-        //         if (message.includes('The user does not exist with that phone')) {
-        //             setErrorAlert('No estás registrado. Crea una cuenta para poder comenzar en TinderDogs.')
-        //         }
-        //         if (message.includes('Wrong Password')) {
-        //             setError('password', {
-        //                 type: 'invalid'
-        //             })
-        //         }
-        //     }
-        // }
+            if (res.status >= 200 && res.status < 300) {
+                console.log("exito")
+            }
+        } catch (error) {
+            console.log(error)
+        }
     };
 
     const fetchInterests = async () => {
@@ -90,7 +67,7 @@ const CreateAd = ({ location }) => {
             }} component="form" onSubmit={handleSubmit(onSubmit)}>
                 <AdPhotoInput
                     control={control}
-                    name='multimedia'
+                    name='files'
                 />
                 <Box sx={{ p: 2 }}>
                     <Box sx={{ display: 'flex', }}>
