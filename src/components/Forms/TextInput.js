@@ -29,9 +29,11 @@ const TextInput = ({
     disabled,
     sx,
     label,
+    labelColor,
+    ...rest
 }) => (
     <FormControl>
-        {label && <InputLabel shrink>{label}</InputLabel>}
+        {label && <InputLabel color={labelColor} shrink>{label}</InputLabel>}
         <Controller
             control={control}
             name={name}
@@ -52,6 +54,7 @@ const TextInput = ({
                                 border: '1px solid red !important'
                             }
                         }}
+                        {...rest}
                     />
                     {error && (
                         <FormHelperText error>
