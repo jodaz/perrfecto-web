@@ -4,6 +4,7 @@ import PawPrints from '../../../assets/images/pawprints.svg'
 import { apiProvider } from '../../../api';
 import Stack from './Stack';
 import { useMediaQuery } from '@mui/material';
+import ContactDialog from '../../../components/Modals/ContactDialog';
 const PopularMembers = React.lazy(() => import('../../../components/PopularMembers'));
 
 const UsersHome = () => {
@@ -77,6 +78,7 @@ const UsersHome = () => {
                 >
                     <Filter2Icon />
                 </Fab> */}
+                {/* <ContactDialog /> */}
             </Box>
         </Box>
     );

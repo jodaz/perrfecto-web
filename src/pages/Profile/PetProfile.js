@@ -108,7 +108,7 @@ const PetProfile = () => {
                         title='Crear anuncio'
                         color="info"
                         component={LinkBehavior}
-                        to={(user.dog) ? '/profile/ad/create' : '?dog=true'}
+                        to={(user.dog) ? '/profile/ads/create' : '?dog=true'}
                     />
                 </Box>
                 {(registerDog) && (
@@ -116,7 +116,7 @@ const PetProfile = () => {
                         <RegisterDog
                             open={registerDog}
                             handleClose={() => navigate('/profile')}
-                            redirect='/profile/ad/create'
+                            redirect='/profile/ads/create'
                         />
                     </React.Suspense>
                 )}
