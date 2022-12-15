@@ -1,16 +1,14 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Fab from '@mui/material/Fab';
 import PawPrints from '../../../assets/images/pawprints.svg'
-import FeedCard from '../../../components/FeedCard'
-import { ReactComponent as Filter2Icon } from '../../../assets/icons/Filter2.svg'
-import { useMediaQuery } from '@mui/material';
 import { apiProvider } from '../../../api';
+import Stack from './Stack';
+import { useMediaQuery } from '@mui/material';
 const PopularMembers = React.lazy(() => import('../../../components/PopularMembers'));
 
 const UsersHome = () => {
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
-    const [data, setData] = React.useState([])
+    const [cards, setCards] = React.useState([1, 2, 3, 4, 5])
 
     const fetchPublications = async () => {
         try {
@@ -21,7 +19,7 @@ const UsersHome = () => {
             if (res.status >= 200 && res.status < 300) {
                 const { data: { data } } = res;
 
-                setData(data);
+                // setCards(data);
             }
         } catch (error) {
             console.log("error ", error)
@@ -67,7 +65,7 @@ const UsersHome = () => {
                 margin: '0 auto',
                 height: '100%'
             }}>
-                <FeedCard />
+                <Stack data={cards} onVote={(item, vote) => console.log(item.props, vote)} />
                 {/* <Fab
                     color="primary"
                     aria-label="add"
