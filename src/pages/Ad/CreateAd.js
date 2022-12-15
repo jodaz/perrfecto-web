@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Chip from '@mui/material/Chip';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import SettingsLayout from '../../layouts/SettingsLayout';
@@ -8,16 +7,17 @@ import { useNavigate } from 'react-router-dom';
 import { MapPin } from 'lucide-react';
 import { useForm } from "react-hook-form";
 import { useAuth } from '../../context/AuthContext'
-import useMediaQuery from '@mui/material/useMediaQuery';
 import TextInput from '../../components/Forms/TextInput';
 import { apiProvider, fileProvider } from '../../api';
 import AdPhotoInput from '../../components/AdPhotoInput';
 import InterestInput from '../../components/InterestInput';
 import formDataHandler from '../../utils/formDataHandler';
 import PublicationWait from '../../components/Modals/PublicationWait';
+import OverlayLoader from '../../components/Modals/OverlayLoader';
 
 const CreateAd = () => {
     const [openWarning, setOpenWarning] = React.useState(false)
+    const [openOverlayLoader, setOpenOverlayLoader] = React.useState(false)
     const [interests, setInterests] = React.useState([])
     const { control, handleSubmit, watch, formState: {
         isSubmitting
@@ -29,15 +29,18 @@ const CreateAd = () => {
     const insterestsValues = watch('interests')
 
     const onSubmit = async (data) => {
+        setOpenOverlayLoader(true)
         const formData = await formDataHandler(data, 'files')
 
         try {
             const res = await fileProvider.post('/api/publication/new', formData)
 
             if (res.status >= 200 && res.status < 300) {
-                console.log("exito")
+                setOpenWarning(true)
+                setOpenOverlayLoader(false)
             }
         } catch (error) {
+            setOpenOverlayLoader(false)
             console.log(error)
         }
     };
@@ -50,7 +53,6 @@ const CreateAd = () => {
                 const { data: { data } } = res;
 
                 setInterests(data);
-                setOpenWarning(true)
             }
         } catch (error) {
             console.log("error ", error)
@@ -164,6 +166,7 @@ const CreateAd = () => {
                 </Box>
             </Box>
             <PublicationWait open={openWarning} handleClose={handleCloseWarning} />
+            <OverlayLoader open={openOverlayLoader} />
         </SettingsLayout>
     );
 }
