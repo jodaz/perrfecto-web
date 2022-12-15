@@ -9,17 +9,12 @@ const StyledCard = styled(motion.div)`
 
 const FeedCard = ({ style, onVote, id, ...props }) => {
     const flyAwayMin = 100;
-    // motion stuff
     const cardElem = React.useRef(null);
-
+    const [constrained, setConstrained] = React.useState(true);
+    const [direction, setDirection] = React.useState();
+    const [velocity, setVelocity] = React.useState();
     const x = useMotionValue(0);
     const controls = useAnimation();
-
-    const [constrained, setConstrained] = React.useState(true);
-
-    const [direction, setDirection] = React.useState();
-
-    const [velocity, setVelocity] = React.useState();
 
     const getVote = (childNode, parentNode) => {
         const childRect = childNode.getBoundingClientRect();
@@ -74,6 +69,11 @@ const FeedCard = ({ style, onVote, id, ...props }) => {
         return () => unsubscribeX();
     });
 
+    const discardCard = () => {
+        setVelocity(200);
+        setDirection('left')
+    }
+
     return (
         <StyledCard
             animate={controls}
@@ -86,7 +86,7 @@ const FeedCard = ({ style, onVote, id, ...props }) => {
             whileTap={{ scale: 1.1 }}
             {...props}
         >
-            <Card />
+            <Card discardAction={discardCard} />
         </StyledCard>
     );
 };

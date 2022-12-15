@@ -24,14 +24,32 @@ const guestMessages = {
     'discard': 'descartar'
 }
 
-const Card = () => {
+const Card = ({
+    discardAction,
+    favAction,
+    likeAction
+}) => {
     const { state: { isAuth } } = useAuth();
     const { dispatch } = useGuest();
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
 
-    const action = message => {
+    const action = (message, action) => {
         if (!isAuth && message != 'descartar') {
             openGuestWarning(dispatch, message);
+        } else {
+            switch (action) {
+                case 'discard':
+                    discardAction();
+                    break;
+                case 'fav':
+                    favAction();
+                    break;
+                case 'like':
+                    likeAction();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -92,13 +110,13 @@ const Card = () => {
                             background: 'url(/images/default/pasto_feo.png)',
                             padding: '0.6rem',
                             boxShadow: '0px 2px 5px rgba(51, 51, 51, 0.15)'
-                        }} onClick={() => action(guestMessages.discard)}>
+                        }} onClick={() => action(guestMessages.discard, 'discard')}>
                             <HuesitoIcon />
                         </IconButton>
                         <IconButton sx={{
                             background: '#fff',
                             boxShadow: '0px 2px 5px rgba(51, 51, 51, 0.15)'
-                        }} onClick={() => action(guestMessages.favourite)}>
+                        }} onClick={() => action(guestMessages.favourite, 'fav')}>
                             <StarIcon />
                         </IconButton>
                         <Badge
@@ -121,7 +139,7 @@ const Card = () => {
                             <IconButton sx={{
                                 background: '#fff',
                                 boxShadow: '0px 2px 5px rgba(51, 51, 51, 0.15)'
-                            }} onClick={() => action(guestMessages.like)}>
+                            }} onClick={() => action(guestMessages.like, 'like')}>
                                 <PawIcon />
                             </IconButton>
                         </Badge>
