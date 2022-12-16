@@ -7,14 +7,12 @@ import IconButton from '@mui/material/IconButton';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import Badge from '@mui/material/Badge';
 import { useMediaQuery } from '@mui/material';
 import { useAuth } from '../../context/AuthContext';
 import { openGuestWarning, useGuest } from '../../context/GuestContext';
 import ShowCard from '../../components/Modals/ShowCard'
 
 // Icons
-import { ReactComponent as PawIcon } from '../../assets/icons/Paw.svg'
 import { ReactComponent as StarIcon } from '../../assets/icons/Star.svg'
 import { ReactComponent as HuesitoIcon } from '../../assets/icons/Huesito.svg'
 import LikeButton from '../Buttons/LikeButton';
@@ -26,11 +24,19 @@ const guestMessages = {
     'discard': 'descartar'
 }
 
+const flyAwayDistance = (direction, cardElem) => {
+    const parentWidth = cardElem.current.parentNode.getBoundingClientRect()
+        .width;
+    const childWidth = cardElem.current.getBoundingClientRect().width;
+    return direction === "left"
+        ? -parentWidth / 2 - childWidth / 2
+        : parentWidth / 2 + childWidth / 2;
+};
+
 const Card = ({
-    discardAction,
-    favAction,
-    likeAction,
-    data
+    data,
+    cardElem,
+    controls
 }) => {
     const { LikesCount, Dog } = data;
     const years = new Date().getUTCFullYear() - Dog.dogAge
@@ -38,24 +44,22 @@ const Card = ({
     const { dispatch } = useGuest();
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
 
-    const action = (message, action) => {
+    const action = (message) => {
         if (!isAuth && message != 'descartar') {
             openGuestWarning(dispatch, message);
-        } else {
-            switch (action) {
-                case 'discard':
-                    discardAction();
-                    break;
-                case 'fav':
-                    favAction();
-                    break;
-                case 'like':
-                    likeAction();
-                    break;
-                default:
-                    break;
-            }
         }
+    }
+
+    const likeAction = () => {
+        controls.start({
+            x: flyAwayDistance('right', cardElem)
+        });
+    }
+
+    const discardAction = () => {
+        controls.start({
+            x: flyAwayDistance('left', cardElem)
+        });
     }
 
     return (
@@ -115,16 +119,22 @@ const Card = ({
                             background: 'url(/images/default/pasto_feo.png)',
                             padding: '0.6rem',
                             boxShadow: '0px 2px 5px rgba(51, 51, 51, 0.15)'
-                        }} onClick={() => action(guestMessages.discard, 'discard')}>
+                        }} onClick={() => {
+                            action(guestMessages.discard)
+                            discardAction()
+                        }}>
                             <HuesitoIcon />
                         </IconButton>
                         <IconButton sx={{
                             background: '#fff',
                             boxShadow: '0px 2px 5px rgba(51, 51, 51, 0.15)'
-                        }} onClick={() => action(guestMessages.favourite, 'fav')}>
+                        }} onClick={() => {
+                            action(guestMessages.favourite, 'fav')
+                            discardAction()
+                        }}>
                             <StarIcon />
                         </IconButton>
-                        <LikeButton likes={LikesCount} />
+                        <LikeButton likes={LikesCount} sliderAction={likeAction} />
                     </CardActions>
                     <Box sx={{
                         marginTop: '2rem',

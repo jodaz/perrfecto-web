@@ -6,7 +6,7 @@ import { openGuestWarning, useGuest } from '../../context/GuestContext';
 // Icons
 import { ReactComponent as PawIcon } from '../../assets/icons/Paw.svg'
 
-const LikeButton = ({ likes }) => {
+const LikeButton = ({ likes, sliderAction }) => {
     const { state: { isAuth } } = useAuth();
     const { dispatch } = useGuest();
 
@@ -15,6 +15,7 @@ const LikeButton = ({ likes }) => {
             openGuestWarning(dispatch, 'dar me gusta');
         } else {
             console.log("Like");
+            sliderAction();
         }
     }
 

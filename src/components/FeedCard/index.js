@@ -8,7 +8,7 @@ const StyledCard = styled(motion.div)`
 `;
 
 const FeedCard = ({ style, onVote, id, item, ...props }) => {
-    const flyAwayMin = 100;
+    const flyAwayMin = 300;
     const cardElem = React.useRef(null);
     const [constrained, setConstrained] = React.useState(true);
     const [direction, setDirection] = React.useState();
@@ -86,7 +86,12 @@ const FeedCard = ({ style, onVote, id, item, ...props }) => {
             whileTap={{ scale: 1.1 }}
             {...props}
         >
-            <Card discardAction={discardCard} data={item} />
+            <Card
+                discardAction={discardCard}
+                data={item}
+                controls={controls}
+                cardElem={cardElem}
+            />
         </StyledCard>
     );
 };
