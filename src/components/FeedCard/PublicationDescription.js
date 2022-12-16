@@ -24,12 +24,16 @@ const PublicationDescription = ({
         <Typography color={color}>
             {breed}
         </Typography>
-        <Box sx={{ fontSize: '8px', padding: '0 8px' }}>
-            <CircleIcon fontSize='inherit' color={dotColor} />
-        </Box>
-        <Typography color={color}>
-            {getYearsSince(dogAge)} años
-        </Typography>
+        {(dogAge) && (
+            <>
+                <Box sx={{ fontSize: '8px', padding: '0 8px' }}>
+                    <CircleIcon fontSize='inherit' color={dotColor} />
+                </Box>
+                <Typography color={color}>
+                    {getYearsSince(dogAge)} años
+                </Typography>
+            </>
+        )}
         {(province && city) && (
             <>
                 <Box sx={{ fontSize: '8px', padding: '0 8px' }}>

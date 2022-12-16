@@ -5,8 +5,9 @@ import { useMediaQuery } from '@mui/material';
 import ShowCard from '../../components/Modals/ShowCard';
 import getUserPhoto from '../../utils/getUserPhoto';
 import PhotoGallery from '../Modals/ShowCard/PhotoGallery';
-import CircleIcon from '@mui/icons-material/FiberManualRecord';
 import PublicationDescription from './PublicationDescription';
+import FavouriteButton from '../Buttons/FavouriteButton'
+import LikeButton from '../Buttons/LikeButton'
 
 const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
@@ -20,30 +21,38 @@ const DogPublication = ({ data, handleClose }) => {
                 <PhotoGallery images={multimedia} />
             </Box>
             <Box sx={{
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
                 flex: 1,
-                p: 2
+                justifyContent: 'space-between'
             }}>
-                <Box sx={{
-                    flex: 1,
-                    p: 2
-                }}>
+                <Box>
                     <Box sx={{ p: 2 }}>
                         <Typography variant="h5" color="text.secondary" fontWeight={500}>
                             {data.Dog.name}
                         </Typography>
+                        <PublicationDescription
+                            color='info.main'
+                            dotColor='info'
+                            dogAge={data.dogAge}
+                            breed={data.Dog.breed}
+                            province={data.Dog.Owner.province}
+                            city={data.Dog.Owner.city}
+                        />
                     </Box>
-                    <PublicationDescription
-                        color='info.main'
-                        dotColor='info'
-                        dogAge={data.dogAge}
-                        breed={data.Dog.breed}
-                        province={'España'}
-                        city={'Madrid'}
-                    />
                     <Box sx={{ p: 2 }}>
-                        <Typography variant="subtitle1">
+                        <Typography variant="subtitle1" color="text.secondary">
                             {data.description}
                         </Typography>
+                    </Box>
+                </Box>
+                <Box sx={{ display: 'flex', width: '100%', mb: 2 }}>
+                    <Box sx={{ p: 1 }}>
+                        <FavouriteButton />
+                    </Box>
+                    <Box sx={{ p: 1 }}>
+                        <LikeButton likes={data.LikesCount} />
                     </Box>
                 </Box>
             </Box>

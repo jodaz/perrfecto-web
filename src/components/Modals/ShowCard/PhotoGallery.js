@@ -31,15 +31,17 @@ const PhotoGallery = ({ images }) => {
             navigation
         >
             {images.map((image, index) => (
-                <SwiperSlide key={index}>
+                // <SwiperSlide key={index}>
                     <CardMedia
                         image={image}
                         sx={{
                             height: 0,
-                            paddingTop: '100%'
+                            paddingTop: '100%',
+                            borderTopLeftRadius: '16px',
+                            borderBottomLeftRadius: '16px'
                         }}
                     />
-                </SwiperSlide>
+                // </SwiperSlide>
             ))}
         </Swiper>
     )
