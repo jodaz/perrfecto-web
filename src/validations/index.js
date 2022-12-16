@@ -122,6 +122,24 @@ export const DOG_GENDER = {
     }
 }
 
+export const CITY = {
+    rules: {
+        required: true,
+    },
+    messages: {
+        required: "Seleccione una ciudad.",
+    }
+}
+
+export const PROVINCE = {
+    rules: {
+        required: true,
+    },
+    messages: {
+        required: "Seleccione una provincia.",
+    }
+}
+
 export const PHOTO = {
     rules: {
         required: true,
