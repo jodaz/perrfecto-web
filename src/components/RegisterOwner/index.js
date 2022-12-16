@@ -14,21 +14,38 @@ import { useAuth } from '../../context/AuthContext';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useNavigate } from 'react-router-dom'
 import Alert from '@mui/material/Alert';
-import { PHOTO, DATE_BIRTH } from '../../validations';
+import { PHOTO, DATE_BIRTH, PROVINCE, CITY } from '../../validations';
+import SelectInput from '../Forms/SelectInput';
+import provincias from '../../utils/provincias';
+import dirtyCities from '../../utils/ciudades';
 
 const RegisterOwner = ({ open, handleClose, redirect = '/home' }) => {
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const [error, setError] = React.useState(false)
-    const { control, handleSubmit, formState: {
+    const { control, handleSubmit, watch, formState: {
         isSubmitting
     }} = useForm({
         reValidateMode: "onBlur"
     });
+    const [cities, setCities] = React.useState([])
     const navigate = useNavigate();
     const { state: { user } } = useAuth();
+    const province = watch('province')
 
-    const onSubmit = async (data) => {
+    const onSubmit = async values => {
         try {
+            let {
+                province,
+                city,
+                ...rest
+            } = values;
+
+            const data = {
+                province: province.nombre,
+                city: city.nombre,
+                ...rest
+            };
+
             const formData = await formDataHandler(data, 'files')
 
             const res = await fileProvider.put(`/api/auth/user-edit/${user.id}`, formData)
@@ -41,6 +58,18 @@ const RegisterOwner = ({ open, handleClose, redirect = '/home' }) => {
             setError('Ha ocurrido un error inesperado.')
         }
     }
+
+    React.useEffect(() => {
+        if (province) {
+            // reset({
+            //     city: {}
+            // })
+            const filteredCities = dirtyCities
+                .filter(({ id_provincia }) => id_provincia == province.id)
+
+            setCities(filteredCities)
+        }
+    }, [province])
 
     return (
         <Dialog open={open} onClose={handleClose}>
@@ -81,25 +110,33 @@ const RegisterOwner = ({ open, handleClose, redirect = '/home' }) => {
                             {error}
                         </Alert>
                     )}
-                    <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column', p: 2 }}>
-                        <Box width='200px' textAlign='center'>
-                            <Typography variant="h6" color="text.main" gutterBottom>
-                                Sube tu foto de perfil
-                            </Typography>
-                            <Typography variant="body2" color="text.main" gutterBottom>
-                                Esta foto será visible para todos los usuarios
-                            </Typography>
+                    <Box sx={{
+                        flex: 1
+                    }}>
+                        <Box sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            flexDirection: 'column'
+                        }}>
+                            <Box width='200px' textAlign='center'>
+                                <Typography variant="h6" color="text.main" gutterBottom>
+                                    Sube tu foto de perfil
+                                </Typography>
+                                <Typography variant="body2" color="text.main" gutterBottom>
+                                    Esta foto será visible para todos los usuarios
+                                </Typography>
+                            </Box>
+                            <Box sx={{ p: 2 }}>
+                                <PhotoInput
+                                    name="files"
+                                    control={control}
+                                    disabled={isSubmitting}
+                                    rules={PHOTO.rules}
+                                    validations={PHOTO.messages}
+                                />
+                            </Box>
                         </Box>
-                        <Box sx={{ p: 3 }}>
-                            <PhotoInput
-                                name="files"
-                                control={control}
-                                disabled={isSubmitting}
-                                rules={PHOTO.rules}
-                                validations={PHOTO.messages}
-                            />
-                        </Box>
-                        <Box sx={{ p: 3 }}>
+                        <Box sx={{ p: 2 }}>
                             <DateInput
                                 name='date_birth'
                                 control={control}
@@ -109,14 +146,48 @@ const RegisterOwner = ({ open, handleClose, redirect = '/home' }) => {
                                 label='Fecha de cumpleaños'
                             />
                         </Box>
-                        <Button
-                            disabled={isSubmitting}
-                            variant="contained"
-                            type="submit"
-                            fullWidth
-                        >
-                            Siguiente
-                        </Button>
+                        <Box sx={{ p: 2 }}>
+                            <SelectInput
+                                name='province'
+                                control={control}
+                                disabled={isSubmitting}
+                                label='Ciudad, estado o provincia'
+                                options={provincias}
+                                optionLabel='nombre'
+                                rules={PROVINCE.rules}
+                                validations={PROVINCE.messages}
+                                InputProps={{
+                                    placeholder: 'Seleccione una provincia'
+                                }}
+                            />
+                        </Box>
+                        {!!(cities.length) && (
+                            <Box sx={{ p: 2 }}>
+                                <SelectInput
+                                    name='city'
+                                    control={control}
+                                    disabled={isSubmitting}
+                                    label='Distrito'
+                                    options={cities}
+                                    optionLabel='nombre'
+                                    rules={CITY.rules}
+                                    validations={CITY.messages}
+                                    InputProps={{
+                                        placeholder: 'Seleccione una ciudad'
+                                    }}
+                                />
+                            </Box>
+                        )}
+                        <Box sx={{ p: 3 }}>
+                            <Button
+                                disabled={isSubmitting}
+                                variant="contained"
+                                type="submit"
+                                fullWidth
+                            >
+                                Siguiente
+                            </Button>
+                        </Box>
                     </Box>
                 </Box>
             </Box>
