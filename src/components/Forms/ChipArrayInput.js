@@ -73,7 +73,7 @@ const ChipArrayInput = ({
                             </Chip>
                         ))}
                     </ToggleButtonGroup>
-                    {error && (
+                    {!!(error && validations) && (
                         <FormHelperText error>
                             {validations[error.type]}
                         </FormHelperText>

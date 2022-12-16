@@ -66,7 +66,7 @@ const SelectInput = ({
                         disableClearable
                         {...rest}
                     />
-                    {error && (
+                    {!!(error && validations) && (
                         <FormHelperText error>
                             {validations[error.type]}
                         </FormHelperText>

@@ -118,8 +118,6 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
 
     React.useEffect(() => { fetchFeatures() }, []);
 
-    console.log(dirtyFields)
-
     const generatePhotoProfile = (isSubmitting) => (
         <Box sx={{
             display: 'flex',
