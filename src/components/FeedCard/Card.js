@@ -16,6 +16,7 @@ import ShowCard from '../../components/Modals/ShowCard'
 import { ReactComponent as StarIcon } from '../../assets/icons/Star.svg'
 import { ReactComponent as HuesitoIcon } from '../../assets/icons/Huesito.svg'
 import LikeButton from '../Buttons/LikeButton';
+import getUserPhoto from '../../utils/getUserPhoto';
 
 const guestMessages = {
     'message': 'enviar un mensaje',
@@ -43,6 +44,7 @@ const Card = ({
     const { state: { isAuth } } = useAuth();
     const { dispatch } = useGuest();
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
+    const photoSrc = getUserPhoto(JSON.parse(Dog.dogPhotos)[0])
 
     const action = (message) => {
         if (!isAuth && message != 'descartar') {
@@ -95,7 +97,7 @@ const Card = ({
                 <CardMedia
                     component="img"
                     width='100%'
-                    src="/images/samples/sad-pupi.png"
+                    src={photoSrc}
                     sx={{
                         height: '60%'
                     }}
