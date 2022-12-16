@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import PawPrints from '../../../assets/images/pawprints.svg'
 import { apiProvider } from '../../../api';
 import Stack from './Stack';
-import { useMediaQuery } from '@mui/material';
+import { CircularProgress, useMediaQuery } from '@mui/material';
 import ContactDialog from '../../../components/Modals/ContactDialog';
 const PopularMembers = React.lazy(() => import('../../../components/PopularMembers'));
 
@@ -63,8 +63,18 @@ const UsersHome = () => {
                 margin: '0 auto',
                 height: '100%'
             }}>
-                {(cards.length) && (
+                {(cards.length) ? (
                     <Stack data={cards} onVote={(item, vote) => console.log(item, vote)} />
+                ) : (
+                    <Box sx={{
+                        height: '100%',
+                        width: '100%',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}>
+                        <CircularProgress color="primary" />
+                    </Box>
                 )}
 
                 {/* <ContactDialog /> */}
