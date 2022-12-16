@@ -11,11 +11,13 @@ import Badge from '@mui/material/Badge';
 import { useMediaQuery } from '@mui/material';
 import { useAuth } from '../../context/AuthContext';
 import { openGuestWarning, useGuest } from '../../context/GuestContext';
+import ShowCard from '../../components/Modals/ShowCard'
 
 // Icons
 import { ReactComponent as PawIcon } from '../../assets/icons/Paw.svg'
 import { ReactComponent as StarIcon } from '../../assets/icons/Star.svg'
 import { ReactComponent as HuesitoIcon } from '../../assets/icons/Huesito.svg'
+import LikeButton from '../Buttons/LikeButton';
 
 const guestMessages = {
     'message': 'enviar un mensaje',
@@ -122,30 +124,7 @@ const Card = ({
                         }} onClick={() => action(guestMessages.favourite, 'fav')}>
                             <StarIcon />
                         </IconButton>
-                        <Badge
-                            badgeContent={`${LikesCount}`}
-                            color="primary"
-                            anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'right'
-                            }}
-                            sx={{
-                                '& .MuiBadge-badge': {
-                                    height: '25px !important',
-                                    width: '25px !important',
-                                    borderRadius: '100px',
-                                    color: '#fff',
-                                    backgroundColor: theme => theme.palette.primary.main
-                                }
-                            }}
-                        >
-                            <IconButton sx={{
-                                background: '#fff',
-                                boxShadow: '0px 2px 5px rgba(51, 51, 51, 0.15)'
-                            }} onClick={() => action(guestMessages.like, 'like')}>
-                                <PawIcon />
-                            </IconButton>
-                        </Badge>
+                        <LikeButton likes={LikesCount} />
                     </CardActions>
                     <Box sx={{
                         marginTop: '2rem',
@@ -177,6 +156,7 @@ const Card = ({
                     </Box>
                 </CardContent>
             </MuiCard>
+            <ShowCard />
         </Box>
     );
 }
