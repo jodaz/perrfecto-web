@@ -27,8 +27,11 @@ const guestMessages = {
 const Card = ({
     discardAction,
     favAction,
-    likeAction
+    likeAction,
+    data
 }) => {
+    const { LikesCount, Dog } = data;
+    const years = new Date().getUTCFullYear() - Dog.dogAge
     const { state: { isAuth } } = useAuth();
     const { dispatch } = useGuest();
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
@@ -73,7 +76,7 @@ const Card = ({
                     border: '2px solid #F59E0B'
                 }} src='/images/samples/sexy-woman.png' />
                 <Typography gutterBottom variant={isSmall ? 'body1' : "h5"} component="div">
-                    Carmen Pires
+                    {Dog.Owner.name}
                 </Typography>
             </Box>
             <MuiCard sx={{
@@ -120,7 +123,7 @@ const Card = ({
                             <StarIcon />
                         </IconButton>
                         <Badge
-                            badgeContent={15}
+                            badgeContent={`${LikesCount}`}
                             color="primary"
                             anchorOrigin={{
                                 vertical: 'bottom',
@@ -149,7 +152,7 @@ const Card = ({
                         textAlign: 'center'
                     }}>
                         <Typography variant="h5" color="text.primary">
-                            Pupi
+                            {Dog.name}
                         </Typography>
                         <Box sx={{
                             display: 'flex',
@@ -159,17 +162,16 @@ const Card = ({
                         }}>
                             {/** Raza */}
                             <Typography color="text.secondary">
-                                Pug
+                                {Dog.breed}
+                            </Typography>
+                            <Box>.</Box>
+                            <Typography color="text.secondary">
+                                {years} años
                             </Typography>
                             <Box>.</Box>
                             {/** Edad */}
                             <Typography color="text.secondary">
-                                3 años
-                            </Typography>
-                            <Box>.</Box>
-                            {/** Ubicación */}
-                            <Typography color="text.secondary">
-                                Sevilla, España
+                                España
                             </Typography>
                         </Box>
                     </Box>

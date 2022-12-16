@@ -9,18 +9,16 @@ const PopularMembers = React.lazy(() => import('../../../components/PopularMembe
 
 const UsersHome = () => {
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
-    const [cards, setCards] = React.useState([1, 2, 3, 4, 5])
+    const [cards, setCards] = React.useState([])
 
     const fetchPublications = async () => {
         try {
-            const res = await apiProvider.get('api/publication/publications', {
-                country: 'Venezuela'
-            })
+            const res = await apiProvider.get('api/publication/publications')
 
             if (res.status >= 200 && res.status < 300) {
-                const { data: { data } } = res;
+                const { data: { data: { data } } } = res;
 
-                // setCards(data);
+                setCards(data);
             }
         } catch (error) {
             console.log("error ", error)
@@ -65,19 +63,10 @@ const UsersHome = () => {
                 margin: '0 auto',
                 height: '100%'
             }}>
-                <Stack data={cards} onVote={(item, vote) => console.log(item, vote)} />
-                {/* <Fab
-                    color="primary"
-                    aria-label="add"
-                    sx={{
-                        position: 'absolute',
-                        bottom: isSmall ? 0 : 0,
-                        right: isSmall ? '-25px' : '-80px',
-                        zIndex: 0
-                    }}
-                >
-                    <Filter2Icon />
-                </Fab> */}
+                {(cards.length) && (
+                    <Stack data={cards} onVote={(item, vote) => console.log(item, vote)} />
+                )}
+
                 {/* <ContactDialog /> */}
             </Box>
         </Box>

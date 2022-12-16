@@ -41,6 +41,7 @@ const Stack = ({ onVote, data, ...props }) => {
                             drag={isTop}
                             key={item.key || index}
                             onVote={(result) => handleVote(item, result)}
+                            item={item}
                         />
                     )
                 })}
