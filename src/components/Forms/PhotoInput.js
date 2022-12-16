@@ -137,7 +137,7 @@ const PhotoInput = ({
                     disabled={disabled}
                     {...rest}
                 />
-                {error && (
+                {!!(error && validations) && (
                     <FormHelperText error>
                         {validations[error.type]}
                     </FormHelperText>
