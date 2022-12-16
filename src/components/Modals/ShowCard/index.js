@@ -13,24 +13,13 @@ const ShowCard = ({ children, open, handleClose }) => {
         >
             <Box sx={{
                 display: 'flex',
-                justifyContent: 'space-between',
-                flexDirection: 'column',
-                p: 2,
                 minWidth: !isSmall ? 800 : '280px',
                 alignItems: 'center',
                 background: '#fff',
                 borderRadius: 4,
                 marginRight: '1rem'
             }}>
-                <Box sx={{ flex: 1 }}>
-
-                </Box>
-                <Box sx={{
-                    flex: 1,
-                    p: 2
-                }}>
-                    {children}
-                </Box>
+                {children}
             </Box>
         </InstagramModal>
     );

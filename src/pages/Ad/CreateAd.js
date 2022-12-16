@@ -3,7 +3,6 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import SettingsLayout from '../../layouts/SettingsLayout';
-import { useNavigate } from 'react-router-dom';
 import { MapPin } from 'lucide-react';
 import { useForm } from "react-hook-form";
 import { useAuth } from '../../context/AuthContext'

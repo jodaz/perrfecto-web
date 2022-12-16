@@ -5,11 +5,18 @@ import { apiProvider } from '../../../api';
 import Stack from './Stack';
 import { CircularProgress, useMediaQuery } from '@mui/material';
 import ContactDialog from '../../../components/Modals/ContactDialog';
+import DogPublication from '../../../components/FeedCard/DogPublication'
+import getSearchParams from '../../../utils/getSearchParams';
+import { useLocation, useNavigate } from 'react-router-dom';
 const PopularMembers = React.lazy(() => import('../../../components/PopularMembers'));
 
 const UsersHome = () => {
+    const location = useLocation();
+    const navigate = useNavigate();
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
     const [cards, setCards] = React.useState([])
+    const [selectedCard, setSelectedCard] = React.useState(null);
+    const isDogPublicationSelected = getSearchParams(location, 'dogPub')
 
     const fetchPublications = async () => {
         try {
@@ -23,6 +30,16 @@ const UsersHome = () => {
         } catch (error) {
             console.log("error ", error)
         }
+    }
+
+    const handleSelect = data => {
+        setSelectedCard(data)
+        navigate('?dogPub=true')
+    }
+
+    const handleCloseCard = () => {
+        setSelectedCard(null);
+        navigate('/home')
     }
 
     React.useEffect(() => { fetchPublications() }, []);
@@ -64,7 +81,11 @@ const UsersHome = () => {
                 height: '100%'
             }}>
                 {(cards.length) ? (
-                    <Stack data={cards} onVote={(item, vote) => console.log(item, vote)} />
+                    <Stack
+                        data={cards}
+                        onVote={(item, vote) => console.log(item, vote)}
+                        onClick={(item) => handleSelect(item)}
+                    />
                 ) : (
                     <Box sx={{
                         height: '100%',
@@ -76,9 +97,8 @@ const UsersHome = () => {
                         <CircularProgress color="primary" />
                     </Box>
                 )}
-
-                {/* <ContactDialog /> */}
             </Box>
+            {isDogPublicationSelected && <DogPublication data={selectedCard} handleClose={handleCloseCard} />}
         </Box>
     );
 }

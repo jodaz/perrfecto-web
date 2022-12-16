@@ -13,7 +13,7 @@ const Frame = styled.div`
     height: 100%;
 `
 
-const Stack = ({ onVote, data, ...props }) => {
+const Stack = ({ onVote, data, onClick, ...props }) => {
     const [stack, setStack] = React.useState(data)
     // return new array with last item removed
     const pop = (array) => {
@@ -41,6 +41,7 @@ const Stack = ({ onVote, data, ...props }) => {
                             drag={isTop}
                             key={item.key || index}
                             onVote={(result) => handleVote(item, result)}
+                            onClick={() => onClick(item)}
                             item={item}
                         />
                     )

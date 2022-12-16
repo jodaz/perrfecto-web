@@ -17,6 +17,7 @@ import { ReactComponent as StarIcon } from '../../assets/icons/Star.svg'
 import { ReactComponent as HuesitoIcon } from '../../assets/icons/Huesito.svg'
 import LikeButton from '../Buttons/LikeButton';
 import getUserPhoto from '../../utils/getUserPhoto';
+import PublicationDescription from './PublicationDescription';
 
 const guestMessages = {
     'message': 'enviar un mensaje',
@@ -151,19 +152,14 @@ const Card = ({
                             width: '80%',
                             margin: '0 auto'
                         }}>
-                            {/** Raza */}
-                            <Typography color="text.secondary">
-                                {Dog.breed}
-                            </Typography>
-                            <Box>.</Box>
-                            <Typography color="text.secondary">
-                                {years} años
-                            </Typography>
-                            <Box>.</Box>
-                            {/** Edad */}
-                            <Typography color="text.secondary">
-                                España
-                            </Typography>
+                            <PublicationDescription
+                                color="text.secondary"
+                                dotColor="text"
+                                dogAge={data.dogAge}
+                                breed={data.Dog.breed}
+                                province={data.Dog.Owner.provice}
+                                city={data.Dog.Owner.city}
+                            />
                         </Box>
                     </Box>
                 </CardContent>
