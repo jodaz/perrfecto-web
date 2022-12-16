@@ -41,7 +41,6 @@ const Card = ({
     controls
 }) => {
     const { LikesCount, Dog } = data;
-    const years = new Date().getUTCFullYear() - Dog.dogAge
     const { state: { isAuth } } = useAuth();
     const { dispatch } = useGuest();
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
