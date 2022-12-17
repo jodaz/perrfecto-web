@@ -122,18 +122,20 @@ const Card = ({
                             background: 'url(/images/default/pasto_feo.png)',
                             padding: '0.6rem',
                             boxShadow: '0px 2px 5px rgba(51, 51, 51, 0.15)'
-                        }} onClick={() => {
+                        }} onClick={e => {
                             action(guestMessages.discard)
                             discardAction()
+                            e.stopPropagation();
                         }}>
                             <HuesitoIcon />
                         </IconButton>
                         <IconButton sx={{
                             background: '#fff',
                             boxShadow: '0px 2px 5px rgba(51, 51, 51, 0.15)'
-                        }} onClick={() => {
+                        }} onClick={e => {
                             action(guestMessages.favourite, 'fav')
                             discardAction()
+                            e.stopPropagation();
                         }}>
                             <StarIcon />
                         </IconButton>

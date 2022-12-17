@@ -16,7 +16,7 @@ const UsersHome = () => {
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
     const [cards, setCards] = React.useState([])
     const [selectedCard, setSelectedCard] = React.useState(null);
-    const isDogPublicationSelected = getSearchParams(location, 'dogPub')
+    const [openDogCard, setOpenDogCard] = React.useState(false)
 
     const fetchPublications = async () => {
         try {
@@ -34,11 +34,11 @@ const UsersHome = () => {
 
     const handleSelect = data => {
         setSelectedCard(data)
-        navigate('?dogPub=true')
+        setOpenDogCard(true)
     }
 
     const handleCloseCard = () => {
-        navigate('/home')
+        setOpenDogCard(false)
         setSelectedCard(null);
     }
 
@@ -83,7 +83,7 @@ const UsersHome = () => {
                 {(cards.length) ? (
                     <Stack
                         data={cards}
-                        onVote={(item, vote) => console.log(item, vote)}
+                        onVote={(item, vote) => null}
                         onClick={(item) => handleSelect(item)}
                     />
                 ) : (
@@ -98,7 +98,13 @@ const UsersHome = () => {
                     </Box>
                 )}
             </Box>
-            {isDogPublicationSelected && <DogPublication data={selectedCard} handleClose={() => handleCloseCard} />}
+            {openDogCard && (
+                <DogPublication
+                    data={selectedCard}
+                    handleClose={() => handleCloseCard()}
+                    open={openDogCard}
+                />
+            )}
         </Box>
     );
 }
