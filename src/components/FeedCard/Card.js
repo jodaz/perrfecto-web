@@ -41,6 +41,7 @@ const Card = ({
     controls
 }) => {
     const { LikesCount, Dog } = data;
+    const userPhoto = getUserPhoto(Dog.Owner.img_profile);
     const { state: { isAuth } } = useAuth();
     const { dispatch } = useGuest();
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
@@ -82,7 +83,7 @@ const Card = ({
                     height: isSmall ? '50px' : '70px',
                     marginRight: '1rem',
                     border: '2px solid #F59E0B'
-                }} src='/images/samples/sexy-woman.png' />
+                }} src={userPhoto} />
                 <Typography gutterBottom variant={isSmall ? 'body1' : "h5"} component="div">
                     {Dog.Owner.name}
                 </Typography>
