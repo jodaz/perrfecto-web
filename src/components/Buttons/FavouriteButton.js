@@ -9,7 +9,9 @@ const FavouriteButton = () => {
     const { state: { isAuth } } = useAuth();
     const { dispatch } = useGuest();
 
-    const action = () => {
+    const action = e => {
+        console.log(e.target)
+        console.log(e.currentTarget)
         if (!isAuth) {
             openGuestWarning(dispatch, 'guardar un anuncio');
         } else {

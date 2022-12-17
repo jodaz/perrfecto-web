@@ -10,13 +10,13 @@ const LikeButton = ({ likes, sliderAction }) => {
     const { state: { isAuth } } = useAuth();
     const { dispatch } = useGuest();
 
-    const action = () => {
+    const action = e => {
         if (!isAuth) {
             openGuestWarning(dispatch, 'dar me gusta');
         } else {
-            console.log("Like");
             sliderAction();
         }
+        e.stopPropagation()
     }
 
     return (

@@ -25,7 +25,7 @@ const InterestInput = ({
 
     const toggleDrawer = (anchor) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-        return;
+            return;
         }
 
         setState({ ...state, [anchor]: !state[anchor] });

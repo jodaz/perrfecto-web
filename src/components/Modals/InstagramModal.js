@@ -10,7 +10,10 @@ const InstagramModal = ({ open, handleClose, children }) => {
 
     return (
         <Backdrop
-            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            sx={{
+                color: '#fff',
+                zIndex: (theme) => theme.zIndex.drawer + 1,
+            }}
             open={open}
             onClick={handleClose}
         >
@@ -19,14 +22,14 @@ const InstagramModal = ({ open, handleClose, children }) => {
                 width: 'fit-content',
                 height: 'fit-content',
                 position: 'relative'
-            }}>
+            }} onClick={e => e.stopPropagation()}>
                 {children}
                 <Box sx={{
                     position: 'absolute',
                     top: isSmall ? '-50px' : 0,
                     right: isSmall ? 0 : '-100px'
                 }}>
-                    <IconButton color='secondary'>
+                    <IconButton color='secondary' onClick={handleClose}>
                         <X size={32} />
                     </IconButton>
                 </Box>

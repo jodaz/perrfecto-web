@@ -17,6 +17,7 @@ import { ReactComponent as StarIcon } from '../../assets/icons/Star.svg'
 import { ReactComponent as HuesitoIcon } from '../../assets/icons/Huesito.svg'
 import LikeButton from '../Buttons/LikeButton';
 import getUserPhoto from '../../utils/getUserPhoto';
+import PublicationDescription from './PublicationDescription';
 
 const guestMessages = {
     'message': 'enviar un mensaje',
@@ -41,7 +42,6 @@ const Card = ({
 }) => {
     const { LikesCount, Dog } = data;
     const userPhoto = getUserPhoto(Dog.Owner.img_profile);
-    const years = new Date().getUTCFullYear() - Dog.dogAge
     const { state: { isAuth } } = useAuth();
     const { dispatch } = useGuest();
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
@@ -122,18 +122,20 @@ const Card = ({
                             background: 'url(/images/default/pasto_feo.png)',
                             padding: '0.6rem',
                             boxShadow: '0px 2px 5px rgba(51, 51, 51, 0.15)'
-                        }} onClick={() => {
+                        }} onClick={e => {
                             action(guestMessages.discard)
                             discardAction()
+                            e.stopPropagation();
                         }}>
                             <HuesitoIcon />
                         </IconButton>
                         <IconButton sx={{
                             background: '#fff',
                             boxShadow: '0px 2px 5px rgba(51, 51, 51, 0.15)'
-                        }} onClick={() => {
+                        }} onClick={e => {
                             action(guestMessages.favourite, 'fav')
                             discardAction()
+                            e.stopPropagation();
                         }}>
                             <StarIcon />
                         </IconButton>
@@ -152,19 +154,14 @@ const Card = ({
                             width: '80%',
                             margin: '0 auto'
                         }}>
-                            {/** Raza */}
-                            <Typography color="text.secondary">
-                                {Dog.breed}
-                            </Typography>
-                            <Box>.</Box>
-                            <Typography color="text.secondary">
-                                {years} años
-                            </Typography>
-                            <Box>.</Box>
-                            {/** Edad */}
-                            <Typography color="text.secondary">
-                                España
-                            </Typography>
+                            <PublicationDescription
+                                color="text.secondary"
+                                dotColor="text"
+                                dogAge={data.dogAge}
+                                breed={data.Dog.breed}
+                                province={data.Dog.Owner.provice}
+                                city={data.Dog.Owner.city}
+                            />
                         </Box>
                     </Box>
                 </CardContent>

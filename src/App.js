@@ -41,7 +41,6 @@ import Settings from './pages/Settings';
 import Favourites from './pages/Favourites';
 import Account from './pages/account';
 import CreateAd from './pages/Ad/CreateAd';
-import DogPublication from './pages/Publications/DogPublication';
 
 function App() {
     let location = useLocation();
@@ -97,14 +96,6 @@ function App() {
                                     element={
                                         <AppLayout>
                                             <CreateAd location={location} />
-                                        </AppLayout>
-                                    }
-                                />
-                                <Route
-                                    path='/p/:id'
-                                    element={
-                                        <AppLayout>
-                                            <DogPublication />
                                         </AppLayout>
                                     }
                                 />
