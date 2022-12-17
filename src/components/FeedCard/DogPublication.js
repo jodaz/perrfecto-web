@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { useMediaQuery } from '@mui/material';
 import ShowCard from '../../components/Modals/ShowCard';
 import getUserPhoto from '../../utils/getUserPhoto';
 import PhotoGallery from '../Modals/ShowCard/PhotoGallery';
@@ -13,10 +12,15 @@ const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
 const DogPublication = ({ data, handleClose }) => {
     const multimedia = getImages(JSON.parse(data.multimedia))
-    const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
+    const ownerPhoto = getUserPhoto(data.Dog.Owner.img_profile);
 
     return (
-        <ShowCard open={true} handleClose={handleClose}>
+        <ShowCard
+            open={data}
+            handleClose={handleClose}
+            photo={ownerPhoto}
+            name={data.Dog.Owner.name}
+        >
             <Box sx={{ flex: 1 }}>
                 <PhotoGallery images={multimedia} />
             </Box>

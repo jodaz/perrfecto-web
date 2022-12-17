@@ -38,8 +38,8 @@ const UsersHome = () => {
     }
 
     const handleCloseCard = () => {
-        setSelectedCard(null);
         navigate('/home')
+        setSelectedCard(null);
     }
 
     React.useEffect(() => { fetchPublications() }, []);
@@ -98,7 +98,7 @@ const UsersHome = () => {
                     </Box>
                 )}
             </Box>
-            {isDogPublicationSelected && <DogPublication data={selectedCard} handleClose={handleCloseCard} />}
+            {isDogPublicationSelected && <DogPublication data={selectedCard} handleClose={() => handleCloseCard} />}
         </Box>
     );
 }
