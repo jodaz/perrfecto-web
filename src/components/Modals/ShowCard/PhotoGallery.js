@@ -1,50 +1,50 @@
 import React from 'react'
 import CardMedia from '@mui/material/CardMedia'
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, A11y } from 'swiper';
+import { Pagination, Navigation } from "swiper";
+import styled from '@emotion/styled';
 
-// const useStyles = akeStyles({
-//     media: {
-//         height: 0,
-//         paddingTop: '100%',
-//     },
-//     swiperContainer: {
-//         paddingBottom: '3rem',
-//         '& .swiper-pagination-bullet': {
-//             background: 'blue',
-//         },
-//         '& .swiper-button-next:after': {
-//             fontSize: '2rem !important',
-//         },
-//         '& .swiper-button-prev:after': {
-//             fontSize: '2rem !important',
-//         },
-//     },
-// })
+const SwiperStyled = styled(Swiper)(() => ({
+    height: 'inherit',
+    '& .swiper-pagination-bullet': {
+        backgroundColor: '#fff',
+        width: '8px',
+        height: '8px',
+        boxShadow: '0px 2px 2px rgba(0, 0, 0, 0.12)'
+    }
+}))
 
-const PhotoGallery = ({ images }) => {
-    // const { media, swiperContainer } = useStyles()
+const SwiperSlideStyled = styled(SwiperSlide)(() => ({
+    height: '100%',
+    width: '100% !important'
+}))
 
-    return (
-        <Swiper
-            modules={[Navigation, Pagination, A11y]}
-            navigation
-        >
-            {images.map((image, index) => (
-                // <SwiperSlide key={index}>
-                    <CardMedia
-                        image={image}
-                        sx={{
-                            height: 0,
-                            paddingTop: '100%',
-                            borderTopLeftRadius: '16px',
-                            borderBottomLeftRadius: '16px'
-                        }}
-                    />
-                // </SwiperSlide>
-            ))}
-        </Swiper>
-    )
-}
+const PhotoGallery = ({ images }) => (
+    <SwiperStyled
+        slidesPerView={1}
+        spaceBetween={30}
+        loop={true}
+        pagination={{
+            clickable: true,
+        }}
+        navigation={images.length > 1}
+        modules={[Pagination, Navigation]}
+    >
+        {images.map((image, index) => (
+            <SwiperSlideStyled key={index}>
+                <CardMedia
+                    image={image}
+                    sx={{
+                        height: 0,
+                        paddingTop: '100%',
+                        margin: 0,
+                        borderTopLeftRadius: '16px',
+                        borderBottomLeftRadius: '16px'
+                    }}
+                />
+            </SwiperSlideStyled>
+        ))}
+    </SwiperStyled>
+)
 
 export default PhotoGallery

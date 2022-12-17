@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import InstagramModal from '../../components/Modals/InstagramModal';
+import ShowCard from '../../components/Modals/ShowCard';
 import getUserPhoto from '../../utils/getUserPhoto';
 import PhotoGallery from '../Modals/ShowCard/PhotoGallery';
 import PublicationDescription from './PublicationDescription';
@@ -20,77 +20,52 @@ const DogPublication = ({ open, data, handleClose }) => {
     if (!open) return null
 
     return (
-        <InstagramModal
+        <ShowCard
             open={open}
-            handleClose={() => handleClose()}
+            handleClose={handleClose}
+            photo={ownerPhoto}
+            name={data.Dog.Owner.name}
         >
-            <Box sx={{
-                display: 'flex',
-                alignItems: 'center',
-                position: 'absolute',
-                top: isSmall ? '-40px' : '-50px',
-                left: 0,
-                zIndex: 1000
-            }}>
-                <Avatar sx={{
-                    width: isSmall ? '50px' : '70px',
-                    height: isSmall ? '50px' : '70px',
-                    marginRight: '1rem',
-                    border: '2px solid #F59E0B'
-                }} src={ownerPhoto} />
-                <Typography gutterBottom variant={isSmall ? 'body1' : "h5"} fontWeight={500}>
-                    {data.Dog.Owner.name}
-                </Typography>
+            <Box sx={{ flex: 1, height: 400, width: 400 }}>
+                <PhotoGallery images={multimedia} />
             </Box>
             <Box sx={{
+                height: '100%',
                 display: 'flex',
-                minWidth: !isSmall ? 800 : '280px',
-                alignItems: 'center',
-                background: '#fff',
-                borderRadius: 4,
-                marginRight: '1rem'
+                flexDirection: 'column',
+                flex: 1,
+                justifyContent: 'space-between'
             }}>
-                <Box sx={{ flex: 1 }}>
-                    <PhotoGallery images={multimedia} />
-                </Box>
-                <Box sx={{
-                    height: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    flex: 1,
-                    justifyContent: 'space-between'
-                }}>
-                    <Box>
-                        <Box sx={{ p: 2 }}>
-                            <Typography variant="h5" color="text.secondary" fontWeight={500}>
-                                {data.Dog.name}
-                            </Typography>
-                            <PublicationDescription
-                                color='info.main'
-                                dotColor='info'
-                                dogAge={data.dogAge}
-                                breed={data.Dog.breed}
-                                province={data.Dog.Owner.province}
-                                city={data.Dog.Owner.city}
-                            />
-                        </Box>
-                        <Box sx={{ p: 2 }}>
-                            <Typography variant="subtitle1" color="text.secondary">
-                                {data.description}
-                            </Typography>
-                        </Box>
+                <Box flex={1} p={2}>
+                    <Box sx={{ p: 2 }}>
+                        <Typography variant="h5" color="text.secondary" fontWeight={500}>
+                            {data.Dog.name}
+                        </Typography>
+                        <PublicationDescription
+                            color='info.main'
+                            dotColor='info'
+                            dogAge={data.dogAge}
+                            breed={data.Dog.breed}
+                            province={data.Dog.Owner.province}
+                            city={data.Dog.Owner.city}
+                        />
                     </Box>
-                    <Box sx={{ display: 'flex', width: '100%', mb: 2 }}>
-                        <Box sx={{ p: 1 }}>
-                            <FavouriteButton />
-                        </Box>
-                        <Box sx={{ p: 1 }}>
-                            <LikeButton likes={data.LikesCount} />
-                        </Box>
+                    <Box sx={{ p: 2 }}>
+                        <Typography variant="subtitle1" color="text.secondary">
+                            {data.description}
+                        </Typography>
+                    </Box>
+                </Box>
+                <Box sx={{ display: 'flex', width: '100%', mb: 2, ml: 2 }}>
+                    <Box sx={{ p: 2 }}>
+                        <FavouriteButton />
+                    </Box>
+                    <Box sx={{ p: 2 }}>
+                        <LikeButton likes={data.LikesCount} />
                     </Box>
                 </Box>
             </Box>
-        </InstagramModal>
+        </ShowCard>
     );
 }
 

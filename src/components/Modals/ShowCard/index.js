@@ -16,7 +16,7 @@ const ShowCard = ({
 
     return (
         <InstagramModal
-            onClose={handleClose}
+            handleClose={handleClose}
             open={open}
         >
             <Box sx={{
