@@ -5,25 +5,23 @@ import ShowCard from '../../components/Modals/ShowCard';
 import getUserPhoto from '../../utils/getUserPhoto';
 import PhotoGallery from '../Modals/ShowCard/PhotoGallery';
 import PublicationDescription from './PublicationDescription';
-import FavouriteButton from '../Buttons/FavouriteButton'
-import LikeButton from '../Buttons/LikeButton'
 import { useMediaQuery } from '@mui/material';
 
 const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
-const DogPublication = ({ open, data, handleClose }) => {
+const OwnerPublication = ({ open, data, handleClose }) => {
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
-    const multimedia = getImages(JSON.parse(data.multimedia))
-    const ownerPhoto = getUserPhoto(data.Dog.Owner.img_profile);
-
+    const multimedia = [getUserPhoto(data.Dog.Owner.img_profile)]
+    const dogPhoto = getUserPhoto(JSON.parse(data.multimedia)[0]);
+    console.log(data)
     if (!open) return null
 
     return (
         <ShowCard
             open={open}
             handleClose={handleClose}
-            photo={ownerPhoto}
-            name={data.Dog.Owner.name}
+            photo={dogPhoto}
+            name={data.Dog.name}
         >
             <Box sx={{ flex: 1, height: 400, width: 400 }}>
                 <PhotoGallery images={multimedia} />
@@ -38,29 +36,22 @@ const DogPublication = ({ open, data, handleClose }) => {
                 <Box flex={1} p={2}>
                     <Box sx={{ p: 2 }}>
                         <Typography variant="h5" color="text.secondary" fontWeight={500}>
-                            {data.Dog.name}
+                            {data.Dog.Owner.name}
                         </Typography>
                         <PublicationDescription
                             color='info.main'
                             dotColor='info'
-                            age={data.dogAge}
-                            breed={data.Dog.breed}
+                            age={'2022'}
                             province={data.Dog.Owner.province}
                             city={data.Dog.Owner.city}
                         />
                     </Box>
-                    <Box sx={{ p: 2 }}>
-                        <Typography variant="subtitle1" color="text.secondary">
-                            {data.description}
-                        </Typography>
-                    </Box>
                 </Box>
-                <Box sx={{ display: 'flex', width: '100%', mb: 2, ml: 2 }}>
+                <Box flex={1} p={2}>
                     <Box sx={{ p: 2 }}>
-                        <FavouriteButton />
-                    </Box>
-                    <Box sx={{ p: 2 }}>
-                        <LikeButton likes={data.LikesCount} />
+                        <Typography variant="h5" color="text.secondary" fontWeight={500}>
+                            {data.name}
+                        </Typography>
                     </Box>
                 </Box>
             </Box>
@@ -68,4 +59,4 @@ const DogPublication = ({ open, data, handleClose }) => {
     );
 }
 
-export default DogPublication
+export default OwnerPublication

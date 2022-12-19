@@ -6,7 +6,7 @@ import Stack from './Stack';
 import { CircularProgress, useMediaQuery } from '@mui/material';
 import ContactDialog from '../../../components/Modals/ContactDialog';
 import DogPublication from '../../../components/FeedCard/DogPublication'
-import getSearchParams from '../../../utils/getSearchParams';
+import OwnerPublication from '../../../components/FeedCard/OwnerPublication';
 import { useLocation, useNavigate } from 'react-router-dom';
 const PopularMembers = React.lazy(() => import('../../../components/PopularMembers'));
 
@@ -98,8 +98,15 @@ const UsersHome = () => {
                     </Box>
                 )}
             </Box>
-            {openDogCard && (
+            {/* {openDogCard && (
                 <DogPublication
+                    data={selectedCard}
+                    handleClose={() => handleCloseCard()}
+                    open={openDogCard}
+                />
+            )} */}
+            {openDogCard && (
+                <OwnerPublication
                     data={selectedCard}
                     handleClose={() => handleCloseCard()}
                     open={openDogCard}
