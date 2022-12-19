@@ -40,12 +40,12 @@ const Card = ({
     cardElem,
     controls
 }) => {
-    const { LikesCount, Dog } = data;
-    const userPhoto = getUserPhoto(Dog.Owner.img_profile);
+    const { LikesCount, publi } = data;
+    const userPhoto = getUserPhoto(publi.Owner.img_profile);
     const { state: { isAuth } } = useAuth();
     const { dispatch } = useGuest();
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
-    const photoSrc = getUserPhoto(JSON.parse(Dog.dogPhotos)[0])
+    const photoSrc = getUserPhoto(JSON.parse(publi.dogPhotos)[0])
 
     const action = (message) => {
         if (!isAuth && message != 'descartar') {
@@ -85,7 +85,7 @@ const Card = ({
                     border: '2px solid #F59E0B'
                 }} src={userPhoto} />
                 <Typography gutterBottom variant={isSmall ? 'body1' : "h5"} component="div">
-                    {Dog.Owner.name}
+                    {publi.Owner.name}
                 </Typography>
             </Box>
             <MuiCard sx={{
@@ -146,7 +146,7 @@ const Card = ({
                         textAlign: 'center'
                     }}>
                         <Typography variant="h5" color="text.primary">
-                            {Dog.name}
+                            {publi.name}
                         </Typography>
                         <Box sx={{
                             display: 'flex',
@@ -158,9 +158,9 @@ const Card = ({
                                 color="text.secondary"
                                 dotColor="text"
                                 dogAge={data.dogAge}
-                                breed={data.Dog.breed}
-                                province={data.Dog.Owner.provice}
-                                city={data.Dog.Owner.city}
+                                breed={data.publi.breed}
+                                province={data.publi.Owner.provice}
+                                city={data.publi.Owner.city}
                             />
                         </Box>
                     </Box>
