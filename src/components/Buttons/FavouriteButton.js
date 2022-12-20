@@ -11,17 +11,13 @@ const FavouriteButton = ({ item, handleClick }) => {
     const { dispatch } = useGuest();
     const { dispatch: dispatchFavourite } = useFavourites()
 
-    const submitLike = async () => {
-        addFavourite(dispatchFavourite, item);
-        handleClick();
-    }
-
-    const action = e => {
+    const action = async e => {
         if (!isAuth) {
             openGuestWarning(dispatch, 'guardar un anuncio');
         } else {
-            submitLike()
             e.stopPropagation();
+            await addFavourite(dispatchFavourite, item);
+            handleClick();
         }
     }
 

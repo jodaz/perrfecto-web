@@ -5,23 +5,33 @@ import { useAuth } from '../../context/AuthContext';
 import { openGuestWarning, useGuest } from '../../context/GuestContext';
 // Icons
 import { ReactComponent as PawIcon } from '../../assets/icons/Paw.svg'
+import { apiProvider } from '../../api';
 
-const LikeButton = ({ likes, sliderAction }) => {
+const LikeButton = ({ item, sliderAction }) => {
     const { state: { isAuth } } = useAuth();
     const { dispatch } = useGuest();
 
+    const handleSubmitLike = async () => {
+        const res = await apiProvider.post('/api/publication/like', {
+            ad_id: item.id
+        })
+    }
+
     const action = e => {
+        e.stopPropagation()
         if (!isAuth) {
             openGuestWarning(dispatch, 'dar me gusta');
         } else {
-            sliderAction();
+            handleSubmitLike();
+            if (sliderAction) {
+                sliderAction();
+            }
         }
-        e.stopPropagation()
     }
 
     return (
         <Badge
-            badgeContent={`${likes}`}
+            badgeContent={`${item.LikesCount}`}
             color="primary"
             anchorOrigin={{
                 vertical: 'bottom',

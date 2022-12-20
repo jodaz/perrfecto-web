@@ -18,7 +18,7 @@ function favouriteReducer(state, action) {
                     is_searching: false
                 }
             }
-            case 'ADD_FAVORITE': {
+            case 'LOADING': {
                 return {
                     ...state,
                     items: [action.payload, ...state.items],
@@ -73,15 +73,19 @@ async function addFavourite(dispatch, item) {
         })
 
         if (res.status >= 200 && res.status < 300) {
-            dispatch({
-                type: 'ADD_FAVORITE',
-                payload: null
-            })
-            fetchFavourites(dispatch)
+            loadFavorite(dispatch);
+            fetchFavourites(dispatch);
         }
     } catch (e) {
         console.log(e);
     }
+}
+
+async function loadFavorite(dispatch) {
+    dispatch({
+        type: 'LOADING',
+        payload: null
+    })
 }
 
 /**

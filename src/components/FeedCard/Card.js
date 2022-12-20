@@ -13,7 +13,6 @@ import { openGuestWarning, useGuest } from '../../context/GuestContext';
 import ShowCard from '../../components/Modals/ShowCard'
 
 // Icons
-import { ReactComponent as StarIcon } from '../../assets/icons/Star.svg'
 import { ReactComponent as HuesitoIcon } from '../../assets/icons/Huesito.svg'
 import LikeButton from '../Buttons/LikeButton';
 import getUserPhoto from '../../utils/getUserPhoto';
@@ -41,7 +40,7 @@ const Card = ({
     cardElem,
     controls
 }) => {
-    const { LikesCount, publi } = data;
+    const { publi } = data;
     const userPhoto = getUserPhoto(publi.Owner.img_profile);
     const { state: { isAuth } } = useAuth();
     const { dispatch } = useGuest();
@@ -134,7 +133,7 @@ const Card = ({
                             item={data}
                             handleClick={likeAction}
                         />
-                        <LikeButton likes={LikesCount} sliderAction={likeAction} />
+                        <LikeButton sliderAction={likeAction} item={data} />
                     </CardActions>
                     <Box sx={{
                         marginTop: '2rem',

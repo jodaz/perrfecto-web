@@ -7,13 +7,11 @@ import PhotoGallery from '../Modals/ShowCard/PhotoGallery';
 import PublicationDescription from './PublicationDescription';
 import FavouriteButton from '../Buttons/FavouriteButton'
 import LikeButton from '../Buttons/LikeButton'
-import Avatar from '@mui/material/Avatar';
 import { useMediaQuery } from '@mui/material';
 
 const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
 const DogPublication = ({ open, data, handleClose }) => {
-    const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
     const multimedia = getImages(JSON.parse(data.multimedia))
     const ownerPhoto = getUserPhoto(data.publi.Owner.img_profile);
 
@@ -58,10 +56,10 @@ const DogPublication = ({ open, data, handleClose }) => {
                 </Box>
                 <Box sx={{ display: 'flex', width: '100%', mb: 2, ml: 2 }}>
                     <Box sx={{ p: 2 }}>
-                        <FavouriteButton />
+                        <FavouriteButton item={data} />
                     </Box>
                     <Box sx={{ p: 2 }}>
-                        <LikeButton likes={data.LikesCount} />
+                        <LikeButton item={data} />
                     </Box>
                 </Box>
             </Box>
