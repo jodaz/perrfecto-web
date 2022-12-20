@@ -15,7 +15,7 @@ import {
 const Favourites = () => {
     const [openDeleteModal, setOpenDeleteModal] = React.useState(false)
     const [selectedItem, setSelectedItem] = React.useState(null);
-    const { state: { items }, dispatch }= useFavourites();
+    const { state: { items, is_searching }, dispatch }= useFavourites();
 
     const handleOpenDeleteModal = async (data) => {
         setSelectedItem(data);
@@ -53,9 +53,14 @@ const Favourites = () => {
                             data={item}
                         />
                     ))}
-                    {!!!(items.length) && (
+                    {!!(!items.length && !is_searching) && (
                         <Typography variant="body2" color="text.secondary" sx={{ p: 2 }}>
                             Aún no has guardado ninguna publicación.
+                        </Typography>
+                    )}
+                    {!!(is_searching && !items.length) && (
+                        <Typography variant="body2" color="text.secondary" sx={{ p: 2 }}>
+                            Sin resultados.
                         </Typography>
                     )}
                 </Box>

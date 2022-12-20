@@ -4,7 +4,8 @@ import { apiProvider } from '../api'
 const FavouriteContext = React.createContext()
 
 const initialState = {
-    items: [null]
+    items: [null],
+    is_searching: false
 }
 
 function favouriteReducer(state, action) {
@@ -13,25 +14,29 @@ function favouriteReducer(state, action) {
             case 'FETCH_FAVORITES': {
                 return {
                     ...state,
-                    items: action.payload
+                    items: action.payload,
+                    is_searching: false
                 }
             }
             case 'ADD_FAVORITE': {
                 return {
                     ...state,
                     items: [action.payload, ...state.items],
+                    is_searching: false
                 }
             }
             case 'SEARCH_FAVORITE': {
                 return {
                     ...state,
-                    items: state.items.filter(item => item.Ad.publi.name.match(action.payload))
+                    items: state.items.filter(item => item.Ad.publi.name.match(action.payload)),
+                    is_searching: true
                 }
             }
             case 'DELETE_FAVORITE': {
                 return {
                     ...state,
                     items: state.items.filter(({ id }) => id != action.payload.id),
+                    is_searching: false
                 }
             }
             default: {
