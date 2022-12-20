@@ -13,11 +13,11 @@ import { openGuestWarning, useGuest } from '../../context/GuestContext';
 import ShowCard from '../../components/Modals/ShowCard'
 
 // Icons
-import { ReactComponent as StarIcon } from '../../assets/icons/Star.svg'
 import { ReactComponent as HuesitoIcon } from '../../assets/icons/Huesito.svg'
 import LikeButton from '../Buttons/LikeButton';
 import getUserPhoto from '../../utils/getUserPhoto';
 import PublicationDescription from './PublicationDescription';
+import FavouriteButton from '../Buttons/FavouriteButton';
 
 const guestMessages = {
     'message': 'enviar un mensaje',
@@ -40,12 +40,12 @@ const Card = ({
     cardElem,
     controls
 }) => {
-    const { LikesCount, Dog } = data;
-    const userPhoto = getUserPhoto(Dog.Owner.img_profile);
+    const { publi } = data;
+    const userPhoto = getUserPhoto(publi.Owner.img_profile);
     const { state: { isAuth } } = useAuth();
     const { dispatch } = useGuest();
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
-    const photoSrc = getUserPhoto(JSON.parse(Dog.dogPhotos)[0])
+    const photoSrc = getUserPhoto(JSON.parse(publi.dogPhotos)[0])
 
     const action = (message) => {
         if (!isAuth && message != 'descartar') {
@@ -76,7 +76,7 @@ const Card = ({
                 position: 'absolute',
                 top: isSmall ? '-40px' : '-50px',
                 left: 0,
-                zIndex: 1000
+                zIndex: 1
             }}>
                 <Avatar sx={{
                     width: isSmall ? '50px' : '70px',
@@ -85,7 +85,7 @@ const Card = ({
                     border: '2px solid #F59E0B'
                 }} src={userPhoto} />
                 <Typography gutterBottom variant={isSmall ? 'body1' : "h5"} component="div">
-                    {Dog.Owner.name}
+                    {publi.Owner.name}
                 </Typography>
             </Box>
             <MuiCard sx={{
@@ -129,24 +129,18 @@ const Card = ({
                         }}>
                             <HuesitoIcon />
                         </IconButton>
-                        <IconButton sx={{
-                            background: '#fff',
-                            boxShadow: '0px 2px 5px rgba(51, 51, 51, 0.15)'
-                        }} onClick={e => {
-                            action(guestMessages.favourite, 'fav')
-                            discardAction()
-                            e.stopPropagation();
-                        }}>
-                            <StarIcon />
-                        </IconButton>
-                        <LikeButton likes={LikesCount} sliderAction={likeAction} />
+                        <FavouriteButton
+                            item={data}
+                            handleClick={likeAction}
+                        />
+                        <LikeButton sliderAction={likeAction} item={data} />
                     </CardActions>
                     <Box sx={{
                         marginTop: '2rem',
                         textAlign: 'center'
                     }}>
                         <Typography variant="h5" color="text.primary">
-                            {Dog.name}
+                            {publi.name}
                         </Typography>
                         <Box sx={{
                             display: 'flex',
@@ -158,9 +152,9 @@ const Card = ({
                                 color="text.secondary"
                                 dotColor="text"
                                 dogAge={data.dogAge}
-                                breed={data.Dog.breed}
-                                province={data.Dog.Owner.provice}
-                                city={data.Dog.Owner.city}
+                                breed={data.publi.breed}
+                                province={data.publi.Owner.provice}
+                                city={data.publi.Owner.city}
                             />
                         </Box>
                     </Box>
