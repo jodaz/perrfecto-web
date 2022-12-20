@@ -10,7 +10,7 @@ const initialState = {
 function favouriteReducer(state, action) {
     if (action) {
         switch (action.type) {
-            case 'FETCH_FAVOURITES': {
+            case 'FETCH_FAVORITES': {
                 return {
                     ...state,
                     items: action.payload
@@ -22,7 +22,13 @@ function favouriteReducer(state, action) {
                     items: [action.payload, ...state.items],
                 }
             }
-            case 'DELETE_FAVOURITE': {
+            case 'SEARCH_FAVORITE': {
+                return {
+                    ...state,
+                    items: state.items.filter(item => item.Ad.publi.name.match(action.payload))
+                }
+            }
+            case 'DELETE_FAVORITE': {
                 return {
                     ...state,
                     items: state.items.filter(({ id }) => id != action.payload.id),
@@ -76,7 +82,7 @@ async function addFavourite(dispatch, item) {
 /**
  * Delete favourite
  * @param {*} dispatch function
- * @param {*} index inside array
+ * @param {*} item inside array
  */
 async function deleteFavourite(dispatch, item) {
     try {
@@ -84,7 +90,7 @@ async function deleteFavourite(dispatch, item) {
 
         if (res.status >= 200 && res.status < 300) {
             dispatch({
-                type: 'DELETE_FAVOURITE',
+                type: 'DELETE_FAVORITE',
                 payload: item
             })
         }
@@ -103,12 +109,27 @@ async function fetchFavourites(dispatch) {
             const { data: { data } } = res;
 
             dispatch({
-                type: 'FETCH_FAVOURITES',
+                type: 'FETCH_FAVORITES',
                 payload: data
             })
         }
     } catch (e) {
         console.log(e);
+    }
+}
+
+async function searchFavourites(dispatch, search) {
+    try {
+        if (search) {
+            dispatch({
+                type: 'SEARCH_FAVORITE',
+                payload: search
+            })
+        } else {
+            fetchFavourites(dispatch);
+        }
+    } catch (e) {
+        console.log(e)
     }
 }
 
@@ -118,5 +139,6 @@ export {
     deleteFavourite,
     FavouriteContext,
     addFavourite,
+    searchFavourites,
     fetchFavourites
 }
