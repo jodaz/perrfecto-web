@@ -7,22 +7,16 @@ import { Trash2 } from 'lucide-react';
 import Stack from '@mui/material/Stack';
 import { apiProvider } from '../../../api'
 import { alpha } from '@mui/material';
+import { deleteFavourite, useFavourites } from '../../../context/FavouriteContext';
 
-const DeleteFavourite = ({ open, handleClose, item, handleDelete }) => {
+const DeleteFavourite = ({ open, handleClose, item }) => {
     const [onSubmit, setOnSubmit] = React.useState(false);
+    const { dispatch } = useFavourites();
 
-    const submitDelete = async () => {
+    const handleDelete = async () => {
         setOnSubmit(true);
-        try {
-            const res = await apiProvider.delete(`api/fav/${item.id}`)
-
-            if (res.status >= 200 && res.status < 300) {
-                handleDelete(item);
-                handleClose();
-            }
-        } catch (error) {
-            console.log("error ", error)
-        }
+        await deleteFavourite(dispatch, item)
+        handleClose();
         setOnSubmit(false)
     }
 
@@ -57,7 +51,7 @@ const DeleteFavourite = ({ open, handleClose, item, handleDelete }) => {
                         ¿Estás seguro que deseas eliminar a “{item.Ad.publi.name}” de favoritos?
                     </Typography>
                     <Stack direction="column">
-                        <Button color="error" disabled={onSubmit} onClick={submitDelete}>
+                        <Button color="error" disabled={onSubmit} onClick={handleDelete}>
                             Eliminar favorit@
                         </Button>
                         <Button onClick={handleClose} disabled={onSubmit} sx={{

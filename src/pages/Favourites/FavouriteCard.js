@@ -3,7 +3,6 @@ import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Skeleton from "@mui/material/Skeleton";
-import vars from '../../vars'
 import CircleIcon from '@mui/icons-material/FiberManualRecord';
 import Menu from '../../components/Menu';
 import { Trash2 } from 'lucide-react';

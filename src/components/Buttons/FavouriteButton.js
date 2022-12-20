@@ -4,24 +4,15 @@ import { useAuth } from '../../context/AuthContext';
 import { openGuestWarning, useGuest } from '../../context/GuestContext';
 // Icons
 import { ReactComponent as StarIcon } from '../../assets/icons/Star.svg'
-import { apiProvider } from '../../api';
+import { useFavourites, addFavourite } from '../../context/FavouriteContext';
 
 const FavouriteButton = ({ item, handleClick }) => {
     const { state: { isAuth } } = useAuth();
     const { dispatch } = useGuest();
+    const { dispatch: dispatchFavourite } = useFavourites()
 
-    const submitLike = async (e) => {
-        try {
-            const res = await apiProvider.post(`api/fav/new`, {
-                ad_id: item.id
-            })
-
-            if (res.status >= 200 && res.status < 300) {
-                // const { data: { data } } = res;
-            }
-        } catch (error) {
-            console.log("error ", error)
-        }
+    const submitLike = async () => {
+        addFavourite(dispatchFavourite, item);
         handleClick();
     }
 
