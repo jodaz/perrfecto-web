@@ -9,7 +9,7 @@ const ProfileToolbar = ({ title }) => {
     const navigate = useNavigate();
 
     return (
-        <Box sx={{ flex: 1 }}>
+        <Box width='100%'>
             <Toolbar sx={{
                 width: '100%',
                 p: '0 !important',
