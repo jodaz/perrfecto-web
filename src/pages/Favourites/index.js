@@ -28,7 +28,7 @@ const Favourites = () => {
     }
 
     React.useEffect(() => {
-        if (!items.length) {
+        if (items.length < 2) {
             fetchFavourites(dispatch)
         }
     }, []);

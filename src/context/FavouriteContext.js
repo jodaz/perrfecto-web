@@ -16,6 +16,12 @@ function favouriteReducer(state, action) {
                     items: action.payload
                 }
             }
+            case 'ADD_FAVORITE': {
+                return {
+                    ...state,
+                    items: [action.payload, ...state.items],
+                }
+            }
             case 'DELETE_FAVOURITE': {
                 return {
                     ...state,
@@ -56,6 +62,10 @@ async function addFavourite(dispatch, item) {
         })
 
         if (res.status >= 200 && res.status < 300) {
+            dispatch({
+                type: 'ADD_FAVORITE',
+                payload: null
+            })
             fetchFavourites(dispatch)
         }
     } catch (e) {
@@ -86,11 +96,6 @@ async function deleteFavourite(dispatch, item) {
 }
 
 async function fetchFavourites(dispatch) {
-    dispatch({
-        type: 'FETCH_FAVOURITES',
-        payload: [null]
-    })
-
     try {
         const res = await apiProvider.get('api/fav/fav-user')
 
