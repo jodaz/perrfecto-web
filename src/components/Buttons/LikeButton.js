@@ -12,9 +12,13 @@ const LikeButton = ({ item, sliderAction }) => {
     const { dispatch } = useGuest();
 
     const handleSubmitLike = async () => {
-        const res = await apiProvider.post('/api/publication/like', {
-            ad_id: item.id
-        })
+        try {
+            const res = await apiProvider.post('/api/publication/like', {
+                ad_id: item.id
+            })
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     const action = e => {
