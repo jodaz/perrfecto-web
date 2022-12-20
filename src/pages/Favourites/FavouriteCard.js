@@ -5,13 +5,16 @@ import Typography from '@mui/material/Typography';
 import Skeleton from "@mui/material/Skeleton";
 import vars from '../../vars'
 import CircleIcon from '@mui/icons-material/FiberManualRecord';
+import Menu from '../../components/Menu';
+import { Trash2 } from 'lucide-react';
 
 const getYearsSince = year => new Date().getUTCFullYear() - year
 
 const FavouriteCard = ({
     rootRef,
     data,
-    index
+    index,
+    handleDelete
 }) => {
     const loading = data != null;
     const dogAge = 2020;
@@ -91,7 +94,15 @@ const FavouriteCard = ({
                     )}
                 </Box>
                 <Box>
-                    {/* {(visible) && <ChatMenu chat={data} />} */}
+                    <Menu>
+                        <Box sx={{
+                            display: 'flex',
+                            alignItems: 'center'
+                        }} onClick={() => handleDelete("uno")}>
+                            <Trash2 />
+                            <Box sx={{ paddingLeft: '0.5rem' }}>Eliminar favorito</Box>
+                        </Box>
+                    </Menu>
                 </Box>
             </Box>
         </Box>
