@@ -1,15 +1,22 @@
 import * as React from 'react'
 import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import Skeleton from "@mui/material/Skeleton";
 import vars from '../../vars'
+import CircleIcon from '@mui/icons-material/FiberManualRecord';
+
+const getYearsSince = year => new Date().getUTCFullYear() - year
 
 const FavouriteCard = ({
     rootRef,
     data,
     index
 }) => {
-    const loading = data == null;
+    const loading = data != null;
+    const dogAge = 2020;
+    const city = 'Carupano';
+    const province = 'Sucre';
     const anchorRef = React.useRef(null)
 
     return (
@@ -51,9 +58,9 @@ const FavouriteCard = ({
                             style={{ marginBottom: 6 }}
                         />
                     ) : (
-                        <Box>
+                        <Typography variant="subtitle1" fontWeight={500}>
                             name
-                        </Box>
+                        </Typography>
                     )}
                     {loading ? (
                         <Skeleton
@@ -63,9 +70,23 @@ const FavouriteCard = ({
                             style={{ marginBottom: 6 }}
                         />
                     ) : (
-                        <Box>
-                            Último mensaje
-                            12 minutos
+                        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                            {(dogAge) && (
+                                <Typography color='text.tertiary'>
+                                    {getYearsSince(dogAge)} años
+                                </Typography>
+                            )}
+                            {(province && city) && (
+                                <>
+                                    <Box sx={{ fontSize: '6px', padding: '0 6px', color: '#858585' }}>
+                                        <CircleIcon fontSize='inherit' />
+                                    </Box>
+                                    <Typography color='text.tertiary'>
+                                        {province},&nbsp;
+                                        {city}
+                                    </Typography>
+                                </>
+                            )}
                         </Box>
                     )}
                 </Box>
