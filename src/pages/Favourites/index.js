@@ -6,6 +6,7 @@ import FavouriteCard from './FavouriteCard';
 import { apiProvider } from '../../api';
 import DeleteFavourite from '../../components/Modals/DeleteFavourite';
 import { Typography } from '@mui/material';
+import FavouriteSearchBox from './FavouriteSearchBox';
 
 const Favourites = () => {
     const [favourites, setFavourites] = React.useState([null]);
@@ -51,11 +52,7 @@ const Favourites = () => {
                 flexDirection: 'column'
             }}>
                 <ProfileToolbar title='Favoritos' />
-                <Box sx={{
-                    height: '4vh'
-                }}>
-
-                </Box>
+                <FavouriteSearchBox />
                 <Box sx={{
                     display: 'flex',
                     flexDirection: 'column'

@@ -9,7 +9,10 @@ import { apiProvider } from '../../../api'
 import { alpha } from '@mui/material';
 
 const DeleteFavourite = ({ open, handleClose, item, handleDelete }) => {
+    const [onSubmit, setOnSubmit] = React.useState(false);
+
     const submitDelete = async () => {
+        setOnSubmit(true);
         try {
             const res = await apiProvider.delete(`api/fav/${item.id}`)
 
@@ -20,12 +23,19 @@ const DeleteFavourite = ({ open, handleClose, item, handleDelete }) => {
         } catch (error) {
             console.log("error ", error)
         }
+        setOnSubmit(false)
     }
 
     if (!open) return null;
 
     return (
-        <InstagramModal handleClose={handleClose} open={open}>
+        <InstagramModal
+            handleClose={() => {
+                handleClose()
+                setOnSubmit(false)
+            }}
+            open={open}
+        >
             <Box sx={{
                 display: 'flex',
                 justifyContent: 'space-between',
@@ -47,10 +57,10 @@ const DeleteFavourite = ({ open, handleClose, item, handleDelete }) => {
                         ¿Estás seguro que deseas eliminar a “{item.Ad.publi.name}” de favoritos?
                     </Typography>
                     <Stack direction="column">
-                        <Button color="error" onClick={submitDelete}>
+                        <Button color="error" disabled={onSubmit} onClick={submitDelete}>
                             Eliminar favorit@
                         </Button>
-                        <Button onClick={handleClose} sx={{
+                        <Button onClick={handleClose} disabled={onSubmit} sx={{
                             color: '#858585',
                             '&:hover': {
                                 backgroundColor: `${alpha('#858585', 0.1)}`

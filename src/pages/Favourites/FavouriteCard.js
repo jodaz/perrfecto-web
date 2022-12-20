@@ -93,19 +93,21 @@ const FavouriteCard = ({
                         </Box>
                     )}
                 </Box>
-                <Box>
-                    <Menu>
-                        <Box sx={{
-                            display: 'flex',
-                            alignItems: 'center'
-                        }} onClick={() => handleDelete(data)}>
-                            <Trash2 />
-                            <Box sx={{ paddingLeft: '0.5rem' }}>
-                                Eliminar favorito
+                {!!!loading && (
+                    <Box>
+                        <Menu>
+                            <Box sx={{
+                                display: 'flex',
+                                alignItems: 'center'
+                            }} onClick={() => handleDelete(data)}>
+                                <Trash2 />
+                                <Box sx={{ paddingLeft: '0.5rem' }}>
+                                    Eliminar favorito
+                                </Box>
                             </Box>
-                        </Box>
-                    </Menu>
-                </Box>
+                        </Menu>
+                    </Box>
+                )}
             </Box>
         </Box>
     );
