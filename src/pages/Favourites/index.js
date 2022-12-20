@@ -5,9 +5,10 @@ import ProfileToolbar from '../../components/ProfileToolbar';
 import FavouriteCard from './FavouriteCard';
 import { apiProvider } from '../../api';
 import DeleteFavourite from '../../components/Modals/DeleteFavourite';
+import { Typography } from '@mui/material';
 
 const Favourites = () => {
-    const [favourites, setFavourites] = React.useState([]);
+    const [favourites, setFavourites] = React.useState([null]);
     const [openDeleteModal, setOpenDeleteModal] = React.useState(false)
     const [selectedItem, setSelectedItem] = React.useState(null);
 
@@ -35,6 +36,10 @@ const Favourites = () => {
         setOpenDeleteModal(false)
     }
 
+    const handleDelete = item => {
+        setFavourites(favourites.filter(({ id }) => id != item.id))
+    }
+
     React.useEffect(() => { fetchPublications() }, []);
 
     return (
@@ -55,12 +60,23 @@ const Favourites = () => {
                     display: 'flex',
                     flexDirection: 'column'
                 }}>
-                    <FavouriteCard handleDelete={handleOpenDeleteModal} />
+                    {favourites.map(item => (
+                        <FavouriteCard
+                            handleDelete={handleOpenDeleteModal}
+                            data={item}
+                        />
+                    ))}
+                    {!!!(favourites.length) && (
+                        <Typography variant="body2" color="text.secondary" sx={{ p: 2 }}>
+                            Aún no has guardado ninguna publicación.
+                        </Typography>
+                    )}
                 </Box>
                 <DeleteFavourite
                     open={openDeleteModal}
                     handleClose={handleCloseDeleteModal}
                     item={selectedItem}
+                    handleDelete={handleDelete}
                 />
             </Box>
         </Slide>

@@ -8,18 +8,21 @@ import Stack from '@mui/material/Stack';
 import { apiProvider } from '../../../api'
 import { alpha } from '@mui/material';
 
-const DeleteFavourite = ({ open, handleClose, item }) => {
+const DeleteFavourite = ({ open, handleClose, item, handleDelete }) => {
     const submitDelete = async () => {
         try {
             const res = await apiProvider.delete(`api/fav/${item.id}`)
 
             if (res.status >= 200 && res.status < 300) {
-                const { data: { data } } = res;
+                handleDelete(item);
+                handleClose();
             }
         } catch (error) {
             console.log("error ", error)
         }
     }
+
+    if (!open) return null;
 
     return (
         <InstagramModal handleClose={handleClose} open={open}>
@@ -41,8 +44,7 @@ const DeleteFavourite = ({ open, handleClose, item }) => {
                 </Box>
                 <Box sx={{ p: 1 }}>
                     <Typography variant="body2" gutterBottom>
-                        ¿Estás seguro que deseas eliminar a “Dog” de favoritos?
-                        {/* ¿Estás seguro que deseas eliminar a “${item.publi.name}” de favoritos? */}
+                        ¿Estás seguro que deseas eliminar a “{item.Ad.publi.name}” de favoritos?
                     </Typography>
                     <Stack direction="column">
                         <Button color="error" onClick={submitDelete}>

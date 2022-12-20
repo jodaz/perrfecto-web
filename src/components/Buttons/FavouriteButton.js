@@ -4,18 +4,33 @@ import { useAuth } from '../../context/AuthContext';
 import { openGuestWarning, useGuest } from '../../context/GuestContext';
 // Icons
 import { ReactComponent as StarIcon } from '../../assets/icons/Star.svg'
+import { apiProvider } from '../../api';
 
-const FavouriteButton = () => {
+const FavouriteButton = ({ item, handleClick }) => {
     const { state: { isAuth } } = useAuth();
     const { dispatch } = useGuest();
 
+    const submitLike = async (e) => {
+        try {
+            const res = await apiProvider.post(`api/fav/new`, {
+                ad_id: item.id
+            })
+
+            if (res.status >= 200 && res.status < 300) {
+                // const { data: { data } } = res;
+            }
+        } catch (error) {
+            console.log("error ", error)
+        }
+        handleClick();
+    }
+
     const action = e => {
-        console.log(e.target)
-        console.log(e.currentTarget)
         if (!isAuth) {
             openGuestWarning(dispatch, 'guardar un anuncio');
         } else {
-            console.log("Like");
+            submitLike()
+            e.stopPropagation();
         }
     }
 
@@ -23,7 +38,7 @@ const FavouriteButton = () => {
         <IconButton sx={{
             background: '#fff',
             boxShadow: '0px 2px 5px rgba(51, 51, 51, 0.15)'
-        }} onClick={action}>
+        }} onClick={e => action(e)}>
             <StarIcon />
         </IconButton>
     );

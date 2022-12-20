@@ -18,6 +18,7 @@ import { ReactComponent as HuesitoIcon } from '../../assets/icons/Huesito.svg'
 import LikeButton from '../Buttons/LikeButton';
 import getUserPhoto from '../../utils/getUserPhoto';
 import PublicationDescription from './PublicationDescription';
+import FavouriteButton from '../Buttons/FavouriteButton';
 
 const guestMessages = {
     'message': 'enviar un mensaje',
@@ -129,16 +130,10 @@ const Card = ({
                         }}>
                             <HuesitoIcon />
                         </IconButton>
-                        <IconButton sx={{
-                            background: '#fff',
-                            boxShadow: '0px 2px 5px rgba(51, 51, 51, 0.15)'
-                        }} onClick={e => {
-                            action(guestMessages.favourite, 'fav')
-                            discardAction()
-                            e.stopPropagation();
-                        }}>
-                            <StarIcon />
-                        </IconButton>
+                        <FavouriteButton
+                            item={data}
+                            handleClick={likeAction}
+                        />
                         <LikeButton likes={LikesCount} sliderAction={likeAction} />
                     </CardActions>
                     <Box sx={{

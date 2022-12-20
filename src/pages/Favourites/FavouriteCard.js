@@ -7,6 +7,7 @@ import vars from '../../vars'
 import CircleIcon from '@mui/icons-material/FiberManualRecord';
 import Menu from '../../components/Menu';
 import { Trash2 } from 'lucide-react';
+import getUserPhoto from '../../utils/getUserPhoto';
 
 const getYearsSince = year => new Date().getUTCFullYear() - year
 
@@ -16,10 +17,9 @@ const FavouriteCard = ({
     index,
     handleDelete
 }) => {
-    const loading = data != null;
-    const dogAge = 2020;
-    const city = 'Carupano';
-    const province = 'Sucre';
+    const loading = data == null;
+    const publi = !loading ? data.Ad.publi : null;
+    const photo = !loading ? JSON.parse(data.Ad.multimedia)[0] : null;
     const anchorRef = React.useRef(null)
 
     return (
@@ -44,7 +44,7 @@ const FavouriteCard = ({
                         />
                     ) : (
                         <Box>
-                            <Avatar src={`${vars.SOURCE}/${data}`} />
+                            <Avatar src={`${getUserPhoto(photo)}`} />
                         </Box>
                     )}
                 </Box>
@@ -62,7 +62,7 @@ const FavouriteCard = ({
                         />
                     ) : (
                         <Typography variant="subtitle1" fontWeight={500}>
-                            name
+                            {publi.name}
                         </Typography>
                     )}
                     {loading ? (
@@ -74,19 +74,19 @@ const FavouriteCard = ({
                         />
                     ) : (
                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                            {(dogAge) && (
+                            {(publi.dogAge) && (
                                 <Typography color='text.tertiary'>
-                                    {getYearsSince(dogAge)} años
+                                    {getYearsSince(publi.dogAge)} años
                                 </Typography>
                             )}
-                            {(province && city) && (
+                            {(publi.Owner.province && publi.Owner.city) && (
                                 <>
                                     <Box sx={{ fontSize: '6px', padding: '0 6px', color: '#858585' }}>
                                         <CircleIcon fontSize='inherit' />
                                     </Box>
                                     <Typography color='text.tertiary'>
-                                        {province},&nbsp;
-                                        {city}
+                                        {publi.Owner.province},&nbsp;
+                                        {publi.Owner.city}
                                     </Typography>
                                 </>
                             )}
@@ -98,9 +98,11 @@ const FavouriteCard = ({
                         <Box sx={{
                             display: 'flex',
                             alignItems: 'center'
-                        }} onClick={() => handleDelete("uno")}>
+                        }} onClick={() => handleDelete(data)}>
                             <Trash2 />
-                            <Box sx={{ paddingLeft: '0.5rem' }}>Eliminar favorito</Box>
+                            <Box sx={{ paddingLeft: '0.5rem' }}>
+                                Eliminar favorito
+                            </Box>
                         </Box>
                     </Menu>
                 </Box>
