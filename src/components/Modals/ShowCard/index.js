@@ -10,7 +10,8 @@ const ShowCard = ({
     open,
     handleClose,
     photo,
-    name
+    name,
+    handleOpen
 }) => {
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
 
@@ -25,8 +26,10 @@ const ShowCard = ({
                 position: 'absolute',
                 top: isSmall ? '-40px' : '-50px',
                 left: 0,
-                zIndex: 1000
-            }}>
+                zIndex: 1000,
+                color: '#fff',
+                cursor: 'pointer'
+            }} onClick={handleOpen}>
                 <Avatar sx={{
                     width: isSmall ? '50px' : '70px',
                     height: isSmall ? '50px' : '70px',

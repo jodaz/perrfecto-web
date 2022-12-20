@@ -7,11 +7,10 @@ import PhotoGallery from '../Modals/ShowCard/PhotoGallery';
 import PublicationDescription from './PublicationDescription';
 import FavouriteButton from '../Buttons/FavouriteButton'
 import LikeButton from '../Buttons/LikeButton'
-import { useMediaQuery } from '@mui/material';
 
 const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
-const DogPublication = ({ open, data, handleClose }) => {
+const DogPublication = ({ open, data, handleClose, handleOpenOwnerCard }) => {
     const multimedia = getImages(JSON.parse(data.multimedia))
     const ownerPhoto = getUserPhoto(data.publi.Owner.img_profile);
 
@@ -23,6 +22,7 @@ const DogPublication = ({ open, data, handleClose }) => {
             handleClose={handleClose}
             photo={ownerPhoto}
             name={data.publi.Owner.name}
+            handleOpen={handleOpenOwnerCard}
         >
             <Box sx={{ flex: 1, height: 400, width: 400 }}>
                 <PhotoGallery images={multimedia} />

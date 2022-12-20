@@ -6,17 +6,16 @@ import Stack from './Stack';
 import { CircularProgress, useMediaQuery } from '@mui/material';
 import ContactDialog from '../../../components/Modals/ContactDialog';
 import DogPublication from '../../../components/FeedCard/DogPublication'
-import getSearchParams from '../../../utils/getSearchParams';
-import { useLocation, useNavigate } from 'react-router-dom';
+import OwnerPublication from '../../../components/FeedCard/OwnerPublication';
 const PopularMembers = React.lazy(() => import('../../../components/PopularMembers'));
 
 const UsersHome = () => {
-    const location = useLocation();
-    const navigate = useNavigate();
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
     const [cards, setCards] = React.useState([])
     const [selectedCard, setSelectedCard] = React.useState(null);
     const [openDogCard, setOpenDogCard] = React.useState(false)
+    const [openOwnerCard, setOpenOwnerCard] = React.useState(false)
+    const [openContactDialog, setOpenContactDialog] = React.useState(false)
 
     const fetchPublications = async () => {
         try {
@@ -37,7 +36,17 @@ const UsersHome = () => {
         setOpenDogCard(true)
     }
 
+    const handleOpenOwnerCard = () => {
+        setOpenOwnerCard(true)
+    }
+
+    const handleOpenContactDialog = () => {
+        setOpenContactDialog(true)
+    }
+
     const handleCloseCard = () => {
+        setOpenContactDialog(false)
+        setOpenOwnerCard(false)
         setOpenDogCard(false)
         setSelectedCard(null);
     }
@@ -103,6 +112,22 @@ const UsersHome = () => {
                     data={selectedCard}
                     handleClose={() => handleCloseCard()}
                     open={openDogCard}
+                    handleOpenOwnerCard={handleOpenOwnerCard}
+                />
+            )}
+            {openOwnerCard && (
+                <OwnerPublication
+                    data={selectedCard}
+                    handleClose={() => handleCloseCard()}
+                    open={openOwnerCard}
+                    handleOpenContactDialog={handleOpenContactDialog}
+                />
+            )}
+            {openContactDialog && (
+                <ContactDialog
+                    data={selectedCard}
+                    handleClose={() => handleCloseCard()}
+                    open={openContactDialog}
                 />
             )}
         </Box>

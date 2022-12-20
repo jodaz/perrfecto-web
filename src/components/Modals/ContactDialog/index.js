@@ -6,11 +6,10 @@ import { Phone } from 'lucide-react';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import InstagramModal from '../InstagramModal';
+import getUserPhoto from '../../../utils/getUserPhoto';
 
-const ContactDialog = () => {
-    const [open, setOpen] = React.useState(true)
-
-    const handleClose = () => setOpen(false)
+const ContactDialog = ({ data, handleClose, open }) => {
+    const dogPhoto = getUserPhoto(JSON.parse(data.multimedia)[0]);
 
     return (
         <InstagramModal handleClose={handleClose} open={open}>
@@ -29,9 +28,7 @@ const ContactDialog = () => {
                     border: '2px solid #F59E0B',
                     height: '85px',
                     width: '85px'
-                }}
-                    src={`/images/samples/Pupi.png`}
-                />
+                }} src={dogPhoto} />
                 <Box sx={{ p: 2 }}>
                     <Typography
                         color="text.primary"
@@ -55,6 +52,8 @@ const ContactDialog = () => {
                                 variant="contained"
                                 color="info"
                                 fullWidth
+                                target='_blank'
+                                href={`tel:+${data.publi.Owner.code_phone}${data.publi.Owner.phone}`}
                             >
                                 <Phone /> Llamar
                             </Button>
@@ -63,6 +62,8 @@ const ContactDialog = () => {
                             <Button
                                 variant="contained"
                                 color="success"
+                                target='_blank'
+                                href={`https://wa.me/${data.publi.Owner.code_phone}${data.publi.Owner.phone}`}
                                 fullWidth
                             >
                                 <WhatsApp /> Whatsapp
