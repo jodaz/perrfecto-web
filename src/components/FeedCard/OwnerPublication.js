@@ -14,7 +14,7 @@ const OwnerPublication = ({ open, data, handleClose, handleOpenContactDialog }) 
     const city = 'Sevilla'
     const years = 26
     const multimedia = [getUserPhoto(data.publi.Owner.img_profile)]
-    const dogPhoto = getUserPhoto(JSON.parse(data.multimedia)[0]);
+    const dogPhoto = getUserPhoto(JSON.parse(data.publi.dogPhotos)[0]);
 
     if (!open) return null
 
