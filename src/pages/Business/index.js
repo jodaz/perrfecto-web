@@ -13,12 +13,13 @@ const Business = () => {
 
     return (
         <Box sx={{
-            height: '100vh',
+            height: '100%',
             transition: 'all 0.3s ease-out 0s',
             position: 'relative',
             display: 'flex',
             justifyContent: 'center',
-            alignItems: matches ? 'end' : 'center',
+            alignItems: 'center',
+            paddingTop: matches ? '4rem' : '6rem',
             background: 'linear-gradient(0deg, rgba(161, 103, 201, 0.1), rgba(161, 103, 201, 0.1)), #FFFFFF;'
         }}>
             <Box sx={{
@@ -44,7 +45,8 @@ const Business = () => {
                     <Box sx={{
                         position: 'relative',
                         height: '350px',
-                        width: '100%'
+                        width: `${matches ? 225 : 250}px`,
+                        margin: '0 auto'
                     }}>
                         <Box component='div' sx={{
                             background: `url(${Dog1}) no-repeat center center`,
@@ -55,7 +57,8 @@ const Business = () => {
                             top: 0,
                             left: 0,
                             zIndex: 1
-                        }} />
+                        }}>
+
                         <Box component='div' sx={{
                             background: `url(${Dog2}) no-repeat center center`,
                             height: matches ? '200px' : '250px',
@@ -66,6 +69,7 @@ const Business = () => {
                             left: matches ? '40%' : '50%',
                             zIndex: 10
                         }} />
+                        </Box>
                     </Box>
                     <Box sx={{ p: 1 }}>
                         <Button variant="contained" component={LinkBehavior} to="register">
