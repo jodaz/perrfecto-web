@@ -21,14 +21,11 @@ const SwiperSlideStyled = styled(SwiperSlide)(() => ({
 
 const PhotoGallery = ({ images }) => (
     <SwiperStyled
-        slidesPerView={1}
-        spaceBetween={30}
-        loop={true}
         pagination={{
             clickable: true,
+            dynamicBullets: true,
         }}
-        navigation={images.length > 1}
-        modules={[Pagination, Navigation]}
+        modules={[Pagination]}
     >
         {images.map((image, index) => (
             <SwiperSlideStyled key={index}>

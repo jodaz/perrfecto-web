@@ -12,10 +12,10 @@ const FavouriteButton = ({ item, handleClick }) => {
     const { dispatch: dispatchFavourite } = useFavourites()
 
     const action = async e => {
+        e.stopPropagation();
         if (!isAuth) {
             openGuestWarning(dispatch, 'guardar un anuncio');
         } else {
-            e.stopPropagation();
             await addFavourite(dispatchFavourite, item);
             handleClick();
         }

@@ -11,7 +11,7 @@ const GuestWarningModal = () => {
 
     return (
         <InstagramModal
-            onClose={() => closeGuestWarning(dispatch)}
+            handleClose={() => closeGuestWarning(dispatch)}
             open={isOpen}
         >
             <Box sx={{
