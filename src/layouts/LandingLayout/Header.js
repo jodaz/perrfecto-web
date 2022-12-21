@@ -1,29 +1,22 @@
-import * as React from 'react'
-import Box from '@mui/material/Box'
-import { styled } from '@mui/material/styles';
-import { Link, Button } from '@mui/material';
-import LinkBehavior from '../../components/LinkBehavior';
-import useMediaQuery from '@mui/material/useMediaQuery';
+import * as React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import Container from '@mui/material/Container';
+import Button from '@mui/material/Button';
+import Link from '@mui/material/Link';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
+import AdbIcon from '@mui/icons-material/Adb';
 import LanguageButton from './LanguageButton';
 import Logo from '../../components/Logo';
-
-const BoxContainer = styled(Box)(({ theme, color }) => ({
-    display: 'flex',
-    width: '100%',
-    justifyContent: 'space-between',
-    padding: '0 1rem',
-    position: 'fixed',
-    alignItems: 'center',
-    zIndex: 1000,
-    top: 0,
-    left: 0,
-    right: 0,
-    background: !color ? 'transparent' : color,
-    boxShadow: '0px 2px 12px rgba(0, 0, 0, 0.16)',
-    [theme.breakpoints.down('md')]: {
-        justifyContent: 'end'
-    }
-}))
+import { styled } from '@mui/material/styles';
+import LinkBehavior from '../../components/LinkBehavior';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const AnchorTag = styled(Link)(({ theme, dark }) => ({
     textDecoration: 'none',
@@ -56,27 +49,58 @@ const internalLinks = [
     }
 ]
 
-const Header = ({ dark }) => {
+function ResponsiveAppBar({ dark }) {
     const matches = useMediaQuery((theme) => theme.breakpoints.down('md'));
+    const [anchorElNav, setAnchorElNav] = React.useState(null);
+
+    const handleOpenNavMenu = (event) => {
+        setAnchorElNav(event.currentTarget);
+    };
+
+    const handleCloseNavMenu = () => {
+        setAnchorElNav(null);
+    };
+
+    const generateButtons = () => (
+        <>
+            <Box sx={{ p: 1 }}>
+                <LanguageButton dark={dark} />
+            </Box>
+            <Box sx={{ p: 1 }}>
+                <Button
+                    variant="contained"
+                    color={dark ? 'primary' : 'secondary'}
+                    to='/login'
+                    component={LinkBehavior}
+                >
+                    Iniciar sesión
+                </Button>
+            </Box>
+        </>
+    )
 
     return (
-        <BoxContainer
-            component='navbar'
-            color={dark && 'linear-gradient(0deg, rgba(161, 103, 201, 0.1), rgba(161, 103, 201, 0.1)),#FFFFFF'}
+        <AppBar
+            position="fixed"
+            sx={{
+                background: !dark ? 'transparent' : 'linear-gradient(0deg, rgba(161, 103, 201, 0.1), rgba(161, 103, 201, 0.1)),#FFFFFF',
+            }}
         >
-            {!matches && <Logo />}
-            <Box sx={{
-                display: 'flex',
-                fontWeight: '300',
-                fontSize: '1rem',
-                color: '#fff',
-                marginRight: '2rem',
-                listStyle: 'none',
-                alignItems: 'center'
-            }} component='ul'>
-                {!matches && (
-                    <>
-                        {internalLinks.map(link => (
+            <Container maxWidth="xl">
+                <Toolbar disableGutters>
+                    <Logo />
+                    <Box sx={{
+                        flexGrow: 1,
+                        display: { xs: 'none', md: 'flex' },
+                        fontWeight: '300',
+                        fontSize: '1rem',
+                        color: '#fff',
+                        listStyle: 'none',
+                        alignItems: 'center',
+                        justifyContent: 'flex-end',
+                        flex: 1
+                    }}>
+                        {internalLinks.map((link) => (
                             <li>
                                 <AnchorTag
                                     aria-label={link.title}
@@ -88,28 +112,64 @@ const Header = ({ dark }) => {
                                 </AnchorTag>
                             </li>
                         ))}
-                    </>
-                )}
-                <li>
-                    <Box sx={{ marginRight: 2 }}>
-                        <LanguageButton dark={dark} />
                     </Box>
-                </li>
-                <li>
-                    <Box>
-                        <Button
-                            variant="contained"
-                            color={dark ? 'primary' : 'secondary'}
-                            to='/login'
-                            component={LinkBehavior}
-                        >
-                            Iniciar sesión
-                        </Button>
+                    <Box sx={{
+                        display: 'flex',
+                        justifyContent: 'flex-end',
+                        flex: matches ? 1 : 'unset'
+                    }}>
+                        {generateButtons()}
+                        <Box sx={{
+                            display: { xs: 'flex', md: 'none' },
+                            justifyContent: 'flex-end'
+                        }}>
+                            <IconButton
+                                size="large"
+                                aria-label="account of current user"
+                                aria-controls="menu-appbar"
+                                aria-haspopup="true"
+                                onClick={handleOpenNavMenu}
+                                color="inherit"
+                            >
+                                <MenuIcon />
+                            </IconButton>
+                            <Menu
+                                id="menu-appbar"
+                                anchorEl={anchorElNav}
+                                anchorOrigin={{
+                                    vertical: 'bottom',
+                                    horizontal: 'left',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'left',
+                                }}
+                                open={Boolean(anchorElNav)}
+                                onClose={handleCloseNavMenu}
+                                sx={{
+                                    display: { xs: 'block', md: 'none' },
+                                }}
+                            >
+                                {internalLinks.map((link) => (
+                                    <MenuItem>
+                                        <AnchorTag
+                                            aria-label={link.title}
+                                            to={link.link}
+                                            component={LinkBehavior}
+                                            dark={dark || matches}
+                                        >
+                                            {link.title}
+                                        </AnchorTag>
+                                    </MenuItem>
+                                ))}
+                            </Menu>
+                        </Box>
                     </Box>
-                </li>
-            </Box>
-        </BoxContainer>
+                </Toolbar>
+            </Container>
+        </AppBar>
     );
 }
 
-export default Header;
+export default ResponsiveAppBar;
