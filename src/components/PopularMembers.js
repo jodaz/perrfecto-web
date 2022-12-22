@@ -3,6 +3,9 @@ import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, A11y } from 'swiper';
+import { alpha, Typography } from '@mui/material';
+import { Plus } from 'lucide-react';
+import { useMediaQuery } from '@mui/material';
 
 const puppies = [
     {
@@ -52,13 +55,35 @@ const puppies = [
 ]
 
 const PopularMembers = () => {
+    const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
+
     return (
         <Box height='fit-content'>
             <Box sx={{
-                marginBottom: '1rem',
-                color: theme => theme.palette.text.secondary
+                display: 'flex',
+                justifyContent: 'space-between',
+                paddingBottom: 1
             }}>
-                Miembros populares
+                <Typography variant="subtitle" color='text.secondary'>
+                    Miembros populares
+                </Typography>
+                {isSmall && (
+                    <Box sx={{
+                        padding: '5px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        borderRadius: 50,
+                        cursor: 'pointer',
+                        color: '#fff',
+                        background: theme => theme.palette.primary.main,
+                        '& :hover': {
+                            background: theme => `${alpha(theme.palette.primary.main, 0.9)}`
+                        }
+                    }}>
+                        <Plus size={18}/>
+                    </Box>
+                )}
             </Box>
             <Box sx={{
                 width: '100%',
