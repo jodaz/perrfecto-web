@@ -28,6 +28,7 @@ import generateYears from '../../utils/generateYears';
 import ChipArrayInput from '../Forms/ChipArrayInput';
 import AddVaccines from '../../pages/Vaccines/AddVaccines';
 import AddCertificates from '../../pages/certificates/AddCertificates';
+import useEffectOnce from '../../utils/useEffectOnce'
 
 const razas = [
     { value: 1, label: "Bulldog Frances" },
@@ -116,7 +117,7 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
         }
     }
 
-    React.useEffect(() => { fetchFeatures() }, []);
+    useEffectOnce(() => { fetchFeatures() }, []);
 
     const generatePhotoProfile = (isSubmitting) => (
         <Box sx={{

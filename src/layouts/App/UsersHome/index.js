@@ -7,6 +7,7 @@ import { CircularProgress, useMediaQuery } from '@mui/material';
 import ContactDialog from '../../../components/Modals/ContactDialog';
 import DogPublication from '../../../components/FeedCard/DogPublication'
 import OwnerPublication from '../../../components/FeedCard/OwnerPublication';
+import useEffectOnce from '../../../utils/useEffectOnce';
 const PopularMembers = React.lazy(() => import('../../../components/PopularMembers'));
 
 const UsersHome = () => {
@@ -19,6 +20,7 @@ const UsersHome = () => {
 
     const fetchPublications = async () => {
         try {
+            console.log("fetch")
             const res = await apiProvider.get('api/publication/publications')
 
             if (res.status >= 200 && res.status < 300) {
@@ -51,7 +53,7 @@ const UsersHome = () => {
         setSelectedCard(null);
     }
 
-    React.useEffect(() => { fetchPublications() }, []);
+    useEffectOnce(() => { fetchPublications() }, []);
 
     return (
         <Box

@@ -2,8 +2,9 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import { apiProvider } from '../../api';
 import SelectInput from '../../components/Forms/SelectInput';
-import { Button, IconButton, Typography } from '@mui/material';
+import { Button, IconButton } from '@mui/material';
 import { Trash2, Plus } from 'lucide-react';
+import useEffectOnce from '../../utils/useEffectOnce';
 
 const AddVaccines = ({ control }) => {
     const [vaccines, setVaccines] = React.useState([])
@@ -33,7 +34,7 @@ const AddVaccines = ({ control }) => {
         setCounter(prevCounter => prevCounter - 1);
     };
 
-    React.useEffect(() => { fetchVaccines(); }, []);
+    useEffectOnce(() => { fetchVaccines(); }, []);
 
     return (
         <Box sx={{

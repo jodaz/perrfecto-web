@@ -13,6 +13,7 @@ import InterestInput from '../../components/InterestInput';
 import formDataHandler from '../../utils/formDataHandler';
 import PublicationWait from '../../components/Modals/PublicationWait';
 import OverlayLoader from '../../components/Modals/OverlayLoader';
+import useEffectOnce from '../../utils/useEffectOnce'
 
 const CreateAd = () => {
     const [openWarning, setOpenWarning] = React.useState(false)
@@ -58,7 +59,7 @@ const CreateAd = () => {
         }
     }
 
-    React.useEffect(() => { fetchInterests() }, []);
+    useEffectOnce(() => { fetchInterests() }, []);
 
     const handleCloseWarning = () => {
         setOpenWarning(false);
