@@ -8,14 +8,16 @@ import { ReactComponent as DeleteIcon } from '../../assets/icons/Delete.svg'
 import { Controller } from 'react-hook-form'
 import getUserPhoto from '../../utils/getUserPhoto';
 
+const initialState = { preview: '/images/Avatar.svg' }
+
 const Dropzone = ({
     onChange,
     disabled,
     defaultValue,
     handleDelete
 }) => {
-    const [file, setFile] = React.useState({preview: '/images/Avatar.svg' });
-    const { getRootProps, getInputProps } = useDropzone({
+    const [file, setFile] = React.useState(initialState);
+    const { getRootProps, getInputProps, open } = useDropzone({
         accept: {
             'image/*': ['.jpeg', '.jpg', '.png']
         },
@@ -31,6 +33,13 @@ const Dropzone = ({
         },
         disabled: disabled
     })
+
+    const remove = () => {
+        setFile(initialState)
+        if (handleDelete) {
+            handleDelete();
+        }
+    }
 
     const thumbs = () => (
         <Avatar
@@ -110,10 +119,10 @@ const Dropzone = ({
                 position: 'absolute',
                 bottom: 0,
                 right: 0,
-                color: '#fff',
+                color: '#F6F6F6 !important',
                 cursor: 'pointer'
-            }} onClick={handleDelete}>
-                {(file.preview != '/images/Avatar.svg') ? <DeleteIcon /> : <PlusIcon />}
+            }}>
+                {(file.preview != '/images/Avatar.svg') ? <DeleteIcon onClick={remove} /> : <PlusIcon onClick={open} />}
             </Box>
         </Box>
     )

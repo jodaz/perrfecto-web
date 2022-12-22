@@ -7,7 +7,6 @@ const CustomButton = ({
     icon,
     title,
     color,
-    size,
     p = 1,
     sx,
     component,
