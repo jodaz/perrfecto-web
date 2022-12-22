@@ -21,7 +21,7 @@ import { PHONE, EMAIL, PASSWORD } from '../../validations'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
 export default function Login({ location }) {
-    const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'))
+    const isSmall = useMediaQuery((theme) => theme.breakpoints.down('md'))
     const navigate = useNavigate()
     const isPhoneRegister = getSearchParams(location, 'withPhone')
     const [errorAlert, setErrorAlert] = React.useState('')
@@ -233,7 +233,7 @@ export default function Login({ location }) {
                     </Box>
                     <SocialAuth location={location} />
                     <Box sx={{ margin: '0 auto 2rem auto' }}>
-                        ¿Ya tienes una cuenta?
+                        ¿Aún no tienes una cuenta?
                         <Link
                             href="/register"
                             underline="none"
@@ -241,7 +241,7 @@ export default function Login({ location }) {
                             to='/register'
                             sx={{ marginLeft: '0.5rem' }}
                         >
-                            Inicia sesión
+                            Crear cuenta
                         </Link>
                     </Box>
                 </Box>

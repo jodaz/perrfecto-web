@@ -20,7 +20,10 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 
 const AnchorTag = styled(Link)(({ theme, dark }) => ({
     textDecoration: 'none',
-    padding: ' 0 1rem',
+    padding: '0',
+    [theme.breakpoints.up("sm")]: {
+        padding: '0 1rem',
+    },
     fontWeight: '400',
     color: dark ? `${theme.palette.text.primary}` : `${theme.palette.secondary.main}`,
     cursor: 'pointer',
@@ -129,7 +132,7 @@ function ResponsiveAppBar({ dark }) {
                                 aria-controls="menu-appbar"
                                 aria-haspopup="true"
                                 onClick={handleOpenNavMenu}
-                                color="inherit"
+                                color={dark ? 'black' : 'inherit'}
                             >
                                 <MenuIcon />
                             </IconButton>
@@ -152,16 +155,17 @@ function ResponsiveAppBar({ dark }) {
                                 }}
                             >
                                 {internalLinks.map((link) => (
-                                    <MenuItem>
-                                        <AnchorTag
-                                            aria-label={link.title}
-                                            to={link.link}
-                                            component={LinkBehavior}
-                                            dark={dark || matches}
-                                        >
+                                    <AnchorTag
+                                        aria-label={link.title}
+                                        to={link.link}
+                                        component={LinkBehavior}
+                                        dark={dark || matches}
+                                        onClick={handleCloseNavMenu}
+                                    >
+                                        <MenuItem>
                                             {link.title}
-                                        </AnchorTag>
-                                    </MenuItem>
+                                        </MenuItem>
+                                    </AnchorTag>
                                 ))}
                             </Menu>
                         </Box>

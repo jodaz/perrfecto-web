@@ -20,7 +20,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { NAME, LAST_NAME, PHONE, EMAIL, CONFIRM_PASSWORD, PASSWORD } from '../../validations'
 
 export default function SignUp({ location }) {
-    const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+    const isSmall = useMediaQuery((theme) => theme.breakpoints.down('md'));
     const navigate = useNavigate()
     const { dispatch } = useAuth();
     const { control, handleSubmit, setError, watch, formState: {
