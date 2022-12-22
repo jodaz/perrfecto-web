@@ -35,7 +35,8 @@ const Stack = ({ onVote, data, onClick, ...props }) => {
         <>
             <Frame {...props}>
                 {data.map((item, index) => {
-                let isTop = index === stack.length - 1
+                    let isTop = index === stack.length - 1
+
                     return (
                         <FeedCard
                             drag={isTop}

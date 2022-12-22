@@ -77,11 +77,11 @@ const Card = ({
             zIndex: 10
         }}>
             <Box sx={{
-                display: 'hidden',
+                display: 'flex',
                 alignItems: 'center',
                 zIndex: 1,
                 marginBottom: '-1rem',
-                visibility: drag ? 'hidden' : 'none',
+                visibility: !drag ? 'hidden' : 'none',
                 transition: '0.3s'
             }}>
                 <Avatar sx={{
