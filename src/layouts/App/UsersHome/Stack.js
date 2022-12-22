@@ -34,7 +34,7 @@ const Stack = ({ onVote, data, onClick, ...props }) => {
     return (
         <>
             <Frame {...props}>
-                {data.map((item, index) => {
+                {stack.map((item, index) => {
                     let isTop = index === stack.length - 1
 
                     return (

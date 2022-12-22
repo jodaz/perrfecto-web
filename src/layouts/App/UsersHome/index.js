@@ -20,7 +20,6 @@ const UsersHome = () => {
 
     const fetchPublications = async () => {
         try {
-            console.log("fetch")
             const res = await apiProvider.get('api/publication/publications')
 
             if (res.status >= 200 && res.status < 300) {

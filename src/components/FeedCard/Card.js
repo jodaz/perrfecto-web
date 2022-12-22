@@ -171,9 +171,4 @@ const Card = ({
     );
 }
 
-Card.defaultProps = {
-    height: 500,
-    width: 345
-}
-
 export default Card
