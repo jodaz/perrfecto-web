@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import SettingsLayout from '../../layouts/SettingsLayout';
 import { MapPin } from 'lucide-react';
 import { useForm } from "react-hook-form";
-import { useAuth } from '../../context/AuthContext'
+import { useAuth, renewToken } from '../../context/AuthContext'
 import TextInput from '../../components/Forms/TextInput';
 import { apiProvider, fileProvider } from '../../api';
 import AdPhotoInput from '../../components/AdPhotoInput';
@@ -24,7 +24,7 @@ const CreateAd = () => {
     }} = useForm({
         reValidateMode: "onBlur"
     });
-    const { state: { user } } = useAuth();
+    const { state: { user }, dispatch } = useAuth();
     const { dog } = user
     const insterestsValues = watch('interests')
 
@@ -38,6 +38,7 @@ const CreateAd = () => {
             if (res.status >= 200 && res.status < 300) {
                 setOpenWarning(true)
                 setOpenOverlayLoader(false)
+                renewToken(dispatch, user)
             }
         } catch (error) {
             setOpenOverlayLoader(false)

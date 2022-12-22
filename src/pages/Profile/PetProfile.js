@@ -16,6 +16,8 @@ import PhotoInput from '../../components/Forms/PhotoInput';
 import { fileProvider, apiProvider } from '../../api'
 import Photo from '../../components/Photo';
 import formDataHandler from '../../utils/formDataHandler';
+import useEffectOnce from '../../utils/useEffectOnce';
+import MyAds from '../Ad/MyAds';
 
 const RegisterDog = React.lazy(() => import('../../components/RegisterDog'));
 
@@ -63,68 +65,71 @@ const PetProfile = () => {
         }
     }
 
-    React.useEffect(() => {
+    useEffectOnce(() => {
         const subscription = watch(handleSubmit(onSubmit))
 
         return () => subscription.unsubscribe();
     }, [handleSubmit, watch])
 
     return (
-        <Box sx={{ pt: 1, width: '100%', textAlign: 'center', backgroundColor: '#f6f6f6' }}>
-            <BasicTabs />
-            <Box sx={{
-                marginTop: '1rem',
-            }}>
-                <ProfileOptions />
+        <>
+            <Box sx={{ pt: 1, width: '100%', textAlign: 'center', backgroundColor: '#f6f6f6' }}>
+                <BasicTabs />
                 <Box sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    flex: 1,
-                    p: 2
+                    marginTop: '1rem',
                 }}>
-                    {(user.dog) ? (
-                        <PhotoInput
-                            name="files"
-                            control={control}
-                            defaultValue={(user.dog) && getCurrDogPhoto(user.dog.dogPhotos)}
-                            handleDelete={deletePhoto}
+                    <ProfileOptions />
+                    <Box sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        flex: 1,
+                        p: 2
+                    }}>
+                        {(user.dog) ? (
+                            <PhotoInput
+                                name="files"
+                                control={control}
+                                defaultValue={(user.dog) && getCurrDogPhoto(user.dog.dogPhotos)}
+                                handleDelete={deletePhoto}
+                            />
+                        ) : <Photo />}
+                    </Box>
+                    <Box sx={{
+                        display: 'flex',
+                        justifyContent: 'space-around',
+                        flex: 1,
+                        paddingTop: '4rem',
+                        width: 'fit-content',
+                        margin: '0 auto'
+                    }}>
+                        <CustomButton
+                            size={32}
+                            icon={<Newspaper />}
+                            title='Crear publicación'
+                            color="primary"
                         />
-                    ) : <Photo />}
-                </Box>
-                <Box sx={{
-                    display: 'flex',
-                    justifyContent: 'space-around',
-                    flex: 1,
-                    paddingTop: '4rem',
-                    width: 'fit-content',
-                    margin: '0 auto'
-                }}>
-                    <CustomButton
-                        size={32}
-                        icon={<Newspaper />}
-                        title='Crear publicación'
-                        color="primary"
-                    />
-                    <CustomButton
-                        size={32}
-                        icon={<PlusSquare />}
-                        title='Crear anuncio'
-                        color="info"
-                        component={LinkBehavior}
-                        to={(user.dog) ? '/profile/ads/create' : '?dog=true'}
-                    />
-                </Box>
-                {(registerDog) && (
-                    <React.Suspense>
-                        <RegisterDog
-                            open={registerDog}
-                            handleClose={() => navigate('/profile')}
-                            redirect='/profile/ads/create'
+                        <CustomButton
+                            size={32}
+                            icon={<PlusSquare />}
+                            title='Crear anuncio'
+                            color="info"
+                            component={LinkBehavior}
+                            to={(user.dog) ? '/profile/ads/create' : '?dog=true'}
                         />
-                    </React.Suspense>
-                )}
+                    </Box>
+                    {(registerDog) && (
+                        <React.Suspense>
+                            <RegisterDog
+                                open={registerDog}
+                                handleClose={() => navigate('/profile')}
+                                redirect='/profile/ads/create'
+                            />
+                        </React.Suspense>
+                    )}
+                </Box>
             </Box>
-        </Box>
+            {!!(user.publication.length) && <MyAds {...user} />}
+        </>
     );
 }
 

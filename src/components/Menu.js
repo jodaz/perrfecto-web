@@ -6,7 +6,7 @@ import { MoreHorizontal } from 'lucide-react';
 
 const ITEM_HEIGHT = 48;
 
-const Menu = ({ children }) => {
+const Menu = ({ children, icon, IconButtonProps }) => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -23,8 +23,9 @@ const Menu = ({ children }) => {
                 aria-expanded={open ? 'true' : undefined}
                 aria-haspopup="true"
                 onClick={handleClick}
+                {...IconButtonProps}
             >
-                <MoreHorizontal />
+                {icon}
             </IconButton>
             <MuiMenu
                 hideBackdrop
@@ -59,6 +60,10 @@ const Menu = ({ children }) => {
             </MuiMenu>
         </div>
     );
+}
+
+Menu.defaultProps = {
+    icon: <MoreHorizontal />
 }
 
 export default Menu;

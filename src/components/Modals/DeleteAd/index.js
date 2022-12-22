@@ -5,16 +5,31 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Trash2 } from 'lucide-react';
 import Stack from '@mui/material/Stack';
+import { apiProvider } from '../../../api'
+import { renewToken, useAuth } from '../../../context/AuthContext';
 import { alpha } from '@mui/material';
-import { deleteFavourite, useFavourites } from '../../../context/FavouriteContext';
 
-const DeleteFavourite = ({ open, handleClose, item }) => {
+const DeleteAd = ({ open, handleClose, item }) => {
     const [onSubmit, setOnSubmit] = React.useState(false);
-    const { dispatch } = useFavourites();
+    const { dispatch, state: { user } } = useAuth();
+
+    const deleteAdRequest = async () => {
+        try {
+            const res = await apiProvider.delete(`api/publication/${item.id}`)
+
+            if (res.status >= 200 && res.status < 300) {
+                renewToken(dispatch, user);
+            }
+
+            return res;
+        } catch (e) {
+            console.log(e);
+        }
+    }
 
     const handleDelete = async () => {
         setOnSubmit(true);
-        await deleteFavourite(dispatch, item)
+        await deleteAdRequest()
         handleClose();
         setOnSubmit(false)
     }
@@ -46,12 +61,12 @@ const DeleteFavourite = ({ open, handleClose, item }) => {
                     <Trash2 size={48} />
                 </Box>
                 <Box sx={{ p: 1 }}>
-                    <Typography variant="body2" gutterBottom>
-                        ¿Estás seguro que deseas eliminar a “{item.Ad.publi.name}” de favoritos?
+                    <Typography variant="subtitle1" gutterBottom>
+                        ¿Estás seguro que deseas eliminar tu anuncio?
                     </Typography>
-                    <Stack direction="column">
-                        <Button color="error" disabled={onSubmit} onClick={handleDelete}>
-                            Eliminar favorit@
+                    <Stack direction="column" marginTop={3}>
+                        <Button variant="contained" disabled={onSubmit} onClick={handleDelete}>
+                            Eliminar
                         </Button>
                         <Button onClick={handleClose} disabled={onSubmit} sx={{
                             color: '#858585',
@@ -59,7 +74,7 @@ const DeleteFavourite = ({ open, handleClose, item }) => {
                                 backgroundColor: `${alpha('#858585', 0.1)}`
                             }
                         }}>
-                            Volver
+                            Cancelar
                         </Button>
                     </Stack>
                 </Box>
@@ -68,4 +83,4 @@ const DeleteFavourite = ({ open, handleClose, item }) => {
     );
 }
 
-export default DeleteFavourite
+export default DeleteAd

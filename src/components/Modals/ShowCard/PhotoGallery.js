@@ -6,6 +6,8 @@ import styled from '@emotion/styled';
 
 const SwiperStyled = styled(Swiper)(() => ({
     height: 'inherit',
+    borderTopLeftRadius: 'inherit',
+    borderBottomLeftRadius: 'inherit',
     '& .swiper-pagination-bullet': {
         backgroundColor: '#fff',
         width: '8px',
@@ -16,7 +18,9 @@ const SwiperStyled = styled(Swiper)(() => ({
 
 const SwiperSlideStyled = styled(SwiperSlide)(() => ({
     height: '100%',
-    width: '100% !important'
+    width: '100% !important',
+    borderTopLeftRadius: 'inherit',
+    borderBottomLeftRadius: 'inherit'
 }))
 
 const PhotoGallery = ({ images }) => (
@@ -35,8 +39,8 @@ const PhotoGallery = ({ images }) => (
                         height: 0,
                         paddingTop: '100%',
                         margin: 0,
-                        borderTopLeftRadius: '16px',
-                        borderBottomLeftRadius: '16px'
+                        borderTopLeftRadius: 'inherit',
+                        borderBottomLeftRadius: 'inherit'
                     }}
                 />
             </SwiperSlideStyled>

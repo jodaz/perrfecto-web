@@ -24,7 +24,9 @@ const DogPublication = ({ open, data, handleClose, handleOpenOwnerCard }) => {
             name={data.publi.Owner.name}
             handleOpen={handleOpenOwnerCard}
         >
-            <Box sx={{ flex: 1, height: 400, width: 400 }}>
+            <Box sx={{ flex: 1, height: 400, width: 400,
+                        borderTopLeftRadius: '16px',
+                        borderBottomLeftRadius: '16px' }}>
                 <PhotoGallery images={multimedia} />
             </Box>
             <Box sx={{
