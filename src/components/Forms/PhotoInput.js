@@ -3,8 +3,7 @@ import Box from '@mui/material/Box'
 import Avatar from '@mui/material/Avatar'
 import FormHelperText from '@mui/material/FormHelperText'
 import { useDropzone } from 'react-dropzone';
-import { ReactComponent as PlusIcon } from '../../assets/icons/Plus.svg'
-import { ReactComponent as DeleteIcon } from '../../assets/icons/Delete.svg'
+import { Plus, Trash2 } from 'lucide-react';
 import { Controller } from 'react-hook-form'
 import getUserPhoto from '../../utils/getUserPhoto';
 
@@ -122,7 +121,7 @@ const Dropzone = ({
                 color: '#F6F6F6 !important',
                 cursor: 'pointer'
             }}>
-                {(file.preview != '/images/Avatar.svg') ? <DeleteIcon onClick={remove} /> : <PlusIcon onClick={open} />}
+                {(file.preview != '/images/Avatar.svg') ? <Trash2 onClick={remove} /> : <Plus onClick={open} />}
             </Box>
         </Box>
     )
