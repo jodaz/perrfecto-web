@@ -94,7 +94,7 @@ const PetOwner = () => {
                     display: 'flex',
                     justifyContent: 'space-around',
                     flex: 1,
-                    marginTop: '1rem'
+                    paddingTop: '4rem',
                 }}>
                     <CustomButton
                         size={32}

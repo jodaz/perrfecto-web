@@ -14,6 +14,7 @@ import { useForm } from 'react-hook-form';
 import { useAuth, renewToken } from '../../context/AuthContext'
 import PhotoInput from '../../components/Forms/PhotoInput';
 import { fileProvider, apiProvider } from '../../api'
+import Photo from '../../components/Photo';
 import formDataHandler from '../../utils/formDataHandler';
 
 const RegisterDog = React.lazy(() => import('../../components/RegisterDog'));
@@ -81,20 +82,22 @@ const PetProfile = () => {
                     flex: 1,
                     p: 2
                 }}>
-                    {(user.dog) && (
+                    {(user.dog) ? (
                         <PhotoInput
                             name="files"
                             control={control}
                             defaultValue={(user.dog) && getCurrDogPhoto(user.dog.dogPhotos)}
                             handleDelete={deletePhoto}
                         />
-                    )}
+                    ) : <Photo />}
                 </Box>
                 <Box sx={{
                     display: 'flex',
                     justifyContent: 'space-around',
                     flex: 1,
-                    marginTop: '1rem'
+                    paddingTop: '4rem',
+                    width: 'fit-content',
+                    margin: '0 auto'
                 }}>
                     <CustomButton
                         size={32}
