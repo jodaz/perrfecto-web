@@ -8,6 +8,7 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import { PlusCircle } from 'lucide-react';
+import useEffectOnce from '../utils/useEffectOnce';
 
 const Dropzone = ({
     onChange
@@ -41,7 +42,8 @@ const Dropzone = ({
             />
         </SwiperSlide>
     ));
-    React.useEffect(() => {
+
+    useEffectOnce(() => {
         // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
         return () => files.forEach(file => URL.revokeObjectURL(file.preview));
     }, []);

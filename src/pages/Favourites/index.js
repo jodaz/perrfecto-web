@@ -11,6 +11,7 @@ import {
     useFavourites,
     deleteFavourite
 } from '../../context/FavouriteContext';
+import useEffectOnce from '../../utils/useEffectOnce';
 
 const Favourites = () => {
     const [openDeleteModal, setOpenDeleteModal] = React.useState(false)
@@ -27,7 +28,7 @@ const Favourites = () => {
         setOpenDeleteModal(false)
     }
 
-    React.useEffect(() => {
+    useEffectOnce(() => {
         if (items.length < 2) {
             fetchFavourites(dispatch)
         }

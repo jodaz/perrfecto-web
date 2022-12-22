@@ -7,6 +7,7 @@ import InputLabel from '@mui/material/InputLabel';
 import Box from '@mui/material/Box';
 import { Controller } from 'react-hook-form'
 import { Calendar } from 'lucide-react'
+import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 
 const DateInput = ({
     control,
@@ -27,8 +28,9 @@ const DateInput = ({
             rules={rules}
             render={({ field: { onChange, ...restField }, fieldState: { error, value } }) => (
                 <Box mt={2}>
-                    <DatePicker
+                    <MobileDatePicker
                         value={value}
+                        label='Seleccione una fecha'
                         disabled={disabled}
                         onChange={value => onChange(value)}
                         components={{

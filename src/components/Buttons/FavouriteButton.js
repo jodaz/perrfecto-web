@@ -16,8 +16,8 @@ const FavouriteButton = ({ item, handleClick }) => {
         if (!isAuth) {
             openGuestWarning(dispatch, 'guardar un anuncio');
         } else {
-            await addFavourite(dispatchFavourite, item);
             handleClick();
+            await addFavourite(dispatchFavourite, item);
         }
     }
 
