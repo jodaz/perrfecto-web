@@ -94,7 +94,9 @@ const PetProfile = () => {
                     display: 'flex',
                     justifyContent: 'space-around',
                     flex: 1,
-                    marginTop: '1rem'
+                    marginTop: '1rem',
+                    width: 'fit-content',
+                    margin: '0 auto'
                 }}>
                     <CustomButton
                         size={32}

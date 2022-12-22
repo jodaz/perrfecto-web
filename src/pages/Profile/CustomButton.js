@@ -8,11 +8,10 @@ const CustomButton = ({
     title,
     color,
     size,
-    p = 2,
+    p = 1,
     sx,
     component,
-    to,
-    ...rest
+    to
 }) => (
     <Box sx={{
         display: 'flex',
