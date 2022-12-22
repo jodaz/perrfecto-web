@@ -91,6 +91,7 @@ const FeedCard = ({ style, onVote, id, item, ...props }) => {
                 data={item}
                 controls={controls}
                 cardElem={cardElem}
+                drag={props.drag}
             />
         </StyledCard>
     );

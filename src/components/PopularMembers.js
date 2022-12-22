@@ -55,7 +55,7 @@ const puppies = [
 ]
 
 const PopularMembers = () => {
-    const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
+    const isSmall = useMediaQuery(theme => theme.breakpoints.down('md'));
 
     return (
         <Box height='fit-content'>
@@ -89,7 +89,8 @@ const PopularMembers = () => {
                 width: '100%',
                 display: 'flex',
                 zIndex: 1,
-                height: 'fit-content'
+                height: 'fit-content',
+                paddingBottom: 1
             }}>
                 <Swiper
                     modules={[Navigation, Pagination, A11y]}
@@ -106,8 +107,8 @@ const PopularMembers = () => {
                             }}>
                                 <Avatar sx={{
                                     border: '1.5px solid #F59E0B',
-                                    height: '68px',
-                                    width: '68px'
+                                    height: isSmall ? '48px' : '68px',
+                                    width: isSmall ? '48px' : '68px',
                                 }}
                                     src={`/images/samples/${user.picture}`}
                                 />

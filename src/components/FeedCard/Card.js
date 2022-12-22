@@ -38,7 +38,8 @@ const flyAwayDistance = (direction, cardElem) => {
 const Card = ({
     data,
     cardElem,
-    controls
+    controls,
+    drag
 }) => {
     const { publi } = data;
     const userPhoto = getUserPhoto(publi.Owner.img_profile);
@@ -67,16 +68,21 @@ const Card = ({
 
     return (
         <Box sx={{
-            position: 'relative',
-            userSelect: 'none'
+            userSelect: 'none',
+            display: 'flex',
+            height: 'fit-content',
+            flexDirection: 'column',
+            marginTop: !drag ? '1rem' : 0,
+            transition: '0.3s',
+            zIndex: 10
         }}>
             <Box sx={{
-                display: 'flex',
+                display: 'hidden',
                 alignItems: 'center',
-                position: 'absolute',
-                top: isSmall ? '-40px' : '-50px',
-                left: 0,
-                zIndex: 1
+                zIndex: 1,
+                marginBottom: '-1rem',
+                visibility: drag ? 'hidden' : 'none',
+                transition: '0.3s'
             }}>
                 <Avatar sx={{
                     width: isSmall ? '50px' : '70px',

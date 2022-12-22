@@ -78,7 +78,7 @@ const UsersHome = () => {
             }}
         >
             <React.Suspense>
-                <Box width={isSmall ? '300px' : '450px'} height='20vh' margin='2rem 0'>
+                <Box width={isSmall ? '300px' : '450px'} marginTop='2rem'>
                     <PopularMembers />
                 </Box>
             </React.Suspense>
@@ -87,7 +87,8 @@ const UsersHome = () => {
                 flexDirection: 'column',
                 width: '100%',
                 margin: '0 auto',
-                height: '100%'
+                height: '100%',
+                zIndex: 100
             }}>
                 {(cards.length) ? (
                     <Stack
