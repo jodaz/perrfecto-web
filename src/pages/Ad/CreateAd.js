@@ -8,6 +8,7 @@ import CircleIcon from '@mui/icons-material/FiberManualRecord';
 import { useForm } from "react-hook-form";
 import { useAuth, renewToken } from '../../context/AuthContext'
 import TextInput from '../../components/Forms/TextInput';
+import SwitchInput from '../../components/Forms/SwitchInput';
 import { apiProvider, fileProvider } from '../../api';
 import AdPhotoInput from '../../components/AdPhotoInput';
 import InterestInput from '../../components/InterestInput';
@@ -17,6 +18,28 @@ import OverlayLoader from '../../components/Modals/OverlayLoader';
 import useEffectOnce from '../../utils/useEffectOnce'
 
 const getYearsSince = year => new Date().getUTCFullYear() - year
+
+const SwitchInputContainer = ({
+    control,
+    label,
+    name
+}) => (
+    <Box sx={{
+        display: 'flex',
+        width: '100%',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        pb: 1
+    }}>
+        <Typography variant="subtitle1" color="text.secondary">
+            {label}
+        </Typography>
+        <SwitchInput
+            control={control}
+            name={name}
+        />
+    </Box>
+)
 
 const CreateAd = () => {
     const [openWarning, setOpenWarning] = React.useState(false)
@@ -179,14 +202,30 @@ const CreateAd = () => {
                             }}
                         />
                     </Box>
-                    <Box sx={{ display: 'flex', }}>
+                    <Box>
                         <Typography
                             variant="body2"
                             color="text.tertiary"
-                            textTransform={'uppercase'}
+                            textTransform='uppercase'
+                            gutterBottom
                         >
                             Permisos
                         </Typography>
+                        <SwitchInputContainer
+                            label='Visualizar número de teléfono'
+                            control={control}
+                            name='permission_tlf'
+                        />
+                        <SwitchInputContainer
+                            label='Activar geolocalización'
+                            control={control}
+                            name='permission_geolocation'
+                        />
+                        <SwitchInputContainer
+                            label='Habilitar Whatsapp'
+                            control={control}
+                            name='permission_whatsapp'
+                        />
                     </Box>
                     <Box sx={{ p: 2 }}>
                         <Button variant="contained" type="submit" fullWidth>
