@@ -71,6 +71,7 @@ const AddCertificateModal = ({ open, handleClose }) => {
                     minScreenshotWidth={180}
                     minScreenshotHeight={180}
                 />
+                {imgSrc && <img src={imgSrc} />}
             </Box>
         </InstagramModal>
     );
