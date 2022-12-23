@@ -30,22 +30,26 @@ const ContactDialog = ({ data, handleClose, open }) => {
                     width: '85px'
                 }} src={dogPhoto} />
                 <Box sx={{ p: 2 }}>
-                    <Typography
-                        color="text.primary"
-                        variant="h6"
-                        fontWeight={500}
-                        gutterBottom
-                        textAlign='center'
-                    >
-                        ¿Cómo quieres contactar a Pupi?
-                    </Typography>
-                    <Typography
-                        color="text.tertiary"
-                        variant="body1"
-                        textAlign='center'
-                    >
-                        Haz click en la opción de tu interés
-                    </Typography>
+                    {(data.permission_whatsapp) && (
+                        <>
+                            <Typography
+                                color="text.primary"
+                                variant="h6"
+                                fontWeight={500}
+                                gutterBottom
+                                textAlign='center'
+                            >
+                                ¿Cómo quieres contactar a Pupi?
+                            </Typography>
+                            <Typography
+                                color="text.tertiary"
+                                variant="body1"
+                                textAlign='center'
+                            >
+                                Haz click en la opción de tu interés
+                            </Typography>
+                        </>
+                    )}
                     <Box sx={{ p: 2 }}>
                         <Box sx={{ p: 1 }}>
                             <Button
@@ -58,17 +62,19 @@ const ContactDialog = ({ data, handleClose, open }) => {
                                 <Phone /> Llamar
                             </Button>
                         </Box>
-                        <Box sx={{ p: 1 }}>
-                            <Button
-                                variant="contained"
-                                color="success"
-                                target='_blank'
-                                href={`https://wa.me/${data.publi.Owner.code_phone}${data.publi.Owner.phone}`}
-                                fullWidth
-                            >
-                                <WhatsApp /> Whatsapp
-                            </Button>
-                        </Box>
+                        {(data.permission_whatsapp) && (
+                            <Box sx={{ p: 1 }}>
+                                <Button
+                                    variant="contained"
+                                    color="success"
+                                    target='_blank'
+                                    href={`https://wa.me/${data.publi.Owner.code_phone}${data.publi.Owner.phone}`}
+                                    fullWidth
+                                >
+                                    <WhatsApp /> Whatsapp
+                                </Button>
+                            </Box>
+                        )}
                     </Box>
                 </Box>
             </Box>
