@@ -15,8 +15,6 @@ import { Chip } from '@mui/material';
 
 const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
-const interes = ['Hembra', 'Tamaño pequeño', 'Tamaño grande'];
-
 const CustomBadge = ({ children, count}) => (
     <Badge
         badgeContent={`${count}`}
@@ -42,7 +40,7 @@ const CustomBadge = ({ children, count}) => (
 const MyAdCard = ({ fullWidth, dog, publication, email, phone, code_phone }) => {
     const [openDeleteModal, setOpenDeleteModal] = React.useState(false)
     const { Certificates, Vaccines } = dog
-    const { multimedia } = publication;
+    const { multimedia, interests } = publication;
     const arrImages = getImages(JSON.parse(multimedia))
 
     const handleCloseDeleteModal = () => {
@@ -84,7 +82,7 @@ const MyAdCard = ({ fullWidth, dog, publication, email, phone, code_phone }) => 
                     flexWrap: 'wrap',
                     marginTop: '1rem'
                 }}>
-                    {interes.map(item => <Chip label={item} size="small" sx={{ mb: 1, mr: 1 }} />)}
+                    {interests.map(item => <Chip label={item.name} size="small" sx={{ mb: 1, mr: 1 }} />)}
                 </Box>
                 {phone && (
                     <Typography
