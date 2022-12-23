@@ -10,7 +10,7 @@ import PhotoInput from '../Forms/PhotoInput';
 import DateInput from '../Forms/DateInput';
 import formDataHandler from '../../utils/formDataHandler';
 import { fileProvider } from '../../api'
-import { useAuth } from '../../context/AuthContext';
+import { useAuth, renewToken } from '../../context/AuthContext';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useNavigate } from 'react-router-dom'
 import Alert from '@mui/material/Alert';
@@ -29,7 +29,7 @@ const RegisterOwner = ({ open, handleClose, redirect = '/home' }) => {
     });
     const [cities, setCities] = React.useState([])
     const navigate = useNavigate();
-    const { state: { user } } = useAuth();
+    const { state: { user },dispatch } = useAuth();
     const province = watch('province')
 
     const onSubmit = async values => {
@@ -53,6 +53,7 @@ const RegisterOwner = ({ open, handleClose, redirect = '/home' }) => {
             if (res.status >= 200 && res.status < 300) {
                 handleClose();
                 navigate(redirect)
+                renewToken(dispatch)
             }
         } catch (error) {
             setError('Ha ocurrido un error inesperado.')

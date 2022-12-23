@@ -20,7 +20,7 @@ import {
 } from '../../validations';
 import formDataHandler from '../../utils/formDataHandler';
 import { apiProvider } from '../../api';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth, renewToken } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import PhotoInput from '../Forms/PhotoInput';
@@ -61,6 +61,7 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
     const { state: { user } } = useAuth();
     const navigate = useNavigate();
     const [features, setFeatures] = React.useState([])
+    const { dispatch } = useAuth();
 
     const onSubmit = async (data) => {
         try {
@@ -107,6 +108,7 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
 
             if (res.status >= 200 && res.status < 300) {
                 navigate(redirect)
+                renewToken(dispatch);
             }
         } catch (error) {
             setError('Ha ocurrido un error inesperado.')
