@@ -285,17 +285,13 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
                             label='Características de tu mascota'
                         />
                     </Box>
-                    <Box sx={{
-                        p: 2
-                    }}>
+                    <Box sx={{ p: 2 }}>
                         <Typography variant="subtitle1" gutterBottom>
                             Añadir vacunas
                         </Typography>
                         <AddVaccines control={control} />
                     </Box>
-                    <Box sx={{
-                        p: 2
-                    }}>
+                    <Box sx={{ p: 2 }}>
                         <Typography variant="subtitle1" gutterBottom>
                             Añadir certificados
                         </Typography>
