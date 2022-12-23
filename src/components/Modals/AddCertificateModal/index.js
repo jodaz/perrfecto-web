@@ -18,12 +18,16 @@ const videoConstraints = {
 const AddCertificateModal = ({ open, handleClose }) => {
     const [errorAlert, setErrorAlert] = React.useState('')
     const navigate = useNavigate();
+    const [openWebcam, setOpenWebcam] = React.useState(false)
     const webcamRef = React.useRef(null);
     const [imgSrc, setImgSrc] = React.useState(null);
+
+    const toggleOpenWebCam = () => setOpenWebcam(!openWebcam);
 
     const capture = React.useCallback(() => {
         const imageSrc = webcamRef.current.getScreenshot();
         setImgSrc(imageSrc);
+        alert(imageSrc)
     }, [webcamRef, setImgSrc]);
 
     return (
@@ -40,38 +44,56 @@ const AddCertificateModal = ({ open, handleClose }) => {
                 textAlign: 'center',
                 color: theme => theme.palette.text.secondary,
             }}>
-                <Box sx={{ p: 1, textAlign: 'center' }}>
-                    <Camera size={48} />
-                </Box>
-                <Box sx={{ p: 1 }}>
-                    <Box sx={{ p: 1 }}>
-                        <Typography variant="body1" gutterBottom>
-                            Añade tus certificados tomando una foto desde tu aplicación
-                        </Typography>
+                {!openWebcam && (
+                    <Box sx={{ p: 1, textAlign: 'center' }}>
+                        <Camera size={48} />
                     </Box>
-                    <Stack direction="column">
-                        <Button color="primary" variant="contained" onClick={capture}>
-                            Abrir app
-                        </Button>
-                        <Button onClick={handleClose} sx={{
-                            color: '#858585',
-                            '&:hover': {
-                                backgroundColor: `${alpha('#858585', 0.1)}`
-                            }
-                        }}>
-                            Volver
-                        </Button>
-                    </Stack>
+                )}
+                <Box sx={{ p: 1 }}>
+                    {openWebcam && (
+                        <Box>
+                            <Webcam
+                                audio={false}
+                                ref={webcamRef}
+                                screenshotFormat="image/jpeg"
+                                videoConstraints={videoConstraints}
+                                minScreenshotWidth={180}
+                                minScreenshotHeight={180}
+                            />
+                            <Stack direction="column">
+                                <Button variant="contained" color="primary" onClick={capture}>
+                                    Capturar
+                                </Button>
+                                <Button color="error" onClick={toggleOpenWebCam}>
+                                    Cancelar
+                                </Button>
+                            </Stack>
+                        </Box>
+                    )}
+                    {!openWebcam && (
+                        <>
+                            <Box sx={{ p: 1 }}>
+                                <Typography variant="body1" gutterBottom>
+                                    Añade tus certificados tomando una foto desde tu aplicación
+                                </Typography>
+                            </Box>
+                            <Stack direction="column">
+                                <Button color="primary" variant="contained" onClick={toggleOpenWebCam}>
+                                    Abrir app
+                                </Button>
+                                <Button onClick={handleClose} sx={{
+                                    color: '#858585',
+                                    '&:hover': {
+                                        backgroundColor: `${alpha('#858585', 0.1)}`
+                                    }
+                                }}>
+                                    Volver
+                                </Button>
+                            </Stack>
+                        </>
+                    )}
+                    {imgSrc && <img src={imgSrc} />}
                 </Box>
-                <Webcam
-                    audio={false}
-                    ref={webcamRef}
-                    screenshotFormat="image/jpeg"
-                    videoConstraints={videoConstraints}
-                    minScreenshotWidth={180}
-                    minScreenshotHeight={180}
-                />
-                {imgSrc && <img src={imgSrc} />}
             </Box>
         </InstagramModal>
     );
