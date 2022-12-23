@@ -30,7 +30,7 @@ const AddCertificateModal = ({ open, handleClose }) => {
         setImgSrc(imageSrc);
     }, [webcamRef, setImgSrc]);
 
-    const usePhoto = React.useCallback(() => alert(imageSrc), []);
+    const usePhoto = React.useCallback(() => alert(imgSrc), []);
 
     return (
         <InstagramModal handleClose={handleClose} open={open}>
