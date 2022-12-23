@@ -7,13 +7,24 @@ import { Camera } from 'lucide-react';
 import Stack from '@mui/material/Stack';
 import { useNavigate } from 'react-router-dom';
 import { alpha } from '@mui/material';
+import Webcam from "react-webcam";
 
-const AdCertificateModal = ({ open, handleClose }) => {
+const videoConstraints = {
+    width: 640,
+    height: 480,
+    facingMode: "user",
+};
+
+const AddCertificateModal = ({ open, handleClose }) => {
     const [errorAlert, setErrorAlert] = React.useState('')
     const navigate = useNavigate();
+    const webcamRef = React.useRef(null);
+    const [imgSrc, setImgSrc] = React.useState(null);
 
-    const submitDelete = () => {
-    };
+    const capture = React.useCallback(() => {
+        const imageSrc = webcamRef.current.getScreenshot();
+        setImgSrc(imageSrc);
+    }, [webcamRef, setImgSrc]);
 
     return (
         <InstagramModal handleClose={handleClose} open={open}>
@@ -39,7 +50,7 @@ const AdCertificateModal = ({ open, handleClose }) => {
                         </Typography>
                     </Box>
                     <Stack direction="column">
-                        <Button color="primary" variant="contained" onClick={submitDelete}>
+                        <Button color="primary" variant="contained" onClick={capture}>
                             Abrir app
                         </Button>
                         <Button onClick={handleClose} sx={{
@@ -52,9 +63,17 @@ const AdCertificateModal = ({ open, handleClose }) => {
                         </Button>
                     </Stack>
                 </Box>
+                <Webcam
+                    audio={false}
+                    ref={webcamRef}
+                    screenshotFormat="image/jpeg"
+                    videoConstraints={videoConstraints}
+                    minScreenshotWidth={180}
+                    minScreenshotHeight={180}
+                />
             </Box>
         </InstagramModal>
     );
 }
 
-export default AdCertificateModal
+export default AddCertificateModal

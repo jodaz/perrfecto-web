@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import FormHelperText from '@mui/material/FormHelperText'
 import TextInput from '../../components/Forms/TextInput'
 import { Camera, Plus, Trash2 } from 'lucide-react';
-import AdCertificateModal from '../../components/Modals/AdCertificateModal';
+import AddCertificateModal from '../../components/Modals/AddCertificateModal';
 
 const AddCertificates = ({ control }) => {
     const [isModalOpen, setIsModalOpen] = React.useState(false)
@@ -70,7 +70,7 @@ const AddCertificates = ({ control }) => {
                     </FormHelperText>
                 </Box>
             )}
-            <AdCertificateModal open={isModalOpen} handleClose={() => setIsModalOpen(false)}  />
+            <AddCertificateModal open={isModalOpen} handleClose={() => setIsModalOpen(false)}  />
         </Box>
     );
 }
