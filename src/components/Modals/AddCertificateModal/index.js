@@ -5,7 +5,6 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Camera } from 'lucide-react';
 import Stack from '@mui/material/Stack';
-import { useNavigate } from 'react-router-dom';
 import { alpha } from '@mui/material';
 import Webcam from "react-webcam";
 

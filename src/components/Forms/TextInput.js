@@ -30,6 +30,7 @@ const TextInput = ({
     sx,
     label,
     labelColor,
+    id,
     ...rest
 }) => (
     <FormControl>
@@ -54,6 +55,7 @@ const TextInput = ({
                                 border: '1px solid red !important'
                             }
                         }}
+                        id={id}
                         {...rest}
                     />
                     {!!(error && validations) && (

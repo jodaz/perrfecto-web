@@ -6,11 +6,10 @@ import Button from '@mui/material/Button';
 import FormHelperText from '@mui/material/FormHelperText'
 import TextInput from '../../components/Forms/TextInput'
 import { Camera, Plus, Trash2 } from 'lucide-react';
-import AddCertificateModal from '../../components/Modals/AddCertificateModal';
+// import AddCertificateModal from '../../components/Modals/AddCertificateModal';
 
 const AddCertificates = ({ control }) => {
     const [isModalOpen, setIsModalOpen] = React.useState(false)
-    const [certificates, setCertificates] = React.useState([])
     const [indexes, setIndexes] = React.useState([0]);
     const [counter, setCounter] = React.useState(0);
 
@@ -34,8 +33,20 @@ const AddCertificates = ({ control }) => {
                     <Box sx={{ flex: 1, p: 1 }}>
                         <TextInput
                             control={control}
-                            name='name'
+                            name={`certificates[${index}]`}
+                            type="file"
+                            value={undefined}
                             placeholder='Subir archivo'
+                            sx={{
+                                color: 'transparent',
+                                '& ::file-selector-button': {
+                                    display: 'none'
+                                },
+                                '& ::after': {
+                                    color: "#000"
+                                }
+                            }}
+                            title="Seleccionar archivo"
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
@@ -69,7 +80,7 @@ const AddCertificates = ({ control }) => {
                     </FormHelperText>
                 </Box>
             )}
-            <AddCertificateModal open={isModalOpen} handleClose={() => setIsModalOpen(false)}  />
+            {/* <AddCertificateModal open={isModalOpen} handleClose={() => setIsModalOpen(false)}  /> */}
         </Box>
     );
 }

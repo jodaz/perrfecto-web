@@ -53,7 +53,7 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const [error, setError] = React.useState(false)
     const { control, handleSubmit, watch, formState: {
-        isSubmitting, dirtyFields
+        isSubmitting
     }} = useForm({
         reValidateMode: "onBlur"
     });
@@ -69,15 +69,20 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
                 breed,
                 gender,
                 name,
-                files,
                 dogAge,
+                files,
                 characteristics,
-                vaccines
+                vaccines,
+                certificates
             } = data;
 
-            // const mappedCharacteristics = characteristics.map(value => ({
-            //     id_charact: value
-            // }))
+            const mappedVaccines = vaccines.map(({ id }) => ({
+                id_vaccine: id
+            }))
+
+            const mappedCharacteristics = characteristics.map(value => ({
+                id_charact: value
+            }))
 
             const parsedData = {
                 name: name,
@@ -86,13 +91,18 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
                 dogAge: dogAge.label,
                 gender: gender.label,
                 id_user: user.id,
-                characteristics: characteristics,
+                characteristics: mappedCharacteristics,
                 files: files,
-                vaccines: vaccines
+                vaccines: mappedVaccines
             }
 
             const formData = await formDataHandler(parsedData, 'files')
 
+            // Aqui va certificates en lugar de files
+            for (let i = 0; i < certificates.length; i++) {
+                formData.append('certificates', certificates[i]);
+            }
+            console.log(parsedData, formData)
             const res = await apiProvider.post('/api/dog/new', formData)
 
             if (res.status >= 200 && res.status < 300) {
