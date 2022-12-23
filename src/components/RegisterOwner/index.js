@@ -53,7 +53,7 @@ const RegisterOwner = ({ open, handleClose, redirect = '/home' }) => {
             if (res.status >= 200 && res.status < 300) {
                 handleClose();
                 navigate(redirect)
-                renewToken(dispatch)
+                renewToken(dispatch, user);
             }
         } catch (error) {
             setError('Ha ocurrido un error inesperado.')
