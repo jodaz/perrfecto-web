@@ -102,7 +102,7 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
             for (let i = 0; i < certificates.length; i++) {
                 formData.append('certificates', certificates[i]);
             }
-            console.log(parsedData, formData)
+
             const res = await apiProvider.post('/api/dog/new', formData)
 
             if (res.status >= 200 && res.status < 300) {

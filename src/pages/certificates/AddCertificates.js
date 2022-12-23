@@ -1,11 +1,10 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import FormHelperText from '@mui/material/FormHelperText'
-import TextInput from '../../components/Forms/TextInput'
-import { Camera, Plus, Trash2 } from 'lucide-react';
+import { Plus, Trash2 } from 'lucide-react';
+import FileInput from './FileInput';
 // import AddCertificateModal from '../../components/Modals/AddCertificateModal';
 
 const AddCertificates = ({ control }) => {
@@ -31,32 +30,7 @@ const AddCertificates = ({ control }) => {
             {indexes.map((index) => (
                 <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
                     <Box sx={{ flex: 1, p: 1 }}>
-                        <TextInput
-                            control={control}
-                            name={`certificates[${index}]`}
-                            type="file"
-                            value={undefined}
-                            placeholder='Subir archivo'
-                            sx={{
-                                color: 'transparent',
-                                '& ::file-selector-button': {
-                                    display: 'none'
-                                },
-                                '& ::after': {
-                                    color: "#000"
-                                }
-                            }}
-                            title="Seleccionar archivo"
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        <IconButton color="warning" onClick={() => setIsModalOpen(true)}>
-                                            <Camera />
-                                        </IconButton>
-                                    </InputAdornment>
-                                ),
-                            }}
-                        />
+                        <FileInput control={control} name={`certificates`} />
                     </Box>
                     <Box>
                         <IconButton
