@@ -10,25 +10,27 @@ import { alpha } from '@mui/material';
 import Webcam from "react-webcam";
 
 const videoConstraints = {
-    width: 640,
-    height: 480,
+    width: 320,
+    height: 240,
     facingMode: "environment",
 };
 
 const AddCertificateModal = ({ open, handleClose }) => {
-    const [errorAlert, setErrorAlert] = React.useState('')
-    const navigate = useNavigate();
     const [openWebcam, setOpenWebcam] = React.useState(false)
     const webcamRef = React.useRef(null);
     const [imgSrc, setImgSrc] = React.useState(null);
 
-    const toggleOpenWebCam = () => setOpenWebcam(!openWebcam);
+    const toggleOpenWebCam = () => {
+        setOpenWebcam(!openWebcam);
+        setImgSrc(null)
+    }
 
     const capture = React.useCallback(() => {
         const imageSrc = webcamRef.current.getScreenshot();
         setImgSrc(imageSrc);
-        alert(imageSrc)
     }, [webcamRef, setImgSrc]);
+
+    const usePhoto = React.useCallback(() => alert(imageSrc), []);
 
     return (
         <InstagramModal handleClose={handleClose} open={open}>
@@ -52,17 +54,21 @@ const AddCertificateModal = ({ open, handleClose }) => {
                 <Box sx={{ p: 1 }}>
                     {openWebcam && (
                         <Box>
-                            <Webcam
-                                audio={false}
-                                ref={webcamRef}
-                                screenshotFormat="image/jpeg"
-                                videoConstraints={videoConstraints}
-                                minScreenshotWidth={180}
-                                minScreenshotHeight={180}
-                            />
+                            {imgSrc ? (
+                                <img src={imgSrc} />
+                            ) : (
+                                <Webcam
+                                    audio={false}
+                                    ref={webcamRef}
+                                    screenshotFormat="image/jpeg"
+                                    videoConstraints={videoConstraints}
+                                    minScreenshotWidth={180}
+                                    minScreenshotHeight={180}
+                                />
+                            )}
                             <Stack direction="column">
-                                <Button variant="contained" color="primary" onClick={capture}>
-                                    Capturar
+                                <Button variant="contained" color="primary" onClick={imgSrc ? capture : usePhoto}>
+                                    {imgSrc ? 'Capturar' : 'Usar foto'}
                                 </Button>
                                 <Button color="error" onClick={toggleOpenWebCam}>
                                     Cancelar
@@ -92,7 +98,6 @@ const AddCertificateModal = ({ open, handleClose }) => {
                             </Stack>
                         </>
                     )}
-                    {imgSrc && <img src={imgSrc} />}
                 </Box>
             </Box>
         </InstagramModal>
