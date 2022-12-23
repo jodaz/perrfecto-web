@@ -2,7 +2,6 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/Typography';
-import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import FormHelperText from '@mui/material/FormHelperText'
 import TextInput from '../../components/Forms/TextInput'
