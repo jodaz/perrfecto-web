@@ -12,7 +12,7 @@ import Webcam from "react-webcam";
 const videoConstraints = {
     width: 640,
     height: 480,
-    facingMode: "user",
+    facingMode: "environment",
 };
 
 const AddCertificateModal = ({ open, handleClose }) => {
