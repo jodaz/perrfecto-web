@@ -128,7 +128,7 @@ const PetProfile = () => {
                     )}
                 </Box>
             </Box>
-            {!!(user.publication.length) && <MyAds {...user} />}
+            {!!(user.publication) && <MyAds {...user} />}
         </>
     );
 }
