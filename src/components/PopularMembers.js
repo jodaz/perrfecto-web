@@ -67,23 +67,21 @@ const PopularMembers = () => {
                 <Typography variant="subtitle" color='text.secondary'>
                     Miembros populares
                 </Typography>
-                {isSmall && (
-                    <Box sx={{
-                        padding: '5px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        borderRadius: 50,
-                        cursor: 'pointer',
-                        color: '#fff',
-                        background: theme => theme.palette.primary.main,
-                        '& :hover': {
-                            background: theme => `${alpha(theme.palette.primary.main, 0.9)}`
-                        }
-                    }}>
-                        <Plus size={18}/>
-                    </Box>
-                )}
+                <Box sx={{
+                    padding: '5px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    borderRadius: 50,
+                    cursor: 'pointer',
+                    color: '#fff',
+                    background: theme => theme.palette.primary.main,
+                    '& :hover': {
+                        background: theme => `${alpha(theme.palette.primary.main, 0.9)}`
+                    }
+                }}>
+                    <Plus size={18}/>
+                </Box>
             </Box>
             <Box sx={{
                 width: '100%',

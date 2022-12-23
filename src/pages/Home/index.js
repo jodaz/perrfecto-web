@@ -26,7 +26,8 @@ const Home = () => {
             display: 'flex',
             width: '100%',
             flexDirection: 'column',
-            alignItems: 'center'
+            alignItems: 'center',
+            height: '100%'
         }}>
             {generateContent()}
         </Box>
