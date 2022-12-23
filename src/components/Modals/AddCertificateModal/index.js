@@ -67,9 +67,15 @@ const AddCertificateModal = ({ open, handleClose }) => {
                                 />
                             )}
                             <Stack direction="column">
-                                <Button variant="contained" color="primary" onClick={imgSrc ? capture : usePhoto}>
-                                    {imgSrc ? 'Capturar' : 'Usar foto'}
-                                </Button>
+                                {imgSrc ? (
+                                    <Button variant="contained" color="primary" onClick={capture}>
+                                        Capturar
+                                    </Button>
+                                ) : (
+                                    <Button variant="contained" color="primary" onClick={usePhoto}>
+                                        Usar foto
+                                    </Button>
+                                )}
                                 <Button color="error" onClick={toggleOpenWebCam}>
                                     Cancelar
                                 </Button>
