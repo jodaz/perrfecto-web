@@ -40,7 +40,7 @@ const CustomBadge = ({ children, count}) => (
 const MyAdCard = ({ fullWidth, dog, publication, email, phone, code_phone }) => {
     const [openDeleteModal, setOpenDeleteModal] = React.useState(false)
     const { Certificates, Vaccines } = dog
-    const { multimedia, interests } = publication;
+    const { multimedia, interests, permission_tlf } = publication;
     const arrImages = getImages(JSON.parse(multimedia))
 
     const handleCloseDeleteModal = () => {
@@ -84,7 +84,7 @@ const MyAdCard = ({ fullWidth, dog, publication, email, phone, code_phone }) => 
                 }}>
                     {interests.map(item => <Chip label={item.name} size="small" sx={{ mb: 1, mr: 1 }} />)}
                 </Box>
-                {phone && (
+                {(phone && permission_tlf) && (
                     <Typography
                         variant="subtitle1"
                         color="text.secondary"
