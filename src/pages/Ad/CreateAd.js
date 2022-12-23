@@ -93,7 +93,7 @@ const CreateAd = () => {
     }
 
     return (
-        <SettingsLayout title='Crear anuncio' id="drawer-container">
+        <SettingsLayout title='Crear anuncio'>
             <Box sx={{
                 height: '100%',
                 width: '100%',
