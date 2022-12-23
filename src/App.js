@@ -42,6 +42,7 @@ import Favourites from './pages/Favourites';
 import Account from './pages/account';
 import CreateAd from './pages/Ad/CreateAd';
 import ShowAd from './pages/Ad/ShowAd';
+import PersonalInformation from './pages/PersonalInformation';
 
 function App() {
     let location = useLocation();
@@ -113,6 +114,14 @@ function App() {
                                     element={
                                         <AppLayout>
                                             <ShowAd location={location} />
+                                        </AppLayout>
+                                    }
+                                />
+                                <Route
+                                    path='/profile/settings/information'
+                                    element={
+                                        <AppLayout>
+                                            <PersonalInformation location={location} />
                                         </AppLayout>
                                     }
                                 />
