@@ -43,6 +43,7 @@ import Account from './pages/account';
 import CreateAd from './pages/Ad/CreateAd';
 import ShowAd from './pages/Ad/ShowAd';
 import PersonalInformation from './pages/PersonalInformation';
+import EditNames from './pages/PersonalInformation/EditNames';
 
 function App() {
     let location = useLocation();
@@ -118,7 +119,23 @@ function App() {
                                     }
                                 />
                                 <Route
-                                    path='/profile/settings/information'
+                                    path='/profile/settings/owner'
+                                    element={
+                                        <AppLayout>
+                                            <PersonalInformation location={location} />
+                                        </AppLayout>
+                                    }
+                                />
+                                <Route
+                                    path='/profile/settings/owner/names'
+                                    element={
+                                        <AppLayout>
+                                            <EditNames location={location} />
+                                        </AppLayout>
+                                    }
+                                />
+                                <Route
+                                    path='/profile/settings/pet'
                                     element={
                                         <AppLayout>
                                             <PersonalInformation location={location} />
