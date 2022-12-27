@@ -7,7 +7,7 @@ import { PROVINCE, CITY } from '../../validations';
 import { fileProvider } from '../../api'
 import SettingsLayout from '../../layouts/SettingsLayout';
 import { useForm } from 'react-hook-form';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth, renewToken } from '../../context/AuthContext';
 import formDataHandler from '../../utils/formDataHandler';
 import provincias from '../../utils/provincias';
 import Button from '../../components/Button';
@@ -21,7 +21,7 @@ const EditLocation = () => {
     });
     const [cities, setCities] = React.useState([])
     const navigate = useNavigate();
-    const { state: { user } } = useAuth();
+    const { state: { user }, dispatch } = useAuth();
     const province = watch('province')
 
     const onSubmit = async values => {
@@ -43,6 +43,7 @@ const EditLocation = () => {
             const res = await fileProvider.put(`/api/auth/user-edit/${user.id}`, formData)
 
             if (res.status >= 200 && res.status < 300) {
+                renewToken(dispatch, user);
                 navigate(-1);
             }
         } catch (error) {
