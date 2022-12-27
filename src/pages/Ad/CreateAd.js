@@ -16,8 +16,7 @@ import formDataHandler from '../../utils/formDataHandler';
 import PublicationWait from '../../components/Modals/PublicationWait';
 import OverlayLoader from '../../components/Modals/OverlayLoader';
 import useEffectOnce from '../../utils/useEffectOnce'
-
-const getYearsSince = year => new Date().getUTCFullYear() - year
+import getYearsFromYear from '../../utils/getYearsFromYear';
 
 const SwitchInputContainer = ({
     control,
@@ -137,7 +136,7 @@ const CreateAd = () => {
                                 <CircleIcon fontSize='inherit' color='primary' />
                             </Box>
                             <Typography color="primary.main">
-                                {getYearsSince(dog.dogAge)} años
+                                {getYearsFromYear(dog.dogAge)} años
                             </Typography>
                             {(user.province && user.city) && (
                                 <>

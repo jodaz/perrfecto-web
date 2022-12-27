@@ -6,6 +6,7 @@ import SettingsLayout from '../../layouts/SettingsLayout';
 import ListItemLink from '../../components/ListItemLink';
 import List from '../../components/List';
 import EditPhoto from './EditPhoto';
+import getYearsFromYear from '../../utils/getYearsFromYear'
 
 const PetInformation = () => {
     const [editPhoto, setEditPhoto] = React.useState(false);
@@ -45,7 +46,7 @@ const PetInformation = () => {
                             color="text.tertiary"
                         />
                         <Typography variant="subtitle1" ml={2}>
-                            25 años
+                            {getYearsFromYear(user.dog.dogAge)} años
                         </Typography>
                         <ListItemLink
                             to="name"
