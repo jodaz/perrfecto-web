@@ -7,14 +7,16 @@ import { fileProvider, apiProvider } from '../../api'
 import formDataHandler from '../../utils/formDataHandler';
 import Avatar from '@mui/material/Avatar';
 import getUserPhoto from '../../utils/getUserPhoto';
+import useEffectOnce from '../../utils/useEffectOnce';
+
+const getCurrDogPhoto = data => JSON.parse(data)[0]
 
 const EditPhoto = ({ isEditing }) => {
     const { state: { user }, dispatch } = useAuth();
     const { handleSubmit, control, watch, formState: {
         isSubmitting
     }} = useForm();
-    console.log(user.dog)
-
+    const dogPhoto = '/images/Avatar.svg'
     const onSubmit = async (data) => {
         try {
             const parsedData = {
@@ -26,7 +28,7 @@ const EditPhoto = ({ isEditing }) => {
 
             const formData = await formDataHandler(parsedData, 'files')
 
-            const res = await fileProvider.put('/api/user/img-profile', formData)
+            const res = await fileProvider.put(`/api/dog/img-dog/${user.dog.id}`, formData)
 
             if (res.status >= 200 && res.status < 300) {
                 renewToken(dispatch, user)
@@ -38,7 +40,8 @@ const EditPhoto = ({ isEditing }) => {
 
     const deletePhoto = async () => {
         try {
-            const res = await apiProvider.delete(`/api/user/img-profile/${user.img_profile}`)
+            const dogPhoto = await getCurrDogPhoto(user.dog.dogPhotos)
+            const res = await apiProvider.delete(`/api/dog/img-dog/${user.dog.id}/${dogPhoto}`)
 
             if (res.status >= 200 && res.status < 300) {
                 renewToken(dispatch, user)
@@ -48,7 +51,7 @@ const EditPhoto = ({ isEditing }) => {
         }
     }
 
-    React.useEffect(() => {
+    useEffectOnce(() => {
         const subscription = watch(handleSubmit(onSubmit))
 
         return () => subscription.unsubscribe();
@@ -60,13 +63,13 @@ const EditPhoto = ({ isEditing }) => {
                 <PhotoInput
                     name="files"
                     control={control}
-                    defaultValue={user.img_profile}
+                    defaultValue={dogPhoto}
                     disabled={isSubmitting}
                     handleDelete={deletePhoto}
                 />
             ) : (
                 <Avatar
-                    src={`${getUserPhoto(user.img_profile)}`}
+                    defaultValue={dogPhoto}
                     alt="profile_photo"
                     sx={{ height: '125px', width: '125px' }}
                 />

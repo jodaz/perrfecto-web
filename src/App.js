@@ -45,6 +45,8 @@ import ShowAd from './pages/Ad/ShowAd';
 import PersonalInformation from './pages/PersonalInformation';
 import EditNames from './pages/PersonalInformation/EditNames';
 import EditLocation from './pages/PersonalInformation/EditLocation';
+import PetInformation from './pages/PetInformation';
+import EditPetName from './pages/PetInformation/EditPetName';
 
 function App() {
     let location = useLocation();
@@ -147,7 +149,16 @@ function App() {
                                     path='/profile/settings/pet'
                                     element={
                                         <AppLayout>
-                                            <PersonalInformation location={location} />
+                                            <PetInformation location={location} />
+                                        </AppLayout>
+                                    }
+                                />
+
+                                <Route
+                                    path='/profile/settings/pet/name'
+                                    element={
+                                        <AppLayout>
+                                            <EditPetName location={location} />
                                         </AppLayout>
                                     }
                                 />
