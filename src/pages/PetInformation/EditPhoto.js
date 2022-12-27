@@ -16,7 +16,8 @@ const EditPhoto = ({ isEditing }) => {
     const { handleSubmit, control, watch, formState: {
         isSubmitting
     }} = useForm();
-    const dogPhoto = '/images/Avatar.svg'
+    const dogPhoto = getCurrDogPhoto(user.dog.dogPhotos);
+
     const onSubmit = async (data) => {
         try {
             const parsedData = {
@@ -63,13 +64,13 @@ const EditPhoto = ({ isEditing }) => {
                 <PhotoInput
                     name="files"
                     control={control}
-                    defaultValue={dogPhoto}
+                    defaultValue={dogPhoto ? getUserPhoto(dogPhoto) : '/images/Avatar.svg'}
                     disabled={isSubmitting}
                     handleDelete={deletePhoto}
                 />
             ) : (
                 <Avatar
-                    defaultValue={dogPhoto}
+                    src={dogPhoto ? getUserPhoto(dogPhoto) : '/images/Avatar.svg'}
                     alt="profile_photo"
                     sx={{ height: '125px', width: '125px' }}
                 />
