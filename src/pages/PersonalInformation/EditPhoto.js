@@ -13,7 +13,6 @@ const EditPhoto = ({ isEditing }) => {
     const { handleSubmit, control, watch, formState: {
         isSubmitting
     }} = useForm();
-    console.log(user.dog)
 
     const onSubmit = async (data) => {
         try {

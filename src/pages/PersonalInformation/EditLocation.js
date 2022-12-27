@@ -38,8 +38,7 @@ const EditLocation = () => {
                 ...rest
             };
 
-            const formData = await formDataHandler(data, 'files')
-
+            const formData = await formDataHandler(data)
             const res = await fileProvider.put(`/api/auth/user-edit/${user.id}`, formData)
 
             if (res.status >= 200 && res.status < 300) {

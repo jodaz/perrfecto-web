@@ -5,8 +5,9 @@ import TextInput from '../../components/Forms/TextInput';
 import { useAuth, renewToken } from '../../context/AuthContext';
 import SettingsLayout from '../../layouts/SettingsLayout';
 import { useForm } from 'react-hook-form';
-import { apiProvider } from '../../api';
+import { fileProvider } from '../../api';
 import { useNavigate } from 'react-router-dom';
+import formDataHandler from '../../utils/formDataHandler';
 
 const EditNames = () => {
     const { control, handleSubmit, formState: {
@@ -17,7 +18,8 @@ const EditNames = () => {
 
     const onSubmit = async values => {
         try {
-            const res = await apiProvider.put(`/api/auth/user-edit/${user.id}`, values)
+            const formData = await formDataHandler(values)
+            const res = await fileProvider.put(`/api/auth/user-edit/${user.id}`, formData)
 
             if (res.status >= 200 && res.status < 300) {
                 renewToken(dispatch, user)
