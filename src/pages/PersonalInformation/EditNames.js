@@ -8,6 +8,10 @@ import { useForm } from 'react-hook-form';
 import { fileProvider } from '../../api';
 import { useNavigate } from 'react-router-dom';
 import formDataHandler from '../../utils/formDataHandler';
+import {
+    NAME,
+    LAST_NAME
+} from '../../validations'
 
 const EditNames = () => {
     const { control, handleSubmit, formState: {
@@ -47,6 +51,8 @@ const EditNames = () => {
                             label="Nombre"
                             defaultValue={user.name}
                             placeholder='Ingrese su nombre'
+                            rules={NAME.rules}
+                            validations={NAME.messages}
                             disabled={isSubmitting}
                         />
                     </Box>
@@ -56,6 +62,8 @@ const EditNames = () => {
                             name='lastName'
                             label="Apellido"
                             defaultValue={user.lastName}
+                            rules={LAST_NAME.rules}
+                            validations={LAST_NAME.messages}
                             placeholder='Ingrese su apellido'
                             disabled={isSubmitting}
                         />
