@@ -29,22 +29,13 @@ import ChipArrayInput from '../Forms/ChipArrayInput';
 import AddVaccines from '../../pages/Vaccines/AddVaccines';
 import AddCertificates from '../../pages/certificates/AddCertificates';
 import useEffectOnce from '../../utils/useEffectOnce'
-
-const razas = [
-    { value: 1, label: "Bulldog Frances" },
-    { value: 2, label: "Pastor aleman" },
-    { value: 3, label: "Dalmata" }
-];
+import razas from '../../utils/breeds';
+import generos from '../../utils/generos';
 
 const types = [
     { value: "breed", label: "Raza" },
     { value: "mongrel", label: "Mestizo" },
     { value: "other", label: "Otro" }
-];
-
-const genders = [
-    { value: 1, label: "Macho" },
-    { value: 2, label: "Hembra" }
 ];
 
 const years = generateYears();
@@ -256,7 +247,7 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
                         <SelectInput
                             label="Sexo"
                             control={control}
-                            options={genders}
+                            options={generos}
                             disabled={isSubmitting}
                             rules={DOG_GENDER.rules}
                             validations={DOG_GENDER.messages}

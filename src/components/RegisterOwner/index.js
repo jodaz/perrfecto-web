@@ -62,9 +62,6 @@ const RegisterOwner = ({ open, handleClose, redirect = '/home' }) => {
 
     React.useEffect(() => {
         if (province) {
-            // reset({
-            //     city: {}
-            // })
             const filteredCities = dirtyCities
                 .filter(({ id_provincia }) => id_provincia == province.id)
 

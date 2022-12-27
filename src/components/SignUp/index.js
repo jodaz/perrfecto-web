@@ -17,7 +17,14 @@ import { useAuth, loginUser } from '../../context/AuthContext'
 import getSearchParams from '../../utils/getSearchParams';
 import useMediaQuery from '@mui/material/useMediaQuery';
 // Other components
-import { NAME, LAST_NAME, PHONE, EMAIL, CONFIRM_PASSWORD, PASSWORD } from '../../validations'
+import {
+    NAME,
+    LAST_NAME,
+    PHONE,
+    EMAIL,
+    CONFIRM_PASSWORD,
+    PASSWORD
+} from '../../validations'
 
 export default function SignUp({ location }) {
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('md'));

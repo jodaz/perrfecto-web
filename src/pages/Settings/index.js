@@ -2,23 +2,12 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-import MuiList from '@mui/material/List';
 import { logout, useAuth } from '../../context/AuthContext';
 import LinkBehavior from '../../components/LinkBehavior';
-import { ListItemIcon } from '@mui/material';
-import { ChevronRight } from 'lucide-react';
-import SettingsLayout from '../../layouts/SettingsLayout';
-
-const List = ({ children }) => (
-    <MuiList sx={{
-        padding: '8px !important',
-        marginBottom: 1
-    }}>
-        {children}
-    </MuiList>
-)
+import SettingsLayout from '../../layouts/SettingsLayout'
+import ListItemLink from '../../components/ListItemLink';
+import List from '../../components/List';
 
 const ListTitle = ({ children }) => (
     <ListItem component="div" disablePadding sx={{
@@ -38,26 +27,6 @@ const ListTitle = ({ children }) => (
                 textTransform: 'uppercase'
             }}
         />
-    </ListItem>
-)
-
-const ListItemLink = ({ to, title }) => (
-    <ListItem component={LinkBehavior} disablePadding to={to} sx={{
-        borderRadius: '8px'
-    }}>
-        <ListItemButton sx={{ borderRadius: '8px', margin: '2px 0' }}>
-            <ListItemText
-                primary={title}
-                primaryTypographyProps={{
-                    color: 'text.secondary',
-                    fontWeight: 'medium',
-                    variant: 'body2',
-                }}
-            />
-            <ListItemIcon sx={{ minWidth: 0 }}>
-                <ChevronRight />
-            </ListItemIcon>
-        </ListItemButton>
     </ListItem>
 )
 
@@ -83,8 +52,25 @@ const Settings = ({ title }) => {
                             title="Cuenta de acceso"
                         />
                         <ListItemLink
-                            to="information"
+                            to="owner"
                             title="Información personal"
+                        />
+                        <ListItemLink
+                            to="pet"
+                            title="Información de la mascota"
+                        />
+                    </List>
+                    <List>
+                        <ListTitle>
+                            Legales
+                        </ListTitle>
+                        <ListItemLink
+                            to="privacy"
+                            title="Políticas de privacidad"
+                        />
+                        <ListItemLink
+                            to="terms"
+                            title="Términos y condiciones"
                         />
                     </List>
                 </Box>

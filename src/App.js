@@ -42,6 +42,14 @@ import Favourites from './pages/Favourites';
 import Account from './pages/account';
 import CreateAd from './pages/Ad/CreateAd';
 import ShowAd from './pages/Ad/ShowAd';
+import PersonalInformation from './pages/PersonalInformation';
+import EditNames from './pages/PersonalInformation/EditNames';
+import EditLocation from './pages/PersonalInformation/EditLocation';
+import PetInformation from './pages/PetInformation';
+import EditPetName from './pages/PetInformation/EditPetName';
+import EditBreed from './pages/PetInformation/EditBreed';
+import EditGender from './pages/PetInformation/EditGender';
+import EditYearDate from './pages/PetInformation/EditYearDate';
 
 function App() {
     let location = useLocation();
@@ -113,6 +121,71 @@ function App() {
                                     element={
                                         <AppLayout>
                                             <ShowAd location={location} />
+                                        </AppLayout>
+                                    }
+                                />
+                                <Route
+                                    path='/profile/settings/owner'
+                                    element={
+                                        <AppLayout>
+                                            <PersonalInformation location={location} />
+                                        </AppLayout>
+                                    }
+                                />
+                                <Route
+                                    path='/profile/settings/owner/names'
+                                    element={
+                                        <AppLayout>
+                                            <EditNames location={location} />
+                                        </AppLayout>
+                                    }
+                                />
+                                <Route
+                                    path='/profile/settings/owner/location'
+                                    element={
+                                        <AppLayout>
+                                            <EditLocation />
+                                        </AppLayout>
+                                    }
+                                />
+                                <Route
+                                    path='/profile/settings/pet'
+                                    element={
+                                        <AppLayout>
+                                            <PetInformation location={location} />
+                                        </AppLayout>
+                                    }
+                                />
+
+                                <Route
+                                    path='/profile/settings/pet/name'
+                                    element={
+                                        <AppLayout>
+                                            <EditPetName location={location} />
+                                        </AppLayout>
+                                    }
+                                />
+                                <Route
+                                    path='/profile/settings/pet/breed'
+                                    element={
+                                        <AppLayout>
+                                            <EditBreed />
+                                        </AppLayout>
+                                    }
+                                />
+                                <Route
+                                    path='/profile/settings/pet/gender'
+                                    element={
+                                        <AppLayout>
+                                            <EditGender />
+                                        </AppLayout>
+                                    }
+                                />
+                                <Route
+                                    path='/profile/settings/pet/age'
+                                    element={
+                                        <AppLayout>
+                                            <EditYearDate />
                                         </AppLayout>
                                     }
                                 />
