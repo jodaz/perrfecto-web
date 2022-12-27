@@ -1,14 +1,14 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Avatar from '@mui/material/Avatar';
 import { useAuth } from '../../context/AuthContext';
 import SettingsLayout from '../../layouts/SettingsLayout';
-import getUserPhoto from '../../utils/getUserPhoto';
 import ListItemLink from '../../components/ListItemLink';
 import List from '../../components/List';
+import EditPhoto from './EditPhoto';
 
-const PersonalInformation = ({ location }) => {
+const PersonalInformation = () => {
+    const [editPhoto, setEditPhoto] = React.useState(false);
     const { state: { user } } = useAuth();
 
     return (
@@ -24,13 +24,16 @@ const PersonalInformation = ({ location }) => {
                         <Typography variant="subtitle1" gutterBottom color="text.tertiary" fontWeight={500}>
                             Foto de perfil
                         </Typography>
-                        <Avatar
-                            src={`${getUserPhoto(user.img_profile)}`}
-                            alt="profile_photo"
-                            sx={{ height: '125px', width: '125px' }}
-                        />
+                        <EditPhoto isEditing={editPhoto} />
                     </Box>
-                    <Typography variant="subtitle1" gutterBottom color="primary" fontWeight={500}>
+                    <Typography
+                        variant="subtitle1"
+                        gutterBottom
+                        color="primary"
+                        fontWeight={500}
+                        onClick={() => setEditPhoto(true)}
+                        sx={{ cursor: 'pointer' }}
+                    >
                         Editar foto
                     </Typography>
                 </Box>
