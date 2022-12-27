@@ -7,6 +7,7 @@ import SettingsLayout from '../../layouts/SettingsLayout';
 import { useForm } from 'react-hook-form';
 import { apiProvider } from '../../api';
 import { useNavigate } from 'react-router-dom';
+import formDataHandler from '../../utils/formDataHandler';
 
 const EditPetName = () => {
     const { control, handleSubmit, formState: {
@@ -17,7 +18,8 @@ const EditPetName = () => {
 
     const onSubmit = async values => {
         try {
-            const res = await apiProvider.put(`/api/auth/user-edit/${user.id}`, values)
+            const formData = await formDataHandler(values);
+            const res = await apiProvider.put(`/api/dog/edit/${user.dog.id}`, formData)
 
             if (res.status >= 200 && res.status < 300) {
                 renewToken(dispatch, user)

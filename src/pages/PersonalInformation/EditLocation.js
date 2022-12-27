@@ -13,15 +13,22 @@ import provincias from '../../utils/provincias';
 import Button from '../../components/Button';
 import dirtyCities from '../../utils/ciudades';
 
+const selectedProvince = name => provincias.filter(({ nombre }) => nombre === name)
+const selectedCity = name => dirtyCities.filter(({ nombre }) => nombre === name)
+
 const EditLocation = () => {
+    const { state: { user }, dispatch } = useAuth();
     const { control, handleSubmit, watch, formState: {
         isSubmitting
     }} = useForm({
-        reValidateMode: "onBlur"
+        reValidateMode: "onBlur",
+        defaultValues: React.useMemo(() => ({
+            'province': selectedProvince(user.province)[0],
+            'city': selectedCity(user.city)[0]
+        }))
     });
     const [cities, setCities] = React.useState([])
     const navigate = useNavigate();
-    const { state: { user }, dispatch } = useAuth();
     const province = watch('province')
 
     const onSubmit = async values => {
@@ -97,8 +104,8 @@ const EditLocation = () => {
                             label='Distrito'
                             options={cities}
                             optionLabel='nombre'
-                            rules={CITY.rules}
-                            validations={CITY.messages}
+                            // rules={CITY.rules}
+                            // validations={CITY.messages}
                             InputProps={{
                                 placeholder: 'Seleccione una ciudad'
                             }}

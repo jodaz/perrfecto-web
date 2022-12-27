@@ -42,12 +42,12 @@ const SelectInput = ({
             defaultValue={defaultValue}
             validations={validations}
             rules={rules}
-            render={({ field: { ref, onChange, ...fieldRest }, fieldState: { error } }) => (
+            render={({ field: { ref, onChange, value, ...fieldRest }, fieldState: { error } }) => (
                 <>
                     <Select
                         multiple={multiple}
                         options={options}
-                        defaultValue={defaultValue}
+                        defaultValue={value}
                         getOptionLabel={(option) => option[optionLabel]}
                         onChange={(_, data) => onChange(data)}
                         renderInput={params => (
