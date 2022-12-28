@@ -44,7 +44,7 @@ const EditGender = () => {
     }
 
     return (
-        <SettingsLayout title='Raza'>
+        <SettingsLayout title='Editar sexo'>
             <Box sx={{
                 pt: 1,
                 display: 'flex',
