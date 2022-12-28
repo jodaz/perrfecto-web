@@ -10,6 +10,7 @@ import Button from '../../components/Button';
 import ChipArrayInput from '../../components/Forms/ChipArrayInput';
 import useEffectOnce from '../../utils/useEffectOnce';
 import CircularProgress from '@mui/material/CircularProgress';
+import AddVaccines from '../Vaccines/AddVaccines';
 
 const selectedCharacteristics = items => items.map(({ id }) => id)
 
@@ -26,26 +27,27 @@ const Form = ({ features }) => {
     const navigate = useNavigate();
 
     const onSubmit = async values => {
-        try {
-            const mappedCharacteristics = values.characteristics.map(value => ({
-                id_charact: value
-            }))
+        console.log(values)
+        // try {
+        //     const mappedCharacteristics = values.characteristics.map(value => ({
+        //         id_charact: value
+        //     }))
 
-            const parsedData = {
-                characteristics: mappedCharacteristics
-            }
-            const formData = await formDataHandler(parsedData)
+        //     const formData = {
+        //         characteristic: mappedCharacteristics
+        //     }
+        //     const res = await fileProvider.put(`/api/dog/edit/${user.dog.id}`, formData)
 
-            const res = await fileProvider.put(`/api/dog/edit/${user.dog.id}`, formData)
-
-            if (res.status >= 200 && res.status < 300) {
-                renewToken(dispatch, user);
-                navigate(-1);
-            }
-        } catch (error) {
-            console.log(error)
-        }
+        //     if (res.status >= 200 && res.status < 300) {
+        //         renewToken(dispatch, user);
+        //         navigate(-1);
+        //     }
+        // } catch (error) {
+        //     console.log(error)
+        // }
     }
+
+    console.log(user.dog.Vaccines)
 
     return (
         <Box sx={{
@@ -57,11 +59,7 @@ const Form = ({ features }) => {
         }}  component="form" onSubmit={handleSubmit(onSubmit)}>
             <Box>
                 <Box sx={{ p: 2 }}>
-                    <ChipArrayInput
-                        control={control}
-                        name='characteristics'
-                        labels={features}
-                    />
+                    <AddVaccines control={control} />
                 </Box>
             </Box>
             <Box sx={{ p: 2 }}>
@@ -78,7 +76,7 @@ const Form = ({ features }) => {
     );
 }
 
-const EditCharacteristics = () => {
+const EditVaccines = () => {
     const [isLoading, setIsLoading] = React.useState(true)
     const [features, setFeatures] = React.useState([])
 
@@ -100,21 +98,10 @@ const EditCharacteristics = () => {
     useEffectOnce(() => { fetchFeatures() }, []);
 
     return (
-        <SettingsLayout title='Características'>
-            {isLoading ? (
-                <Box sx={{
-                    display: 'flex',
-                    flex: 1,
-                    justifyContent: 'center',
-                    p: 2
-                }}>
-                    <CircularProgress />
-                </Box>
-            ) : (
-                <Form features={features} />
-            )}
+        <SettingsLayout title='Vacunas'>
+            <Form />
         </SettingsLayout>
     );
 }
 
-export default EditCharacteristics
+export default EditVaccines

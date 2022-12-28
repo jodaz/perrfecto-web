@@ -51,6 +51,7 @@ import EditBreed from './pages/PetInformation/EditBreed';
 import EditGender from './pages/PetInformation/EditGender';
 import EditYearDate from './pages/PetInformation/EditYearDate';
 import EditCharacteristics from './pages/PetInformation/EditCharacteristics';
+import EditVaccines from './pages/PetInformation/EditVaccines';
 
 function App() {
     let location = useLocation();
@@ -195,6 +196,14 @@ function App() {
                                     element={
                                         <AppLayout>
                                             <EditCharacteristics />
+                                        </AppLayout>
+                                    }
+                                />
+                                <Route
+                                    path='/profile/settings/pet/vaccines'
+                                    element={
+                                        <AppLayout>
+                                            <EditVaccines />
                                         </AppLayout>
                                     }
                                 />

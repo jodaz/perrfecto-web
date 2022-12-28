@@ -8,8 +8,8 @@ import useEffectOnce from '../../utils/useEffectOnce';
 
 const AddVaccines = ({ control }) => {
     const [vaccines, setVaccines] = React.useState([])
-    const [indexes, setIndexes] = React.useState([0]);
-    const [counter, setCounter] = React.useState(0);
+    const [indexes, setIndexes] = React.useState([1, 2]);
+    const [counter, setCounter] = React.useState(2);
 
     const fetchVaccines = async () => {
         try {
@@ -48,6 +48,7 @@ const AddVaccines = ({ control }) => {
                             control={control}
                             name={`vaccines[${index}]`}
                             options={vaccines}
+                            defaultValue={`vaccines[${index}]`}
                             optionLabel='name'
                         />
                     </Box>

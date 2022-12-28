@@ -124,7 +124,7 @@ const PetInformation = () => {
                             marginTop: '0.5rem',
                             ml: 2
                         }}>
-                            {(characteristic) ? renderCharacteristics() : 'Sin caracteríticas'}
+                            {(characteristic.length) ? renderCharacteristics() : 'Sin caracteríticas'}
                         </Box>
                         <ListItemLink
                             to="vaccines"
@@ -137,7 +137,7 @@ const PetInformation = () => {
                             marginTop: '0.5rem',
                             ml: 2
                         }}>
-                            {(Vaccines) ? renderVaccines() : 'Sin vacunas'}
+                            {(Vaccines.length) ? renderVaccines() : 'Sin vacunas'}
                         </Box>
                         <ListItemLink
                             to="certificates"
@@ -150,7 +150,7 @@ const PetInformation = () => {
                             marginTop: '0.5rem',
                             ml: 2
                         }}>
-                            {(Certificates) ? renderCertificates() : 'Sin certificados'}
+                            {(Certificates.length) ? renderCertificates() : 'Sin certificados'}
                         </Box>
                     </List>
                 </Box>
