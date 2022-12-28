@@ -43,11 +43,11 @@ const AddCertificates = ({ control }) => {
                 </Box>
             ))}
             <Box>
-                <Button onClick={addCertificate} disabled={counter == 3} size='small' sx={{ fontSize: '14px' }}>
+                <Button onClick={addCertificate} disabled={counter == 4} size='small' sx={{ fontSize: '14px' }}>
                     <Plus size={18} /> Añadir más
                 </Button>
             </Box>
-            {(counter == 3) && (
+            {(counter == 4) && (
                 <Box sx={{ p: 2}}>
                     <FormHelperText error>
                         Haz alcanzado el límite de certificados.

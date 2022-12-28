@@ -52,6 +52,7 @@ import EditGender from './pages/PetInformation/EditGender';
 import EditYearDate from './pages/PetInformation/EditYearDate';
 import EditCharacteristics from './pages/PetInformation/EditCharacteristics';
 import EditVaccines from './pages/PetInformation/EditVaccines';
+import EditCertificates from './pages/PetInformation/EditCertificates';
 
 function App() {
     let location = useLocation();
@@ -204,6 +205,14 @@ function App() {
                                     element={
                                         <AppLayout>
                                             <EditVaccines />
+                                        </AppLayout>
+                                    }
+                                />
+                                <Route
+                                    path='/profile/settings/pet/certificates'
+                                    element={
+                                        <AppLayout>
+                                            <EditCertificates />
                                         </AppLayout>
                                     }
                                 />

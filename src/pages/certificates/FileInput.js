@@ -3,11 +3,8 @@ import Box from '@mui/material/Box'
 import FormHelperText from '@mui/material/FormHelperText'
 import { useDropzone } from 'react-dropzone';
 import { Controller } from 'react-hook-form'
-import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/Typography';
 import { Camera } from 'lucide-react';
-import { Button } from '@mui/material';
-
 const Dropzone = ({
     onChange,
     disabled

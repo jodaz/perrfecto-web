@@ -9,7 +9,7 @@ import useEffectOnce from '../../utils/useEffectOnce';
 
 const VaccinesArrayField = ({ vaccines, control }) => {
     const [indexes, setIndexes] = React.useState([0]);
-    const [counter, setCounter] = React.useState(2);
+    const [counter, setCounter] = React.useState(0);
 
     const addVaccine = () => {
         setIndexes(prevIndexes => [...prevIndexes, counter]);
@@ -94,7 +94,10 @@ const AddVaccines = ({ control, funcHandler }) => {
                     <CircularProgress />
                 </Box>
             ) : (
-                <VaccinesArrayField control={control} vaccines={vaccines} />
+                <VaccinesArrayField
+                    control={control}
+                    vaccines={vaccines}
+                />
             )}
         </Box>
     );
