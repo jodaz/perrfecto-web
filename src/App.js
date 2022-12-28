@@ -50,6 +50,9 @@ import EditPetName from './pages/PetInformation/EditPetName';
 import EditBreed from './pages/PetInformation/EditBreed';
 import EditGender from './pages/PetInformation/EditGender';
 import EditYearDate from './pages/PetInformation/EditYearDate';
+import EditCharacteristics from './pages/PetInformation/EditCharacteristics';
+import EditVaccines from './pages/PetInformation/EditVaccines';
+import EditCertificates from './pages/PetInformation/EditCertificates';
 import EditAd from './pages/Ad/EditAd';
 
 function App() {
@@ -195,6 +198,30 @@ function App() {
                                     element={
                                         <AppLayout>
                                             <EditYearDate />
+                                        </AppLayout>
+                                    }
+                                />
+                                <Route
+                                    path='/profile/settings/pet/characteristics'
+                                    element={
+                                        <AppLayout>
+                                            <EditCharacteristics />
+                                        </AppLayout>
+                                    }
+                                />
+                                <Route
+                                    path='/profile/settings/pet/vaccines'
+                                    element={
+                                        <AppLayout>
+                                            <EditVaccines />
+                                        </AppLayout>
+                                    }
+                                />
+                                <Route
+                                    path='/profile/settings/pet/certificates'
+                                    element={
+                                        <AppLayout>
+                                            <EditCertificates />
                                         </AppLayout>
                                     }
                                 />

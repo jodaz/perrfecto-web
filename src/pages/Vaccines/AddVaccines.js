@@ -2,27 +2,14 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import { apiProvider } from '../../api';
 import SelectInput from '../../components/Forms/SelectInput';
+import CircularProgress from '@mui/material/CircularProgress';
 import { Button, IconButton } from '@mui/material';
 import { Trash2, Plus } from 'lucide-react';
 import useEffectOnce from '../../utils/useEffectOnce';
 
-const AddVaccines = ({ control }) => {
-    const [vaccines, setVaccines] = React.useState([])
+const VaccinesArrayField = ({ vaccines, control }) => {
     const [indexes, setIndexes] = React.useState([0]);
     const [counter, setCounter] = React.useState(0);
-
-    const fetchVaccines = async () => {
-        try {
-            const res = await apiProvider.get('api/vaccine/vaccines')
-
-            if (res.status >= 200 && res.status < 300) {
-                const { data: { data } } = res;
-                setVaccines(data);
-            }
-        } catch (error) {
-            console.log("error ", error)
-        }
-    }
 
     const addVaccine = () => {
         setIndexes(prevIndexes => [...prevIndexes, counter]);
@@ -33,8 +20,6 @@ const AddVaccines = ({ control }) => {
         setIndexes(prevIndexes => [...prevIndexes.filter(item => item !== index)]);
         setCounter(prevCounter => prevCounter - 1);
     };
-
-    useEffectOnce(() => { fetchVaccines(); }, []);
 
     return (
         <Box sx={{
@@ -48,6 +33,7 @@ const AddVaccines = ({ control }) => {
                             control={control}
                             name={`vaccines[${index}]`}
                             options={vaccines}
+                            defaultValue={`vaccines[${index}]`}
                             optionLabel='name'
                         />
                     </Box>
@@ -69,6 +55,50 @@ const AddVaccines = ({ control }) => {
                     <Plus size={18} /> Añadir más
                 </Button>
             </Box>
+        </Box>
+    );
+}
+
+const AddVaccines = ({ control, funcHandler }) => {
+    const [vaccines, setVaccines] = React.useState([])
+
+    const fetchVaccines = async () => {
+        try {
+            const res = await apiProvider.get('api/vaccine/vaccines')
+
+            if (res.status >= 200 && res.status < 300) {
+                const { data: { data } } = res;
+                setVaccines(data);
+
+                if (funcHandler) funcHandler();
+            }
+        } catch (error) {
+            console.log("error ", error)
+        }
+    }
+
+    useEffectOnce(() => { fetchVaccines(); }, []);
+
+    return (
+        <Box sx={{
+            display: 'flex',
+            flexDirection: 'column'
+        }}>
+            {!vaccines.length ? (
+                <Box sx={{
+                    display: 'flex',
+                    flex: 1,
+                    justifyContent: 'center',
+                    p: 2
+                }}>
+                    <CircularProgress />
+                </Box>
+            ) : (
+                <VaccinesArrayField
+                    control={control}
+                    vaccines={vaccines}
+                />
+            )}
         </Box>
     );
 }
