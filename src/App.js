@@ -50,6 +50,7 @@ import EditPetName from './pages/PetInformation/EditPetName';
 import EditBreed from './pages/PetInformation/EditBreed';
 import EditGender from './pages/PetInformation/EditGender';
 import EditYearDate from './pages/PetInformation/EditYearDate';
+import EditCharacteristics from './pages/PetInformation/EditCharacteristics';
 
 function App() {
     let location = useLocation();
@@ -186,6 +187,14 @@ function App() {
                                     element={
                                         <AppLayout>
                                             <EditYearDate />
+                                        </AppLayout>
+                                    }
+                                />
+                                <Route
+                                    path='/profile/settings/pet/characteristics'
+                                    element={
+                                        <AppLayout>
+                                            <EditCharacteristics />
                                         </AppLayout>
                                     }
                                 />
