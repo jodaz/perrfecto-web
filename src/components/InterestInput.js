@@ -102,7 +102,7 @@ const InterestInput = ({
                     {list('bottom')}
                 </Drawer>
             </Box>
-            {(currentValues) && (
+            {!!(currentValues && options.length) && (
                 <Stack direction='row' flexWrap='wrap'>
                     {
                         currentValues.map(item => {
