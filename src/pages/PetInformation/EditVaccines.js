@@ -7,47 +7,43 @@ import { useForm } from 'react-hook-form';
 import { useAuth, renewToken } from '../../context/AuthContext';
 import formDataHandler from '../../utils/formDataHandler';
 import Button from '../../components/Button';
-import ChipArrayInput from '../../components/Forms/ChipArrayInput';
 import useEffectOnce from '../../utils/useEffectOnce';
-import CircularProgress from '@mui/material/CircularProgress';
 import AddVaccines from '../Vaccines/AddVaccines';
 
-const selectedCharacteristics = items => items.map(({ id }) => id)
-
-const Form = ({ features }) => {
+const Form = () => {
     const { state: { user }, dispatch } = useAuth();
     const { control, handleSubmit, formState: {
         isSubmitting
     }} = useForm({
         reValidateMode: "onBlur",
         defaultValues: React.useMemo(() => ({
-            'characteristics': selectedCharacteristics(user.dog.characteristic)
+            'vaccines': user.dog.Vaccines
         }))
     });
     const navigate = useNavigate();
 
     const onSubmit = async values => {
-        console.log(values)
-        // try {
-        //     const mappedCharacteristics = values.characteristics.map(value => ({
-        //         id_charact: value
-        //     }))
+        try {
+            const mappedVaccines = values.vaccines.map(({ id }) => ({
+                id_vaccine: id
+            }))
 
-        //     const formData = {
-        //         characteristic: mappedCharacteristics
-        //     }
-        //     const res = await fileProvider.put(`/api/dog/edit/${user.dog.id}`, formData)
+            const parsedData = {
+                vaccines: mappedVaccines
+            }
 
-        //     if (res.status >= 200 && res.status < 300) {
-        //         renewToken(dispatch, user);
-        //         navigate(-1);
-        //     }
-        // } catch (error) {
-        //     console.log(error)
-        // }
+            const formData = await formDataHandler(parsedData)
+
+            const res = await fileProvider.put(`/api/dog/edit/${user.dog.id}`, formData)
+
+            if (res.status >= 200 && res.status < 300) {
+                renewToken(dispatch, user);
+                navigate(-1);
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
-
-    console.log(user.dog.Vaccines)
 
     return (
         <Box sx={{
