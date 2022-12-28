@@ -12,6 +12,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Menu from "../../../components/Menu";
 import DeleteAd from "../../../components/Modals/DeleteAd";
 import { Chip } from '@mui/material';
+import LinkBehavior from '../../../components/LinkBehavior';
 
 const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
@@ -68,7 +69,15 @@ const MyAdCard = ({ fullWidth, dog, publication, email, phone, code_phone }) => 
                         }
                     }}
                 >
-                    <Box onClick={() => setOpenDeleteModal(true)}>
+                    <Box
+                        component={LinkBehavior}
+                        to='edit'
+                        width='inherit'
+                        sx={{ textDecoration: 'none', color: 'unset' }}
+                    >
+                        Editar anuncio
+                    </Box>
+                    <Box onClick={() => setOpenDeleteModal(true)} width='inherit'>
                         Eliminar anuncio
                     </Box>
                 </Menu>

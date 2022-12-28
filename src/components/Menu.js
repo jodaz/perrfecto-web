@@ -35,9 +35,9 @@ const Menu = ({ children, icon, IconButtonProps }) => {
                 PaperProps={{
                     style: {
                         maxHeight: ITEM_HEIGHT * 4.5,
-                        width: '20ch',
                         boxShadow: '0px 2px 8px rgba(0, 0, 0, 0.24)',
-                        borderRadius: '8px'
+                        borderRadius: '8px',
+                        width: 'fit-content'
                     },
                 }}
                 anchorOrigin={{
@@ -53,6 +53,7 @@ const Menu = ({ children, icon, IconButtonProps }) => {
                     <MenuItem
                         key={child}
                         onClick={handleClose}
+                        sx={{ width: '100%' }}
                     >
                         {React.cloneElement(child)}
                     </MenuItem>

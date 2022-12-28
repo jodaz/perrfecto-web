@@ -9,11 +9,18 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import { PlusCircle } from 'lucide-react';
 import useEffectOnce from '../utils/useEffectOnce';
+import getUserPhoto from '../utils/getUserPhoto'
 
 const Dropzone = ({
-    onChange
+    onChange,
+    value = []
 }) => {
-    const [files, setFiles] = React.useState([]);
+    const [files, setFiles] = React.useState((() => {
+        if (typeof(value) == 'string') {
+            return JSON.parse(value)
+        }
+        return value;
+    })());
     const { getRootProps, getInputProps } = useDropzone({
         accept: {
             'image/*': []
@@ -31,7 +38,7 @@ const Dropzone = ({
         <SwiperSlide key={i}>
             <Box
                 component='img'
-                src={file.preview}
+                src={file.preview ? file.preview : getUserPhoto(file)}
                 onLoad={() => { URL.revokeObjectURL(file.preview) }}
                 sx={{
                     borderRadius: '12px',

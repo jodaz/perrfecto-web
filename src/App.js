@@ -53,6 +53,7 @@ import EditYearDate from './pages/PetInformation/EditYearDate';
 import EditCharacteristics from './pages/PetInformation/EditCharacteristics';
 import EditVaccines from './pages/PetInformation/EditVaccines';
 import EditCertificates from './pages/PetInformation/EditCertificates';
+import EditAd from './pages/Ad/EditAd';
 
 function App() {
     let location = useLocation();
@@ -108,6 +109,14 @@ function App() {
                                     element={
                                         <AppLayout>
                                             <CreateAd location={location} />
+                                        </AppLayout>
+                                    }
+                                />
+                                <Route
+                                    path='/profile/ads/:id/edit'
+                                    element={
+                                        <AppLayout>
+                                            <EditAd location={location} />
                                         </AppLayout>
                                     }
                                 />
