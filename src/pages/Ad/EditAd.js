@@ -53,6 +53,7 @@ const EditAd = () => {
     }} = useForm({
         reValidateMode: "onBlur",
         defaultValues: {
+            files: user.publication[0].multimedia,
             interests: selectedItems(user.publication[0].interests),
             description: user.publication[0].description,
             permission_geolocation: user.publication[0].permission_geolocation,
@@ -109,6 +110,10 @@ const EditAd = () => {
                 flexDirection: 'column',
                 position: 'relative'
             }} component="form" onSubmit={handleSubmit(onSubmit)}>
+                <AdPhotoInput
+                    control={control}
+                    name='files'
+                />
                 <Box sx={{ p: 2 }}>
                     <Box sx={{ display: 'flex', }}>
                         <Typography
