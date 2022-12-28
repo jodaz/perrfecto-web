@@ -59,7 +59,7 @@ const VaccinesArrayField = ({ vaccines, control }) => {
     );
 }
 
-const AddVaccines = ({ control }) => {
+const AddVaccines = ({ control, funcHandler }) => {
     const [vaccines, setVaccines] = React.useState([])
 
     const fetchVaccines = async () => {
@@ -69,6 +69,8 @@ const AddVaccines = ({ control }) => {
             if (res.status >= 200 && res.status < 300) {
                 const { data: { data } } = res;
                 setVaccines(data);
+
+                if (funcHandler) funcHandler();
             }
         } catch (error) {
             console.log("error ", error)
