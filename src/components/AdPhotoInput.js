@@ -26,7 +26,7 @@ const Dropzone = ({
     const { getRootProps, getInputProps } = useDropzone({
         accept: {
             'image/*': [],
-            'video/*': []
+            'video/mp4': []
         },
         onDrop: acceptedFiles => {
             setFiles(acceptedFiles.map(file => Object.assign(file, {
@@ -74,7 +74,13 @@ const Dropzone = ({
         return () => files.forEach(file => URL.revokeObjectURL(file.preview));
     }, []);
 
-    console.log(value)
+    React.useEffect(() => {
+        if (typeof(value) == 'string') {
+            return setFiles(JSON.parse(value))
+        } else {
+            return setFiles(value);
+        }
+    }, [value])
 
     return (
         <Box sx={{ display: 'flex', maxWidth: '200px', mt: 1, mb: 2 }}>

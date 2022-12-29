@@ -51,7 +51,7 @@ const EditAd = () => {
     const [openOverlayLoader, setOpenOverlayLoader] = React.useState(false)
     const [interests, setInterests] = React.useState([])
     const [openDeletePhoto, setOpenDeletePhoto] = React.useState(false);
-    const { control, handleSubmit, watch, formState: {
+    const { control, handleSubmit, watch, setValue, formState: {
         isSubmitting
     }} = useForm({
         reValidateMode: "onBlur",
@@ -113,6 +113,14 @@ const EditAd = () => {
         setOpenDeletePhoto(false)
         setSelectedPhoto(null)
     }
+
+    // useEffectOnce(() => {
+    //     console.log("Actualizar footo")
+    //     setValue('files', user.publication[0].multimedia)
+    // }, [user])
+    React.useEffect(() => {
+        setValue("files", user.publication[0].multimedia)
+    }, [user.publication[0].multimedia.length])
 
     return (
         <SettingsLayout title='Editar anuncio'>
