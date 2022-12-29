@@ -8,10 +8,12 @@ import Stack from '@mui/material/Stack';
 import { apiProvider } from '../../../api'
 import { renewToken, useAuth } from '../../../context/AuthContext';
 import { alpha } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const DeleteAd = ({ open, handleClose, item }) => {
     const [onSubmit, setOnSubmit] = React.useState(false);
     const { dispatch, state: { user } } = useAuth();
+    const redirect = useNavigate()
 
     const deleteAdRequest = async () => {
         try {
@@ -19,6 +21,7 @@ const DeleteAd = ({ open, handleClose, item }) => {
 
             if (res.status >= 200 && res.status < 300) {
                 renewToken(dispatch, user);
+                redirect('/profile')
             }
 
             return res;
