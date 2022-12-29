@@ -7,7 +7,6 @@ import { fileProvider, apiProvider } from '../../api'
 import formDataHandler from '../../utils/formDataHandler';
 import Avatar from '@mui/material/Avatar';
 import getUserPhoto from '../../utils/getUserPhoto';
-import useEffectOnce from '../../utils/useEffectOnce';
 
 const getCurrDogPhoto = data => JSON.parse(data)[0]
 
@@ -52,7 +51,7 @@ const EditPhoto = ({ isEditing }) => {
         }
     }
 
-    useEffectOnce(() => {
+    React.useEffect(() => {
         const subscription = watch(handleSubmit(onSubmit))
 
         return () => subscription.unsubscribe();

@@ -114,10 +114,6 @@ const EditAd = () => {
         setSelectedPhoto(null)
     }
 
-    // useEffectOnce(() => {
-    //     console.log("Actualizar footo")
-    //     setValue('files', user.publication[0].multimedia)
-    // }, [user])
     React.useEffect(() => {
         setValue("files", user.publication[0].multimedia)
     }, [user.publication[0].multimedia.length])
