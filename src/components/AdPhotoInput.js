@@ -25,7 +25,8 @@ const Dropzone = ({
     })());
     const { getRootProps, getInputProps } = useDropzone({
         accept: {
-            'image/*': []
+            'image/*': [],
+            'video/*': []
         },
         onDrop: acceptedFiles => {
             setFiles(acceptedFiles.map(file => Object.assign(file, {
@@ -72,6 +73,8 @@ const Dropzone = ({
         // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
         return () => files.forEach(file => URL.revokeObjectURL(file.preview));
     }, []);
+
+    console.log(value)
 
     return (
         <Box sx={{ display: 'flex', maxWidth: '200px', mt: 1, mb: 2 }}>
