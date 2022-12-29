@@ -102,7 +102,7 @@ const EditAd = () => {
     }
 
     return (
-        <SettingsLayout title='Crear anuncio'>
+        <SettingsLayout title='Editar anuncio'>
             <Box sx={{
                 height: '100%',
                 width: '100%',
