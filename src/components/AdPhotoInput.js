@@ -14,7 +14,8 @@ import { alpha } from '@mui/material';
 
 const Dropzone = ({
     onChange,
-    value = []
+    value = [],
+    deletePhotoHandler,
 }) => {
     const [files, setFiles] = React.useState((() => {
         if (typeof(value) == 'string') {
@@ -59,7 +60,7 @@ const Dropzone = ({
                         '&:hover': {
                             backgroundColor: theme => `${alpha(theme.palette.error.main, 0.9)}`
                         }
-                    }}>
+                    }} onClick={() => deletePhotoHandler(file)}>
                         <Trash2 color="#fff" size={16} />
                     </IconButton>
                 )}
