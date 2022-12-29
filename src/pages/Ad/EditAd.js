@@ -17,6 +17,7 @@ import PublicationWait from '../../components/Modals/PublicationWait';
 import OverlayLoader from '../../components/Modals/OverlayLoader';
 import useEffectOnce from '../../utils/useEffectOnce'
 import getYearsFromYear from '../../utils/getYearsFromYear';
+import DeletePhotoWarning from '../../components/Modals/DeletePhotoWarning';
 
 const selectedItems = labels => labels.map(({ AdInterest }) => AdInterest.id_interest)
 
@@ -46,8 +47,10 @@ const EditAd = () => {
     const { state: { user }, dispatch } = useAuth();
     const { dog } = user
     const [openWarning, setOpenWarning] = React.useState(false)
+    const [selectedPhoto, setSelectedPhoto] = React.useState(null)
     const [openOverlayLoader, setOpenOverlayLoader] = React.useState(false)
     const [interests, setInterests] = React.useState([])
+    const [openDeletePhoto, setOpenDeletePhoto] = React.useState(false);
     const { control, handleSubmit, watch, formState: {
         isSubmitting
     }} = useForm({
@@ -101,8 +104,18 @@ const EditAd = () => {
         setOpenWarning(false);
     }
 
+    const handleOpenDeletePhoto = (file) => {
+        setOpenDeletePhoto(true);
+        setSelectedPhoto(file)
+    }
+
+    const handleCloseDeletePhoto = () => {
+        setOpenDeletePhoto(false)
+        setSelectedPhoto(null)
+    }
+
     return (
-        <SettingsLayout title='Crear anuncio'>
+        <SettingsLayout title='Editar anuncio'>
             <Box sx={{
                 height: '100%',
                 width: '100%',
@@ -113,6 +126,7 @@ const EditAd = () => {
                 <AdPhotoInput
                     control={control}
                     name='files'
+                    deletePhotoHandler={handleOpenDeletePhoto}
                 />
                 <Box sx={{ p: 2 }}>
                     <Box sx={{ display: 'flex', }}>
@@ -245,6 +259,12 @@ const EditAd = () => {
             </Box>
             <PublicationWait open={openWarning} handleClose={handleCloseWarning} />
             <OverlayLoader open={openOverlayLoader} />
+            <DeletePhotoWarning
+                open={openDeletePhoto}
+                handleClose={handleCloseDeletePhoto}
+                file={selectedPhoto}
+                publication={user.publication[0]}
+            />
         </SettingsLayout>
     );
 }

@@ -7,13 +7,15 @@ import { Scrollbar } from 'swiper';
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import { PlusCircle } from 'lucide-react';
+import { PlusCircle, Trash2 } from 'lucide-react';
 import useEffectOnce from '../utils/useEffectOnce';
 import getUserPhoto from '../utils/getUserPhoto'
+import { alpha } from '@mui/material';
 
 const Dropzone = ({
     onChange,
-    value = []
+    value = [],
+    deletePhotoHandler,
 }) => {
     const [files, setFiles] = React.useState((() => {
         if (typeof(value) == 'string') {
@@ -36,17 +38,33 @@ const Dropzone = ({
 
     const thumbs = files.map((file, i) => (
         <SwiperSlide key={i}>
-            <Box
-                component='img'
-                src={file.preview ? file.preview : getUserPhoto(file)}
-                onLoad={() => { URL.revokeObjectURL(file.preview) }}
-                sx={{
-                    borderRadius: '12px',
-                    height: 180,
-                    width: 160,
-                    marginRight: 1
-                }}
-            />
+            <Box sx={{ position: 'relative' }}>
+                <Box
+                    component='img'
+                    src={file.preview ? file.preview : getUserPhoto(file)}
+                    onLoad={() => { URL.revokeObjectURL(file.preview) }}
+                    sx={{
+                        borderRadius: '12px',
+                        height: 180,
+                        width: 160,
+                        marginRight: 1
+                    }}
+                />
+                {(files.length) && (
+                    <IconButton sx={{
+                        position: 'absolute',
+                        zIndex: 1000,
+                        bottom: 12,
+                        right: 12,
+                        backgroundColor: theme => theme.palette.error.main,
+                        '&:hover': {
+                            backgroundColor: theme => `${alpha(theme.palette.error.main, 0.9)}`
+                        }
+                    }} onClick={() => deletePhotoHandler(file)}>
+                        <Trash2 color="#fff" size={16} />
+                    </IconButton>
+                )}
+            </Box>
         </SwiperSlide>
     ));
 
