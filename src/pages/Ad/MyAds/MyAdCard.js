@@ -5,42 +5,21 @@ import getUserPhoto from "../../../utils/getUserPhoto";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import Badge from "@mui/material/Badge";
 import { Mail, Phone } from 'lucide-react';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Menu from "../../../components/Menu";
 import DeleteAd from "../../../components/Modals/DeleteAd";
 import { Chip } from '@mui/material';
 import LinkBehavior from '../../../components/LinkBehavior';
+import ButtonBadge from '../../../components/Buttons/ButtonBadge';
+import ShowVaccines from '../../Vaccines/ShowVaccines';
 
 const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
-const CustomBadge = ({ children, count}) => (
-    <Badge
-        badgeContent={`${count}`}
-        color="primary"
-        anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'right'
-        }}
-        sx={{
-            '& .MuiBadge-badge': {
-                height: '25px !important',
-                width: '25px !important',
-                borderRadius: '100px',
-                color: '#fff',
-                backgroundColor: theme => theme.palette.warning.main
-            }
-        }}
-    >
-        {children}
-    </Badge>
-)
-
-const MyAdCard = ({ fullWidth, dog, publication, email, phone, code_phone }) => {
+const MyAdCard = ({ fullWidth, ...data  }) => {
+    const { dog, publication, email, phone, code_phone } = data
     const [openDeleteModal, setOpenDeleteModal] = React.useState(false)
-    const { Certificates, Vaccines } = dog
+    const { Certificates } = dog
     const { multimedia, interests, permission_tlf } = publication;
     const arrImages = getImages(JSON.parse(multimedia))
 
@@ -121,28 +100,10 @@ const MyAdCard = ({ fullWidth, dog, publication, email, phone, code_phone }) => 
                         mb: 1
                     }
                 }}>
-                    <CustomBadge count={`${Certificates.length}`}>
-                        <Button
-                            variant="contained"
-                            sx={{
-                                padding: '8px, 16px, 8px, 16px',
-                                fontSize: '14px'
-                            }}
-                        >
-                            Certificados
-                        </Button>
-                    </CustomBadge>
-                    <CustomBadge count={`${Vaccines.length}`}>
-                        <Button
-                            variant="contained"
-                            sx={{
-                                padding: '8px, 16px, 8px, 16px',
-                                fontSize: '14px'
-                            }}
-                        >
-                            Vacunas
-                        </Button>
-                    </CustomBadge>
+                    <ButtonBadge total={`${Certificates.length}`}>
+                        Certificados
+                    </ButtonBadge>
+                    <ShowVaccines {...data} />
                 </Box>
                 <DeleteAd
                     open={openDeleteModal}
