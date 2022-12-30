@@ -18,6 +18,8 @@ import OverlayLoader from '../../components/Modals/OverlayLoader';
 import useEffectOnce from '../../utils/useEffectOnce'
 import getYearsFromYear from '../../utils/getYearsFromYear';
 import DeletePhotoWarning from '../../components/Modals/DeletePhotoWarning';
+import { useNavigate } from 'react-router-dom';
+import DogInformation from './DogInformation';
 
 const selectedItems = labels => labels.map(({ AdInterest }) => AdInterest.id_interest)
 
@@ -65,6 +67,7 @@ const EditAd = () => {
         }
     });
     const insterestsValues = watch('interests')
+    const redirect = useNavigate()
 
     const onSubmit = async (data) => {
         setOpenOverlayLoader(true)
@@ -130,75 +133,8 @@ const EditAd = () => {
                     name='files'
                     deletePhotoHandler={handleOpenDeletePhoto}
                 />
-                <Box sx={{ p: 2 }}>
-                    <Box sx={{ display: 'flex', }}>
-                        <Typography
-                            variant="body2"
-                            color="text.tertiary"
-                            textTransform={'uppercase'}
-                            gutterBottom
-                        >
-                            información de la mascota
-                        </Typography>
-                    </Box>
-                    <Typography
-                        variant="h6"
-                        textTransform='capitalize'
-                        gutterBottom
-                    >
-                        {dog.name}
-                    </Typography>
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <Box sx={{
-                            display: 'flex',
-                            justifyContent: 'space-around',
-                            alignItems: 'center',
-                        }}>
-                            {/** Raza */}
-                            <Typography color="primary.main">
-                                {dog.breed}
-                            </Typography>
-                            <Box sx={{ fontSize: '6px', padding: '0 8px' }}>
-                                <CircleIcon fontSize='inherit' color='primary' />
-                            </Box>
-                            <Typography color="primary.main">
-                                {getYearsFromYear(dog.dogAge)} años
-                            </Typography>
-                            {(user.province && user.city) && (
-                                <>
-                                    <Box sx={{ fontSize: '6px', padding: '0 8px' }}>
-                                        <CircleIcon fontSize='inherit' color='primary' />
-                                    </Box>
-                                    <Typography color='info.main' sx={{ display: 'flex', alignItems: 'center' }}>
-                                        <MapPin size={20} />
-                                        {user.province},&nbsp;
-                                        {user.city}
-                                    </Typography>
-                                </>
-                            )}
-                        </Box>
-                    </Box>
-                    <Box sx={{ mt: 1 }}>
-                        <Typography variant="body1" color="text.secondary" gutterBottom sx={{ display: 'flex', alignItems: 'center' }}>
-                            <Mail size={20} />
-                            <Box marginRight='1rem' />
-                            {user.email}
-                        </Typography>
-                        {user.phone && (
-                            <Typography
-                                variant="body1"
-                                color="text.secondary"
-                                gutterBottom
-                                sx={{ display: 'flex', alignItems: 'center' }}
-                            >
-                                <Box>
-                                    <Phone size={20} />
-                                </Box>
-                                <Box marginRight='1rem' />
-                                {user.code_phone}&nbsp;{user.phone}
-                            </Typography>
-                        )}
-                    </Box>
+                <Box sx={{ p: 2 }} id="drawer-container">
+                    <DogInformation />
                     <Box sx={{ pt: 2, pb: 2 }}>
                         <InterestInput
                             control={control}
