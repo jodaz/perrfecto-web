@@ -7,6 +7,7 @@ import { useAuth, renewToken } from '../../context/AuthContext';
 import formDataHandler from '../../utils/formDataHandler';
 import Button from '../../components/Button';
 import AddVaccines from '../Vaccines/AddVaccines';
+import SettingsLayout from '../../layouts/SettingsLayout';
 
 const EditVaccines = () => {
     const { state: { user }, dispatch } = useAuth();
@@ -45,34 +46,36 @@ const EditVaccines = () => {
     }
 
     return (
-        <Box sx={{
-            pt: 1,
-            display: 'flex',
-            flex: 1,
-            flexDirection: 'column',
-            justifyContent: 'space-between'
-        }}  component="form" onSubmit={handleSubmit(onSubmit)}>
-            <Box>
-                <Box sx={{ p: 2 }}>
-                    <AddVaccines
-                        control={control}
-                        funcHandler={() => setIsFetching(false)}
-                    />
+        <SettingsLayout title='Vacunas'>
+            <Box sx={{
+                pt: 1,
+                display: 'flex',
+                flex: 1,
+                flexDirection: 'column',
+                justifyContent: 'space-between'
+            }}  component="form" onSubmit={handleSubmit(onSubmit)}>
+                <Box>
+                    <Box sx={{ p: 2 }}>
+                        <AddVaccines
+                            control={control}
+                            funcHandler={() => setIsFetching(false)}
+                        />
+                    </Box>
                 </Box>
+                {!isFetching && (
+                    <Box sx={{ p: 2 }}>
+                        <Button
+                            variant="contained"
+                            type="submit"
+                            fullWidth
+                            disabled={isSubmitting}
+                        >
+                            Guardar
+                        </Button>
+                    </Box>
+                )}
             </Box>
-            {!isFetching && (
-                <Box sx={{ p: 2 }}>
-                    <Button
-                        variant="contained"
-                        type="submit"
-                        fullWidth
-                        disabled={isSubmitting}
-                    >
-                        Guardar
-                    </Button>
-                </Box>
-            )}
-        </Box>
+        </SettingsLayout>
     );
 }
 

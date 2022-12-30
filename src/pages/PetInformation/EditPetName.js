@@ -31,7 +31,7 @@ const EditPetName = () => {
     }
 
     return (
-        <SettingsLayout title='Nombres y apellidos'>
+        <SettingsLayout title='Nombre'>
             <Box sx={{
                 pt: 1,
                 display: 'flex',
