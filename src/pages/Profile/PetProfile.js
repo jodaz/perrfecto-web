@@ -16,7 +16,6 @@ import PhotoInput from '../../components/Forms/PhotoInput';
 import { fileProvider, apiProvider } from '../../api'
 import Photo from '../../components/Photo';
 import formDataHandler from '../../utils/formDataHandler';
-import useEffectOnce from '../../utils/useEffectOnce';
 import MyAds from '../Ad/MyAds';
 
 const RegisterDog = React.lazy(() => import('../../components/RegisterDog'));
@@ -65,7 +64,7 @@ const PetProfile = () => {
         }
     }
 
-    useEffectOnce(() => {
+    React.useEffect(() => {
         const subscription = watch(handleSubmit(onSubmit))
 
         return () => subscription.unsubscribe();
@@ -85,14 +84,14 @@ const PetProfile = () => {
                         flex: 1,
                         p: 2
                     }}>
-                        {(user.dog) ? (
+                        {(user.dog) && (
                             <PhotoInput
                                 name="files"
                                 control={control}
                                 defaultValue={(user.dog) && getCurrDogPhoto(user.dog.dogPhotos)}
                                 handleDelete={deletePhoto}
                             />
-                        ) : <Photo />}
+                        )}
                     </Box>
                     <Box sx={{
                         display: 'flex',
