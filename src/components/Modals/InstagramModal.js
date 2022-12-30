@@ -12,6 +12,7 @@ const InstagramModal = ({ open, handleClose, children }) => {
         <Backdrop
             sx={{
                 zIndex: (theme) => theme.zIndex.drawer + 1,
+                margin: 0
             }}
             open={open}
             onClick={handleClose}
