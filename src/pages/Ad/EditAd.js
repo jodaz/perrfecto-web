@@ -120,9 +120,7 @@ const EditAd = () => {
 
     return (
         <SettingsLayout title='Editar anuncio'>
-            <Box sx={{
-                height: '100%',
-                width: '100%',
+            <Box id="drawer-container" sx={{
                 display: 'flex',
                 flexDirection: 'column',
                 position: 'relative'

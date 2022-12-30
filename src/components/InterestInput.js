@@ -81,15 +81,16 @@ const InterestInput = ({
                     open={open}
                     onClose={toggleDrawer('bottom', false)}
                     sx={{
-                        '& .MuiDrawer-root': {
-                            position: 'absolute',
-                            borderTopLeftRadius: '12px',
-                        },
+                        // '& .MuiDrawer-root': {
+                        //     position: 'absolute',
+                        //     borderTopLeftRadius: '12px',
+                        // },
                         '& .MuiPaper-root': {
                             position: 'absolute',
                             borderTopLeftRadius: '12px',
                             borderTopRightRadius: '12px',
-                            width: '99%'
+                            width: '99%',
+                            bottom: 0
                         },
                     }}
                     PaperProps={{ style: { position: 'absolute' } }}

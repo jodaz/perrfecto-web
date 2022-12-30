@@ -107,14 +107,16 @@ const PetProfile = () => {
                             title='Crear publicación'
                             color="primary"
                         />
-                        <CustomButton
-                            size={32}
-                            icon={<PlusSquare />}
-                            title='Crear anuncio'
-                            color="info"
-                            component={LinkBehavior}
-                            to={(user.dog) ? '/profile/ads/create' : '?dog=true'}
-                        />
+                        {(!user.publication?.length) && (
+                            <CustomButton
+                                size={32}
+                                icon={<PlusSquare />}
+                                title='Crear anuncio'
+                                color="info"
+                                component={LinkBehavior}
+                                to={(user.dog) ? '/profile/ads/create' : '?dog=true'}
+                            />
+                        )}
                     </Box>
                     {(registerDog) && (
                         <React.Suspense>
