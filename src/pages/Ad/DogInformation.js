@@ -34,9 +34,10 @@ const DogInformation = () => {
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Box sx={{
                     display: 'flex',
-                    justifyContent: 'space-around',
                     alignItems: 'center',
-                    whiteSpace: 'nowrap'
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis'
                 }}>
                     {/** Raza */}
                     <Typography color="primary.main">

@@ -3,8 +3,6 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import SettingsLayout from '../../layouts/SettingsLayout';
-import { MapPin, Mail, Phone } from 'lucide-react';
-import CircleIcon from '@mui/icons-material/FiberManualRecord';
 import { useForm } from "react-hook-form";
 import { useAuth, renewToken } from '../../context/AuthContext'
 import TextInput from '../../components/Forms/TextInput';
@@ -16,10 +14,9 @@ import formDataHandler from '../../utils/formDataHandler';
 import PublicationWait from '../../components/Modals/PublicationWait';
 import OverlayLoader from '../../components/Modals/OverlayLoader';
 import useEffectOnce from '../../utils/useEffectOnce'
-import getYearsFromYear from '../../utils/getYearsFromYear';
 import DeletePhotoWarning from '../../components/Modals/DeletePhotoWarning';
-import { useNavigate } from 'react-router-dom';
 import DogInformation from './DogInformation';
+import { DESCRIPTION } from '../../validations';
 
 const selectedItems = labels => labels.map(({ AdInterest }) => AdInterest.id_interest)
 
@@ -67,7 +64,6 @@ const EditAd = () => {
         }
     });
     const insterestsValues = watch('interests')
-    const redirect = useNavigate()
 
     const onSubmit = async (data) => {
         setOpenOverlayLoader(true)
@@ -152,6 +148,8 @@ const EditAd = () => {
                             multiline
                             maxRows={4}
                             rows={4}
+                            rules={DESCRIPTION.rules}
+                            validations={DESCRIPTION.messages}
                             labelColor="text"
                             sx={{
                                 border: 'none !important',

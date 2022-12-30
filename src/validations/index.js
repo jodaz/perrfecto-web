@@ -31,6 +31,15 @@ export const NAME = {
     }
 }
 
+export const DESCRIPTION = {
+    rules: {
+        required: true
+    },
+    messages: {
+        required: "Ingresar descripción."
+    }
+}
+
 export const LAST_NAME = {
     rules: {
         required: true
