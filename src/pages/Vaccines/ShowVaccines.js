@@ -5,6 +5,7 @@ import ShowCard from "../../components/Modals/ShowCard";
 import getUserPhoto from '../../utils/getUserPhoto';
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
+import { useMediaQuery } from '@mui/material';
 
 const VaccineContainer = ({ children, id }) => (
     <Box sx={{
@@ -24,6 +25,7 @@ const ShowVaccines = ({ dog, name, lastName = '', img_profile }) => {
     const [open, setOpen] = React.useState(false)
     const photo = getUserPhoto(img_profile)
     const image = getUserPhoto(JSON.parse(dog.dogPhotos)[0])
+    const isSmall = useMediaQuery(theme => theme.breakpoints.down('md'));
 
     const toggleDialog = () => {
         setOpen(!open)
@@ -43,30 +45,33 @@ const ShowVaccines = ({ dog, name, lastName = '', img_profile }) => {
                 open={open}
                 handleClose={toggleDialog}
             >
-                <Box sx={{
-                    flex: 1,
-                    height: 400,
-                    width: 400,
-                    borderTopLeftRadius: '16px',
-                    borderBottomLeftRadius: '16px'
-                }}>
-                    <CardMedia
-                        image={image}
-                        sx={{
-                            height: 0,
-                            paddingTop: '100%',
-                            margin: 0,
-                            borderTopLeftRadius: 'inherit',
-                            borderBottomLeftRadius: 'inherit'
-                        }}
-                    />
-                </Box>
+                {!isSmall && (
+                    <Box sx={{
+                        flex: 1,
+                        height: 400,
+                        width: 400,
+                        borderTopLeftRadius: '16px',
+                        borderBottomLeftRadius: '16px'
+                    }}>
+                        <CardMedia
+                            image={image}
+                            sx={{
+                                height: 0,
+                                paddingTop: '100%',
+                                margin: 0,
+                                borderTopLeftRadius: 'inherit',
+                                borderBottomLeftRadius: 'inherit'
+                            }}
+                        />
+                    </Box>
+                )}
                 <Box sx={{
                     height: '100%',
                     display: 'flex',
                     flexDirection: 'column',
                     flex: 1,
-                    alignItems: 'center'
+                    alignItems: 'center',
+                    paddingBottom: '1rem'
                 }}>
                     <Box sx={{ p: 3 }}>
                         <Typography

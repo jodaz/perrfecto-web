@@ -14,7 +14,7 @@ const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 const DogPublication = ({ open, data, handleClose, handleOpenOwnerCard }) => {
     const multimedia = getImages(JSON.parse(data.multimedia))
     const ownerPhoto = getUserPhoto(data.publi.Owner.img_profile);
-    console.log(data)
+
     if (!open) return null
 
     return (
