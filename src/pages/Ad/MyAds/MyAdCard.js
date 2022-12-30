@@ -11,15 +11,14 @@ import Menu from "../../../components/Menu";
 import DeleteAd from "../../../components/Modals/DeleteAd";
 import { Chip } from '@mui/material';
 import LinkBehavior from '../../../components/LinkBehavior';
-import ButtonBadge from '../../../components/Buttons/ButtonBadge';
 import ShowVaccines from '../../Vaccines/ShowVaccines';
+import ListCertificates from '../../certificates/ListCertificates';
 
 const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
 const MyAdCard = ({ fullWidth, ...data  }) => {
     const { dog, publication, email, phone, code_phone } = data
     const [openDeleteModal, setOpenDeleteModal] = React.useState(false)
-    const { Certificates } = dog
     const { multimedia, interests, permission_tlf } = publication;
     const arrImages = getImages(JSON.parse(multimedia))
 
@@ -100,9 +99,7 @@ const MyAdCard = ({ fullWidth, ...data  }) => {
                         mb: 1
                     }
                 }}>
-                    <ButtonBadge total={`${Certificates.length}`}>
-                        Certificados
-                    </ButtonBadge>
+                    <ListCertificates {...data} />
                     <ShowVaccines {...data} />
                 </Box>
                 <DeleteAd
