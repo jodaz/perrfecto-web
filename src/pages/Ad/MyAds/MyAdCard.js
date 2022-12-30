@@ -12,12 +12,14 @@ import DeleteAd from "../../../components/Modals/DeleteAd";
 import { Chip } from '@mui/material';
 import LinkBehavior from '../../../components/LinkBehavior';
 import ButtonBadge from '../../../components/Buttons/ButtonBadge';
+import ShowVaccines from '../../Vaccines/ShowVaccines';
 
 const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
-const MyAdCard = ({ fullWidth, dog, publication, email, phone, code_phone }) => {
+const MyAdCard = ({ fullWidth, ...data  }) => {
+    const { dog, publication, email, phone, code_phone } = data
     const [openDeleteModal, setOpenDeleteModal] = React.useState(false)
-    const { Certificates, Vaccines } = dog
+    const { Certificates } = dog
     const { multimedia, interests, permission_tlf } = publication;
     const arrImages = getImages(JSON.parse(multimedia))
 
@@ -101,9 +103,7 @@ const MyAdCard = ({ fullWidth, dog, publication, email, phone, code_phone }) => 
                     <ButtonBadge total={`${Certificates.length}`}>
                         Certificados
                     </ButtonBadge>
-                    <ButtonBadge total={`${Vaccines.length}`}>
-                        Vacunas
-                    </ButtonBadge>
+                    <ShowVaccines {...data} />
                 </Box>
                 <DeleteAd
                     open={openDeleteModal}

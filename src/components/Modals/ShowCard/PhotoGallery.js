@@ -1,7 +1,7 @@
 import React from 'react'
 import CardMedia from '@mui/material/CardMedia'
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Navigation } from "swiper";
+import { Pagination } from "swiper";
 import styled from '@emotion/styled';
 
 const SwiperStyled = styled(Swiper)(() => ({

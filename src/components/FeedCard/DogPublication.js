@@ -7,13 +7,14 @@ import PhotoGallery from '../Modals/ShowCard/PhotoGallery';
 import PublicationDescription from './PublicationDescription';
 import FavouriteButton from '../Buttons/FavouriteButton'
 import LikeButton from '../Buttons/LikeButton'
+import ShowVaccines from '../../pages/Vaccines/ShowVaccines';
 
 const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
 const DogPublication = ({ open, data, handleClose, handleOpenOwnerCard }) => {
     const multimedia = getImages(JSON.parse(data.multimedia))
     const ownerPhoto = getUserPhoto(data.publi.Owner.img_profile);
-
+    console.log(data)
     if (!open) return null
 
     return (
@@ -58,6 +59,12 @@ const DogPublication = ({ open, data, handleClose, handleOpenOwnerCard }) => {
                         <Typography variant="subtitle1" color="text.secondary">
                             {data.description}
                         </Typography>
+                    </Box>
+                    <Box sx={{ p: 2 }}>
+                        <ShowVaccines
+                            {...data.publi.Owner}
+                            dog={{...data.publi}}
+                        />
                     </Box>
                 </Box>
                 <Box sx={{ display: 'flex', width: '100%', mb: 2, ml: 2 }}>
