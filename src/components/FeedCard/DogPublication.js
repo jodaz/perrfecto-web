@@ -8,6 +8,7 @@ import PublicationDescription from './PublicationDescription';
 import FavouriteButton from '../Buttons/FavouriteButton'
 import LikeButton from '../Buttons/LikeButton'
 import ShowVaccines from '../../pages/Vaccines/ShowVaccines';
+import ListCertificates from '../../pages/certificates/ListCertificates';
 
 const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
@@ -60,11 +61,19 @@ const DogPublication = ({ open, data, handleClose, handleOpenOwnerCard }) => {
                             {data.description}
                         </Typography>
                     </Box>
-                    <Box sx={{ p: 2 }}>
-                        <ShowVaccines
-                            {...data.publi.Owner}
-                            dog={{...data.publi}}
-                        />
+                    <Box sx={{ display: 'flex', p: 1 }}>
+                        <Box sx={{ p: 1 }}>
+                            <ShowVaccines
+                                {...data.publi.Owner}
+                                dog={{...data.publi}}
+                            />
+                        </Box>
+                        <Box sx={{ p: 1 }}>
+                            <ListCertificates
+                                {...data.publi.Owner}
+                                dog={{...data.publi}}
+                            />
+                        </Box>
                     </Box>
                 </Box>
                 <Box sx={{ display: 'flex', width: '100%', mb: 2, ml: 2 }}>

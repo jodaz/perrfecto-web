@@ -21,7 +21,7 @@ const VaccineContainer = ({ children, id }) => (
     </Box>
 )
 
-const ShowVaccines = ({ dog, name, lastName = '', img_profile }) => {
+const ListCertificates = ({ dog, name, lastName = '', img_profile }) => {
     const [open, setOpen] = React.useState(false)
     const photo = getUserPhoto(img_profile)
     const image = getUserPhoto(JSON.parse(dog.dogPhotos)[0])
@@ -34,10 +34,10 @@ const ShowVaccines = ({ dog, name, lastName = '', img_profile }) => {
     return (
         <>
             <ButtonBadge
-                total={dog.Vaccines.length}
+                total={dog.Certificates.length}
                 onClick={toggleDialog}
             >
-                Vacunas
+                Certificados
             </ButtonBadge>
             <ShowCard
                 photo={photo}
@@ -73,17 +73,16 @@ const ShowVaccines = ({ dog, name, lastName = '', img_profile }) => {
                     alignItems: 'center',
                     paddingBottom: '1rem'
                 }}>
-                    <Box sx={{ marginTop: 3 }}>
+                    <Box sx={{ p: 3 }}>
                         <Typography
                             variant="h6"
                             fontWeight={500}
                             color="primary"
-                            gutterBottom
                         >
-                            Vacunas
+                            Certificados
                         </Typography>
                     </Box>
-                    {dog.Vaccines.map((item, i) => (
+                    {dog.Certificates.map((item, i) => (
                         <VaccineContainer id={i}>
                             {item.name}
                         </VaccineContainer>
@@ -94,4 +93,4 @@ const ShowVaccines = ({ dog, name, lastName = '', img_profile }) => {
     )
 }
 
-export default ShowVaccines
+export default ListCertificates
