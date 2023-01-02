@@ -2,12 +2,13 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import PawPrints from '../../../assets/images/pawprints.svg'
 import Stack from './Stack';
-import { CircularProgress, useMediaQuery } from '@mui/material';
+import { CircularProgress, Fab, useMediaQuery } from '@mui/material';
 import ContactDialog from '../../../components/Modals/ContactDialog';
 import DogPublication from '../../../components/FeedCard/DogPublication'
 import OwnerPublication from '../../../components/FeedCard/OwnerPublication';
 import useEffectOnce from '../../../utils/useEffectOnce';
 import { usePublications, fetchPublications } from '../../../context/PublicationContext';
+import FilterButton from '../../../components/Buttons/FilterButton';
 
 const PopularMembers = React.lazy(() => import('../../../components/PopularMembers'));
 
@@ -72,8 +73,9 @@ const UsersHome = () => {
             </React.Suspense>
             <Box sx={{
                 display: 'flex',
+                position: 'relative',
                 flexDirection: 'column',
-                width: '100%',
+                width: isSmall ? '100%' : '50%',
                 margin: '0 auto',
                 height: '100%',
                 zIndex: 100
@@ -95,6 +97,7 @@ const UsersHome = () => {
                         <CircularProgress color="primary" />
                     </Box>
                 )}
+                <FilterButton />
             </Box>
             {openDogCard && (
                 <DogPublication

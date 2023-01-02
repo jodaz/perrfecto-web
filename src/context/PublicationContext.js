@@ -5,7 +5,8 @@ const PublicationContext = React.createContext()
 
 const initialState = {
     publications: [],
-    is_searching: false
+    is_searching: false,
+    openFilter: false
 }
 
 function publicationReducer(state, action) {
@@ -16,6 +17,12 @@ function publicationReducer(state, action) {
                     ...state,
                     publications: action.payload,
                     is_searching: false
+                }
+            }
+            case 'TOGGLE_FILTERS': {
+                return {
+                    ...state,
+                    openFilter: !state.openFilter
                 }
             }
             case 'LOADING': {
@@ -69,9 +76,20 @@ async function fetchPublications(dispatch) {
     }
 }
 
+async function toggleFilters(dispatch) {
+    try {
+        dispatch({
+            type: 'TOGGLE_FILTERS'
+        })
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 export {
     usePublications,
     PublicationProvider,
     PublicationContext,
+    toggleFilters,
     fetchPublications
 }
