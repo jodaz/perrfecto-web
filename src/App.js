@@ -54,6 +54,7 @@ import EditCharacteristics from './pages/PetInformation/EditCharacteristics';
 import EditVaccines from './pages/PetInformation/EditVaccines';
 import EditCertificates from './pages/PetInformation/EditCertificates';
 import EditAd from './pages/Ad/EditAd';
+import { PublicationProvider } from './context/PublicationContext';
 
 function App() {
     let location = useLocation();
@@ -64,256 +65,258 @@ function App() {
                 <AuthProvider>
                     <FavouriteProvider>
                         <GuestProvider>
-                            <Routes>
-                                <Route
-                                    path='*'
-                                    element=<NotFound />
-                                />
-                                <Route
-                                    path='/home'
-                                    element={
-                                        <AppLayout>
-                                            <Home />
-                                        </AppLayout>
-                                    }
-                                />
-                                <Route
-                                    path='/market'
-                                    element={
-                                        <AppLayout>
-                                            <Market />
-                                        </AppLayout>
-                                    }
-                                />
-                                <Route
-                                    path='/chat'
-                                    element={
-                                        <AppLayout>
-                                            <Chat />
-                                        </AppLayout>
-                                    }
-                                />
-                                <Route
-                                    path='/blog'
-                                    element={
-                                        <AppLayout>
-                                            <Blog />
-                                        </AppLayout>
-                                    }
-                                />
-                                {/**
-                                 * Publication routes
-                                 */}
-                                <Route
-                                    path='/profile/ads/create'
-                                    element={
-                                        <AppLayout>
-                                            <CreateAd location={location} />
-                                        </AppLayout>
-                                    }
-                                />
-                                <Route
-                                    path='/profile/ads/:id/edit'
-                                    element={
-                                        <AppLayout>
-                                            <EditAd location={location} />
-                                        </AppLayout>
-                                    }
-                                />
-                                <Route
-                                    path='/profile/ads/show'
-                                    element={
-                                        <AppLayout>
-                                            <CreateAd location={location} />
-                                        </AppLayout>
-                                    }
-                                />
-                                <Route
-                                    path='/profile/ads/:id'
-                                    element={
-                                        <AppLayout>
-                                            <ShowAd location={location} />
-                                        </AppLayout>
-                                    }
-                                />
-                                <Route
-                                    path='/profile/settings/owner'
-                                    element={
-                                        <AppLayout>
-                                            <PersonalInformation location={location} />
-                                        </AppLayout>
-                                    }
-                                />
-                                <Route
-                                    path='/profile/settings/owner/names'
-                                    element={
-                                        <AppLayout>
-                                            <EditNames location={location} />
-                                        </AppLayout>
-                                    }
-                                />
-                                <Route
-                                    path='/profile/settings/owner/location'
-                                    element={
-                                        <AppLayout>
-                                            <EditLocation />
-                                        </AppLayout>
-                                    }
-                                />
-                                <Route
-                                    path='/profile/settings/pet'
-                                    element={
-                                        <AppLayout>
-                                            <PetInformation location={location} />
-                                        </AppLayout>
-                                    }
-                                />
+                            <PublicationProvider>
+                                <Routes>
+                                    <Route
+                                        path='*'
+                                        element=<NotFound />
+                                    />
+                                    <Route
+                                        path='/home'
+                                        element={
+                                            <AppLayout>
+                                                <Home />
+                                            </AppLayout>
+                                        }
+                                    />
+                                    <Route
+                                        path='/market'
+                                        element={
+                                            <AppLayout>
+                                                <Market />
+                                            </AppLayout>
+                                        }
+                                    />
+                                    <Route
+                                        path='/chat'
+                                        element={
+                                            <AppLayout>
+                                                <Chat />
+                                            </AppLayout>
+                                        }
+                                    />
+                                    <Route
+                                        path='/blog'
+                                        element={
+                                            <AppLayout>
+                                                <Blog />
+                                            </AppLayout>
+                                        }
+                                    />
+                                    {/**
+                                     * Publication routes
+                                     */}
+                                    <Route
+                                        path='/profile/ads/create'
+                                        element={
+                                            <AppLayout>
+                                                <CreateAd location={location} />
+                                            </AppLayout>
+                                        }
+                                    />
+                                    <Route
+                                        path='/profile/ads/:id/edit'
+                                        element={
+                                            <AppLayout>
+                                                <EditAd location={location} />
+                                            </AppLayout>
+                                        }
+                                    />
+                                    <Route
+                                        path='/profile/ads/show'
+                                        element={
+                                            <AppLayout>
+                                                <CreateAd location={location} />
+                                            </AppLayout>
+                                        }
+                                    />
+                                    <Route
+                                        path='/profile/ads/:id'
+                                        element={
+                                            <AppLayout>
+                                                <ShowAd location={location} />
+                                            </AppLayout>
+                                        }
+                                    />
+                                    <Route
+                                        path='/profile/settings/owner'
+                                        element={
+                                            <AppLayout>
+                                                <PersonalInformation location={location} />
+                                            </AppLayout>
+                                        }
+                                    />
+                                    <Route
+                                        path='/profile/settings/owner/names'
+                                        element={
+                                            <AppLayout>
+                                                <EditNames location={location} />
+                                            </AppLayout>
+                                        }
+                                    />
+                                    <Route
+                                        path='/profile/settings/owner/location'
+                                        element={
+                                            <AppLayout>
+                                                <EditLocation />
+                                            </AppLayout>
+                                        }
+                                    />
+                                    <Route
+                                        path='/profile/settings/pet'
+                                        element={
+                                            <AppLayout>
+                                                <PetInformation location={location} />
+                                            </AppLayout>
+                                        }
+                                    />
 
-                                <Route
-                                    path='/profile/settings/pet/name'
-                                    element={
-                                        <AppLayout>
-                                            <EditPetName location={location} />
-                                        </AppLayout>
-                                    }
-                                />
-                                <Route
-                                    path='/profile/settings/pet/breed'
-                                    element={
-                                        <AppLayout>
-                                            <EditBreed />
-                                        </AppLayout>
-                                    }
-                                />
-                                <Route
-                                    path='/profile/settings/pet/gender'
-                                    element={
-                                        <AppLayout>
-                                            <EditGender />
-                                        </AppLayout>
-                                    }
-                                />
-                                <Route
-                                    path='/profile/settings/pet/age'
-                                    element={
-                                        <AppLayout>
-                                            <EditYearDate />
-                                        </AppLayout>
-                                    }
-                                />
-                                <Route
-                                    path='/profile/settings/pet/characteristics'
-                                    element={
-                                        <AppLayout>
-                                            <EditCharacteristics />
-                                        </AppLayout>
-                                    }
-                                />
-                                <Route
-                                    path='/profile/settings/pet/vaccines'
-                                    element={
-                                        <AppLayout>
-                                            <EditVaccines />
-                                        </AppLayout>
-                                    }
-                                />
-                                <Route
-                                    path='/profile/settings/pet/certificates'
-                                    element={
-                                        <AppLayout>
-                                            <EditCertificates />
-                                        </AppLayout>
-                                    }
-                                />
+                                    <Route
+                                        path='/profile/settings/pet/name'
+                                        element={
+                                            <AppLayout>
+                                                <EditPetName location={location} />
+                                            </AppLayout>
+                                        }
+                                    />
+                                    <Route
+                                        path='/profile/settings/pet/breed'
+                                        element={
+                                            <AppLayout>
+                                                <EditBreed />
+                                            </AppLayout>
+                                        }
+                                    />
+                                    <Route
+                                        path='/profile/settings/pet/gender'
+                                        element={
+                                            <AppLayout>
+                                                <EditGender />
+                                            </AppLayout>
+                                        }
+                                    />
+                                    <Route
+                                        path='/profile/settings/pet/age'
+                                        element={
+                                            <AppLayout>
+                                                <EditYearDate />
+                                            </AppLayout>
+                                        }
+                                    />
+                                    <Route
+                                        path='/profile/settings/pet/characteristics'
+                                        element={
+                                            <AppLayout>
+                                                <EditCharacteristics />
+                                            </AppLayout>
+                                        }
+                                    />
+                                    <Route
+                                        path='/profile/settings/pet/vaccines'
+                                        element={
+                                            <AppLayout>
+                                                <EditVaccines />
+                                            </AppLayout>
+                                        }
+                                    />
+                                    <Route
+                                        path='/profile/settings/pet/certificates'
+                                        element={
+                                            <AppLayout>
+                                                <EditCertificates />
+                                            </AppLayout>
+                                        }
+                                    />
 
-                                {/**
-                                 * Profile routes
-                                 */}
-                                <Route
-                                    path='/profile'
-                                    element={
-                                        <AppLayout>
-                                            <Profile location={location}>
-                                                <PetProfile />
-                                            </Profile>
-                                        </AppLayout>
-                                    }
-                                />
-                                <Route
-                                    path='/profile/owner'
-                                    element={
-                                        <AppLayout>
-                                            <Profile location={location}>
-                                                <PetOwner />
-                                            </Profile>
-                                        </AppLayout>
-                                    }
-                                />
-                                <Route
-                                    path='/profile/settings'
-                                    element={
-                                        <AppLayout>
-                                            <Settings />
-                                        </AppLayout>
-                                    }
-                                />
-                                <Route
-                                    path='/profile/settings/account'
-                                    element={
-                                        <AppLayout>
-                                            <Account location={location} />
-                                        </AppLayout>
-                                    }
-                                />
-                                <Route
-                                    path='/profile/favourites'
-                                    element={
-                                        <AppLayout>
-                                            <Profile location={location}>
-                                                <Favourites title="Favoritos" />
-                                            </Profile>
-                                        </AppLayout>
-                                    }
-                                />
+                                    {/**
+                                     * Profile routes
+                                     */}
+                                    <Route
+                                        path='/profile'
+                                        element={
+                                            <AppLayout>
+                                                <Profile location={location}>
+                                                    <PetProfile />
+                                                </Profile>
+                                            </AppLayout>
+                                        }
+                                    />
+                                    <Route
+                                        path='/profile/owner'
+                                        element={
+                                            <AppLayout>
+                                                <Profile location={location}>
+                                                    <PetOwner />
+                                                </Profile>
+                                            </AppLayout>
+                                        }
+                                    />
+                                    <Route
+                                        path='/profile/settings'
+                                        element={
+                                            <AppLayout>
+                                                <Settings />
+                                            </AppLayout>
+                                        }
+                                    />
+                                    <Route
+                                        path='/profile/settings/account'
+                                        element={
+                                            <AppLayout>
+                                                <Account location={location} />
+                                            </AppLayout>
+                                        }
+                                    />
+                                    <Route
+                                        path='/profile/favourites'
+                                        element={
+                                            <AppLayout>
+                                                <Profile location={location}>
+                                                    <Favourites title="Favoritos" />
+                                                </Profile>
+                                            </AppLayout>
+                                        }
+                                    />
 
-                                <Route
-                                    path='/notifications'
-                                    element={
-                                        <AppLayout>
-                                            <Notifications />
-                                        </AppLayout>
-                                    }
-                                />
+                                    <Route
+                                        path='/notifications'
+                                        element={
+                                            <AppLayout>
+                                                <Notifications />
+                                            </AppLayout>
+                                        }
+                                    />
 
-                                <Route path="/" element={
-                                    <LandingLayout>
-                                        <Landing location={location} />
-                                    </LandingLayout>
-                                }>
-                                    <Route path="/login" element={<Login location={location} />} />
-                                    <Route path="/detect-location" element={<DetectLocation location={location} />} />
-                                    <Route path="/register" element={<SignUp location={location} />} />
-                                    <Route path="/recover-password" element={<RecoverPassword location={location} />} />
-                                    <Route path="/recover-password/new" element={<NewPassword location={location} />} />
-                                    <Route path="/recover-password/code" element={<AskCode location={location} />} />
-                                </Route>
-                                <Route path="/register/welcome" element={<CreateProfileWelcome location={location} />} />
+                                    <Route path="/" element={
+                                        <LandingLayout>
+                                            <Landing location={location} />
+                                        </LandingLayout>
+                                    }>
+                                        <Route path="/login" element={<Login location={location} />} />
+                                        <Route path="/detect-location" element={<DetectLocation location={location} />} />
+                                        <Route path="/register" element={<SignUp location={location} />} />
+                                        <Route path="/recover-password" element={<RecoverPassword location={location} />} />
+                                        <Route path="/recover-password/new" element={<NewPassword location={location} />} />
+                                        <Route path="/recover-password/code" element={<AskCode location={location} />} />
+                                    </Route>
+                                    <Route path="/register/welcome" element={<CreateProfileWelcome location={location} />} />
 
-                                {/** Bussiness routes */}
-                                <Route path="/business" element={
-                                    <LandingLayout dark>
-                                        <Business />
-                                    </LandingLayout>
-                                }>
-                                    <Route path="/business/register" element={<RegisterBusiness location={location} />} />
-                                </Route>
+                                    {/** Bussiness routes */}
+                                    <Route path="/business" element={
+                                        <LandingLayout dark>
+                                            <Business />
+                                        </LandingLayout>
+                                    }>
+                                        <Route path="/business/register" element={<RegisterBusiness location={location} />} />
+                                    </Route>
 
-                                <Route path="/introduction" element={<Intro />} />
+                                    <Route path="/introduction" element={<Intro />} />
 
-                                <Route path="/terms-conditions" element={<Terms />} />
+                                    <Route path="/terms-conditions" element={<Terms />} />
 
-                                <Route path="/privacy" element={<Terms />} />
-                            </Routes>
+                                    <Route path="/privacy" element={<Terms />} />
+                                </Routes>
+                            </PublicationProvider>
                         </GuestProvider>
                     </FavouriteProvider>
                 </AuthProvider>
