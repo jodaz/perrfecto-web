@@ -76,7 +76,7 @@ const EditGender = () => {
                         fullWidth
                         disabled={isSubmitting}
                     >
-                        Enviar
+                        Guardar
                     </Button>
                 </Box>
             </Box>

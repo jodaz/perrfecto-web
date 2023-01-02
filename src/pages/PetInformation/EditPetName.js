@@ -58,7 +58,7 @@ const EditPetName = () => {
                         fullWidth
                         disabled={isSubmitting}
                     >
-                        Enviar
+                        Guardar
                     </Button>
                 </Box>
             </Box>

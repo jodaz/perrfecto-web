@@ -76,7 +76,7 @@ const EditBreed = () => {
                         fullWidth
                         disabled={isSubmitting}
                     >
-                        Enviar
+                        Guardar
                     </Button>
                 </Box>
             </Box>
