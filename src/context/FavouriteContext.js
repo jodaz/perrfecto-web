@@ -77,7 +77,7 @@ async function addFavourite(dispatch, item) {
             fetchFavourites(dispatch);
         }
     } catch (e) {
-        console.log(e);
+        console.log(e)
     }
 }
 
