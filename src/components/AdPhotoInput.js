@@ -11,6 +11,14 @@ import { PlusCircle, Trash2 } from 'lucide-react';
 import useEffectOnce from '../utils/useEffectOnce';
 import getUserPhoto from '../utils/getUserPhoto'
 import { alpha } from '@mui/material';
+import styled from '@emotion/styled';
+
+const SwiperStyled = styled(Swiper)(() => ({
+    '& .swiper-wrapper': {
+        width: '200px',
+        marginBottom: '0.5rem'
+    }
+}))
 
 const Dropzone = ({
     onChange,
@@ -29,13 +37,26 @@ const Dropzone = ({
             'video/mp4': []
         },
         onDrop: acceptedFiles => {
-            setFiles(acceptedFiles.map(file => Object.assign(file, {
+            const newFiles = [...files, ...acceptedFiles.map(file => Object.assign(file, {
                 preview: URL.createObjectURL(file)
-            })));
-            onChange(acceptedFiles)
+            }))];
+
+            setFiles(newFiles);
+            onChange(newFiles)
         },
         maxFiles: 15
     });
+
+    const removePhoto = item => {
+        if (deletePhotoHandler) {
+            deletePhotoHandler(item)
+        } else {
+            const newFiles = files.filter(file => file != item);
+
+            setFiles(newFiles);
+            onChange(newFiles)
+        }
+    }
 
     const thumbs = files.map((file, i) => (
         <SwiperSlide key={i}>
@@ -46,8 +67,8 @@ const Dropzone = ({
                     onLoad={() => { URL.revokeObjectURL(file.preview) }}
                     sx={{
                         borderRadius: '12px',
-                        height: 180,
-                        width: 160,
+                        height: 220,
+                        width: 180,
                         marginRight: 1
                     }}
                 />
@@ -61,7 +82,7 @@ const Dropzone = ({
                         '&:hover': {
                             backgroundColor: theme => `${alpha(theme.palette.error.main, 0.9)}`
                         }
-                    }} onClick={() => deletePhotoHandler(file)}>
+                    }} onClick={() => removePhoto(file)}>
                         <Trash2 color="#fff" size={16} />
                     </IconButton>
                 )}
@@ -83,27 +104,33 @@ const Dropzone = ({
     }, [value])
 
     return (
-        <Box sx={{ display: 'flex', maxWidth: '200px', mt: 1, mb: 2 }}>
-            <Box sx={{ display: 'flex', maxWidth: '200px' }}>
-                <Swiper
-                    modules={[Scrollbar]}
-                >
-                    {thumbs}
-                </Swiper>
-            </Box>
+        <Box sx={{ display: 'flex', mt: 1, mb: 2 }}>
+            {!!(files.length) && (
+                <Box sx={{ display: 'flex' }}>
+                    <SwiperStyled
+                        slidesPerView={1}
+                        scrollbar={{
+                            draggable: true
+                        }}
+                        grabCursor={true}
+                        modules={[Scrollbar]}
+                    >
+                        {thumbs}
+                    </SwiperStyled>
+                </Box>
+            )}
             <Box {...getRootProps({className: 'dropzone'})} sx={{ display: 'flex' }}>
                 <input {...getInputProps()} />
                 {(!files.length) &&
                     (<Box sx={{
-                        height: 180,
-                        width: 160,
+                        height: 220,
+                        width: 180,
                         bgcolor: '#ECECEC',
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
                         borderRadius: '12px',
-                        cursor: 'pointer',
-                        ml: 2
+                        cursor: 'pointer'
                     }}>
                         <PlusCircle color='#858585' />
                     </Box>

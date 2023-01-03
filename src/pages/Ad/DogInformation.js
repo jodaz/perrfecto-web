@@ -49,23 +49,20 @@ const DogInformation = () => {
                     <Typography color="primary.main">
                         {getYearsFromYear(dog.dogAge)} años
                     </Typography>
-                    {(user.province && user.city) && (
-                        <>
-                            <Box sx={{ fontSize: '6px', padding: '0 8px' }}>
-                                <CircleIcon fontSize='inherit' color='primary' />
-                            </Box>
-                            <Typography
-                                onClick={() => redirect('/profile/settings/owner/location')}
-                                color='info.main'
-                                sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
-                            >
-                                <MapPin size={20} />
-                                {user.province},&nbsp;
-                                {user.city}
-                            </Typography>
-                        </>
-                    )}
                 </Box>
+            </Box>
+            <Box sx={{ mt: 1 }}>
+                {(user.province && user.city) && (
+                    <Typography
+                        onClick={() => redirect('/profile/settings/owner/location')}
+                        color='info.main'
+                        sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+                    >
+                        <MapPin size={20} />
+                        {user.province},&nbsp;
+                        {user.city}
+                    </Typography>
+                )}
             </Box>
             <Box sx={{ mt: 1 }}>
                 <Typography variant="body1" color="text.secondary" gutterBottom sx={{ display: 'flex', alignItems: 'center' }}>

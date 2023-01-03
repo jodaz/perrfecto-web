@@ -15,7 +15,7 @@ import PublicationWait from '../../components/Modals/PublicationWait';
 import OverlayLoader from '../../components/Modals/OverlayLoader';
 import useEffectOnce from '../../utils/useEffectOnce'
 import DogInformation from './DogInformation';
-import { DESCRIPTION } from '../../validations';
+import { DESCRIPTION, AD_PHOTOS } from '../../validations';
 
 const SwitchInputContainer = ({
     control,
@@ -49,7 +49,6 @@ const CreateAd = () => {
         reValidateMode: "onBlur"
     });
     const { state: { user }, dispatch } = useAuth();
-    const { dog } = user
     const insterestsValues = watch('interests')
 
     const onSubmit = async (data) => {
@@ -97,10 +96,14 @@ const CreateAd = () => {
                 flexDirection: 'column',
                 position: 'relative'
             }} component="form" onSubmit={handleSubmit(onSubmit)}>
-                <AdPhotoInput
-                    control={control}
-                    name='files'
-                />
+                <Box sx={{ p: 2 }}>
+                    <AdPhotoInput
+                        control={control}
+                        name='files'
+                        rules={AD_PHOTOS.rules}
+                        validations={AD_PHOTOS.messages}
+                    />
+                </Box>
                 <Box sx={{ p: 2 }} id="drawer-container">
                     <DogInformation />
                     <Box sx={{ pt: 2, pb: 2 }}>
