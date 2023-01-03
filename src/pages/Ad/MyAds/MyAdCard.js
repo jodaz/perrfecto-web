@@ -28,7 +28,7 @@ const MyAdCard = ({ fullWidth, ...data  }) => {
 
     return (
         <Card sx={{
-            maxWidth: !fullWidth ? 250 : '100%',
+            maxWidth: '100%',
             m: 2,
             boxShadow: '0px 2px 12px rgba(0, 0, 0, 0.24)',
             borderRadius: '20px',
@@ -49,7 +49,7 @@ const MyAdCard = ({ fullWidth, ...data  }) => {
                 >
                     <Box
                         component={LinkBehavior}
-                        to='edit'
+                        to={`ads/${publication.id}/edit`}
                         width='inherit'
                         sx={{ textDecoration: 'none', color: 'unset' }}
                     >
