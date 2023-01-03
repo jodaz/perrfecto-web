@@ -39,6 +39,12 @@ code {
 .swiper-slide {
     width: fit-content !important;
 }
+.swiper-pagination-bullet,
+.swiper-pagination-bullet-active-next,
+.swiper-pagination-bullet-active-prev {
+    background-color: #A167C9 !important;
+    opacity: 1 !important;
+}
 input.pincode-input-text {
     background-color: #ECECEC !important;
     border-radius: 8px;
