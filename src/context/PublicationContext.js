@@ -64,7 +64,7 @@ async function fetchPublications(dispatch) {
         const res = await apiProvider.get('api/publication/publications')
 
         if (res.status >= 200 && res.status < 300) {
-            const { data: { data } } = res;
+            const { data: { data: { data } } } = res;
 
             dispatch({
                 type: 'FETCH_PUBLICATIONS',
