@@ -37,10 +37,12 @@ const Dropzone = ({
             'video/mp4': []
         },
         onDrop: acceptedFiles => {
-            setFiles(acceptedFiles.map(file => Object.assign(file, {
+            const newFiles = [...files, ...acceptedFiles.map(file => Object.assign(file, {
                 preview: URL.createObjectURL(file)
-            })));
-            onChange(acceptedFiles)
+            }))];
+
+            setFiles(newFiles);
+            onChange(newFiles)
         },
         maxFiles: 15
     });

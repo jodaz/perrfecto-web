@@ -50,7 +50,7 @@ const EditAd = () => {
     const [interests, setInterests] = React.useState([])
     const [openDeletePhoto, setOpenDeletePhoto] = React.useState(false);
     const { control, handleSubmit, watch, setValue, formState: {
-        isSubmitting, dirtyFields
+        isSubmitting
     }} = useForm({
         reValidateMode: "onBlur",
         defaultValues: {
@@ -114,8 +114,6 @@ const EditAd = () => {
     React.useEffect(() => {
         setValue("files", JSON.parse(user.publication[0].multimedia))
     }, [user.publication[0].multimedia.length])
-
-    console.log(dirtyFields)
 
     return (
         <SettingsLayout title='Editar anuncio'>
