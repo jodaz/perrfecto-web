@@ -5,7 +5,7 @@ import { X } from 'lucide-react';
 import { IconButton } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-const InstagramModal = ({ open, handleClose, children, hideCloseButton }) => {
+const InstagramModal = ({ open, handleClose, children }) => {
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
     return (
@@ -24,17 +24,15 @@ const InstagramModal = ({ open, handleClose, children, hideCloseButton }) => {
                 position: 'relative'
             }} onClick={e => e.stopPropagation()}>
                 {children}
-                {!hideCloseButton && (
-                    <Box sx={{
-                        position: 'absolute',
-                        top: isSmall ? '-50px' : 0,
-                        right: isSmall ? 0 : '-100px'
-                    }}>
-                        <IconButton color='secondary' onClick={handleClose}>
-                            <X size={32} />
-                        </IconButton>
-                    </Box>
-                )}
+                <Box sx={{
+                    position: 'absolute',
+                    top: isSmall ? '-50px' : 0,
+                    right: isSmall ? 0 : '-100px'
+                }}>
+                    <IconButton color='secondary' onClick={handleClose}>
+                        <X size={32} />
+                    </IconButton>
+                </Box>
             </Box>
         </Backdrop>
     );

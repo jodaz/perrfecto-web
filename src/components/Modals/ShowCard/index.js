@@ -11,8 +11,7 @@ const ShowCard = ({
     handleClose,
     photo,
     name,
-    handleOpen,
-    hideCloseButton
+    handleOpen
 }) => {
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
 
@@ -20,7 +19,6 @@ const ShowCard = ({
         <InstagramModal
             handleClose={handleClose}
             open={open}
-            hideCloseButton
         >
             <Box sx={{
                 display: 'flex',
