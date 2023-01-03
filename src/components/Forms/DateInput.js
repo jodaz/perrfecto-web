@@ -38,6 +38,7 @@ const DateInput = ({
                         }}
                         renderInput={({ inputRef, inputProps, InputProps }) => (
                             <InputBase
+                                fullWidth
                                 ref={inputRef}
                                 {...inputProps}
                                 {...InputProps}

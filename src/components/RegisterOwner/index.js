@@ -14,18 +14,20 @@ import { useAuth, renewToken } from '../../context/AuthContext';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useNavigate } from 'react-router-dom'
 import Alert from '@mui/material/Alert';
-import { PHOTO, DATE_BIRTH, PROVINCE, CITY } from '../../validations';
+import PhoneInput from '../Forms/PhoneInput'
+import { PHOTO, DATE_BIRTH, PROVINCE, CITY, PHONE } from '../../validations';
 import SelectInput from '../Forms/SelectInput';
 import provincias from '../../utils/provincias';
 import dirtyCities from '../../utils/ciudades';
 
 const RegisterOwner = ({ open, handleClose, redirect = '/home' }) => {
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
-    const [error, setError] = React.useState(false)
-    const { control, handleSubmit, watch, formState: {
+    const [errorAlert, setErrorAlert] = React.useState(false)
+    const { control, handleSubmit, watch, setError, formState: {
         isSubmitting
     }} = useForm({
-        reValidateMode: "onBlur"
+        reValidateMode: "onBlur",
+        defaultValues: React.useMemo(() => ({ 'code_phone': 34 }))
     });
     const [cities, setCities] = React.useState([])
     const navigate = useNavigate();
@@ -56,7 +58,17 @@ const RegisterOwner = ({ open, handleClose, redirect = '/home' }) => {
                 navigate(redirect)
             }
         } catch (error) {
-            setError('Ha ocurrido un error inesperado.')
+            if (error.response.data.msg) {
+                const message = error.response.data.msg;
+
+                if (message.includes('There is a user with the provided that phone')) {
+                    setError('phone', {
+                        type: 'unique'
+                    })
+                }
+            } else {
+                setErrorAlert('Ha ocurrido un error inesperado.')
+            }
         }
     }
 
@@ -103,9 +115,9 @@ const RegisterOwner = ({ open, handleClose, redirect = '/home' }) => {
                             </Typography>
                         </Box>
                     )}
-                    {(error) && (
+                    {(errorAlert) && (
                         <Alert severity="error" sx={{ marginBottom: '1.5rem' }}>
-                            {error}
+                            {errorAlert}
                         </Alert>
                     )}
                     <Box sx={{
@@ -133,6 +145,16 @@ const RegisterOwner = ({ open, handleClose, redirect = '/home' }) => {
                                     validations={PHOTO.messages}
                                 />
                             </Box>
+                        </Box>
+                        <Box sx={{ p: 2 }}>
+                            <PhoneInput
+                                label="Teléfono"
+                                control={control}
+                                name="phone"
+                                rules={PHONE.rules}
+                                validations={PHONE.messages}
+                                placeholder='Ingresar teléfono'
+                            />
                         </Box>
                         <Box sx={{ p: 2 }}>
                             <DateInput
