@@ -75,10 +75,12 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
                 id_charact: value
             }))
 
+            const parsedBreed = !breed ? 'mongrel' : typeof(breed) == 'string' ? breed : breed.label;
+
             const parsedData = {
                 name: name,
                 type: type.value,
-                breed: breed.label,
+                breed: parsedBreed,
                 dogAge: dogAge.label,
                 gender: gender.label,
                 id_user: user.id,
@@ -102,6 +104,7 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
                 navigate(redirect)
             }
         } catch (error) {
+            console.log(error)
             setError('Ha ocurrido un error inesperado.')
         }
     }
@@ -235,7 +238,7 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
                             <TextInput
                                 label="Raza"
                                 control={control}
-                                name="name"
+                                name="breed"
                                 type="text"
                                 rules={NAME.rules}
                                 validations={NAME.messages}
