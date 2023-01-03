@@ -76,7 +76,7 @@ const EditNames = () => {
                         fullWidth
                         disabled={isSubmitting}
                     >
-                        Enviar
+                        Guardar
                     </Button>
                 </Box>
             </Box>
