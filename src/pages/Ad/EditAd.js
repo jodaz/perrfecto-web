@@ -190,7 +190,7 @@ const EditAd = () => {
                     </Box>
                     <Box sx={{ p: 2 }}>
                         <Button variant="contained" type="submit" fullWidth>
-                            Enviar
+                            Guardar
                         </Button>
                     </Box>
                 </Box>
