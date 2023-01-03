@@ -49,7 +49,6 @@ const CreateAd = () => {
         reValidateMode: "onBlur"
     });
     const { state: { user }, dispatch } = useAuth();
-    const { dog } = user
     const insterestsValues = watch('interests')
 
     const onSubmit = async (data) => {

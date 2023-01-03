@@ -11,8 +11,7 @@ const ShowCard = ({
     handleClose,
     photo,
     name,
-    handleOpen,
-    hideCloseButton
+    handleOpen
 }) => {
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
 
@@ -20,7 +19,6 @@ const ShowCard = ({
         <InstagramModal
             handleClose={handleClose}
             open={open}
-            hideCloseButton
         >
             <Box sx={{
                 display: 'flex',
@@ -29,7 +27,8 @@ const ShowCard = ({
                 top: isSmall ? '-40px' : '-50px',
                 left: 0,
                 zIndex: 1000,
-                color: '#fff'
+                color: '#fff',
+                cursor: 'pointer'
             }} onClick={handleOpen}>
                 <Avatar sx={{
                     width: isSmall ? '50px' : '70px',

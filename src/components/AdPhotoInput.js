@@ -37,6 +37,14 @@ const Dropzone = ({
         maxFiles: 15
     });
 
+    const removePhoto = item => {
+        if (deletePhotoHandler) {
+            deletePhotoHandler(item)
+        } else {
+            setFiles(files.filter(file => file != item));
+        }
+    }
+
     const thumbs = files.map((file, i) => (
         <SwiperSlide key={i}>
             <Box sx={{ position: 'relative' }}>
@@ -61,7 +69,7 @@ const Dropzone = ({
                         '&:hover': {
                             backgroundColor: theme => `${alpha(theme.palette.error.main, 0.9)}`
                         }
-                    }} onClick={() => deletePhotoHandler(file)}>
+                    }} onClick={() => removePhoto(file)}>
                         <Trash2 color="#fff" size={16} />
                     </IconButton>
                 )}

@@ -32,7 +32,6 @@ import Settings from './pages/Settings';
 import Favourites from './pages/Favourites';
 import Account from './pages/account';
 import CreateAd from './pages/Ad/CreateAd';
-import ShowAd from './pages/Ad/ShowAd';
 import PersonalInformation from './pages/PersonalInformation';
 import EditNames from './pages/PersonalInformation/EditNames';
 import EditLocation from './pages/PersonalInformation/EditLocation';
@@ -111,14 +110,6 @@ function AppRoutes() {
                 element={
                     <AppLayout>
                         <CreateAd location={location} />
-                    </AppLayout>
-                }
-            />
-            <Route
-                path='/profile/ads/:id'
-                element={
-                    <AppLayout>
-                        <ShowAd location={location} />
                     </AppLayout>
                 }
             />

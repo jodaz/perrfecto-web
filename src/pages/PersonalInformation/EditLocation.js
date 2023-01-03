@@ -124,7 +124,7 @@ const EditLocation = () => {
                         fullWidth
                         disabled={isSubmitting}
                     >
-                        Enviar
+                        Guardar
                     </Button>
                 </Box>
             </Box>

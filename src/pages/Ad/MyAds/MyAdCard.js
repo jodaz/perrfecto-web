@@ -17,7 +17,7 @@ import ListCertificates from '../../certificates/ListCertificates';
 const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
 const MyAdCard = ({ fullWidth, ...data  }) => {
-    const { dog, publication, email, phone, code_phone } = data
+    const { publication, email, phone, code_phone } = data
     const [openDeleteModal, setOpenDeleteModal] = React.useState(false)
     const { multimedia, interests, permission_tlf } = publication;
     const arrImages = getImages(JSON.parse(multimedia))
@@ -28,11 +28,10 @@ const MyAdCard = ({ fullWidth, ...data  }) => {
 
     return (
         <Card sx={{
-            maxWidth: !fullWidth ? 250 : '100%',
+            maxWidth: '100%',
             m: 2,
             boxShadow: '0px 2px 12px rgba(0, 0, 0, 0.24)',
-            borderRadius: '20px',
-            cursor: 'pointer'
+            borderRadius: '20px'
         }}>
             <Box sx={{ flex: 1, aspectRatio: '1 / 1', width: '100%', position: 'relative' }}>
                 <PhotoGallery images={arrImages} />
@@ -49,7 +48,7 @@ const MyAdCard = ({ fullWidth, ...data  }) => {
                 >
                     <Box
                         component={LinkBehavior}
-                        to='edit'
+                        to={`ads/${publication.id}/edit`}
                         width='inherit'
                         sx={{ textDecoration: 'none', color: 'unset' }}
                     >

@@ -8,24 +8,14 @@ const MyAds = ({ dog, publication, ...rest }) => (
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'start',
+        alignItems: 'center',
         width: '100%'
     }}>
         <Typography variant="h6" p={1} fontWeight={500}>
             Mi anuncio publicado
         </Typography>
         {publication.map(item => (
-            <Box
-                sx={{
-                    textDecoration: 'none !important'
-                }}
-                component={LinkBehavior}
-                to={`ads/${item.id}`}
-                state={{
-                    dog: dog,
-                    publication: item,
-                    ...rest
-                }}
-            >
+            <Box mb={1}>
                 <MyAdCard
                     publication={item}
                     dog={dog}
