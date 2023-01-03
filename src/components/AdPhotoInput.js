@@ -49,7 +49,10 @@ const Dropzone = ({
         if (deletePhotoHandler) {
             deletePhotoHandler(item)
         } else {
-            setFiles(files.filter(file => file != item));
+            const newFiles = files.filter(file => file != item);
+
+            setFiles(newFiles);
+            onChange(newFiles)
         }
     }
 
@@ -125,8 +128,7 @@ const Dropzone = ({
                         justifyContent: 'center',
                         alignItems: 'center',
                         borderRadius: '12px',
-                        cursor: 'pointer',
-                        ml: 2
+                        cursor: 'pointer'
                     }}>
                         <PlusCircle color='#858585' />
                     </Box>

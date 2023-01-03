@@ -16,7 +16,7 @@ import OverlayLoader from '../../components/Modals/OverlayLoader';
 import useEffectOnce from '../../utils/useEffectOnce'
 import DeletePhotoWarning from '../../components/Modals/DeletePhotoWarning';
 import DogInformation from './DogInformation';
-import { DESCRIPTION } from '../../validations';
+import { DESCRIPTION, AD_PHOTOS } from '../../validations';
 
 const selectedItems = labels => labels.map(({ AdInterest }) => AdInterest.id_interest)
 
@@ -44,18 +44,16 @@ const SwitchInputContainer = ({
 
 const EditAd = () => {
     const { state: { user }, dispatch } = useAuth();
-    const { dog } = user
     const [openWarning, setOpenWarning] = React.useState(false)
     const [selectedPhoto, setSelectedPhoto] = React.useState(null)
     const [openOverlayLoader, setOpenOverlayLoader] = React.useState(false)
     const [interests, setInterests] = React.useState([])
     const [openDeletePhoto, setOpenDeletePhoto] = React.useState(false);
     const { control, handleSubmit, watch, setValue, formState: {
-        isSubmitting
+        isSubmitting, dirtyFields
     }} = useForm({
         reValidateMode: "onBlur",
         defaultValues: {
-            files: user.publication[0].multimedia,
             interests: selectedItems(user.publication[0].interests),
             description: user.publication[0].description,
             permission_geolocation: user.publication[0].permission_geolocation,
@@ -114,8 +112,10 @@ const EditAd = () => {
     }
 
     React.useEffect(() => {
-        setValue("files", user.publication[0].multimedia)
+        setValue("files", JSON.parse(user.publication[0].multimedia))
     }, [user.publication[0].multimedia.length])
+
+    console.log(dirtyFields)
 
     return (
         <SettingsLayout title='Editar anuncio'>
@@ -124,11 +124,15 @@ const EditAd = () => {
                 flexDirection: 'column',
                 position: 'relative'
             }} component="form" onSubmit={handleSubmit(onSubmit)}>
-                <AdPhotoInput
-                    control={control}
-                    name='files'
-                    deletePhotoHandler={handleOpenDeletePhoto}
-                />
+                <Box sx={{ p: 2 }}>
+                    <AdPhotoInput
+                        control={control}
+                        name='files'
+                        rules={AD_PHOTOS.rules}
+                        validations={AD_PHOTOS.messages}
+                        deletePhotoHandler={handleOpenDeletePhoto}
+                    />
+                </Box>
                 <Box sx={{ p: 2 }} id="drawer-container">
                     <DogInformation />
                     <Box sx={{ pt: 2, pb: 2 }}>
