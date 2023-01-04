@@ -8,13 +8,27 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as FacebookIcon } from '../../assets/icons/Facebook.svg'
 import { ReactComponent as GoogleIcon } from '../../assets/icons/Google.svg'
-import { ReactComponent as PhoneIcon } from '../../assets/icons/Phone.svg'
+import { Smartphone } from 'lucide-react';
 import LinkBehavior from '../LinkBehavior';
 import { apiProvider } from '../../api'
 import vars from '../../vars';
 import { useAuth, loginUser } from '../../context/AuthContext'
+import { alpha } from '@mui/material';
+import styled from '@emotion/styled';
 
 const facebookFields = 'id,first_name,last_name,name,name_format,picture,email'
+
+const SocialIcon = styled(IconButton)(({ color }) => ({
+    margin: '0.5rem',
+    padding: '0 !important',
+    backgroundColor: color,
+    boxShadow: '0px 1px 12px rgba(0, 0, 0, 0.12)',
+    height: '48px',
+    width: '48px',
+    '&:hover': {
+        backgroundColor: `${alpha(color, 0.8)} !important`
+    }
+}))
 
 const SocialAuth = ({ hidePhone }) => {
     const [error, setError] = React.useState(false)
@@ -57,12 +71,9 @@ const SocialAuth = ({ hidePhone }) => {
                 fieldsProfile={facebookFields}
                 onResolve={({ data }) => onSubmit(data)}
             >
-                <IconButton sx={{
-                    margin: '0 !important',
-                    padding: '0 !important'
-                }}>
+                <SocialIcon color="#1B77F2">
                     <FacebookIcon />
-                </IconButton>
+                </SocialIcon>
             </LoginSocialFacebook>
             <LoginSocialGoogle
                 client_id={vars.GoogleID}
@@ -71,20 +82,14 @@ const SocialAuth = ({ hidePhone }) => {
                 access_type="offline"
                 onResolve={({ data }) => onSubmit(data)}
             >
-                <IconButton sx={{
-                    margin: '0 !important',
-                    padding: '0 !important'
-                }}>
+                <SocialIcon color="#ffffff">
                     <GoogleIcon />
-                </IconButton>
+                </SocialIcon>
             </LoginSocialGoogle>
             {(!hidePhone) && (
-                <IconButton component={LinkBehavior} to='?withPhone=true' sx={{
-                    margin: '0 !important',
-                    padding: '0 !important'
-                }}>
-                    <PhoneIcon />
-                </IconButton>
+                <SocialIcon color="#35414C">
+                    <Smartphone color="#fff" />
+                </SocialIcon>
             )}
         </Box>
     )
