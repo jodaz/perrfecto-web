@@ -40,6 +40,8 @@ const ChipArrayInput = ({
     rules,
     disabled,
     defaultValue,
+    property = 'name',
+    propertyValue = 'id',
     validations
 }) => (
     <FormControl>
@@ -63,13 +65,13 @@ const ChipArrayInput = ({
                     >
                         {labels.map(label => (
                             <Chip
-                                value={label.id}
+                                value={label[propertyValue]}
                                 aria-label={label}
                                 color="primary"
                                 size="small"
                                 disabled={disabled}
                             >
-                                {label.name}
+                                {label[property]}
                             </Chip>
                         ))}
                     </ToggleButtonGroup>

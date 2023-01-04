@@ -179,6 +179,7 @@ const RegisterOwner = ({ open, handleClose, redirect = '/home' }) => {
                                 InputProps={{
                                     placeholder: 'Seleccione una provincia'
                                 }}
+                                noOptionsText='Sin resultados'
                             />
                         </Box>
                         {!!(cities.length) && (
@@ -195,6 +196,7 @@ const RegisterOwner = ({ open, handleClose, redirect = '/home' }) => {
                                     InputProps={{
                                         placeholder: 'Seleccione una ciudad'
                                     }}
+                                    noOptionsText='Sin resultados'
                                 />
                             </Box>
                         )}
