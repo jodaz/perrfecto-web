@@ -13,6 +13,10 @@ import { Chip } from '@mui/material';
 import LinkBehavior from '../../../components/LinkBehavior';
 import ShowVaccines from '../../Vaccines/ShowVaccines';
 import ListCertificates from '../../certificates/ListCertificates';
+import { Stack } from '@mui/system';
+import StarIconButton from '../../../components/Buttons/FavouriteButton/StarIconButton';
+import LikeIconButton from '../../../components/Buttons/LikeButton/LikeIconButton';
+import MessageIconButton from '../../../components/Buttons/MessageButton/MessageIconButton';
 
 const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
@@ -106,6 +110,11 @@ const MyAdCard = ({ fullWidth, ...data  }) => {
                     handleClose={handleCloseDeleteModal}
                     item={publication}
                 />
+                <Stack spacing={2} direction="row" mt={2}>
+                    <StarIconButton />
+                    <LikeIconButton likes={0} />
+                    <MessageIconButton active={true} />
+                </Stack>
             </CardContent>
         </Card>
     )
