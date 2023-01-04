@@ -13,6 +13,7 @@ import TextInput from './Forms/TextInput';
 import razas from '../utils/breeds';
 import ChipArrayInput from './Forms/ChipArrayInput';
 import { alpha } from '@mui/material';
+import SliderInput from './Forms/SliderInput';
 
 const genders = [
     { label: 'Macho', value: 'macho' },
@@ -95,6 +96,14 @@ const FilterDrawer = () => {
                     label='Sexo'
                     property='label'
                     propertyValue='value'
+                />
+            </Box>
+            <Divider />
+            <Box sx={{ p: 3 }}>
+                <SliderInput
+                    label='Distancia'
+                    control={control}
+                    name="distance"
                 />
             </Box>
             <Divider />
