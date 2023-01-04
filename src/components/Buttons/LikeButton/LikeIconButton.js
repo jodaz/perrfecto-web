@@ -21,6 +21,7 @@ const LikeIconButton = ({ likes, ...rest }) => (
                 backgroundColor: theme => theme.palette.primary.main
             }
         }}
+        overlap="circular"
     >
         <IconButton sx={{
             background: '#fff',
