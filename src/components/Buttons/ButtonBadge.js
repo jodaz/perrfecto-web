@@ -19,6 +19,7 @@ const CustomBadge = ({ children, count}) => (
                 backgroundColor: theme => theme.palette.warning.main
             }
         }}
+        overlap="rectangular"
     >
         {children}
     </Badge>

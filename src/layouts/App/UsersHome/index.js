@@ -1,36 +1,24 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import PawPrints from '../../../assets/images/pawprints.svg'
-import { apiProvider } from '../../../api';
 import Stack from './Stack';
-import { CircularProgress, useMediaQuery } from '@mui/material';
+import { CircularProgress, Fab, useMediaQuery } from '@mui/material';
 import ContactDialog from '../../../components/Modals/ContactDialog';
 import DogPublication from '../../../components/FeedCard/DogPublication'
 import OwnerPublication from '../../../components/FeedCard/OwnerPublication';
 import useEffectOnce from '../../../utils/useEffectOnce';
+import { usePublications, fetchPublications } from '../../../context/PublicationContext';
+import FilterButton from '../../../components/Buttons/FilterButton';
+
 const PopularMembers = React.lazy(() => import('../../../components/PopularMembers'));
 
 const UsersHome = () => {
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
-    const [cards, setCards] = React.useState([])
+    const { state: { publications }, dispatch } = usePublications();
     const [selectedCard, setSelectedCard] = React.useState(null);
     const [openDogCard, setOpenDogCard] = React.useState(false)
     const [openOwnerCard, setOpenOwnerCard] = React.useState(false)
     const [openContactDialog, setOpenContactDialog] = React.useState(false)
-
-    const fetchPublications = async () => {
-        try {
-            const res = await apiProvider.get('api/publication/publications')
-
-            if (res.status >= 200 && res.status < 300) {
-                const { data: { data: { data } } } = res;
-
-                setCards(data);
-            }
-        } catch (error) {
-            console.log("error ", error)
-        }
-    }
 
     const handleSelect = data => {
         setSelectedCard(data)
@@ -52,7 +40,7 @@ const UsersHome = () => {
         setSelectedCard(null);
     }
 
-    useEffectOnce(() => { fetchPublications() }, []);
+    useEffectOnce(() => { fetchPublications(dispatch) }, []);
 
     return (
         <Box
@@ -85,15 +73,16 @@ const UsersHome = () => {
             </React.Suspense>
             <Box sx={{
                 display: 'flex',
+                position: 'relative',
                 flexDirection: 'column',
-                width: '100%',
+                width: isSmall ? '100%' : '50%',
                 margin: '0 auto',
                 height: '100%',
                 zIndex: 100
             }}>
-                {(cards.length) ? (
+                {(publications.length) ? (
                     <Stack
-                        data={cards}
+                        data={publications}
                         onVote={(item, vote) => null}
                         onClick={(item) => handleSelect(item)}
                     />
@@ -108,6 +97,7 @@ const UsersHome = () => {
                         <CircularProgress color="primary" />
                     </Box>
                 )}
+                <FilterButton />
             </Box>
             {openDogCard && (
                 <DogPublication

@@ -9,6 +9,7 @@ import { Camera } from 'lucide-react';
 import Logo from '../../components/Logo';
 // Icons
 import NotificationButton from './NotificationButton';
+import FilterDrawer from '../../components/FilterDrawer';
 
 const drawerWidth = '350px';
 
@@ -40,9 +41,13 @@ const Sidebar = ({ children }) => {
             </Toolbar>
             <Divider />
             <Navigation />
-            <Box sx={{ height: '100%', maxWidth: 'inherit' }}>
+            <Box
+                sx={{ height: '100%', maxWidth: 'inherit' }}
+                id="drawer-container"
+            >
                 {children}
             </Box>
+            <FilterDrawer />
         </Drawer>
     )
 }

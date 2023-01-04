@@ -3,7 +3,6 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
 import SelectInput from '../../components/Forms/SelectInput';
-import { PROVINCE, CITY } from '../../validations';
 import { fileProvider } from '../../api'
 import SettingsLayout from '../../layouts/SettingsLayout';
 import { useForm } from 'react-hook-form';
@@ -89,8 +88,6 @@ const EditLocation = () => {
                             label='Ciudad, estado o provincia'
                             options={provincias}
                             optionLabel='nombre'
-                            rules={PROVINCE.rules}
-                            validations={PROVINCE.messages}
                             InputProps={{
                                 placeholder: 'Seleccione una provincia'
                             }}
@@ -104,11 +101,10 @@ const EditLocation = () => {
                             label='Distrito'
                             options={cities}
                             optionLabel='nombre'
-                            // rules={CITY.rules}
-                            // validations={CITY.messages}
                             InputProps={{
                                 placeholder: 'Seleccione una ciudad'
                             }}
+                            noOptionsText='Sin resultados'
                         />
                     </Box>
                     <Box sx={{ p: 2 }}>
