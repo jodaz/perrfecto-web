@@ -87,7 +87,11 @@ const SocialAuth = ({ hidePhone }) => {
                 </SocialIcon>
             </LoginSocialGoogle>
             {(!hidePhone) && (
-                <SocialIcon color="#35414C">
+                <SocialIcon
+                    color="#35414C"
+                    component={LinkBehavior}
+                    to='?withPhone=true'
+                >
                     <Smartphone color="#fff" />
                 </SocialIcon>
             )}
