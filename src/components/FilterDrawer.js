@@ -12,6 +12,7 @@ import { usePublications, toggleFilters } from '../context/PublicationContext';
 import TextInput from './Forms/TextInput';
 import razas from '../utils/breeds';
 import ChipArrayInput from './Forms/ChipArrayInput';
+import { alpha } from '@mui/material';
 
 const genders = [
     { label: 'Macho', value: 'macho' },
@@ -114,10 +115,9 @@ const FilterDrawer = () => {
                 <Button
                     variant="contained"
                     color="primary"
-                    onClick={toggleDrawer(anchor, false)}
                     fullWidth
                 >
-                    Agregar
+                    Filtrar
                 </Button>
             </Box>
         </Box>
