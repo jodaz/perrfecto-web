@@ -100,6 +100,17 @@ export const FEATURES = {
     }
 }
 
+export const AD_PHOTOS = {
+    rules: {
+        required: true,
+        minLength: 1
+    },
+    messages: {
+        required: "Ingrese al menos una foto para su anuncio.",
+        minLength: "Ingrese al menos una foto para su anuncio."
+    }
+}
+
 export const PASSWORD = {
     rules: {
         required: true,

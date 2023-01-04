@@ -1,7 +1,7 @@
 import React from 'react'
 import CardMedia from '@mui/material/CardMedia'
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination } from "swiper";
+import { Pagination, Navigation } from "swiper";
 import styled from '@emotion/styled';
 
 const SwiperStyled = styled(Swiper)(() => ({
@@ -29,7 +29,8 @@ const PhotoGallery = ({ images }) => (
             clickable: true,
             dynamicBullets: true,
         }}
-        modules={[Pagination]}
+        modules={[Navigation, Pagination]}
+        navigation
     >
         {images.map((image, index) => (
             <SwiperSlideStyled key={index}>
