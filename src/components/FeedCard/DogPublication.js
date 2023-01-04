@@ -9,6 +9,7 @@ import FavouriteButton from '../Buttons/FavouriteButton'
 import LikeButton from '../Buttons/LikeButton'
 import ShowVaccines from '../../pages/Vaccines/ShowVaccines';
 import ListCertificates from '../../pages/certificates/ListCertificates';
+import MessageButton from '../Buttons/MessageButton';
 
 const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
@@ -77,11 +78,14 @@ const DogPublication = ({ open, data, handleClose, handleOpenOwnerCard }) => {
                     </Box>
                 </Box>
                 <Box sx={{ display: 'flex', width: '100%', mb: 2, ml: 2 }}>
-                    <Box sx={{ p: 2 }}>
+                    <Box sx={{ p: 1 }}>
                         <FavouriteButton item={data} />
                     </Box>
-                    <Box sx={{ p: 2 }}>
+                    <Box sx={{ p: 1 }}>
                         <LikeButton item={data} />
+                    </Box>
+                    <Box sx={{ p: 1 }}>
+                        <MessageButton />
                     </Box>
                 </Box>
             </Box>
