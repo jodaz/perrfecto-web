@@ -54,7 +54,6 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
     const [features, setFeatures] = React.useState([])
 
     const onSubmit = async data => {
-        console.log(data)
         try {
             let {
                 type,
@@ -85,7 +84,7 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
                 files: files
             }
 
-            if (vaccines) {
+            if (vaccines.length) {
                 const mappedVaccines = vaccines.map(({ id }) => ({
                     id_vaccine: id
                 }))

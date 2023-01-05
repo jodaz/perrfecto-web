@@ -27,7 +27,6 @@ const VaccinesArrayField = ({ vaccines, control }) => {
                             control={control}
                             name={`vaccines[${index}]`}
                             options={vaccines}
-                            // defaultValue={`vaccines[${index}]`}
                             optionLabel='name'
                         />
                     </Box>

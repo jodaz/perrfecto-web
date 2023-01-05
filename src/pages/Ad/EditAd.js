@@ -54,11 +54,11 @@ const EditAd = () => {
     }} = useForm({
         reValidateMode: "onBlur",
         defaultValues: {
-            interests: selectedItems(user.publication[0].interests),
-            description: user.publication[0].description,
-            permission_geolocation: user.publication[0].permission_geolocation,
-            permission_whatsapp: user.publication[0].permission_whatsapp,
-            permission_tlf: user.publication[0].permission_tlf
+            interests: user.publication.interests ? selectedItems(user.publication.interests) : null,
+            description: user.publication.description,
+            permission_geolocation: user.publication.permission_geolocation,
+            permission_whatsapp: user.publication.permission_whatsapp,
+            permission_tlf: user.publication.permission_tlf
         }
     });
     const insterestsValues = watch('interests')
@@ -112,8 +112,8 @@ const EditAd = () => {
     }
 
     React.useEffect(() => {
-        setValue("files", JSON.parse(user.publication[0].multimedia))
-    }, [user.publication[0].multimedia.length])
+        setValue("files", JSON.parse(user.publication.multimedia))
+    }, [user.publication.multimedia.length])
 
     return (
         <SettingsLayout title='Editar anuncio'>
