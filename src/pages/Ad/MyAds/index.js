@@ -1,7 +1,6 @@
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import MyAdCard from "./MyAdCard";
-import LinkBehavior from "../../../components/LinkBehavior";
 
 const MyAds = ({ dog, publication, ...rest }) => (
     <Box sx={{

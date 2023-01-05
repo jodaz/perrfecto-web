@@ -14,9 +14,8 @@ import { useForm } from 'react-hook-form';
 import { useAuth, renewToken } from '../../context/AuthContext'
 import PhotoInput from '../../components/Forms/PhotoInput';
 import { fileProvider, apiProvider } from '../../api'
-import Photo from '../../components/Photo';
 import formDataHandler from '../../utils/formDataHandler';
-import MyAds from '../Ad/MyAds';
+import MyAdCard from '../Ad/MyAds/MyAdCard';
 
 const RegisterDog = React.lazy(() => import('../../components/RegisterDog'));
 
@@ -129,7 +128,11 @@ const PetProfile = () => {
                     )}
                 </Box>
             </Box>
-            {!!(user.publication?.length) && <MyAds {...user} />}
+            <Box sx={{ width: '100%', mb: 1 }}>
+                {!!(user.publication) && (
+                    <MyAdCard {...user} />
+                )}
+            </Box>
         </>
     );
 }

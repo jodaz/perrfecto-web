@@ -35,7 +35,8 @@ const MyAdCard = ({ fullWidth, ...data  }) => {
             maxWidth: '100%',
             m: 2,
             boxShadow: '0px 2px 12px rgba(0, 0, 0, 0.24)',
-            borderRadius: '20px'
+            borderRadius: '20px',
+            minHeight: '500px'
         }}>
             <Box sx={{ flex: 1, aspectRatio: '1 / 1', width: '100%', position: 'relative' }}>
                 <PhotoGallery images={arrImages} />
@@ -67,13 +68,15 @@ const MyAdCard = ({ fullWidth, ...data  }) => {
                 <Typography variant="subtitle1" color="text.secondary" gutterBottom>
                     {publication.description}
                 </Typography>
-                <Box spacing={3} sx={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    marginTop: '1rem'
-                }}>
-                    {interests.map(item => <Chip label={item.name} size="small" sx={{ mb: 1, mr: 1 }} />)}
-                </Box>
+                {(interests) && (
+                    <Box spacing={3} sx={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        marginTop: '1rem'
+                    }}>
+                        {interests.map(item => <Chip label={item.name} size="small" sx={{ mb: 1, mr: 1 }} />)}
+                    </Box>
+                )}
                 {(phone && permission_tlf) && (
                     <Typography
                         variant="subtitle1"
