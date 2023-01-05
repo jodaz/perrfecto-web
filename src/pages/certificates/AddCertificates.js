@@ -1,10 +1,10 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import IconButton from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import FormHelperText from '@mui/material/FormHelperText'
-import { Plus, Trash2 } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import FileInput from './FileInput';
+import TrashButton from '../../components/Buttons/TrashButton';
 // import AddCertificateModal from '../../components/Modals/AddCertificateModal';
 
 const AddCertificates = ({ control }) => {
@@ -32,11 +32,7 @@ const AddCertificates = ({ control }) => {
                         <FileInput control={control} name={`certificates`} />
                     </Box>
                     <Box>
-                        <IconButton
-                            onClick={removeCertificate(index)}
-                        >
-                            <Trash2 color="black" />
-                        </IconButton>
+                        <TrashButton onClick={removeCertificate(index)} />
                     </Box>
                 </Box>
             ))}
