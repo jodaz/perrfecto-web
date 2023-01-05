@@ -22,9 +22,16 @@ const EditCertificates = () => {
     const navigate = useNavigate();
 
     const onSubmit = async values => {
-        try {
-            const formData = await formDataHandler(values, 'certificates')
+        const formData = new FormData();
 
+        if (values.certificates.length) {
+            // Aqui va certificates en lugar de files
+            for (let i = 0; i < values.certificates.length; i++) {
+                formData.append('certificates', values.certificates[i][0]);
+            }
+        }
+
+        try {
             const res = await fileProvider.put(`/api/dog/edit/${user.dog.id}`, formData)
 
             if (res.status >= 200 && res.status < 300) {

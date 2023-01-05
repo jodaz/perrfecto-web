@@ -94,10 +94,10 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
 
             const formData = await formDataHandler(parsedData, 'files')
 
-            if (certificates) {
+            if (data.certificates.length) {
                 // Aqui va certificates en lugar de files
-                for (let i = 0; i < certificates.length; i++) {
-                    formData.append('certificates', certificates[i]);
+                for (let i = 0; i < data.certificates.length; i++) {
+                    formData.append('certificates', data.certificates[i][0]);
                 }
             }
 
