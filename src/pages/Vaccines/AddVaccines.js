@@ -15,6 +15,13 @@ const VaccinesArrayField = ({ vaccines, control, disabled }) => {
         name: "vaccines"
     });
 
+    const disabledOptions = option => {
+        const selectedVaccines = fields.map(({ DogVaccine }) => DogVaccine)
+            .filter(item => item != undefined)
+
+        return selectedVaccines.some(item => item.id_vaccine == option.id)
+    }
+
     return (
         <Box sx={{
             display: 'flex',
@@ -29,6 +36,7 @@ const VaccinesArrayField = ({ vaccines, control, disabled }) => {
                             options={vaccines}
                             optionLabel='name'
                             disabled={disabled}
+                            getOptionDisabled={disabledOptions}
                         />
                     </Box>
                     <Box>
