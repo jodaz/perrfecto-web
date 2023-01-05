@@ -36,7 +36,10 @@ const VaccinesArrayField = ({ vaccines, control }) => {
                 </Box>
             ))}
             <Box>
-                <Button onClick={() => append()} size='small' sx={{ fontSize: '14px' }}>
+                <Button
+                    onClick={() => append()} size='small' sx={{ fontSize: '14px' }}
+                    disabled={vaccines.length == fields.length}
+                >
                     <Plus size={18} /> Añadir más
                 </Button>
             </Box>
