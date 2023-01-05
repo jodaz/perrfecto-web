@@ -53,7 +53,7 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
     const navigate = useNavigate();
     const [features, setFeatures] = React.useState([])
 
-    const onSubmit = async (data) => {
+    const onSubmit = async data => {
         try {
             let {
                 type,
@@ -66,10 +66,6 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
                 vaccines,
                 certificates
             } = data;
-
-            const mappedVaccines = vaccines.map(({ id }) => ({
-                id_vaccine: id
-            }))
 
             const mappedCharacteristics = characteristics.map(value => ({
                 id_charact: value
@@ -85,15 +81,24 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
                 gender: gender.label,
                 id_user: user.id,
                 characteristics: mappedCharacteristics,
-                files: files,
-                vaccines: mappedVaccines
+                files: files
+            }
+
+            if (vaccines) {
+                const mappedVaccines = vaccines.map(({ id }) => ({
+                    id_vaccine: id
+                }))
+
+                parsedData.vaccines = mappedVaccines
             }
 
             const formData = await formDataHandler(parsedData, 'files')
 
-            // Aqui va certificates en lugar de files
-            for (let i = 0; i < certificates.length; i++) {
-                formData.append('certificates', certificates[i]);
+            if (certificates) {
+                // Aqui va certificates en lugar de files
+                for (let i = 0; i < certificates.length; i++) {
+                    formData.append('certificates', certificates[i]);
+                }
             }
 
             const res = await apiProvider.post('/api/dog/new', formData)

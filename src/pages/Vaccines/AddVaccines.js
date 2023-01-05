@@ -8,7 +8,7 @@ import { Trash2, Plus } from 'lucide-react';
 import useEffectOnce from '../../utils/useEffectOnce';
 
 const VaccinesArrayField = ({ vaccines, control }) => {
-    const [indexes, setIndexes] = React.useState([0]);
+    const [indexes, setIndexes] = React.useState([]);
     const [counter, setCounter] = React.useState(0);
 
     const addVaccine = () => {
@@ -40,7 +40,6 @@ const VaccinesArrayField = ({ vaccines, control }) => {
                     <Box>
                         <IconButton
                             onClick={removeVaccine(index)}
-                            disabled={indexes.length == 1}
                             sx={{
                                 bgcolor: 'red'
                             }}

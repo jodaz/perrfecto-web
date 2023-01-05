@@ -8,8 +8,7 @@ import FileInput from './FileInput';
 // import AddCertificateModal from '../../components/Modals/AddCertificateModal';
 
 const AddCertificates = ({ control }) => {
-    const [isModalOpen, setIsModalOpen] = React.useState(false)
-    const [indexes, setIndexes] = React.useState([0]);
+    const [indexes, setIndexes] = React.useState([]);
     const [counter, setCounter] = React.useState(0);
 
     const addCertificate = () => {
@@ -35,7 +34,6 @@ const AddCertificates = ({ control }) => {
                     <Box>
                         <IconButton
                             onClick={removeCertificate(index)}
-                            disabled={indexes.length == 1}
                         >
                             <Trash2 color="black" />
                         </IconButton>
