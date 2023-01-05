@@ -68,7 +68,7 @@ const EditAd = () => {
         const formData = await formDataHandler(data, 'files')
 
         try {
-            const res = await fileProvider.put(`/api/publication/edit/${user.publication[0].id}`, formData)
+            const res = await fileProvider.put(`/api/publication/edit/${user.publication.id}`, formData)
 
             if (res.status >= 200 && res.status < 300) {
                 renewToken(dispatch, user)
@@ -201,7 +201,7 @@ const EditAd = () => {
                 open={openDeletePhoto}
                 handleClose={handleCloseDeletePhoto}
                 file={selectedPhoto}
-                publication={user.publication[0]}
+                publication={user.publication}
             />
         </SettingsLayout>
     );
