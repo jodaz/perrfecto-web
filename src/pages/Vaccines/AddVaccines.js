@@ -9,7 +9,7 @@ import useEffectOnce from '../../utils/useEffectOnce';
 import TrashButton from '../../components/Buttons/TrashButton';
 import { useFieldArray } from "react-hook-form";
 
-const VaccinesArrayField = ({ vaccines, control }) => {
+const VaccinesArrayField = ({ vaccines, control, disabled }) => {
     const { fields, append, remove } = useFieldArray({
         control,
         name: "vaccines"
@@ -28,10 +28,14 @@ const VaccinesArrayField = ({ vaccines, control }) => {
                             name={`vaccines[${index}]`}
                             options={vaccines}
                             optionLabel='name'
+                            disabled={disabled}
                         />
                     </Box>
                     <Box>
-                        <TrashButton onClick={() => remove(index)} />
+                        <TrashButton
+                            disabled={disabled}
+                            onClick={() => remove(index)}
+                        />
                     </Box>
                 </Box>
             ))}
