@@ -3,13 +3,14 @@ import Box from '@mui/material/Box';
 import { apiProvider } from '../../api';
 import SelectInput from '../../components/Forms/SelectInput';
 import CircularProgress from '@mui/material/CircularProgress';
-import { Button, IconButton } from '@mui/material';
-import { Trash2, Plus } from 'lucide-react';
+import { Button } from '@mui/material';
+import { Plus } from 'lucide-react';
 import useEffectOnce from '../../utils/useEffectOnce';
+import TrashButton from '../../components/Buttons/TrashButton';
 
 const VaccinesArrayField = ({ vaccines, control }) => {
     const [indexes, setIndexes] = React.useState([]);
-    const [counter, setCounter] = React.useState(0);
+    const [counter, setCounter] = React.useState(null);
 
     const addVaccine = () => {
         setIndexes(prevIndexes => [...prevIndexes, counter]);
@@ -33,19 +34,12 @@ const VaccinesArrayField = ({ vaccines, control }) => {
                             control={control}
                             name={`vaccines[${index}]`}
                             options={vaccines}
-                            defaultValue={`vaccines[${index}]`}
+                            // defaultValue={`vaccines[${index}]`}
                             optionLabel='name'
                         />
                     </Box>
                     <Box>
-                        <IconButton
-                            onClick={removeVaccine(index)}
-                            sx={{
-                                bgcolor: 'red'
-                            }}
-                        >
-                            <Trash2 color="black" />
-                        </IconButton>
+                        <TrashButton onClick={removeVaccine(index)} />
                     </Box>
                 </Box>
             ))}

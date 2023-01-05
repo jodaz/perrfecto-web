@@ -104,8 +104,7 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
             const res = await apiProvider.post('/api/dog/new', formData)
 
             if (res.status >= 200 && res.status < 300) {
-                handleClose();
-                await renewToken(dispatch, user);
+                renewToken(dispatch, user);
                 navigate(redirect)
             }
         } catch (error) {
