@@ -1,3 +1,4 @@
+import * as React from 'react'
 import Box from '@mui/material/Box'
 import BackgroundDogs from '../../assets/images/background-dogs.png'
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -6,11 +7,17 @@ import LinkBehavior from '../../components/LinkBehavior';
 import { Outlet, useNavigate } from 'react-router-dom'
 import getSearchParams from '../../utils/getSearchParams';
 import DeletedAccount from '../../components/Modals/DeletedAccount';
+import { closeGuestWarning, useGuest } from '../../context/GuestContext';
 
 const Landing = ({ location }) => {
+    const { dispatch: guestDispatch } = useGuest()
     const navigate = useNavigate();
     const openDeleteModal = getSearchParams(location, 'delete')
     const matches = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+
+    React.useEffect(() => {
+        closeGuestWarning(guestDispatch);
+    }, [])
 
     return (
         <Box sx={{
