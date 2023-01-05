@@ -18,16 +18,19 @@ const AddCertificates = ({ control }) => {
             display: 'flex',
             flexDirection: 'column'
         }}>
-            {fields.map((item, index) => (
-                <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
-                    <Box sx={{ flex: 1, p: 1 }}>
-                        <FileInput control={control} name={`certificates[${index}]`} />
+            {fields.map((item, index) => {
+                console.log(item)
+                return (
+                    <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Box sx={{ flex: 1, p: 1 }}>
+                            <FileInput control={control} name={`certificates[${index}]`} defaultValue={item} />
+                        </Box>
+                        <Box>
+                            <TrashButton onClick={() => remove(index)} />
+                        </Box>
                     </Box>
-                    <Box>
-                        <TrashButton onClick={() => remove(index)} />
-                    </Box>
-                </Box>
-            ))}
+                )
+            })}
             <Box>
                 <Button
                     onClick={() => append()}

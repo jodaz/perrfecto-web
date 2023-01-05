@@ -5,12 +5,14 @@ import { useDropzone } from 'react-dropzone';
 import { Controller } from 'react-hook-form'
 import IconButton from '@mui/material/Typography';
 import { Camera } from 'lucide-react';
+
 const Dropzone = ({
+    value = null,
     onChange,
     disabled
 }) => {
-    const [file, setFile] = React.useState(null);
-    const { getRootProps, getInputProps, open } = useDropzone({
+    const [file, setFile] = React.useState(value);
+    const { getRootProps, getInputProps } = useDropzone({
         accept: {
             'image/*': []
         },
@@ -61,10 +63,12 @@ const FileInput = ({
     rules,
     disabled,
     validations,
+    defaultValue,
     ...rest
 }) => (
     <Controller
         rules={rules}
+        defaultValue={defaultValue}
         render={({ field: { onChange, ...restField }, fieldState: { error } }) => (
             <>
                 <Dropzone
