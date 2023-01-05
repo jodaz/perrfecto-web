@@ -19,7 +19,7 @@ const AddCertificates = ({ control }) => {
             flexDirection: 'column'
         }}>
             {fields.map((item, index) => (
-                <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
+                <Box key={item.id} sx={{ display: 'flex', alignItems: 'center' }}>
                     <Box sx={{ flex: 1, p: 1 }}>
                         <FileInput control={control} name={`certificates[${index}]`} />
                     </Box>
