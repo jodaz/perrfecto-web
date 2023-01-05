@@ -54,6 +54,7 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
     const [features, setFeatures] = React.useState([])
 
     const onSubmit = async data => {
+        console.log(data)
         try {
             let {
                 type,

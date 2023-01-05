@@ -7,27 +7,20 @@ import { Button } from '@mui/material';
 import { Plus } from 'lucide-react';
 import useEffectOnce from '../../utils/useEffectOnce';
 import TrashButton from '../../components/Buttons/TrashButton';
+import { useFieldArray } from "react-hook-form";
 
 const VaccinesArrayField = ({ vaccines, control }) => {
-    const [indexes, setIndexes] = React.useState([]);
-    const [counter, setCounter] = React.useState(null);
-
-    const addVaccine = () => {
-        setIndexes(prevIndexes => [...prevIndexes, counter]);
-        setCounter(prevCounter => prevCounter + 1);
-    };
-
-    const removeVaccine = index => () => {
-        setIndexes(prevIndexes => [...prevIndexes.filter(item => item !== index)]);
-        setCounter(prevCounter => prevCounter - 1);
-    };
+    const { fields, append, remove } = useFieldArray({
+        control,
+        name: "vaccines"
+    });
 
     return (
         <Box sx={{
             display: 'flex',
             flexDirection: 'column'
         }}>
-            {indexes.map((index) => (
+            {fields.map((item, index) => (
                 <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
                     <Box sx={{ flex: 1, p: 1 }}>
                         <SelectInput
@@ -39,12 +32,12 @@ const VaccinesArrayField = ({ vaccines, control }) => {
                         />
                     </Box>
                     <Box>
-                        <TrashButton onClick={removeVaccine(index)} />
+                        <TrashButton onClick={() => remove(index)} />
                     </Box>
                 </Box>
             ))}
             <Box>
-                <Button onClick={addVaccine} size='small' sx={{ fontSize: '14px' }}>
+                <Button onClick={() => append()} size='small' sx={{ fontSize: '14px' }}>
                     <Plus size={18} /> Añadir más
                 </Button>
             </Box>
