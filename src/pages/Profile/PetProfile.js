@@ -106,7 +106,7 @@ const PetProfile = () => {
                             title='Crear publicación'
                             color="primary"
                         />
-                        {(!user.publication?.length) && (
+                        {(!user.publication) && (
                             <CustomButton
                                 size={32}
                                 icon={<PlusSquare />}
