@@ -6,11 +6,14 @@ import SettingsLayout from '../../layouts/SettingsLayout';
 import ListItemLink from '../../components/ListItemLink';
 import List from '../../components/List';
 import EditPhoto from './EditPhoto';
+import { differenceInYears } from 'date-fns';
+
+const getYears = birthDate => differenceInYears(new Date(), new Date (birthDate.toString().replace(/"/g, '')))
 
 const PersonalInformation = () => {
     const [editPhoto, setEditPhoto] = React.useState(false);
     const { state: { user } } = useAuth();
-
+    console.log(user.birth_date)
     return (
         <SettingsLayout title='Información personal'>
             <Box sx={{
@@ -45,7 +48,11 @@ const PersonalInformation = () => {
                             color="text.tertiary"
                         />
                         <Typography variant="subtitle1" ml={2}>
-                            25 años
+                            {user.birth_date ? (
+                                <>
+                                    {getYears(user.birth_date)} años
+                                </>
+                            ) : <>Agregar edad</>}
                         </Typography>
                         <ListItemLink
                             to="names"
