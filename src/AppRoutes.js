@@ -44,6 +44,7 @@ import EditCharacteristics from './pages/PetInformation/EditCharacteristics';
 import EditVaccines from './pages/PetInformation/EditVaccines';
 import EditCertificates from './pages/PetInformation/EditCertificates';
 import EditAd from './pages/Ad/EditAd';
+import EditOwnerAge from './pages/PersonalInformation/EditOwnerAge';
 
 function AppRoutes() {
     let location = useLocation();
@@ -126,6 +127,14 @@ function AppRoutes() {
                 element={
                     <AppLayout>
                         <EditNames location={location} />
+                    </AppLayout>
+                }
+            />
+            <Route
+                path='/profile/settings/owner/age'
+                element={
+                    <AppLayout>
+                        <EditOwnerAge location={location} />
                     </AppLayout>
                 }
             />
