@@ -1,25 +1,10 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import { useAuth } from '../../context/AuthContext'
-// Components
-import { useMediaQuery } from '@mui/material';
-import UsersHome from '../../layouts/App/UsersHome';
-import BusinessHome from '../../layouts/App/BusinessHome';
+import InviteGuest from './InviteGuest';
 
-const Home = () => {
-    const { state: { user, isAuth } } = useAuth();
-    const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
-
-    const generateContent = () => {
-        if (!isSmall) {
-            return null;
-        }
-        return (
-            <>
-                {(user.role == 'user' || !isAuth) ? <UsersHome /> : <BusinessHome />}
-            </>
-        )
-    }
+const Home = ({ children }) => {
+    const { state: { isAuth } } = useAuth();
 
     return (
         <Box sx={{
@@ -29,7 +14,7 @@ const Home = () => {
             alignItems: 'center',
             height: '100%'
         }}>
-            {generateContent()}
+            {isAuth ? <>{children}</> : <InviteGuest />}
         </Box>
     );
 }
