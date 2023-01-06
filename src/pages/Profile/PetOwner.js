@@ -24,6 +24,7 @@ const PetOwner = () => {
     const { state: { user }, dispatch } = useAuth();
     const location = useLocation();
     const navigate = useNavigate();
+    const currProfilePic = user.img_profile ? JSON.parse(user.img_profile)[0] : null;
     const registerOwner = getSearchParams(location, 'register');
     const { handleSubmit, control, watch, formState: {
         isSubmitting
@@ -50,9 +51,9 @@ const PetOwner = () => {
         }
     }
 
-    const deletePhoto = async () => {
+    const deletePhoto = async (picture) => {
         try {
-            const res = await apiProvider.delete(`/api/user/img-profile/${user.img_profile}`)
+            const res = await apiProvider.delete(`/api/user/img-profile/${picture}`)
 
             if (res.status >= 200 && res.status < 300) {
                 renewToken(dispatch, user)
@@ -85,9 +86,9 @@ const PetOwner = () => {
                     <PhotoInput
                         name="files"
                         control={control}
-                        defaultValue={user.img_profile}
+                        defaultValue={currProfilePic}
                         disabled={isSubmitting}
-                        handleDelete={deletePhoto}
+                        handleDelete={() => deletePhoto(currProfilePic)}
                     />
                 </Box>
                 <Box sx={{

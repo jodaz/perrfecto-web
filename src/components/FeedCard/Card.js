@@ -42,7 +42,7 @@ const Card = ({
     drag
 }) => {
     const { publi } = data;
-    const userPhoto = getUserPhoto(publi.Owner.img_profile);
+    const userPhoto = getUserPhoto(JSON.parse(publi.Owner.img_profile)[0]);
     const { state: { isAuth } } = useAuth();
     const { dispatch } = useGuest();
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
