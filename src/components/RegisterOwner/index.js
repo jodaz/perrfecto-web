@@ -158,7 +158,7 @@ const RegisterOwner = ({ open, handleClose, redirect = '/home' }) => {
                         </Box>
                         <Box sx={{ p: 2 }}>
                             <DateInput
-                                name='date_birth'
+                                name='birth_date'
                                 control={control}
                                 disabled={isSubmitting}
                                 rules={DATE_BIRTH.rules}

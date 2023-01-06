@@ -19,7 +19,13 @@ const AddCertificates = ({ control, disabled }) => {
             flexDirection: 'column'
         }}>
             {fields.map((item, index) => (
-                <Box key={item.id} sx={{ display: 'flex', alignItems: 'center' }}>
+                <Box sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    border: '1px solid #ccc',
+                    borderRadius: 100,
+                    padding: '0 10px'
+                }} key={item.id} >
                     <Box sx={{ flex: 1, p: 1 }}>
                         <FileInput
                             disabled={disabled}
