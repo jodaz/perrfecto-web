@@ -23,7 +23,7 @@ const VaccineContainer = ({ children, id }) => (
 
 const ShowVaccines = ({ dog, name, lastName = '', img_profile }) => {
     const [open, setOpen] = React.useState(false)
-    const photo = getUserPhoto(img_profile)
+    const photo = img_profile ? getUserPhoto(JSON.parse(img_profile)[0]) : '/images/Avatar.svg'
     const image = getUserPhoto(JSON.parse(dog.dogPhotos)[0])
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('md'));
 

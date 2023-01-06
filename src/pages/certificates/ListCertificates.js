@@ -35,7 +35,7 @@ const CertificateItem = ({ children, id, ...data }) => (
 const ListCertificates = ({ dog, ...userProps }) => {
     const { name, lastName = '', img_profile } = userProps
     const [open, setOpen] = React.useState(false)
-    const photo = getUserPhoto(img_profile)
+    const photo = img_profile ? getUserPhoto(JSON.parse(img_profile)[0]) : '/images/Avatar.svg'
     const image = getUserPhoto(JSON.parse(dog.dogPhotos)[0])
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('md'));
 
