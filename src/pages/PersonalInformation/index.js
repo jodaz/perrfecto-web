@@ -13,7 +13,7 @@ const getYears = birthDate => differenceInYears(new Date(), new Date (birthDate.
 const PersonalInformation = () => {
     const [editPhoto, setEditPhoto] = React.useState(false);
     const { state: { user } } = useAuth();
-    console.log(user.birth_date)
+
     return (
         <SettingsLayout title='Información personal'>
             <Box sx={{
@@ -48,11 +48,11 @@ const PersonalInformation = () => {
                             color="text.tertiary"
                         />
                         <Typography variant="subtitle1" ml={2}>
-                            {user.birth_date ? (
+                            {user.birth_date && (
                                 <>
                                     {getYears(user.birth_date)} años
                                 </>
-                            ) : <>Agregar edad</>}
+                            )}
                         </Typography>
                         <ListItemLink
                             to="names"
@@ -67,13 +67,9 @@ const PersonalInformation = () => {
                             title="Lugar de residencia"
                             color="text.tertiary"
                         />
-                        {(user.province) ? (
+                        {(user.province) && (
                             <Typography variant="subtitle1" ml={2}>
                                 {user.province}, {user.city}
-                            </Typography>
-                        ) : (
-                            <Typography variant="subtitle1" ml={2}>
-                                No ha rellenado su ubicación
                             </Typography>
                         )}
                     </List>
