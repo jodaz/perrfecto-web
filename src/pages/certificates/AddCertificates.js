@@ -24,7 +24,8 @@ const AddCertificates = ({ control, disabled }) => {
                     alignItems: 'center',
                     border: '1px solid #ccc',
                     borderRadius: 100,
-                    padding: '0 10px'
+                    padding: '0 10px',
+                    m: 1
                 }} key={item.id} >
                     <Box sx={{ flex: 1, p: 1 }}>
                         <FileInput

@@ -53,7 +53,7 @@ const Dropzone = ({
                         <Camera />
                     </IconButton>
                     <Box sx={{
-                        maxWidth: '230px',
+                        maxWidth: '200px',
                         whiteSpace: "nowrap",
                         overflow: "hidden",
                         textOverflow: "ellipsis"
