@@ -24,6 +24,9 @@ const Dropzone = ({
     onChange,
     value = [],
     deletePhotoHandler,
+    accept,
+    message,
+    maxFiles
 }) => {
     const [files, setFiles] = React.useState((() => {
         if (typeof(value) == 'string') {
@@ -32,10 +35,7 @@ const Dropzone = ({
         return value;
     })());
     const { getRootProps, getInputProps } = useDropzone({
-        accept: {
-            'image/*': [],
-            'video/mp4': []
-        },
+        accept: accept,
         onDrop: acceptedFiles => {
             const newFiles = [...files, ...acceptedFiles.map(file => Object.assign(file, {
                 preview: URL.createObjectURL(file)
@@ -44,7 +44,7 @@ const Dropzone = ({
             setFiles(newFiles);
             onChange(newFiles)
         },
-        maxFiles: 15
+        maxFiles: maxFiles
     });
 
     const removePhoto = item => {
@@ -157,9 +157,11 @@ const Dropzone = ({
                             <PlusCircle />
                         </IconButton>
                     </Box>
-                    <Typography fontSize={12} color="text.tertiary">
-                        Tienes un máximo de 15 fotos
-                    </Typography>
+                    {message && (
+                        <Typography fontSize={12} color="text.tertiary">
+                            {message}
+                        </Typography>
+                    )}
                 </Box>
             </Box>
         </Box>

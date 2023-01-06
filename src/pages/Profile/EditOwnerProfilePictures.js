@@ -5,51 +5,66 @@ import Typography from '@mui/material/Typography';
 import SettingsLayout from '../../layouts/SettingsLayout';
 import { useForm } from 'react-hook-form';
 import { useAuth, renewToken } from '../../context/AuthContext'
-import PhotoInput from '../../components/Forms/PhotoInput';
 import { fileProvider, apiProvider } from '../../api'
-import formDataHandler from '../../utils/formDataHandler';
+import { AD_PHOTOS } from '../../validations';
+import useEffectOnce from '../../utils/useEffectOnce';
+import AdPhotoInput from '../../components/AdPhotoInput'
+import DeletePhotoWarning from '../../components/Modals/DeletePhotoWarning';
 
 const EditOwnerProfilePictures = () => {
     const [error, setError] = React.useState(null);
+    const [selectedPhoto, setSelectedPhoto] = React.useState(null)
+    const [openDeletePhoto, setOpenDeletePhoto] = React.useState(false);
     const { state: { user }, dispatch } = useAuth();
-    const { control, handleSubmit, isSubmitting } = useForm();
+    const { control, handleSubmit, isSubmitting, setValue } = useForm();
 
     const onSubmit = async ({ files }) => {
         let formData = new FormData();
 
         try {
             if (files.length) {
-                for (let i = 0; i < files.length; i++) {
-                    console.log(files[i][0])
-                    // formData.append('files', files[i]);
+                const keepedFiles = files.filter(file => typeof(file) == 'object')
+
+                for (let i = 0; i < keepedFiles.length; i++) {
+                    formData.append('files', keepedFiles[i][0]);
                 }
 
-                console.log(formData)
+                const res = await fileProvider.put(`/api/user/personal-photos`, formData)
 
-                // const formData = await formDataHandler(formData, 'personalPhotos')
-
-                // const res = await fileProvider.put(`/api/user/personal-photos`, formData)
-
-                // if (res.status >= 200 && res.status < 300) {
-                //     renewToken(dispatch, user)
-                // }
+                if (res.status >= 200 && res.status < 300) {
+                    renewToken(dispatch, user)
+                }
             }
         } catch (error) {
             setError('Ha ocurrido un error inesperado.')
         }
     }
 
-    const deletePhoto = async (photo) => {
+    const fetchPictures = async () => {
         try {
-            const res = await apiProvider.delete(`/api/user/personal-photos/${photo}`)
+            const res = await apiProvider.get('api/user/personal-photos')
 
             if (res.status >= 200 && res.status < 300) {
-                renewToken(dispatch, user)
+                const { data: { data } } = res;
+
+                setValue('files', data)
             }
         } catch (error) {
-            setError('Ha ocurrido un error inesperado.')
+            console.log("error ", error)
         }
     }
+
+    const handleOpenDeletePhoto = (file) => {
+        setOpenDeletePhoto(true);
+        setSelectedPhoto(file)
+    }
+
+    const handleCloseDeletePhoto = () => {
+        setOpenDeletePhoto(false)
+        setSelectedPhoto(null)
+    }
+
+    useEffectOnce(() => { fetchPictures() }, [])
 
     return (
         <SettingsLayout title='Fotos personales'>
@@ -68,20 +83,16 @@ const EditOwnerProfilePictures = () => {
                         display: 'flex',
                         justifyContent: 'center'
                     }}>
-                        <Box sx={{ p: 2, display: 'flex' }}>
-                            <PhotoInput
-                                name="files[1]"
-                                control={control}
-                                handleDelete={deletePhoto}
-                            />
-                        </Box>
-                        <Box sx={{ p: 2, display: 'flex' }}>
-                            <PhotoInput
-                                name="files[2]"
-                                control={control}
-                                handleDelete={deletePhoto}
-                            />
-                        </Box>
+                        <AdPhotoInput
+                            control={control}
+                            name='files'
+                            rules={AD_PHOTOS.rules}
+                            validations={AD_PHOTOS.messages}
+                            deletePhotoHandler={handleOpenDeletePhoto}
+                            accept={{
+                                'image/*': []
+                            }}
+                        />
                     </Box>
                 </Box>
                 <Box sx={{ p: 2 }}>
@@ -94,6 +105,13 @@ const EditOwnerProfilePictures = () => {
                         Guardar
                     </Button>
                 </Box>
+                <DeletePhotoWarning
+                    open={openDeletePhoto}
+                    handleClose={handleCloseDeletePhoto}
+                    file={selectedPhoto}
+                    endpoint={`api/user/personal-photos`}
+                    sideAction={() => fetchPictures()}
+                />
             </Box>
         </SettingsLayout>
     );

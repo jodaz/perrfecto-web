@@ -6,19 +6,25 @@ import Typography from '@mui/material/Typography';
 import { Trash2 } from 'lucide-react';
 import Stack from '@mui/material/Stack';
 import { apiProvider } from '../../../api'
-import { renewToken, useAuth } from '../../../context/AuthContext';
 import { alpha } from '@mui/material';
 
-const DeletePhotoWarning = ({ open, handleClose, publication, file }) => {
+const DeletePhotoWarning = ({
+    open,
+    handleClose,
+    file,
+    endpoint,
+    sideAction
+}) => {
     const [onSubmit, setOnSubmit] = React.useState(false);
-    const { dispatch, state: { user } } = useAuth();
 
     const deletePhotoRequest = async () => {
         try {
-            const res = await apiProvider.delete(`api/publication/img_posted/${publication.id}/${file}`)
+            const res = await apiProvider.delete(`${endpoint}/${file}`)
 
             if (res.status >= 200 && res.status < 300) {
-                renewToken(dispatch, user);
+                if (sideAction) {
+                    sideAction()
+                }
             }
 
             return res;

@@ -45,10 +45,10 @@ const SwitchInputContainer = ({
 const EditAd = () => {
     const { state: { user }, dispatch } = useAuth();
     const [openWarning, setOpenWarning] = React.useState(false)
+    const [openDeletePhoto, setOpenDeletePhoto] = React.useState(false);
     const [selectedPhoto, setSelectedPhoto] = React.useState(null)
     const [openOverlayLoader, setOpenOverlayLoader] = React.useState(false)
     const [interests, setInterests] = React.useState([])
-    const [openDeletePhoto, setOpenDeletePhoto] = React.useState(false);
     const { control, handleSubmit, watch, setValue, formState: {
         isSubmitting
     }} = useForm({
@@ -141,6 +141,12 @@ const EditAd = () => {
                         rules={AD_PHOTOS.rules}
                         validations={AD_PHOTOS.messages}
                         deletePhotoHandler={handleOpenDeletePhoto}
+                        accept={{
+                            'image/*': [],
+                            'video/mp4': []
+                        }}
+                        maxFiles={15}
+                        message='Tienes un máximo de 15 fotos'
                     />
                 </Box>
                 <Box sx={{ p: 2 }} id="drawer-container">
@@ -213,7 +219,8 @@ const EditAd = () => {
                 open={openDeletePhoto}
                 handleClose={handleCloseDeletePhoto}
                 file={selectedPhoto}
-                publication={user.publication}
+                endpoint={`api/publication/img_posted/${user.publication.id}`}
+                sideAction={() => renewToken(dispatch, user)}
             />
         </SettingsLayout>
     );
