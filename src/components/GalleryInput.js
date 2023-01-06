@@ -48,7 +48,8 @@ const Dropzone = ({
     });
 
     const removePhoto = item => {
-        if (deletePhotoHandler) {
+        // Check if file is an string (already submitted) or object (it's just added to the component)
+        if (deletePhotoHandler && (typeof(item) == 'string')) {
             deletePhotoHandler(item)
         } else {
             const newFiles = files.filter(file => file != item);
