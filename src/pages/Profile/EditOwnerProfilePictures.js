@@ -94,6 +94,8 @@ const EditOwnerProfilePictures = () => {
                             accept={{
                                 'image/*': []
                             }}
+                            maxFiles={3}
+                            message='Tienes un máximo de 3 fotos'
                         />
                     </Box>
                 </Box>
