@@ -6,7 +6,7 @@ import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import PublicationDescription from '../../components/FeedCard/PublicationDescription';
 import { Mail, Phone, ChevronLeft, Trash2 } from 'lucide-react'
-import LikeIconButton from '../../components/Buttons/LikeButton/LikeIconButton';
+import LikeButton from '../../components/Buttons/LikeButton';
 import MessageIconButton from '../../components/Buttons/MessageButton/MessageIconButton';
 import ListCertificates from '../certificates/ListCertificates'
 import ShowVaccines from '../Vaccines/ShowVaccines';
@@ -19,7 +19,10 @@ const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 const ShowFavourite = ({ item, deleteFav, close }) => {
     const {
         Ad: {
-            multimedia, permission_tlf, publi, description
+            multimedia,
+            publi,
+            description,
+            LikesCount
         }
     } = item
     const adPictures = getImages(JSON.parse(multimedia))
@@ -136,7 +139,7 @@ const ShowFavourite = ({ item, deleteFav, close }) => {
                     </Box>
                     <Box sx={{ p: 2 }}>
                         <Stack spacing={2} direction="row" mt={2}>
-                            <LikeIconButton likes={0} />
+                            <LikeButton likes={LikesCount} item={item.Ad} />
                             <MessageIconButton active={true} />
                         </Stack>
                     </Box>
