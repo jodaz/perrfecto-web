@@ -51,7 +51,7 @@ const DogPublication = ({ open, data, handleClose, handleOpenOwnerCard }) => {
                         <PublicationDescription
                             color='info.main'
                             dotColor='info'
-                            dogAge={data.dogAge}
+                            age={data.publi.dogAge}
                             breed={data.publi.breed}
                             province={data.publi.Owner.province}
                             city={data.publi.Owner.city}
