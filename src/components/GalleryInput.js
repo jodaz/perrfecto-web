@@ -25,6 +25,7 @@ const Dropzone = ({
     value = [],
     deletePhotoHandler,
     accept,
+    disabled,
     message,
     maxFiles
 }) => {
@@ -44,6 +45,7 @@ const Dropzone = ({
             setFiles(newFiles);
             onChange(newFiles)
         },
+        disabled: disabled,
         maxFiles: maxFiles
     });
 
@@ -79,12 +81,16 @@ const Dropzone = ({
                         zIndex: 1000,
                         bottom: 12,
                         right: 12,
+                        color: '#fff',
                         backgroundColor: theme => theme.palette.error.main,
                         '&:hover': {
                             backgroundColor: theme => `${alpha(theme.palette.error.main, 0.9)}`
+                        },
+                        '&:disabled': {
+                            backgroundColor: theme => theme.palette.text.tertiary
                         }
-                    }} onClick={() => removePhoto(file)}>
-                        <Trash2 color="#fff" size={16} />
+                    }} onClick={() => removePhoto(file)} disabled={disabled}>
+                        <Trash2 color={'#fff'} size={16} />
                     </IconButton>
                 )}
             </Box>
@@ -105,7 +111,7 @@ const Dropzone = ({
     }, [value])
 
     return (
-        <Box sx={{ display: 'flex', mt: 1, mb: 2 }}>
+        <Box sx={{ display: 'flex', mt: 1, mb: 2, opacity: disabled ? 0.8 : 1 }}>
             {!!(files.length) && (
                 <Box sx={{ display: 'flex' }}>
                     <SwiperStyled
@@ -152,9 +158,8 @@ const Dropzone = ({
                         justifyContent: 'center',
                         alignItems: 'center',
                         borderRadius: 100,
-                        cursor: 'pointer'
                     }}>
-                        <IconButton color="text.tertiary">
+                        <IconButton color="text.tertiary" disabled={disabled}>
                             <PlusCircle />
                         </IconButton>
                     </Box>

@@ -15,7 +15,7 @@ const EditOwnerProfilePictures = () => {
     const [error, setError] = React.useState(null);
     const [selectedPhoto, setSelectedPhoto] = React.useState(null)
     const [openDeletePhoto, setOpenDeletePhoto] = React.useState(false);
-    const { control, handleSubmit, isSubmitting, setValue } = useForm();
+    const { control, handleSubmit, setValue, formState: { isSubmitting } } = useForm();
 
     const onSubmit = async ({ files }) => {
         try {
