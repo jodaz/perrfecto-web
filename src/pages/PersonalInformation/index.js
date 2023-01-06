@@ -6,6 +6,9 @@ import SettingsLayout from '../../layouts/SettingsLayout';
 import ListItemLink from '../../components/ListItemLink';
 import List from '../../components/List';
 import EditPhoto from './EditPhoto';
+import { differenceInYears } from 'date-fns';
+
+const getYears = birthDate => differenceInYears(new Date(), new Date (birthDate.toString().replace(/"/g, '')))
 
 const PersonalInformation = () => {
     const [editPhoto, setEditPhoto] = React.useState(false);
@@ -45,7 +48,11 @@ const PersonalInformation = () => {
                             color="text.tertiary"
                         />
                         <Typography variant="subtitle1" ml={2}>
-                            25 años
+                            {user.birth_date && (
+                                <>
+                                    {getYears(user.birth_date)} años
+                                </>
+                            )}
                         </Typography>
                         <ListItemLink
                             to="names"
@@ -60,13 +67,9 @@ const PersonalInformation = () => {
                             title="Lugar de residencia"
                             color="text.tertiary"
                         />
-                        {(user.province) ? (
+                        {(user.province) && (
                             <Typography variant="subtitle1" ml={2}>
                                 {user.province}, {user.city}
-                            </Typography>
-                        ) : (
-                            <Typography variant="subtitle1" ml={2}>
-                                No ha rellenado su ubicación
                             </Typography>
                         )}
                     </List>
