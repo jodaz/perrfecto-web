@@ -11,6 +11,7 @@ const Menu = ({ children, icon, IconButtonProps, iconColor = '#000' }) => {
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
+        event.stopPropagation();
     };
     const handleClose = () => {
         setAnchorEl(null);
