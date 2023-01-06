@@ -111,7 +111,7 @@ const PetOwner = () => {
                         title='Crear publicación'
                         color="primary"
                     />
-                    {!(!user.date_birth || !user.img_profile || !user.province) && (
+                    {!!(!user.birth_date || !user.img_profile || !user.province) && (
                         <CustomButton
                             size={32}
                             icon={<PlusSquare />}
@@ -122,7 +122,7 @@ const PetOwner = () => {
                         />
                     )}
                 </Box>
-                {!(user.date_birth) && (
+                {!!(!user.birth_date || !user.img_profile || !user.province) && (
                     <React.Suspense>
                         <RegisterOwner
                             open={registerOwner}
