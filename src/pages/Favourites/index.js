@@ -33,7 +33,6 @@ const Favourites = () => {
     }
 
     const handleCloseShowFavourite = () => {
-        setSelectedItem(null);
         setShowFavourite(false)
     }
 
@@ -68,6 +67,7 @@ const Favourites = () => {
                     handleClose={handleCloseDeleteModal}
                     item={selectedItem}
                     handleDelete={deleteFavourite}
+                    closeFavourite={handleCloseShowFavourite}
                 />
             </Box>
         </Slide>

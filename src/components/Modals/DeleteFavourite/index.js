@@ -8,7 +8,7 @@ import Stack from '@mui/material/Stack';
 import { alpha } from '@mui/material';
 import { deleteFavourite, useFavourites } from '../../../context/FavouriteContext';
 
-const DeleteFavourite = ({ open, handleClose, item }) => {
+const DeleteFavourite = ({ open, handleClose, item, closeFavourite }) => {
     const [onSubmit, setOnSubmit] = React.useState(false);
     const { dispatch } = useFavourites();
 
@@ -16,6 +16,7 @@ const DeleteFavourite = ({ open, handleClose, item }) => {
         setOnSubmit(true);
         await deleteFavourite(dispatch, item)
         handleClose();
+        closeFavourite();
         setOnSubmit(false)
     }
 
