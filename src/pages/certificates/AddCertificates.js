@@ -25,6 +25,7 @@ const AddCertificates = ({ control, disabled }) => {
                             disabled={disabled}
                             control={control}
                             name={`certificates[${index}]`}
+                            defaultValue={item}
                         />
                     </Box>
                     <Box>
