@@ -4,36 +4,37 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import SettingsLayout from '../../layouts/SettingsLayout';
 import { useForm } from 'react-hook-form';
-import { useAuth, renewToken } from '../../context/AuthContext'
 import { fileProvider, apiProvider } from '../../api'
 import { AD_PHOTOS } from '../../validations';
 import useEffectOnce from '../../utils/useEffectOnce';
 import AdPhotoInput from '../../components/AdPhotoInput'
 import DeletePhotoWarning from '../../components/Modals/DeletePhotoWarning';
+import formDataHandler from '../../utils/formDataHandler';
 
 const EditOwnerProfilePictures = () => {
     const [error, setError] = React.useState(null);
     const [selectedPhoto, setSelectedPhoto] = React.useState(null)
     const [openDeletePhoto, setOpenDeletePhoto] = React.useState(false);
-    const { state: { user }, dispatch } = useAuth();
     const { control, handleSubmit, isSubmitting, setValue } = useForm();
 
     const onSubmit = async ({ files }) => {
-        let formData = new FormData();
-
         try {
+            let filteredFiles = []
+
             if (files.length) {
-                const keepedFiles = files.filter(file => typeof(file) == 'object')
+                filteredFiles = files.filter(file => typeof(file) != 'string')
+            }
 
-                for (let i = 0; i < keepedFiles.length; i++) {
-                    formData.append('files', keepedFiles[i][0]);
-                }
+            const parsedData = {
+                files: filteredFiles
+            }
 
-                const res = await fileProvider.put(`/api/user/personal-photos`, formData)
+            const formData = await formDataHandler(parsedData, 'files')
 
-                if (res.status >= 200 && res.status < 300) {
-                    renewToken(dispatch, user)
-                }
+            const res = await fileProvider.put(`/api/user/personal-photos`, formData)
+
+            if (res.status >= 200 && res.status < 300) {
+                fetchPictures();
             }
         } catch (error) {
             setError('Ha ocurrido un error inesperado.')
@@ -86,6 +87,7 @@ const EditOwnerProfilePictures = () => {
                         <AdPhotoInput
                             control={control}
                             name='files'
+                            disabled={isSubmitting}
                             rules={AD_PHOTOS.rules}
                             validations={AD_PHOTOS.messages}
                             deletePhotoHandler={handleOpenDeletePhoto}
