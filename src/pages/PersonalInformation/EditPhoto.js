@@ -10,6 +10,7 @@ import getUserPhoto from '../../utils/getUserPhoto';
 
 const EditPhoto = ({ isEditing }) => {
     const { state: { user }, dispatch } = useAuth();
+    const currProfilePic = user.img_profile ? JSON.parse(user.img_profile)[0] : null;
     const { handleSubmit, control, watch, formState: {
         isSubmitting
     }} = useForm();
@@ -59,13 +60,13 @@ const EditPhoto = ({ isEditing }) => {
                 <PhotoInput
                     name="files"
                     control={control}
-                    defaultValue={user.img_profile}
+                    defaultValue={currProfilePic}
                     disabled={isSubmitting}
                     handleDelete={deletePhoto}
                 />
             ) : (
                 <Avatar
-                    src={`${getUserPhoto(user.img_profile)}`}
+                    src={currProfilePic}
                     alt="profile_photo"
                     sx={{ height: '125px', width: '125px' }}
                 />
