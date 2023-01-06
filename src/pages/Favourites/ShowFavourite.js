@@ -2,72 +2,100 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Slide from '@mui/material/Slide';
 import Typography from '@mui/material/Typography';
-import ProfileToolbar from '../../components/ProfileToolbar';
-import DeleteFavourite from '../../components/Modals/DeleteFavourite';
-import Card from '@mui/material/Card';
+import Stack from '@mui/material/Stack';
+import IconButton from '@mui/material/IconButton';
 import PublicationDescription from '../../components/FeedCard/PublicationDescription';
-import {
-    fetchFavourites,
-    useFavourites,
-    deleteFavourite
-} from '../../context/FavouriteContext';
-import { Mail, Phone } from 'lucide-react'
-import useEffectOnce from '../../utils/useEffectOnce';
+import { Mail, Phone, ChevronLeft, Trash2 } from 'lucide-react'
+import LikeIconButton from '../../components/Buttons/LikeButton/LikeIconButton';
+import MessageIconButton from '../../components/Buttons/MessageButton/MessageIconButton';
+import ListCertificates from '../certificates/ListCertificates'
+import ShowVaccines from '../Vaccines/ShowVaccines';
+import getUserPhoto from '../../utils/getUserPhoto';
+import PhotoGallery from '../../components/Modals/ShowCard/PhotoGallery';
+import Menu from '../../components/Menu';
 
-const ShowFavourite = ({
-    item
-}) => {
-    console.log(item)
-    const [openDeleteModal, setOpenDeleteModal] = React.useState(false)
-    const [selectedItem, setSelectedItem] = React.useState(null);
-    const { state: { items }, dispatch }= useFavourites();
+const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
-    const handleOpenDeleteModal = async (data) => {
-        setSelectedItem(data);
-        setOpenDeleteModal(true);
-    }
-
-    const handleCloseDeleteModal = () => {
-        setSelectedItem(null);
-        setOpenDeleteModal(false)
-    }
-
-    useEffectOnce(() => {
-        if (items.length < 2) {
-            fetchFavourites(dispatch)
+const ShowFavourite = ({ item, deleteFav, close }) => {
+    const {
+        Ad: {
+            multimedia, permission_tlf, publi, description
         }
-    }, []);
+    } = item
+    const adPictures = getImages(JSON.parse(multimedia))
 
     return (
         <Slide direction="left" in={true} mountOnEnter unmountOnExit>
             <Box sx={{
                 height: '100%',
-                width: '100%',
-                display: 'flex',
-                flexDirection: 'column'
+                width: '100%'
             }}>
-                <ProfileToolbar title='Favoritos' />
                 <Box sx={{
-                    borderRadius: '24px 24px 0px 0px'
+                    flex: 1,
+                    height: 300,
+                    width: '100%',
+                    position: 'relative'
+                }}>
+                    <Box sx={{
+                        position: 'absolute',
+                        zIndex: 100,
+                        bgcolor: 'rgba(0, 0, 0, 0.36)',
+                        borderRadius: '100px',
+                        left: 20,
+                        top: 20
+                    }}>
+                        <IconButton onClick={close}>
+                            <ChevronLeft color="#fff" />
+                        </IconButton>
+                    </Box>
+                    <Box sx={{
+                        position: 'absolute',
+                        zIndex: 100,
+                        bgcolor: 'rgba(0, 0, 0, 0.36)',
+                        borderRadius: '100px',
+                        right: 20,
+                        top: 20
+                    }}>
+                        <Menu iconColor='#fff'>
+                            <Box sx={{
+                                display: 'flex',
+                                alignItems: 'center'
+                            }} onClick={() => {
+                                deleteFav(item)
+                            }}>
+                                <Trash2 />
+                                <Box sx={{ paddingLeft: '0.5rem' }}>
+                                    Eliminar favorito
+                                </Box>
+                            </Box>
+                        </Menu>
+                    </Box>
+                    <PhotoGallery images={adPictures} />
+                </Box>
+                <Box sx={{
+                    borderRadius: '24px 24px 0px 0px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    borderTopLeftRadius: '16px',
+                    borderTopRightRadius: '16px',
                 }}>
                     <Box sx={{ p: 2 }}>
                         <Typography variant="h5" color="text.secondary" fontWeight={500}>
-                            {/* {data.publi.name} */}
-                            Maqueta
+                            {publi.name}
                         </Typography>
                         <PublicationDescription
                             color='info.main'
                             dotColor='info'
-                            age={'2020'}
-                            breed={'Caniche'}
-                            province='Sevilla'
-                            city='España'
+                            age={publi.dogAge}
+                            breed={publi.breed}
+                            province={publi.Owner.province}
+                            city={publi.Owner.city}
                         />
                         <Box sx={{ mt: 1 }}>
                             <Typography variant="body1" color="text.secondary" gutterBottom sx={{ display: 'flex', alignItems: 'center' }}>
                                 <Mail size={20} />
                                 <Box marginRight='1rem' />
-                                jesuodz@gmail.com
+                                {publi.Owner.email}
                             </Typography>
                             <Typography
                                 variant="body1"
@@ -79,60 +107,40 @@ const ShowFavourite = ({
                                     <Phone size={20} />
                                 </Box>
                                 <Box marginRight='1rem' />
-                                +58 04261843880
-                                {/* {user.code_phone}&nbsp;{user.phone} */}
+                                +{publi.Owner.code_phone} {publi.Owner.phone}
                             </Typography>
                         </Box>
                     </Box>
                     <Box sx={{ p: 2 }}>
                         <Typography variant="subtitle1" color="text.secondary">
-                            {/* {data.description} */}
-                            Hola, seré directa. me gusta mucho las personas que son divertidas, que no necesitan que una excusa tonta para ligar. Si puedes ser esa persona dale like y conversamos! 😉
+                            {description}
                         </Typography>
                     </Box>
                     <Box sx={{ display: 'flex', p: 1 }}>
                         <Box sx={{ p: 1 }}>
-                            {/* <ShowVaccines
-                                {...data.publi.Owner}
-                                dog={{...data.publi}}
-                            /> */}
+                            <ShowVaccines
+                                name={publi.Owner.name}
+                                lastName={publi.Owner.lastName}
+                                img_profile={publi.Owner.img_profile}
+                                dog={publi}
+                            />
                         </Box>
                         <Box sx={{ p: 1 }}>
-                            {/* <ListCertificates
-                                {...data.publi.Owner}
-                                dog={{...data.publi}}
-                            /> */}
+                            <ListCertificates
+                                name={publi.Owner.name}
+                                lastName={publi.Owner.lastName}
+                                img_profile={publi.Owner.img_profile}
+                                dog={publi}
+                            />
                         </Box>
                     </Box>
+                    <Box sx={{ p: 2 }}>
+                        <Stack spacing={2} direction="row" mt={2}>
+                            <LikeIconButton likes={0} />
+                            <MessageIconButton active={true} />
+                        </Stack>
+                    </Box>
                 </Box>
-                {/* <FavouriteSearchBox />
-                <Box sx={{
-                    display: 'flex',
-                    flexDirection: 'column'
-                }}>
-                    {items.map(item => (
-                        <FavouriteCard
-                            handleDelete={handleOpenDeleteModal}
-                            data={item}
-                        />
-                    ))}
-                    {!!(!items.length && !is_searching) && (
-                        <Typography variant="body2" color="text.secondary" sx={{ p: 2 }}>
-                            Aún no has guardado ninguna publicación.
-                        </Typography>
-                    )}
-                    {!!(is_searching && !items.length) && (
-                        <Typography variant="body2" color="text.secondary" sx={{ p: 2 }}>
-                            Sin resultados.
-                        </Typography>
-                    )}
-                </Box>
-                <DeleteFavourite
-                    open={openDeleteModal}
-                    handleClose={handleCloseDeleteModal}
-                    item={selectedItem}
-                    handleDelete={deleteFavourite}
-                /> */}
             </Box>
         </Slide>
     )

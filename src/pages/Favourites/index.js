@@ -55,6 +55,7 @@ const Favourites = () => {
                     <ShowFavourite
                         item={selectedItem}
                         close={handleCloseShowFavourite}
+                        deleteFav={handleOpenDeleteModal}
                     />
                 ) : (
                     <ListFavourites
