@@ -8,7 +8,7 @@ import { useAuth, renewToken } from '../../context/AuthContext'
 import TextInput from '../../components/Forms/TextInput';
 import SwitchInput from '../../components/Forms/SwitchInput';
 import { apiProvider, fileProvider } from '../../api';
-import AdPhotoInput from '../../components/AdPhotoInput';
+import GalleryInput from '../../components/GalleryInput';
 import InterestInput from '../../components/InterestInput';
 import formDataHandler from '../../utils/formDataHandler';
 import PublicationWait from '../../components/Modals/PublicationWait';
@@ -16,7 +16,7 @@ import OverlayLoader from '../../components/Modals/OverlayLoader';
 import useEffectOnce from '../../utils/useEffectOnce'
 import DeletePhotoWarning from '../../components/Modals/DeletePhotoWarning';
 import DogInformation from './DogInformation';
-import { DESCRIPTION, AD_PHOTOS } from '../../validations';
+import { DESCRIPTION, ADD_PHOTOS } from '../../validations';
 
 const selectedItems = labels => labels.map(({ AdInterest }) => AdInterest.id_interest)
 
@@ -45,10 +45,10 @@ const SwitchInputContainer = ({
 const EditAd = () => {
     const { state: { user }, dispatch } = useAuth();
     const [openWarning, setOpenWarning] = React.useState(false)
+    const [openDeletePhoto, setOpenDeletePhoto] = React.useState(false);
     const [selectedPhoto, setSelectedPhoto] = React.useState(null)
     const [openOverlayLoader, setOpenOverlayLoader] = React.useState(false)
     const [interests, setInterests] = React.useState([])
-    const [openDeletePhoto, setOpenDeletePhoto] = React.useState(false);
     const { control, handleSubmit, watch, setValue, formState: {
         isSubmitting
     }} = useForm({
@@ -135,12 +135,18 @@ const EditAd = () => {
                 position: 'relative'
             }} component="form" onSubmit={handleSubmit(onSubmit)}>
                 <Box sx={{ p: 2 }}>
-                    <AdPhotoInput
+                    <GalleryInput
                         control={control}
                         name='files'
-                        rules={AD_PHOTOS.rules}
-                        validations={AD_PHOTOS.messages}
+                        rules={ADD_PHOTOS.rules}
+                        validations={ADD_PHOTOS.messages}
                         deletePhotoHandler={handleOpenDeletePhoto}
+                        accept={{
+                            'image/*': [],
+                            'video/mp4': []
+                        }}
+                        maxFiles={15}
+                        message='Tienes un máximo de 15 fotos'
                     />
                 </Box>
                 <Box sx={{ p: 2 }} id="drawer-container">
@@ -213,7 +219,8 @@ const EditAd = () => {
                 open={openDeletePhoto}
                 handleClose={handleCloseDeletePhoto}
                 file={selectedPhoto}
-                publication={user.publication}
+                endpoint={`api/publication/img_posted/${user.publication.id}`}
+                sideAction={() => renewToken(dispatch, user)}
             />
         </SettingsLayout>
     );

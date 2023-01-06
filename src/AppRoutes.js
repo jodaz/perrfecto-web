@@ -45,6 +45,7 @@ import EditVaccines from './pages/PetInformation/EditVaccines';
 import EditCertificates from './pages/PetInformation/EditCertificates';
 import EditAd from './pages/Ad/EditAd';
 import EditOwnerAge from './pages/PersonalInformation/EditOwnerAge';
+import EditOwnerProfilePictures from './pages/Profile/EditOwnerProfilePictures';
 
 function AppRoutes() {
     let location = useLocation();
@@ -231,6 +232,16 @@ function AppRoutes() {
                     <AppLayout>
                         <Profile location={location}>
                             <PetOwner />
+                        </Profile>
+                    </AppLayout>
+                }
+            />
+            <Route
+                path='/profile/owner/pictures'
+                element={
+                    <AppLayout>
+                        <Profile location={location}>
+                            <EditOwnerProfilePictures />
                         </Profile>
                     </AppLayout>
                 }

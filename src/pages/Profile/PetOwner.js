@@ -104,6 +104,8 @@ const PetOwner = () => {
                         sx={{
                             background: 'linear-gradient(122.24deg, #F2D862 6.2%, #EBA046 69.82%);'
                         }}
+                        component={LinkBehavior}
+                        to='pictures'
                     />
                     <CustomButton
                         size={32}

@@ -24,6 +24,10 @@ const Dropzone = ({
     onChange,
     value = [],
     deletePhotoHandler,
+    accept,
+    disabled,
+    message,
+    maxFiles
 }) => {
     const [files, setFiles] = React.useState((() => {
         if (typeof(value) == 'string') {
@@ -32,10 +36,7 @@ const Dropzone = ({
         return value;
     })());
     const { getRootProps, getInputProps } = useDropzone({
-        accept: {
-            'image/*': [],
-            'video/mp4': []
-        },
+        accept: accept,
         onDrop: acceptedFiles => {
             const newFiles = [...files, ...acceptedFiles.map(file => Object.assign(file, {
                 preview: URL.createObjectURL(file)
@@ -44,11 +45,13 @@ const Dropzone = ({
             setFiles(newFiles);
             onChange(newFiles)
         },
-        maxFiles: 15
+        disabled: disabled,
+        maxFiles: maxFiles
     });
 
     const removePhoto = item => {
-        if (deletePhotoHandler) {
+        // Check if file is an string (already submitted) or object (it's just added to the component)
+        if (deletePhotoHandler && (typeof(item) == 'string')) {
             deletePhotoHandler(item)
         } else {
             const newFiles = files.filter(file => file != item);
@@ -78,12 +81,16 @@ const Dropzone = ({
                         zIndex: 1000,
                         bottom: 12,
                         right: 12,
+                        color: '#fff',
                         backgroundColor: theme => theme.palette.error.main,
                         '&:hover': {
                             backgroundColor: theme => `${alpha(theme.palette.error.main, 0.9)}`
+                        },
+                        '&:disabled': {
+                            backgroundColor: theme => theme.palette.text.tertiary
                         }
-                    }} onClick={() => removePhoto(file)}>
-                        <Trash2 color="#fff" size={16} />
+                    }} onClick={() => removePhoto(file)} disabled={disabled}>
+                        <Trash2 color={'#fff'} size={16} />
                     </IconButton>
                 )}
             </Box>
@@ -104,7 +111,7 @@ const Dropzone = ({
     }, [value])
 
     return (
-        <Box sx={{ display: 'flex', mt: 1, mb: 2 }}>
+        <Box sx={{ display: 'flex', mt: 1, mb: 2, opacity: disabled ? 0.8 : 1 }}>
             {!!(files.length) && (
                 <Box sx={{ display: 'flex' }}>
                     <SwiperStyled
@@ -151,22 +158,23 @@ const Dropzone = ({
                         justifyContent: 'center',
                         alignItems: 'center',
                         borderRadius: 100,
-                        cursor: 'pointer'
                     }}>
-                        <IconButton color="text.tertiary">
+                        <IconButton color="text.tertiary" disabled={disabled}>
                             <PlusCircle />
                         </IconButton>
                     </Box>
-                    <Typography fontSize={12} color="text.tertiary">
-                        Tienes un máximo de 15 fotos
-                    </Typography>
+                    {message && (
+                        <Typography fontSize={12} color="text.tertiary">
+                            {message}
+                        </Typography>
+                    )}
                 </Box>
             </Box>
         </Box>
     );
 }
 
-const AdPhotoInput = ({
+const GalleryInput = ({
     name,
     control,
     rules,
@@ -196,4 +204,4 @@ const AdPhotoInput = ({
     />
 )
 
-export default AdPhotoInput
+export default GalleryInput
