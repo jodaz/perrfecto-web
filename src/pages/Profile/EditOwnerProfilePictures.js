@@ -5,9 +5,9 @@ import Typography from '@mui/material/Typography';
 import SettingsLayout from '../../layouts/SettingsLayout';
 import { useForm } from 'react-hook-form';
 import { fileProvider, apiProvider } from '../../api'
-import { AD_PHOTOS } from '../../validations';
+import { ADD_PHOTOS } from '../../validations';
 import useEffectOnce from '../../utils/useEffectOnce';
-import AdPhotoInput from '../../components/AdPhotoInput'
+import GalleryInput from '../../components/GalleryInput'
 import DeletePhotoWarning from '../../components/Modals/DeletePhotoWarning';
 import formDataHandler from '../../utils/formDataHandler';
 
@@ -84,12 +84,12 @@ const EditOwnerProfilePictures = () => {
                         display: 'flex',
                         justifyContent: 'center'
                     }}>
-                        <AdPhotoInput
+                        <GalleryInput
                             control={control}
                             name='files'
                             disabled={isSubmitting}
-                            rules={AD_PHOTOS.rules}
-                            validations={AD_PHOTOS.messages}
+                            rules={ADD_PHOTOS.rules}
+                            validations={ADD_PHOTOS.messages}
                             deletePhotoHandler={handleOpenDeletePhoto}
                             accept={{
                                 'image/*': []

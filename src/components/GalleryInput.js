@@ -168,7 +168,7 @@ const Dropzone = ({
     );
 }
 
-const AdPhotoInput = ({
+const GalleryInput = ({
     name,
     control,
     rules,
@@ -198,4 +198,4 @@ const AdPhotoInput = ({
     />
 )
 
-export default AdPhotoInput
+export default GalleryInput

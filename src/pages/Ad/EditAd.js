@@ -8,7 +8,7 @@ import { useAuth, renewToken } from '../../context/AuthContext'
 import TextInput from '../../components/Forms/TextInput';
 import SwitchInput from '../../components/Forms/SwitchInput';
 import { apiProvider, fileProvider } from '../../api';
-import AdPhotoInput from '../../components/AdPhotoInput';
+import GalleryInput from '../../components/GalleryInput';
 import InterestInput from '../../components/InterestInput';
 import formDataHandler from '../../utils/formDataHandler';
 import PublicationWait from '../../components/Modals/PublicationWait';
@@ -16,7 +16,7 @@ import OverlayLoader from '../../components/Modals/OverlayLoader';
 import useEffectOnce from '../../utils/useEffectOnce'
 import DeletePhotoWarning from '../../components/Modals/DeletePhotoWarning';
 import DogInformation from './DogInformation';
-import { DESCRIPTION, AD_PHOTOS } from '../../validations';
+import { DESCRIPTION, ADD_PHOTOS } from '../../validations';
 
 const selectedItems = labels => labels.map(({ AdInterest }) => AdInterest.id_interest)
 
@@ -135,11 +135,11 @@ const EditAd = () => {
                 position: 'relative'
             }} component="form" onSubmit={handleSubmit(onSubmit)}>
                 <Box sx={{ p: 2 }}>
-                    <AdPhotoInput
+                    <GalleryInput
                         control={control}
                         name='files'
-                        rules={AD_PHOTOS.rules}
-                        validations={AD_PHOTOS.messages}
+                        rules={ADD_PHOTOS.rules}
+                        validations={ADD_PHOTOS.messages}
                         deletePhotoHandler={handleOpenDeletePhoto}
                         accept={{
                             'image/*': [],
