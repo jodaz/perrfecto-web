@@ -7,7 +7,6 @@ import CircleIcon from '@mui/icons-material/FiberManualRecord';
 import Menu from '../../components/Menu';
 import { Trash2 } from 'lucide-react';
 import getUserPhoto from '../../utils/getUserPhoto';
-import LinkBehavior from '../../components/LinkBehavior'
 import { alpha } from '@mui/material';
 
 const getYearsSince = year => new Date().getUTCFullYear() - year
