@@ -22,7 +22,8 @@ const ShowFavourite = ({ item, deleteFav, close }) => {
             multimedia,
             publi,
             description,
-            LikesCount
+            LikesCount,
+            permission_tlf
         }
     } = item
     const adPictures = getImages(JSON.parse(multimedia))
@@ -100,18 +101,20 @@ const ShowFavourite = ({ item, deleteFav, close }) => {
                                 <Box marginRight='1rem' />
                                 {publi.Owner.email}
                             </Typography>
-                            <Typography
-                                variant="body1"
-                                color="text.secondary"
-                                gutterBottom
-                                sx={{ display: 'flex', alignItems: 'center' }}
-                            >
-                                <Box>
-                                    <Phone size={20} />
-                                </Box>
-                                <Box marginRight='1rem' />
-                                +{publi.Owner.code_phone} {publi.Owner.phone}
-                            </Typography>
+                            {(publi.Owner.phone && permission_tlf) && (
+                                <Typography
+                                    variant="body1"
+                                    color="text.secondary"
+                                    gutterBottom
+                                    sx={{ display: 'flex', alignItems: 'center' }}
+                                >
+                                    <Box>
+                                        <Phone size={20} />
+                                    </Box>
+                                    <Box marginRight='1rem' />
+                                    +{publi.Owner.code_phone} {publi.Owner.phone}
+                                </Typography>
+                            )}
                         </Box>
                     </Box>
                     <Box sx={{ p: 2 }}>
