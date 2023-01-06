@@ -7,7 +7,7 @@ import FileInput from './FileInput';
 import TrashButton from '../../components/Buttons/TrashButton';
 import { useFieldArray } from "react-hook-form";
 
-const AddCertificates = ({ control }) => {
+const AddCertificates = ({ control, disabled }) => {
     const { fields, append, remove } = useFieldArray({
         control,
         name: "certificates"
@@ -18,19 +18,23 @@ const AddCertificates = ({ control }) => {
             display: 'flex',
             flexDirection: 'column'
         }}>
-            {fields.map((item, index) => {
-                console.log(item)
-                return (
-                    <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
-                        <Box sx={{ flex: 1, p: 1 }}>
-                            <FileInput control={control} name={`certificates[${index}]`} defaultValue={item} />
-                        </Box>
-                        <Box>
-                            <TrashButton onClick={() => remove(index)} />
-                        </Box>
+            {fields.map((item, index) => (
+                <Box key={item.id} sx={{ display: 'flex', alignItems: 'center' }}>
+                    <Box sx={{ flex: 1, p: 1 }}>
+                        <FileInput
+                            disabled={disabled}
+                            control={control}
+                            name={`certificates[${index}]`}
+                        />
                     </Box>
-                )
-            })}
+                    <Box>
+                        <TrashButton
+                            disabled={disabled}
+                            onClick={() => remove(index)}
+                        />
+                    </Box>
+                </Box>
+            ))}
             <Box>
                 <Button
                     onClick={() => append()}

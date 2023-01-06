@@ -9,11 +9,18 @@ import useEffectOnce from '../../utils/useEffectOnce';
 import TrashButton from '../../components/Buttons/TrashButton';
 import { useFieldArray } from "react-hook-form";
 
-const VaccinesArrayField = ({ vaccines, control }) => {
+const VaccinesArrayField = ({ vaccines, control, disabled }) => {
     const { fields, append, remove } = useFieldArray({
         control,
         name: "vaccines"
     });
+
+    const disabledOptions = option => {
+        const selectedVaccines = fields.map(({ DogVaccine }) => DogVaccine)
+            .filter(item => item != undefined)
+
+        return selectedVaccines.some(item => item.id_vaccine == option.id)
+    }
 
     return (
         <Box sx={{
@@ -21,17 +28,22 @@ const VaccinesArrayField = ({ vaccines, control }) => {
             flexDirection: 'column'
         }}>
             {fields.map((item, index) => (
-                <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
+                <Box key={item.id} sx={{ display: 'flex', alignItems: 'center' }}>
                     <Box sx={{ flex: 1, p: 1 }}>
                         <SelectInput
                             control={control}
                             name={`vaccines[${index}]`}
                             options={vaccines}
                             optionLabel='name'
+                            disabled={disabled}
+                            getOptionDisabled={disabledOptions}
                         />
                     </Box>
                     <Box>
-                        <TrashButton onClick={() => remove(index)} />
+                        <TrashButton
+                            disabled={disabled}
+                            onClick={() => remove(index)}
+                        />
                     </Box>
                 </Box>
             ))}

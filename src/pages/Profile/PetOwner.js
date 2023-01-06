@@ -69,7 +69,7 @@ const PetOwner = () => {
     }, [handleSubmit, watch])
 
     return (
-        <Box sx={{ p: 1, textAlign: 'center', backgroundColor: '#f6f6f6' }}>
+        <Box sx={{ p: 1, textAlign: 'center', backgroundColor: '#f6f6f6', width: '100%' }}>
             <BasicTabs />
             <Box sx={{
                 marginTop: '1rem',
@@ -110,7 +110,7 @@ const PetOwner = () => {
                         title='Crear publicación'
                         color="primary"
                     />
-                    {!(user.date_birth) && (
+                    {!(!user.date_birth || !user.img_profile || !user.province) && (
                         <CustomButton
                             size={32}
                             icon={<PlusSquare />}

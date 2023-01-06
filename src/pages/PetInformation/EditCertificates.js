@@ -5,7 +5,6 @@ import { fileProvider } from '../../api'
 import SettingsLayout from '../../layouts/SettingsLayout';
 import { useForm } from 'react-hook-form';
 import { useAuth, renewToken } from '../../context/AuthContext';
-import formDataHandler from '../../utils/formDataHandler';
 import Button from '../../components/Button';
 import AddCertificates from '../certificates/AddCertificates';
 
@@ -21,14 +20,26 @@ const EditCertificates = () => {
     });
     const navigate = useNavigate();
 
-    const onSubmit = async values => {
+    const onSubmit = async ({ certificates }) => {
         const formData = new FormData();
 
-        if (values.certificates.length) {
+        const keepedCertificates = certificates
+            .filter(file => typeof(file) != 'string')
+            .map(item => item.id)
+
+        const deletedCertificates = user.dog.Certificates
+            .filter(({ id }) => !keepedCertificates.includes(id))
+            .map(item => ({ 'id_certificate': item.id }))
+
+        if (certificates.length) {
             // Aqui va certificates en lugar de files
-            for (let i = 0; i < values.certificates.length; i++) {
-                formData.append('certificates', values.certificates[i][0]);
+            for (let i = 0; i < certificates.length; i++) {
+                formData.append('certificates', certificates[i][0]);
             }
+        }
+
+        if (deletedCertificates) {
+            formData.append('certificates_delete', JSON.stringify(deletedCertificates))
         }
 
         try {
@@ -51,7 +62,7 @@ const EditCertificates = () => {
                 flex: 1,
                 flexDirection: 'column',
                 justifyContent: 'space-between'
-            }}  component="form" onSubmit={handleSubmit(onSubmit)}>
+            }} component="form" onSubmit={handleSubmit(onSubmit)}>
                 <Box>
                     <Box sx={{ p: 2 }}>
                         <AddCertificates control={control} />

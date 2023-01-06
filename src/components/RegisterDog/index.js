@@ -299,13 +299,13 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
                         <Typography variant="subtitle1" gutterBottom>
                             Añadir vacunas
                         </Typography>
-                        <AddVaccines control={control} />
+                        <AddVaccines control={control} disabled={isSubmitting} />
                     </Box>
                     <Box sx={{ p: 2 }}>
                         <Typography variant="subtitle1" gutterBottom>
                             Añadir certificados
                         </Typography>
-                        <AddCertificates control={control} />
+                        <AddCertificates control={control} disabled={isSubmitting} />
                     </Box>
                     <Box sx={{ p: 2 }}>
                         <Button

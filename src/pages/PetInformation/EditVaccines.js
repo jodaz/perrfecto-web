@@ -59,6 +59,7 @@ const EditVaccines = () => {
                         <AddVaccines
                             control={control}
                             funcHandler={() => setIsFetching(false)}
+                            disabled={isSubmitting}
                         />
                     </Box>
                 </Box>

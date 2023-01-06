@@ -64,8 +64,20 @@ const EditAd = () => {
     const insterestsValues = watch('interests')
 
     const onSubmit = async (data) => {
+        let filteredFiles = []
+        const { files, ...rest } = data;
+
+        if (files.length) {
+            filteredFiles = files.filter(file => typeof(file) != 'string')
+        }
+
+        const parsedData = {
+            ...rest,
+            files: filteredFiles
+        }
+
         setOpenOverlayLoader(true)
-        const formData = await formDataHandler(data, 'files')
+        const formData = await formDataHandler(parsedData, 'files')
 
         try {
             const res = await fileProvider.put(`/api/publication/edit/${user.publication.id}`, formData)
