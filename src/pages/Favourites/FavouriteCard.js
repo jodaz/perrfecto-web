@@ -16,7 +16,8 @@ const FavouriteCard = ({
     rootRef,
     data,
     index,
-    handleDelete
+    handleDelete,
+    openFavourite
 }) => {
     const loading = data == null;
     const publi = !loading ? data.Ad.publi : null;
@@ -27,12 +28,11 @@ const FavouriteCard = ({
         <Box
             ref={rootRef}
             key={index}
-            component={LinkBehavior}
             sx={{
                 textDecoration: 'none',
                 color: 'unset'
             }}
-            to={data && `${data.id}`}
+            onClick={() => openFavourite(data)}
         >
             <Box sx={{
                 height: '4rem',
