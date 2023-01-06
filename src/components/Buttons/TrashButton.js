@@ -12,7 +12,7 @@ const TrashButton = props => (
         }}
         {...props}
     >
-        <Trash2 color="#fff" size={18} />
+        <Trash2 color="#fff" size={14} />
     </IconButton>
 );
 
