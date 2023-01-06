@@ -10,7 +10,7 @@ import { ArrowLeft } from 'lucide-react';
 const ShowCertificate = ({ item, dog, user }) => {
     const { name, lastName = '', img_profile } = user
     const [open, setOpen] = React.useState(false)
-    const userPhoto = getUserPhoto(img_profile)
+    const userPhoto = img_profile ? getUserPhoto(JSON.parse(img_profile)[0]) : '/images/Avatar.svg'
     const dogPhoto = getUserPhoto(JSON.parse(dog.dogPhotos)[0])
     const certificatePhoto = getUserPhoto(item.name)
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('md'));

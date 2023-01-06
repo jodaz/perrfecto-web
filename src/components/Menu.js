@@ -6,11 +6,12 @@ import { MoreHorizontal } from 'lucide-react';
 
 const ITEM_HEIGHT = 48;
 
-const Menu = ({ children, icon, IconButtonProps }) => {
+const Menu = ({ children, icon, IconButtonProps, iconColor = '#000' }) => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
+        event.stopPropagation();
     };
     const handleClose = () => {
         setAnchorEl(null);
@@ -25,7 +26,9 @@ const Menu = ({ children, icon, IconButtonProps }) => {
                 onClick={handleClick}
                 {...IconButtonProps}
             >
-                {icon}
+                {React.cloneElement(icon, {
+                    color: iconColor
+                })}
             </IconButton>
             <MuiMenu
                 hideBackdrop

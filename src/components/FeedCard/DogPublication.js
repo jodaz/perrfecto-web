@@ -15,7 +15,7 @@ const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
 const DogPublication = ({ open, data, handleClose, handleOpenOwnerCard }) => {
     const multimedia = getImages(JSON.parse(data.multimedia))
-    const ownerPhoto = getUserPhoto(data.publi.Owner.img_profile);
+    const userPhoto = data.publi.Owner.img_profile ? getUserPhoto(JSON.parse(data.publi.Owner.img_profile)[0]) : '/images/Avatar.svg'
 
     if (!open) return null
 
@@ -23,7 +23,7 @@ const DogPublication = ({ open, data, handleClose, handleOpenOwnerCard }) => {
         <ShowCard
             open={open}
             handleClose={handleClose}
-            photo={ownerPhoto}
+            photo={userPhoto}
             name={data.publi.Owner.name}
             handleOpen={handleOpenOwnerCard}
         >
@@ -51,7 +51,7 @@ const DogPublication = ({ open, data, handleClose, handleOpenOwnerCard }) => {
                         <PublicationDescription
                             color='info.main'
                             dotColor='info'
-                            dogAge={data.dogAge}
+                            age={data.publi.dogAge}
                             breed={data.publi.breed}
                             province={data.publi.Owner.province}
                             city={data.publi.Owner.city}

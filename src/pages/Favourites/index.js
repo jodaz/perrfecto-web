@@ -1,22 +1,21 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Slide from '@mui/material/Slide';
-import ProfileToolbar from '../../components/ProfileToolbar';
-import FavouriteCard from './FavouriteCard';
 import DeleteFavourite from '../../components/Modals/DeleteFavourite';
-import { Typography } from '@mui/material';
-import FavouriteSearchBox from './FavouriteSearchBox';
 import {
     fetchFavourites,
     useFavourites,
     deleteFavourite
 } from '../../context/FavouriteContext';
 import useEffectOnce from '../../utils/useEffectOnce';
+import ShowFavourite from './ShowFavourite';
+import ListFavourites from './ListFavourites';
 
 const Favourites = () => {
     const [openDeleteModal, setOpenDeleteModal] = React.useState(false)
+    const [showFavourite, setShowFavourite] = React.useState(false)
     const [selectedItem, setSelectedItem] = React.useState(null);
-    const { state: { items, is_searching }, dispatch }= useFavourites();
+    const { state: { items }, dispatch }= useFavourites();
 
     const handleOpenDeleteModal = async (data) => {
         setSelectedItem(data);
@@ -26,6 +25,15 @@ const Favourites = () => {
     const handleCloseDeleteModal = () => {
         setSelectedItem(null);
         setOpenDeleteModal(false)
+    }
+
+    const handleShowFavourite = async (data) => {
+        setSelectedItem(data);
+        setShowFavourite(true);
+    }
+
+    const handleCloseShowFavourite = () => {
+        setShowFavourite(false)
     }
 
     useEffectOnce(() => {
@@ -42,34 +50,24 @@ const Favourites = () => {
                 display: 'flex',
                 flexDirection: 'column'
             }}>
-                <ProfileToolbar title='Favoritos' />
-                <FavouriteSearchBox />
-                <Box sx={{
-                    display: 'flex',
-                    flexDirection: 'column'
-                }}>
-                    {items.map(item => (
-                        <FavouriteCard
-                            handleDelete={handleOpenDeleteModal}
-                            data={item}
-                        />
-                    ))}
-                    {!!(!items.length && !is_searching) && (
-                        <Typography variant="body2" color="text.secondary" sx={{ p: 2 }}>
-                            Aún no has guardado ninguna publicación.
-                        </Typography>
-                    )}
-                    {!!(is_searching && !items.length) && (
-                        <Typography variant="body2" color="text.secondary" sx={{ p: 2 }}>
-                            Sin resultados.
-                        </Typography>
-                    )}
-                </Box>
+                {showFavourite ? (
+                    <ShowFavourite
+                        item={selectedItem}
+                        close={handleCloseShowFavourite}
+                        deleteFav={handleOpenDeleteModal}
+                    />
+                ) : (
+                    <ListFavourites
+                        handleDelete={handleOpenDeleteModal}
+                        showFavourite={handleShowFavourite}
+                    />
+                )}
                 <DeleteFavourite
                     open={openDeleteModal}
                     handleClose={handleCloseDeleteModal}
                     item={selectedItem}
                     handleDelete={deleteFavourite}
+                    closeFavourite={handleCloseShowFavourite}
                 />
             </Box>
         </Slide>
