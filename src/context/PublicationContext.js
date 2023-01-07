@@ -5,7 +5,8 @@ const PublicationContext = React.createContext()
 
 const initialState = {
     publications: [],
-    is_searching: false,
+    isLoaded: true,
+    isLoading: false,
     openFilter: false
 }
 
@@ -16,7 +17,8 @@ function publicationReducer(state, action) {
                 return {
                     ...state,
                     publications: action.payload,
-                    is_searching: false
+                    isLoading: false,
+                    isLoaded: true
                 }
             }
             case 'TOGGLE_FILTERS': {
@@ -28,8 +30,8 @@ function publicationReducer(state, action) {
             case 'LOADING': {
                 return {
                     ...state,
-                    publications: [action.payload, ...state.publications],
-                    is_searching: false
+                    isLoading: true,
+                    isLoaded: false,
                 }
             }
             default: {
@@ -59,9 +61,15 @@ function usePublications() {
     return context
 }
 
-async function fetchPublications(dispatch) {
+async function fetchPublications(dispatch, query) {
     try {
-        const res = await apiProvider.get('api/publication/publications')
+        dispatch({
+            type: 'LOADING'
+        })
+
+        const res = await apiProvider.get('api/publication/publications', {
+            params: query
+        })
 
         if (res.status >= 200 && res.status < 300) {
             const { data: { data: { data } } } = res;

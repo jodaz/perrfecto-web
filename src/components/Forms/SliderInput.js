@@ -5,7 +5,6 @@ import FormControl from '@mui/material/FormControl'
 import { Controller } from "react-hook-form";
 import InputLabel from '@mui/material/InputLabel';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 
 /**
  *
@@ -20,7 +19,8 @@ const SliderInput = ({
     label,
     labelColor,
     max,
-    step
+    step,
+    disabled
 }) => (
     <FormControl>
         <Controller
@@ -49,6 +49,7 @@ const SliderInput = ({
                         valueLabelDisplay="auto"
                         max={max}
                         step={step}
+                        disabled={disabled}
                     />
                     {!!(error && validations) && (
                         <FormHelperText error>

@@ -42,7 +42,8 @@ const ChipArrayInput = ({
     defaultValue,
     property = 'name',
     propertyValue = 'id',
-    validations
+    validations,
+    exclusive
 }) => (
     <FormControl>
         {label && <InputLabel color="divider" shrink>{label}</InputLabel>}
@@ -62,6 +63,7 @@ const ChipArrayInput = ({
                             flexWrap: 'wrap',
                             marginTop: '1rem'
                         }}
+                        exclusive={exclusive}
                     >
                         {labels.map(label => (
                             <Chip

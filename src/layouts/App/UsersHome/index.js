@@ -14,7 +14,7 @@ const PopularMembers = React.lazy(() => import('../../../components/PopularMembe
 
 const UsersHome = () => {
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
-    const { state: { publications }, dispatch } = usePublications();
+    const { state: { publications, isLoaded, isLoading }, dispatch } = usePublications();
     const [selectedCard, setSelectedCard] = React.useState(null);
     const [openDogCard, setOpenDogCard] = React.useState(false)
     const [openOwnerCard, setOpenOwnerCard] = React.useState(false)
@@ -80,9 +80,10 @@ const UsersHome = () => {
                 height: '100%',
                 zIndex: 100
             }}>
-                {(publications.length) ? (
+                {(!isLoading) ? (
                     <Stack
                         data={publications}
+                        isLoaded={isLoaded}
                         onVote={(item, vote) => null}
                         onClick={(item) => handleSelect(item)}
                     />

@@ -8,16 +8,21 @@ import { useForm } from "react-hook-form";
 import ciudades from '../utils/ciudades';
 import provincias from '../utils/provincias';
 import SelectInput from './Forms/SelectInput';
-import { usePublications, toggleFilters } from '../context/PublicationContext';
+import {
+    fetchPublications,
+    usePublications,
+    toggleFilters
+} from '../context/PublicationContext';
 import TextInput from './Forms/TextInput';
 import razas from '../utils/breeds';
 import ChipArrayInput from './Forms/ChipArrayInput';
-import { alpha } from '@mui/material';
 import SliderInput from './Forms/SliderInput';
+import { alpha } from '@mui/material';
+import { useGeolocated } from 'react-geolocated';
 
 const genders = [
-    { label: 'Macho', value: 'macho' },
-    { label: 'Hembra', value: 'hembra' },
+    { label: 'Macho', value: 'male' },
+    { label: 'Hembra', value: 'female' },
     { label: 'Ambos', value: 'both' },
 ]
 
@@ -28,6 +33,13 @@ const FilterDrawer = () => {
     }} = useForm({
         reValidateMode: "onBlur"
     });
+    const { coords, isGeolocationAvailable, getPosition, isGeolocationEnabled } =
+        useGeolocated({
+            positionOptions: {
+                enableHighAccuracy: false,
+            }
+        }
+    );
     const province = watch('province')
     const { state: { openFilter }, dispatch } = usePublications();
 
@@ -40,8 +52,52 @@ const FilterDrawer = () => {
         reset();
     };
 
+    const resetFilter = () => {
+        reset();
+        toggleFilters(dispatch)
+        fetchPublications(dispatch)
+    }
+
+    const onSubmit = async values => {
+        const parsedData = {};
+
+        try {
+            let {
+                province,
+                breed,
+                gender,
+                city,
+                distance
+            } = values;
+
+            if (breed) {
+                parsedData.breed = breed.label;
+            }
+            if (gender) {
+                parsedData.gender = (gender == 'both') ? '' : gender;
+            }
+            if (province) {
+                parsedData.province = province.nombre;
+            }
+            if (city) {
+                parsedData.city = city.nombre;
+            }
+            if (distance) {
+                const { latitude, longitude } = coords
+
+                parsedData.lat = latitude
+                parsedData.lon = longitude
+                parsedData.km = distance;
+            }
+
+            await fetchPublications(dispatch, parsedData)
+        } catch (error) {
+            console.log(error)
+        }
+    };
+
     const list = (anchor) => (
-        <Box onKeyDown={toggleDrawer(anchor, false)}>
+        <Box onKeyDown={toggleDrawer(anchor, false)} component="form" onSubmit={handleSubmit(onSubmit)}>
             <DialogTitle onClose={toggleDrawer(anchor, false)}>
                 Filtros
             </DialogTitle>
@@ -96,6 +152,7 @@ const FilterDrawer = () => {
                     label='Sexo'
                     property='label'
                     propertyValue='value'
+                    exclusive
                 />
             </Box>
             <Divider />
@@ -104,6 +161,7 @@ const FilterDrawer = () => {
                     label='Distancia'
                     control={control}
                     name="distance"
+                    disabled={isSubmitting}
                 />
             </Box>
             <Divider />
@@ -125,8 +183,24 @@ const FilterDrawer = () => {
                     variant="contained"
                     color="primary"
                     fullWidth
+                    type="submit"
                 >
                     Filtrar
+                </Button>
+                <Box mt={2} />
+                <Button
+                    variant="contained"
+                    fullWidth
+                    onClick={() => resetFilter()}
+                    sx={{
+                        backgroundColor: '#ccc',
+                        '&:hover': {
+                            color: '#fff',
+                            backgroundColor: alpha(`#000`, 0.3)
+                        }
+                    }}
+                >
+                    Reestablecer
                 </Button>
             </Box>
         </Box>
