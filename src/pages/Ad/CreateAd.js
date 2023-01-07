@@ -51,7 +51,7 @@ const CreateAd = () => {
     const { state: { user }, dispatch } = useAuth();
     const insterestsValues = watch('interests')
 
-    const onSubmit = async (data) => {
+    const onSubmit = async data => {
         setOpenOverlayLoader(true)
         const formData = await formDataHandler(data, 'files')
 

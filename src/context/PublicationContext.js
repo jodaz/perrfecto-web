@@ -59,9 +59,11 @@ function usePublications() {
     return context
 }
 
-async function fetchPublications(dispatch) {
+async function fetchPublications(dispatch, query) {
     try {
-        const res = await apiProvider.get('api/publication/publications')
+        const res = await apiProvider.get('api/publication/publications', {
+            params: query
+        })
 
         if (res.status >= 200 && res.status < 300) {
             const { data: { data: { data } } } = res;

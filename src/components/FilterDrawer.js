@@ -8,16 +8,19 @@ import { useForm } from "react-hook-form";
 import ciudades from '../utils/ciudades';
 import provincias from '../utils/provincias';
 import SelectInput from './Forms/SelectInput';
-import { usePublications, toggleFilters } from '../context/PublicationContext';
+import {
+    fetchPublications,
+    usePublications,
+    toggleFilters
+} from '../context/PublicationContext';
 import TextInput from './Forms/TextInput';
 import razas from '../utils/breeds';
 import ChipArrayInput from './Forms/ChipArrayInput';
-import { alpha } from '@mui/material';
 import SliderInput from './Forms/SliderInput';
 
 const genders = [
-    { label: 'Macho', value: 'macho' },
-    { label: 'Hembra', value: 'hembra' },
+    { label: 'Macho', value: 'male' },
+    { label: 'Hembra', value: 'female' },
     { label: 'Ambos', value: 'both' },
 ]
 
@@ -40,8 +43,42 @@ const FilterDrawer = () => {
         reset();
     };
 
+    const onSubmit = async values => {
+        const parsedData = {};
+
+        try {
+            let {
+                province,
+                breed,
+                gender,
+                city,
+                distance
+            } = values;
+
+            if (breed) {
+                parsedData.breed = breed.label;
+            }
+            if (gender?.length) {
+                parsedData.gender = gender[0];
+            }
+            if (province) {
+                parsedData.province = province.nombre;
+            }
+            if (city) {
+                parsedData.city = city.nombre;
+            }
+            if (distance) {
+                parsedData.distance = distance;
+            }
+
+            await fetchPublications(dispatch, parsedData)
+        } catch (error) {
+            console.log(error)
+        }
+    };
+
     const list = (anchor) => (
-        <Box onKeyDown={toggleDrawer(anchor, false)}>
+        <Box onKeyDown={toggleDrawer(anchor, false)} component="form" onSubmit={handleSubmit(onSubmit)}>
             <DialogTitle onClose={toggleDrawer(anchor, false)}>
                 Filtros
             </DialogTitle>
@@ -125,6 +162,7 @@ const FilterDrawer = () => {
                     variant="contained"
                     color="primary"
                     fullWidth
+                    type="submit"
                 >
                     Filtrar
                 </Button>
