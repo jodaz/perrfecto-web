@@ -17,6 +17,7 @@ import TextInput from './Forms/TextInput';
 import razas from '../utils/breeds';
 import ChipArrayInput from './Forms/ChipArrayInput';
 import SliderInput from './Forms/SliderInput';
+import { alpha } from '@mui/material';
 
 const genders = [
     { label: 'Macho', value: 'male' },
@@ -42,6 +43,12 @@ const FilterDrawer = () => {
         toggleFilters(dispatch)
         reset();
     };
+
+    const resetFilter = () => {
+        reset();
+        toggleFilters(dispatch)
+        fetchPublications(dispatch)
+    }
 
     const onSubmit = async values => {
         const parsedData = {};
@@ -165,6 +172,21 @@ const FilterDrawer = () => {
                     type="submit"
                 >
                     Filtrar
+                </Button>
+                <Box mt={2} />
+                <Button
+                    variant="contained"
+                    fullWidth
+                    onClick={() => resetFilter()}
+                    sx={{
+                        backgroundColor: '#ccc',
+                        '&:hover': {
+                            color: '#fff',
+                            backgroundColor: alpha(`#000`, 0.3)
+                        }
+                    }}
+                >
+                    Reestablecer
                 </Button>
             </Box>
         </Box>
