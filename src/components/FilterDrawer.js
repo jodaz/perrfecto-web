@@ -161,6 +161,7 @@ const FilterDrawer = () => {
                     label='Distancia'
                     control={control}
                     name="distance"
+                    disabled={isSubmitting}
                 />
             </Box>
             <Divider />
