@@ -65,8 +65,8 @@ const FilterDrawer = () => {
             if (breed) {
                 parsedData.breed = breed.label;
             }
-            if (gender?.length) {
-                parsedData.gender = gender[0];
+            if (gender) {
+                parsedData.gender = (gender == 'both') ? '' : gender;
             }
             if (province) {
                 parsedData.province = province.nombre;
