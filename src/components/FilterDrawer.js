@@ -18,6 +18,7 @@ import razas from '../utils/breeds';
 import ChipArrayInput from './Forms/ChipArrayInput';
 import SliderInput from './Forms/SliderInput';
 import { alpha } from '@mui/material';
+import { useGeolocated } from 'react-geolocated';
 
 const genders = [
     { label: 'Macho', value: 'male' },
@@ -32,6 +33,13 @@ const FilterDrawer = () => {
     }} = useForm({
         reValidateMode: "onBlur"
     });
+    const { coords, isGeolocationAvailable, getPosition, isGeolocationEnabled } =
+        useGeolocated({
+            positionOptions: {
+                enableHighAccuracy: false,
+            }
+        }
+    );
     const province = watch('province')
     const { state: { openFilter }, dispatch } = usePublications();
 
@@ -75,7 +83,11 @@ const FilterDrawer = () => {
                 parsedData.city = city.nombre;
             }
             if (distance) {
-                parsedData.distance = distance;
+                const { latitude, longitude } = coords
+
+                parsedData.lat = latitude
+                parsedData.lon = longitude
+                parsedData.km = distance;
             }
 
             await fetchPublications(dispatch, parsedData)
@@ -140,6 +152,7 @@ const FilterDrawer = () => {
                     label='Sexo'
                     property='label'
                     propertyValue='value'
+                    exclusive
                 />
             </Box>
             <Divider />
