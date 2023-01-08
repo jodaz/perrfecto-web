@@ -38,6 +38,7 @@ const PostShow = ({
                     variant="body2"
                     color="text.tertiary"
                     fontWeight={500}
+                    sx={{ textTransform: 'capitalize' }}
                 >
                     {format(published_at, 'MMMM d, y', { locale: es })}
                 </Typography>

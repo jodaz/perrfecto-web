@@ -9,6 +9,9 @@ const posts = [
         title: '¿Cómo prevenir el frio en los perros?',
         image: '/images/samples/sad-pupi.png',
         published_at: new Date(),
+        img_profile: '/images/samples/sad-pupi.png',
+        name: 'Mason',
+        lastName: 'Eduard',
         commentsCount: 12,
         likesCount: 187
     },
@@ -16,6 +19,9 @@ const posts = [
         title: '¿Cómo prevenir el frio en los perros?',
         image: '/images/samples/sad-pupi.png',
         published_at: new Date(),
+        img_profile: '/images/samples/sad-pupi.png',
+        name: 'Mason',
+        lastName: 'Eduard',
         commentsCount: 12,
         likesCount: 187
     },
@@ -23,6 +29,9 @@ const posts = [
         title: '¿Cómo prevenir el frio en los perros?',
         image: '/images/samples/sad-pupi.png',
         published_at: new Date(),
+        img_profile: '/images/samples/sad-pupi.png',
+        name: 'Mason',
+        lastName: 'Eduard',
         commentsCount: 12,
         likesCount: 187
     }
