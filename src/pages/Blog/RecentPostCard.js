@@ -73,9 +73,8 @@ const RecentPostCard = ({
                             <Typography
                                 component="div"
                                 variant="caption"
-                                color="text.tertiary"
+                                color="text.secondary"
                                 fontWeight={500}
-                                sx={{ textDecoration: 'underline' }}
                             >
                                 {`${name} ${lastName}`}
                             </Typography>

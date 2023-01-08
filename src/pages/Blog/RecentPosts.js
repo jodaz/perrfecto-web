@@ -54,6 +54,7 @@ const RecentPosts = () =>  {
                 variant="subtitle1"
                 fontWeight={500}
                 fontSize='1.2rem'
+                mb={2}
             >
                 Recientes
             </Typography>
