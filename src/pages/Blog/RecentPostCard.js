@@ -13,7 +13,7 @@ const RecentPostCard = ({
     published_at,
     name,
     lastName,
-    userPic
+    img_profile
 }) => {
     return (
         <Card
@@ -62,7 +62,7 @@ const RecentPostCard = ({
                             <Box
                                 component="img"
                                 alt='blog_post.png'
-                                src={image}
+                                src={img_profile}
                                 sx={{
                                     maxWidth: 22,
                                     maxHeight: 22,
