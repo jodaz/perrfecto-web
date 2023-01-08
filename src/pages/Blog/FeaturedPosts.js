@@ -28,7 +28,7 @@ const posts = [
     }
 ]
 
-export default function FeaturedPosts() {
+export default function FeaturedPosts({ openPost }) {
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <Typography
@@ -45,7 +45,7 @@ export default function FeaturedPosts() {
                     mt: 2
                 }}
             >
-                {posts.map(post => <PostCard {...post} />)}
+                {posts.map(post => <PostCard {...post} handleClick={openPost} />)}
             </Stack>
         </Box>
     );

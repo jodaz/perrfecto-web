@@ -47,34 +47,32 @@ const posts = [
     }
 ]
 
-const RecentPosts = () =>  {
-    return (
-        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-            <Typography
-                variant="subtitle1"
-                fontWeight={500}
-                fontSize='1.2rem'
-                mb={2}
-            >
-                Recientes
-            </Typography>
-            <SwiperStyled
-                slidesPerView={1}
-                scrollbar={{
-                    draggable: true
-                }}
-                grabCursor={true}
-                modules={[Scrollbar, Navigation]}
-                navigation
-            >
-                {posts.map((post, i) => (
-                    <SwiperSlideStyled key={i}>
-                        <RecentPostCard {...post} />
-                    </SwiperSlideStyled>
-                ))}
-            </SwiperStyled>
-        </Box>
-    );
-}
+const RecentPosts = ({ openPost }) =>  (
+    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+        <Typography
+            variant="subtitle1"
+            fontWeight={500}
+            fontSize='1.2rem'
+            mb={2}
+        >
+            Recientes
+        </Typography>
+        <SwiperStyled
+            slidesPerView={1}
+            scrollbar={{
+                draggable: true
+            }}
+            grabCursor={true}
+            modules={[Scrollbar, Navigation]}
+            navigation
+        >
+            {posts.map((post, i) => (
+                <SwiperSlideStyled key={i}>
+                    <RecentPostCard {...post} handleClick={openPost} />
+                </SwiperSlideStyled>
+            ))}
+        </SwiperStyled>
+    </Box>
+);
 
 export default RecentPosts

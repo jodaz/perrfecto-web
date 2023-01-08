@@ -3,18 +3,19 @@ import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
 import CardMedia from '@mui/material/CardMedia';
-import Stack from '@mui/material/Stack';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale'
 
-const RecentPostCard = ({
-    title,
-    image,
-    published_at,
-    name,
-    lastName,
-    img_profile
-}) => {
+const RecentPostCard = ({ handleClick, ...data }) => {
+    const {
+        title,
+        image,
+        published_at,
+        name,
+        lastName,
+        img_profile
+    } = data
+
     return (
         <Card
             variant="outlined"
@@ -28,6 +29,7 @@ const RecentPostCard = ({
                     opacity: 0.75
                 }
             }}
+            onClick={() => handleClick(data)}
         >
             <CardMedia
                 component="img"
@@ -90,15 +92,6 @@ const RecentPostCard = ({
                         </Typography>
                     </Box>
                 </Box>
-                <Stack
-                    direction="row"
-                    spacing={1}
-                    sx={{
-                        justifyContent: { xs: 'space-between', sm: 'flex-start' },
-                        alignItems: 'center'
-                    }}
-                >
-                </Stack>
             </Box>
         </Card>
     );

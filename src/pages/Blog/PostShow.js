@@ -2,9 +2,19 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import SettingsLayout from '../../layouts/SettingsLayout';
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale'
 
-const PostShow = () => (
-    <SettingsLayout title='Blog'>
+const PostShow = ({
+    title,
+    image,
+    published_at,
+    name,
+    lastName,
+    img_profile,
+    closePost
+}) => (
+    <SettingsLayout title='Blog' handleGoBack={closePost}>
         <Box sx={{
             display: 'flex',
             flex: 1,
@@ -16,7 +26,7 @@ const PostShow = () => (
                     width="100%"
                     height="300px"
                     alt='blog_post.png'
-                    src={'/images/samples/sad-pupi.png'}
+                    src={img_profile}
                     sx={{
                         borderRadius: 4,
                     }}
@@ -29,7 +39,7 @@ const PostShow = () => (
                     color="text.tertiary"
                     fontWeight={500}
                 >
-                    Enero 3, 2022
+                    {format(published_at, 'MMMM d, y', { locale: es })}
                 </Typography>
             </Box>
             <Box sx={{
@@ -41,7 +51,7 @@ const PostShow = () => (
                 <Box
                     component="img"
                     alt='blog_post.png'
-                    src={'/images/samples/sad-pupi.png'}
+                    src={image}
                     sx={{
                         maxWidth: 22,
                         maxHeight: 22,
@@ -54,7 +64,7 @@ const PostShow = () => (
                     variant="body2"
                     color="text.primary"
                 >
-                    {`Mason Eduard`}
+                    {`${name} ${lastName}`}
                 </Typography>
             </Box>
             <Box p={1}>
@@ -64,7 +74,7 @@ const PostShow = () => (
                     color="text.primary"
                     fontWeight={700}
                 >
-                    Cómo afecta la muda del pelo canino.
+                    {title}
                 </Typography>
             </Box>
             <Box p={1}>
@@ -72,7 +82,6 @@ const PostShow = () => (
                     component="div"
                     variant="subtitle1"
                     color="text.primary"
-                    // fontWeight={500}
                 >
                     Pelos por el suelo, el sofá, la alfombra,… en aquellos lugares en los que nuestra
                     mascota se encuentre cerca, podremos encontrar la gran ‘molestia’ del pelaje.

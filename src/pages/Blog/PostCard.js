@@ -8,13 +8,15 @@ import { ThumbsUp, MessageSquare } from 'lucide-react';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale'
 
-const PostCard = ({
-    title,
-    image,
-    published_at,
-    commentsCount,
-    likesCount
-}) => {
+const PostCard = ({ handleClick, ...data }) => {
+    const {
+        title,
+        image,
+        published_at,
+        commentsCount,
+        likesCount
+    } = data;
+
     return (
         <Card
             variant="outlined"
@@ -28,6 +30,7 @@ const PostCard = ({
                     opacity: 0.75
                 }
             }}
+            onClick={() => handleClick(data)}
         >
             <CardMedia
                 component="img"
