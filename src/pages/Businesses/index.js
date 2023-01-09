@@ -3,10 +3,14 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { ReactComponent as RocketIcon } from '../../assets/icons/Rocket.svg'
 import IconButtonWithTitle from '../../components/IconButtonWithTitle';
+import SettingsLayout from '../../layouts/SettingsLayout';
 
-const Businesses = () => {
-    return (
-        <Box sx={{ display: 'flex' }}>
+const Businesses = () => (
+    <SettingsLayout title="Negocio">
+        <Box sx={{
+            display: 'flex',
+            height: '100%'
+        }}>
             <Box sx={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -25,7 +29,7 @@ const Businesses = () => {
                 />
             </Box>
         </Box>
-    );
-}
+    </SettingsLayout>
+);
 
 export default Businesses
