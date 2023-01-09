@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 import { ReactComponent as RocketIcon } from '../../assets/icons/Rocket.svg'
 import IconButtonWithTitle from '../../components/IconButtonWithTitle';
 import SettingsLayout from '../../layouts/SettingsLayout';
+import { Outlet } from 'react-router-dom';
 
 const Businesses = () => (
     <SettingsLayout title="Negocio">
@@ -28,6 +29,7 @@ const Businesses = () => (
                     title='Crear negocio'
                 />
             </Box>
+            <Outlet />
         </Box>
     </SettingsLayout>
 );
