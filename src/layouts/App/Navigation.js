@@ -18,22 +18,19 @@ const generalLinks = [
         label: 'Inicio',
         icon: <HuellaIcon />,
         active: <HuellaActiveIcon />,
-        route: '/home',
-        role: 'user,guest'
+        route: '/home'
     },
     {
         label: 'Marketplace',
         icon: <StoreIcon />,
         active: <StoreIcon />,
-        route: '/market',
-        role: 'user,guest'
+        route: '/market'
     },
     {
         label: 'Blog',
         icon: <Newspaper color='#ccc' />,
         active: <Newspaper color='#A167C9' />,
-        route: '/blog',
-        role: 'user,guest'
+        route: '/blog'
     }
 ];
 
@@ -42,46 +39,40 @@ const onlyUserLinks = [
         label: 'Chat',
         icon: <MessageCircle color='#ccc' />,
         active: <MessageCircle color='#A167C9' />,
-        route: '/chat',
-        role: 'user'
+        route: '/chat'
     },
     {
         label: 'Perfil',
         icon: <Dog color='#ccc' />,
         active: <Dog color='#A167C9' />,
-        route: '/profile',
-        role: 'user'
+        route: '/profile'
     },
 ]
 
-const onlyBussines = [
+const onlyBusiness = [
     {
         label: 'Inicio',
         icon: <Home color='#ccc' />,
         active: <Home color='#A167C9' />,
-        route: '/home',
-        role: 'bussines'
+        route: '/home'
     },
     {
         label: 'Blog',
         icon: <Newspaper color='#ccc' />,
         active: <Newspaper color='#A167C9' />,
-        route: '/blog',
-        role: 'bussines'
+        route: '/blog'
     },
     {
         label: 'Marketplace',
         icon: <StoreIcon color='#ccc' />,
         active: <StoreIcon />,
-        route: '/market',
-        role: 'bussines'
+        route: '/market'
     },
     {
         label: 'Perfil',
         icon: <User color='#ccc' />,
         active: <User color='#A167C9' />,
-        route: '/profile',
-        role: 'bussines'
+        route: '/profile'
     }
 ]
 
@@ -115,8 +106,8 @@ const Navigation = ({ isSmall }) => {
             <PrivateRoute authorize='user' unauthorized={null}>
                 {renderLinks(onlyUserLinks)}
             </PrivateRoute>
-            <PrivateRoute authorize='bussines' unauthorized={null}>
-                {renderLinks(onlyBussines)}
+            <PrivateRoute authorize='business' unauthorized={null}>
+                {renderLinks(onlyBusiness)}
             </PrivateRoute>
         </Toolbar>
     )

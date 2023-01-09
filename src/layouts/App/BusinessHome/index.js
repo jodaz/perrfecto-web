@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import EllipseImage from '../../../components/EllipseImage';
-import DashboardBussinesButton from './DashboardBussinesButton';
+import DashboardBusinessButton from './DashboardBusinessButton';
 import { ReactComponent as RocketIcon } from '../../../assets/icons/Rocket.svg'
 import { ReactComponent as BlogIcon } from '../../../assets/icons/Blog.svg'
 
@@ -31,13 +31,13 @@ const BusinessHome = () => (
             left: 0,
             position: 'relative'
         }}>
-            <EllipseImage sx={{ top: 0, left: 0}} n='BussinesEllipse1' />
-            <EllipseImage sx={{ bottom: 0, left: 150}} n='BussinesEllipse2' />
-            <EllipseImage sx={{ top: 20, left: 400 }} n='BussinesEllipse3' />
-            <EllipseImage sx={{ bottom: 0, right: 400 }} n='BussinesEllipse4' />
-            <EllipseImage sx={{ top: 0, right: 300 }} n='BussinesEllipse5' />
-            <EllipseImage sx={{ bottom: 20, right: 180 }} n='BussinesEllipse6' />
-            <EllipseImage sx={{ top: 0, right: 0 }} n='BussinesEllipse7' />
+            <EllipseImage sx={{ top: 0, left: 0}} n='BusinessEllipse1' />
+            <EllipseImage sx={{ bottom: 0, left: 150}} n='BusinessEllipse2' />
+            <EllipseImage sx={{ top: 20, left: 400 }} n='BusinessEllipse3' />
+            <EllipseImage sx={{ bottom: 0, right: 400 }} n='BusinessEllipse4' />
+            <EllipseImage sx={{ top: 0, right: 300 }} n='BusinessEllipse5' />
+            <EllipseImage sx={{ bottom: 20, right: 180 }} n='BusinessEllipse6' />
+            <EllipseImage sx={{ top: 0, right: 0 }} n='BusinessEllipse7' />
         </Box>
         <Box sx={{
             zIndex: '100',
@@ -67,12 +67,12 @@ const BusinessHome = () => (
                 ESCOGE QUE DESEAS CREAR
             </Typography>
             <Stack direction='row' spacing={2} mt={2}>
-                <DashboardBussinesButton
+                <DashboardBusinessButton
                     title="Negocio"
                     icon={<RocketIcon />}
                     to='/market'
                 />
-                <DashboardBussinesButton
+                <DashboardBusinessButton
                     title="Blog"
                     icon={<BlogIcon />}
                     to='/blog'

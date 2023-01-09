@@ -4,7 +4,7 @@ import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
 import LinkBehavior from '../../../components/LinkBehavior'
 
-const DashboardBussinesButton = ({ to, icon, title }) => (
+const DashboardBusinessButton = ({ to, icon, title }) => (
     <Card
         variant="outlined"
         sx={{
@@ -43,4 +43,4 @@ const DashboardBussinesButton = ({ to, icon, title }) => (
     </Card>
 );
 
-export default DashboardBussinesButton
+export default DashboardBusinessButton

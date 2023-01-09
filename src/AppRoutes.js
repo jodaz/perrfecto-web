@@ -296,7 +296,7 @@ function AppRoutes() {
             </Route>
             <Route path="/register/welcome" element={<CreateProfileWelcome location={location} />} />
 
-            {/** Bussiness routes */}
+            {/** Businesss routes */}
             <Route path="/business" element={
                 <LandingLayout dark>
                     <Business />
