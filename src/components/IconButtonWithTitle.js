@@ -2,9 +2,9 @@ import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
-import LinkBehavior from '../../../components/LinkBehavior'
+import LinkBehavior from './LinkBehavior'
 
-const DashboardBusinessButton = ({ to, icon, title }) => (
+const IconButtonWithTitle = ({ to, icon, title }) => (
     <Card
         variant="outlined"
         sx={{
@@ -43,4 +43,4 @@ const DashboardBusinessButton = ({ to, icon, title }) => (
     </Card>
 );
 
-export default DashboardBusinessButton
+export default IconButtonWithTitle

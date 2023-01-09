@@ -3,9 +3,9 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import EllipseImage from '../../../components/EllipseImage';
-import DashboardBusinessButton from './DashboardBusinessButton';
 import { ReactComponent as RocketIcon } from '../../../assets/icons/Rocket.svg'
 import { ReactComponent as BlogIcon } from '../../../assets/icons/Blog.svg'
+import IconButtonWithTitle from '../../../components/IconButtonWithTitle';
 
 const BusinessHome = () => (
     <Box
@@ -67,12 +67,12 @@ const BusinessHome = () => (
                 ESCOGE QUE DESEAS CREAR
             </Typography>
             <Stack direction='row' spacing={2} mt={2}>
-                <DashboardBusinessButton
+                <IconButtonWithTitle
                     title="Negocio"
                     icon={<RocketIcon />}
-                    to='/market'
+                    to='/businesses'
                 />
-                <DashboardBusinessButton
+                <IconButtonWithTitle
                     title="Blog"
                     icon={<BlogIcon />}
                     to='/blog'

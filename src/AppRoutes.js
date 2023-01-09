@@ -46,6 +46,7 @@ import EditCertificates from './pages/PetInformation/EditCertificates';
 import EditAd from './pages/Ad/EditAd';
 import EditOwnerAge from './pages/PersonalInformation/EditOwnerAge';
 import EditOwnerProfilePictures from './pages/Profile/EditOwnerProfilePictures';
+import Businesses from './pages/Businesses';
 
 function AppRoutes() {
     let location = useLocation();
@@ -304,6 +305,12 @@ function AppRoutes() {
             }>
                 <Route path="/business/register" element={<RegisterBusiness location={location} />} />
             </Route>
+
+            <Route path="/businesses" element={
+                <AppLayout>
+                    <Businesses />
+                </AppLayout>
+            } />
 
             <Route path="/introduction" element={<Intro />} />
 
