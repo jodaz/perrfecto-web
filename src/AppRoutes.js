@@ -23,7 +23,7 @@ import NewPassword from './components/Modals/NewPassword';
 import AskCode from './components/Modals/AskCode';
 import Notifications from './pages/Notifications'
 import CreateProfileWelcome from './components/CreateProfileWelcome';
-import Business from './pages/Business';
+import BusinessLanding from './pages/BusinessLanding';
 import RegisterBusiness from './components/Modals/RegisterBusiness';
 import Terms from './pages/Terms';
 import PetProfile from './pages/Profile/PetProfile';
@@ -299,7 +299,7 @@ function AppRoutes() {
             {/** Businesss routes */}
             <Route path="/business" element={
                 <LandingLayout dark>
-                    <Business />
+                    <BusinessLanding />
                 </LandingLayout>
             }>
                 <Route path="/business/register" element={<RegisterBusiness location={location} />} />
