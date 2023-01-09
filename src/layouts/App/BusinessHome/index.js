@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import EllipseImage from '../../../components/EllipseImage';
 
 const BusinessHome = () => {
     return (
@@ -24,8 +25,17 @@ const BusinessHome = () => {
                 zIndex: '10',
                 position: 'absolute',
                 top: 0,
-                left: 0
-            }} />
+                left: 0,
+                position: 'relative'
+            }}>
+                <EllipseImage sx={{ top: 0, left: 0}} n='BussinesEllipse1' />
+                <EllipseImage sx={{ bottom: 0, left: 150}} n='BussinesEllipse2' />
+                <EllipseImage sx={{ top: 20, left: 400 }} n='BussinesEllipse3' />
+                <EllipseImage sx={{ bottom: 0, right: 400 }} n='BussinesEllipse4' />
+                <EllipseImage sx={{ top: 0, right: 300 }} n='BussinesEllipse5' />
+                <EllipseImage sx={{ bottom: 20, right: 180 }} n='BussinesEllipse6' />
+                <EllipseImage sx={{ top: 0, right: 0 }} n='BussinesEllipse7' />
+            </Box>
             <Box sx={{
                 zIndex: '100',
                 position: 'absolute',
