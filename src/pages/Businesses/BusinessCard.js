@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import CardMedia from '@mui/material/CardMedia';
 import { ChevronRight } from 'lucide-react';
 
-const BusinessCard = ({ handleClick, ...data }) => (
+const BusinessCard = ({ handleSelect, ...data }) => (
     <Card
         variant="outlined"
         sx={{
@@ -18,14 +18,14 @@ const BusinessCard = ({ handleClick, ...data }) => (
                 opacity: 0.75
             }
         }}
-        onClick={() => handleClick(data)}
+        onClick={() => handleSelect(data)}
     >
         <CardMedia
             component="img"
             width="50px"
             height="50px"
             alt="Beside Myself album cover"
-            src={data.image}
+            src={JSON.parse(data.images)[0]}
             sx={{
                 maxWidth: '50px',
                 maxHeight: '50px',
@@ -57,7 +57,7 @@ const BusinessCard = ({ handleClick, ...data }) => (
                     textAlign: 'start',
                 }}
             >
-                {data.location}
+                {data.city}, {data.province}
             </Typography>
         </Box>
         <Box>
