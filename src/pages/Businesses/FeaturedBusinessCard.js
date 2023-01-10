@@ -18,8 +18,8 @@ const FeaturedBusinessCard = ({
             flexDirection: { xs: 'column', sm: 'row' },
             transition: '0.3s',
             cursor: 'pointer',
-            width: "110",
-            height: "150",
+            width: "150px",
+            height: "170px",
             '&: hover': {
                 opacity: 0.75
             }
@@ -38,7 +38,9 @@ const FeaturedBusinessCard = ({
             }}
         />
         <Box sx={{
-            position: 'absolute'
+            position: 'absolute',
+            bottom: '20px',
+            left: '12px'
         }}>
             <Typography
                 variant="body1"
