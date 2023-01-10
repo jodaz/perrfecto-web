@@ -32,8 +32,18 @@ const businesses = [
 ]
 
 const Businesses = () => {
+    const [openDeleteModal, setOpenDeleteModal] = React.useState(false)
     const [selectedItem, setSelectedItem] = React.useState(null);
     const [showBusiness, setShowBusiness] = React.useState(false)
+
+    const handleOpenDeleteModal = async () => {
+        setOpenDeleteModal(true);
+    }
+
+    const handleCloseDeleteModal = () => {
+        setSelectedItem(null);
+        setOpenDeleteModal(false)
+    }
 
     const handleOpenShowBusiness = async (data) => {
         setSelectedItem(data);
@@ -44,10 +54,13 @@ const Businesses = () => {
         setShowBusiness(false)
     }
 
+    console.log(openDeleteModal)
+
     if (showBusiness) {
         return (
             <ShowBusiness
                 close={handleCloseShowBusiness}
+                deleteBusiness={handleOpenDeleteModal}
                 {...selectedItem}
             />
         )

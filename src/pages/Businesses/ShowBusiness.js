@@ -8,10 +8,12 @@ import getUserPhoto from '../../utils/getUserPhoto';
 import PhotoGallery from '../../components/Modals/ShowCard/PhotoGallery';
 import Menu from '../../components/Menu';
 import SettingsLayout from '../../layouts/SettingsLayout';
+import DeleteBusiness from '../../components/Modals/DeleteBusiness';
 
 const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
-const ShowBusiness = ({ deleteBusiness, close, ...item }) => {
+const ShowBusiness = ({ close, ...item }) => {
+    const [openDeleteModal, setOpenDeleteModal] = React.useState(false)
     const {
         phone,
         facebook,
@@ -23,6 +25,14 @@ const ShowBusiness = ({ deleteBusiness, close, ...item }) => {
         city,
         description
     } = item
+
+    const handleOpenDeleteModal = async () => {
+        setOpenDeleteModal(true);
+    }
+
+    const handleCloseDeleteModal = () => {
+        setOpenDeleteModal(false)
+    }
 
     const renderMenu = () => (
         <Menu>
@@ -38,9 +48,7 @@ const ShowBusiness = ({ deleteBusiness, close, ...item }) => {
             <Box sx={{
                 display: 'flex',
                 alignItems: 'center'
-            }} onClick={() => {
-                deleteBusiness(item)
-            }}>
+            }} onClick={handleOpenDeleteModal}>
                 <Trash2 />
                 <Box sx={{ paddingLeft: '0.5rem' }}>
                     Eliminar negocio
@@ -154,6 +162,10 @@ const ShowBusiness = ({ deleteBusiness, close, ...item }) => {
                         )}
                     </Stack>
                 </Box>
+                <DeleteBusiness
+                    open={openDeleteModal}
+                    handleClose={handleCloseDeleteModal}
+                />
             </Box>
         </SettingsLayout>
     )
