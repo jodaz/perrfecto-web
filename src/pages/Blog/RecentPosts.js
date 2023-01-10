@@ -10,6 +10,7 @@ const SwiperStyled = styled(Swiper)(() => ({
     height: 'inherit',
     borderTopLeftRadius: 'inherit',
     borderBottomLeftRadius: 'inherit',
+    width: '100%',
     '& .swiper-wrapper': {
         marginBottom: '1rem'
     },
@@ -17,7 +18,9 @@ const SwiperStyled = styled(Swiper)(() => ({
 
 const SwiperSlideStyled = styled(SwiperSlide)(() => ({
     height: '100%',
-    width: '100% !important'
+    width: '100% !important',
+    textAlign: 'center',
+    width: 'auto'
 }))
 
 const posts = [
@@ -64,6 +67,7 @@ const RecentPosts = ({ openPost }) =>  (
             }}
             grabCursor={true}
             modules={[Scrollbar, Navigation]}
+            spaceBetween={5}
             navigation
         >
             {posts.map((post, i) => (
