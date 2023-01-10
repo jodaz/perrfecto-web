@@ -36,7 +36,7 @@ const Categories = () =>  (
         <Typography
             variant="subtitle1"
             fontWeight={500}
-            fontSize='1.2rem'
+            fontSize='1rem'
             mb={2}
             color="text.secondary"
             textTransform={'uppercase'}
