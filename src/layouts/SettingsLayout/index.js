@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Slide from '@mui/material/Slide';
 import ProfileToolbar from '../../components/ProfileToolbar';
 
-const SettingsLayout = ({ children, handleGoBack, title, ...rest }) => (
+const SettingsLayout = ({ children, handleGoBack, rightIconComponent, title, ...rest }) => (
     <Slide direction="left" in={true}>
         <Box sx={{
             height: '100%',
@@ -12,7 +12,7 @@ const SettingsLayout = ({ children, handleGoBack, title, ...rest }) => (
             flexDirection: 'column',
             justifyContent: 'space-between'
         }} {...rest}>
-            <ProfileToolbar title={title} handleGoBack={handleGoBack} />
+            <ProfileToolbar title={title} handleGoBack={handleGoBack} rightIconComponent={rightIconComponent} />
             {children}
         </Box>
     </Slide>

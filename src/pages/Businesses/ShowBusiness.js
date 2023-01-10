@@ -25,7 +25,7 @@ const ShowBusiness = ({ deleteBusiness, close, ...item }) => {
     } = item
 
     const renderMenu = () => (
-        <Menu iconColor='#fff'>
+        <Menu>
             <Box sx={{
                 display: 'flex',
                 alignItems: 'center'
@@ -50,7 +50,11 @@ const ShowBusiness = ({ deleteBusiness, close, ...item }) => {
     )
 
     return (
-        <SettingsLayout title='Negocio' handleGoBack={close}>
+        <SettingsLayout
+            title='Negocio'
+            handleGoBack={close}
+            rightIconComponent={renderMenu()}
+        >
             <Box sx={{
                 height: '100%',
                 width: '100%'
