@@ -18,7 +18,7 @@ const FeaturedBusinessCard = ({
             flexDirection: { xs: 'column', sm: 'row' },
             transition: '0.3s',
             cursor: 'pointer',
-            width: "150px",
+            // width: "150px",
             height: "170px",
             '&: hover': {
                 opacity: 0.75

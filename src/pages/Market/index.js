@@ -5,7 +5,9 @@ import FeaturedBusinesses from '../Businesses/FeaturedBusinesses';
 const Marketplace = () => {
     return (
         <Box sx={{ display: 'flex' }}>
-            <FeaturedBusinesses />
+            <Box p={2}>
+                <FeaturedBusinesses />
+            </Box>
         </Box>
     )
 }
