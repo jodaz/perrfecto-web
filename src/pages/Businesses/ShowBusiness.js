@@ -165,6 +165,7 @@ const ShowBusiness = ({ close, ...item }) => {
                 <DeleteBusiness
                     open={openDeleteModal}
                     handleClose={handleCloseDeleteModal}
+                    closeBusiness={close}
                 />
             </Box>
         </SettingsLayout>

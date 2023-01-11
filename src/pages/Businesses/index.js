@@ -54,8 +54,6 @@ const Businesses = () => {
         setShowBusiness(false)
     }
 
-    console.log(openDeleteModal)
-
     if (showBusiness) {
         return (
             <ShowBusiness
