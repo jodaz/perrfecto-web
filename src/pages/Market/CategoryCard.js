@@ -7,7 +7,7 @@ import CardMedia from '@mui/material/CardMedia';
 const CategoryCard = ({
     handleClick,
     title,
-    image
+    image = '/images/samples/sad-pupi.png'
 }) => (
     <Card
         variant="outlined"

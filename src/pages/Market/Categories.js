@@ -2,36 +2,10 @@ import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
+import { CircularProgress } from '@mui/material';
 import CategoryCard from './CategoryCard';
 
-const categories = [
-    {
-        title: 'Petshop',
-        image: '/images/samples/sad-pupi.png',
-    },
-    {
-        title: 'Accesorios para perros',
-        image: '/images/samples/sad-pupi.png',
-    },
-    {
-        title: 'Busco un hogar',
-        image: '/images/samples/sad-pupi.png',
-    },
-    {
-        title: 'Petshop',
-        image: '/images/samples/sad-pupi.png',
-    },
-    {
-        title: 'Accesorios para perros',
-        image: '/images/samples/sad-pupi.png',
-    },
-    {
-        title: 'Busco un hogar',
-        image: '/images/samples/sad-pupi.png',
-    }
-]
-
-const Categories = ({ handleSelect }) =>  (
+const Categories = ({ data, handleSelect, loading }) =>  (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <Typography
             variant="subtitle1"
@@ -43,8 +17,9 @@ const Categories = ({ handleSelect }) =>  (
         >
             Categorías
         </Typography>
-        <Stack orientation="column" spacing={1}>
-            {categories.map((category, i) => (
+        <Stack orientation="column" sx={{ alignItems: 'center' }} spacing={1}>
+            {loading && <CircularProgress />}
+            {data.map((category, i) => (
                 <CategoryCard
                     {...category}
                     handleClick={() => handleSelect(category)}

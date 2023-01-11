@@ -5,10 +5,30 @@ import FeaturedBusinesses from '../Businesses/FeaturedBusinesses';
 import Categories from './Categories';
 import MarketSearchBox from './MarketSearchBox';
 import ShowCategory from './ShowCategory';
+import useEffectOnce from '../../utils/useEffectOnce';
+import { apiProvider } from '../../api';
 
 const Marketplace = () => {
+    const [loadingCategories, setLoadingCategories] = React.useState(false)
+    const [categories, setCategories] = React.useState([])
     const [selectedItem, setSelectedItem] = React.useState(null);
     const [showBusiness, setShowCategory] = React.useState(false)
+
+    const fetchCategories = async () => {
+        setLoadingCategories(true)
+        try {
+            const res = await apiProvider.get('api/category/categories')
+
+            if (res.status >= 200 && res.status < 300) {
+                const { data: { data } } = res;
+
+                setCategories(data);
+                setLoadingCategories(false)
+            }
+        } catch (error) {
+            console.log("error ", error)
+        }
+    }
 
     const handleOpenShowCategory = async (data) => {
         setSelectedItem(data);
@@ -18,6 +38,8 @@ const Marketplace = () => {
     const handleCloseShowCategory = () => {
         setShowCategory(false)
     }
+
+    useEffectOnce(() => { fetchCategories() }, [])
 
     if (showBusiness) {
         return (
@@ -48,7 +70,11 @@ const Marketplace = () => {
                 <FeaturedBusinesses />
             </Box>
             <Box p={2}>
-                <Categories handleSelect={handleOpenShowCategory} />
+                <Categories
+                    data={categories}
+                    handleSelect={handleOpenShowCategory}
+                    loading={loadingCategories}
+                />
             </Box>
         </Box>
     )
