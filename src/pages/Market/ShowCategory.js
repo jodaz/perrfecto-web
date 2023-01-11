@@ -4,6 +4,7 @@ import Stack from '@mui/material/Stack';
 import BusinessCard from '../Businesses/BusinessCard';
 import SettingsLayout from '../../layouts/SettingsLayout';
 import MarketSearchBox from './MarketSearchBox';
+import ShowMarket from './ShowMarket';
 
 const showBusiness = {
     name: 'Petshop',
@@ -28,28 +29,51 @@ const businesses = [
     showBusiness
 ]
 
-const ShowCategory = ({ close, title }) => (
-    <SettingsLayout
-        title={title}
-        handleGoBack={close}
-    >
-        <Box sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            height: '100%'
-        }}>
-            <Box p={2}>
-                <MarketSearchBox />
+const ShowCategory = ({ close, title }) => {
+    const [selectedItem, setSelectedItem] = React.useState(null);
+    const [showBusiness, setShowBusiness] = React.useState(false)
+
+    const handleOpenShowBusiness = async (data) => {
+        setSelectedItem(data);
+        setShowBusiness(true);
+    }
+
+    const handleCloseShowBusiness = () => {
+        setShowBusiness(false)
+    }
+
+    if (showBusiness) {
+        return (
+            <ShowMarket
+                close={handleCloseShowBusiness}
+                {...selectedItem}
+            />
+        )
+    }
+
+    return (
+        <SettingsLayout
+            title={title}
+            handleGoBack={close}
+        >
+            <Box sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                height: '100%'
+            }}>
+                <Box p={2}>
+                    <MarketSearchBox />
+                </Box>
+                <Stack
+                    p={2}
+                    orientation='vertical'
+                    spacing={2}
+                >
+                    {businesses.map(item => <BusinessCard {...item} handleSelect={handleOpenShowBusiness} />)}
+                </Stack>
             </Box>
-            <Stack
-                p={2}
-                orientation='vertical'
-                spacing={2}
-            >
-                {businesses.map(item => <BusinessCard {...item} />)}
-            </Stack>
-        </Box>
-    </SettingsLayout>
-)
+        </SettingsLayout>
+    )
+}
 
 export default ShowCategory
