@@ -3,11 +3,12 @@ import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
 import CardMedia from '@mui/material/CardMedia';
+import getUserPhoto from '../../utils/getUserPhoto';
 
 const CategoryCard = ({
     handleClick,
-    title,
-    image = '/images/samples/sad-pupi.png'
+    name,
+    img
 }) => (
     <Card
         variant="outlined"
@@ -30,11 +31,11 @@ const CategoryCard = ({
             component="img"
             width="inherit"
             height="inherit"
-            alt="Beside Myself album cover"
-            src={image}
+            alt="category_pic"
+            // src={getUserPhoto(img)}
             sx={{
                 borderRadius: '12px',
-                background: 'linear-gradient(180deg, rgba(0, 0, 0, 0) 31.77%, rgba(0, 0, 0, 0.64) 100%), url(.jpg)'
+                background: `linear-gradient(180deg, rgba(0, 0, 0, 0) 31.77%, rgba(0, 0, 0, 0.64) 100%), url(${getUserPhoto(img)})`
             }}
         />
         <Box sx={{
@@ -51,7 +52,7 @@ const CategoryCard = ({
                     mt: { xs: 1.5, sm: 0 },
                 }}
             >
-                {title}
+                {name}
             </Typography>
         </Box>
     </Card>
