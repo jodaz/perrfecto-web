@@ -48,7 +48,6 @@ const Businesses = () => {
         return (
             <ShowBusiness
                 close={handleCloseShowBusiness}
-                deleteBusiness={handleOpenDeleteModal}
                 {...selectedItem}
             />
         )
