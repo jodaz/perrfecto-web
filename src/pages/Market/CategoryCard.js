@@ -24,6 +24,7 @@ const CategoryCard = ({
                 opacity: 0.75
             }
         }}
+        onClick={handleClick}
     >
         <CardMedia
             component="img"

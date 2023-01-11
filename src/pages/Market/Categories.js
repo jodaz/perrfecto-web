@@ -31,7 +31,7 @@ const categories = [
     }
 ]
 
-const Categories = () =>  (
+const Categories = ({ handleSelect }) =>  (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <Typography
             variant="subtitle1"
@@ -45,7 +45,10 @@ const Categories = () =>  (
         </Typography>
         <Stack orientation="column" spacing={1}>
             {categories.map((category, i) => (
-                <CategoryCard {...category} />
+                <CategoryCard
+                    {...category}
+                    handleClick={() => handleSelect(category)}
+                />
             ))}
         </Stack>
     </Box>
