@@ -79,3 +79,9 @@ input.pincode-input-text:focus {
     height: 100vh;
     width: 100vw;
 }
+
+@media only screen and (min-width: 600px) {
+    .leaflet-container {
+        height: 40vh;
+    }
+}

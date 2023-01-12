@@ -32,10 +32,9 @@ const CategoryCard = ({
             width="inherit"
             height="inherit"
             alt="category_pic"
-            // src={getUserPhoto(img)}
+            src={getUserPhoto(img)}
             sx={{
                 borderRadius: '12px',
-                background: `linear-gradient(180deg, rgba(0, 0, 0, 0) 31.77%, rgba(0, 0, 0, 0.64) 100%), url(${getUserPhoto(img)})`
             }}
         />
         <Box sx={{

@@ -10,14 +10,9 @@ import {
 import SelectInput from '../../../components/Forms/SelectInput';
 import provincias from '../../../utils/provincias'
 import ciudades from '../../../utils/ciudades'
+import MapInput from '../../../components/Forms/MapInput';
 
-const categories = [
-    {
-        value: 'store', label: 'Tienda de mascotas'
-    }
-]
-
-const Step2 = ({ control, watch }) => {
+const Step2 = ({ control, watch, setValue }) => {
     const [cities, setCities] = React.useState([])
     const province = watch('province')
 
@@ -87,6 +82,12 @@ const Step2 = ({ control, watch }) => {
                     />
                 </Box>
             )}
+            <Box sx={{
+                height: 'fit-content',
+                flex: 1
+            }} p={2}>
+                <MapInput control={control} watch={watch} setValue={setValue} />
+            </Box>
         </Box>
     );
 }
