@@ -1,6 +1,6 @@
 export function getMarkerPosition(watch, fallback) {
     const lat = watch('lat');
-    const lng = watch('lng');
+    const lng = watch('leng');
 
     if (lat && lng)
 

@@ -13,9 +13,11 @@ import useEffectOnce from '../../../utils/useEffectOnce';
 import { useForm } from 'react-hook-form'
 import { saveStep, useMultiStepForm } from '../../../context/MultiStepContext';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../context/AuthContext';
 
 const Step1 = () => {
     const navigate = useNavigate();
+    const { state: { user } } = useAuth();
     const { dispatch } = useMultiStepForm();
     const {
         control,
@@ -23,7 +25,11 @@ const Step1 = () => {
         formState: {
             isSubmitting
         }
-    } = useForm();
+    } = useForm({
+        defaultValues: {
+            whatsapp: user.tlf
+        }
+    });
     const [categories, setCategories] = React.useState([])
 
     const fetchCategories = async () => {
@@ -69,7 +75,7 @@ const Step1 = () => {
             <Box p={2}>
                 <TextInput
                     control={control}
-                    name='name'
+                    name='business_name'
                     label='Nombre del negocio'
                     rules={BUSINESS_NAME.rules}
                     validations={BUSINESS_NAME.messages}
@@ -89,7 +95,7 @@ const Step1 = () => {
             <Box p={2}>
                 <TextInput
                     control={control}
-                    name='whastapp'
+                    name='whatsapp'
                     label='WhatsApp (negocio)'
                 />
             </Box>
@@ -110,7 +116,7 @@ const Step1 = () => {
             <Box p={2}>
                 <TextInput
                     control={control}
-                    name='url'
+                    name='web_site'
                     label='Sitio web'
                 />
             </Box>

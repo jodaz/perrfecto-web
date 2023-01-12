@@ -16,19 +16,33 @@ const Step4 = () => {
     const { handleSubmit } = useForm();
 
     const onSubmit = async () => {
-        const formData = await formDataHandler(state, 'files')
+        const {
+            category,
+            province,
+            city,
+            ...restData
+        } = state
+
+        const data = {
+            ...restData,
+            id_category: category.id,
+            province: province.nombre,
+            city: city.nombre
+        }
+
+        const formData = await formDataHandler(data, 'files')
 
         try {
-            // const res = await fileProvider.post('/api/publication/new', formData)
+            const res = await fileProvider.post('/api/business-ann/new', formData)
 
-            // if (res.status >= 200 && res.status < 300) {
-            //     renewToken(dispatchAuth, user)
-            //     // setOpenWarning(true)
-            //     // setOpenOverlayLoader(false)
+            if (res.status >= 200 && res.status < 300) {
+                renewToken(dispatchAuth, user)
+                // setOpenWarning(true)
+                // setOpenOverlayLoader(false)
 
-            //     clearForm(dispatch)
-            //     navigate('/businesses')
-            // }
+                clearForm(dispatch)
+                navigate('/businesses')
+            }
         } catch (error) {
             // setOpenOverlayLoader(false)
             console.log(error)
