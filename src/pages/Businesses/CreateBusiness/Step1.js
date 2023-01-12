@@ -7,10 +7,21 @@ import {
     BUSINESS_NAME
 } from '../../../validations';
 import { apiProvider } from '../../../api';
+import Button from '@mui/material/Button';
 import SelectInput from '../../../components/Forms/SelectInput';
 import useEffectOnce from '../../../utils/useEffectOnce';
+import { useForm } from 'react-hook-form'
+import { saveStep, useMultiStepForm } from '../../../context/MultiStepContext';
 
-const Step1 = ({ control }) => {
+const Step1 = () => {
+    const { dispatch } = useMultiStepForm();
+    const {
+        control,
+        handleSubmit,
+        formState: {
+            isSubmitting
+        }
+    } = useForm();
     const [categories, setCategories] = React.useState([])
 
     const fetchCategories = async () => {
@@ -27,10 +38,14 @@ const Step1 = ({ control }) => {
         }
     }
 
+    const onSubmit = data => {
+        saveStep(dispatch, data);
+    }
+
     useEffectOnce(() => { fetchCategories() }, [])
 
     return (
-        <Box>
+        <Box component="form" onSubmit={handleSubmit(onSubmit)}>
             <Box p={2}>
                 <Typography
                     variant="subtitle1"
@@ -110,6 +125,14 @@ const Step1 = ({ control }) => {
                         borderRadius: '16px !important',
                     }}
                 />
+            </Box>
+            <Box sx={{ p: 2 }}>
+                <Button
+                    variant='contained'
+                    type='submit'
+                >
+                    Siguiente
+                </Button>
             </Box>
         </Box>
     );

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import TextInput from '../../../components/Forms/TextInput';
 import {
@@ -7,14 +8,35 @@ import {
     CITY,
     BUSINESS_ADDRESS
 } from '../../../validations';
+import { useForm } from 'react-hook-form';
 import SelectInput from '../../../components/Forms/SelectInput';
 import provincias from '../../../utils/provincias'
 import ciudades from '../../../utils/ciudades'
 import MapInput from '../../../components/Forms/MapInput';
+import { saveStep, useMultiStepForm } from '../../../context/MultiStepContext';
 
-const Step2 = ({ control, watch, setValue }) => {
+const Step2 = () => {
+    const { dispatch, state } = useMultiStepForm();
+    const {
+        control,
+        watch,
+        setValue,
+        handleSubmit,
+        formState: {
+            isSubmitting
+        }
+    } = useForm({
+        defaultValues: {
+            lat: 37.32485,
+            lng: -5.934162
+        }
+    });
     const [cities, setCities] = React.useState([])
     const province = watch('province')
+
+    const onSubmit = data => {
+        saveStep(dispatch, data);
+    }
 
     React.useEffect(() => {
         if (province) {
@@ -26,7 +48,7 @@ const Step2 = ({ control, watch, setValue }) => {
     }, [province])
 
     return (
-        <Box>
+        <Box component="form" onSubmit={handleSubmit(onSubmit)}>
             <Box p={2}>
                 <Typography
                     variant="subtitle1"
@@ -87,6 +109,14 @@ const Step2 = ({ control, watch, setValue }) => {
                 flex: 1
             }} p={2}>
                 <MapInput control={control} watch={watch} setValue={setValue} />
+            </Box>
+            <Box sx={{ p: 2 }}>
+                <Button
+                    variant='contained'
+                    type='submit'
+                >
+                    Siguiente
+                </Button>
             </Box>
         </Box>
     );
