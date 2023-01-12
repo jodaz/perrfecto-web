@@ -12,8 +12,10 @@ import SelectInput from '../../../components/Forms/SelectInput';
 import useEffectOnce from '../../../utils/useEffectOnce';
 import { useForm } from 'react-hook-form'
 import { saveStep, useMultiStepForm } from '../../../context/MultiStepContext';
+import { useNavigate } from 'react-router-dom';
 
 const Step1 = () => {
+    const navigate = useNavigate();
     const { dispatch } = useMultiStepForm();
     const {
         control,
@@ -40,6 +42,7 @@ const Step1 = () => {
 
     const onSubmit = data => {
         saveStep(dispatch, data);
+        navigate('/businesses/create/step-2')
     }
 
     useEffectOnce(() => { fetchCategories() }, [])

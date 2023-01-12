@@ -48,6 +48,10 @@ import EditOwnerAge from './pages/PersonalInformation/EditOwnerAge';
 import EditOwnerProfilePictures from './pages/Profile/EditOwnerProfilePictures';
 import Businesses from './pages/Businesses';
 import CreateBusiness from './pages/Businesses/CreateBusiness';
+import Step1 from './pages/Businesses/CreateBusiness/Step1';
+import Step2 from './pages/Businesses/CreateBusiness/Step2';
+import Step3 from './pages/Businesses/CreateBusiness/Step3';
+import Step4 from './pages/Businesses/CreateBusiness/Step4';
 
 function AppRoutes() {
     let location = useLocation();
@@ -316,7 +320,40 @@ function AppRoutes() {
                 <AppLayout>
                     <CreateBusiness />
                 </AppLayout>
-            } />
+            }>
+                <Route
+                    path='/businesses/create'
+                    element={
+                        <AppLayout>
+                            <Step1 />
+                        </AppLayout>
+                    }
+                />
+                <Route
+                    path='/businesses/create/step-2'
+                    element={
+                        <AppLayout>
+                            <Step2 />
+                        </AppLayout>
+                    }
+                />
+                <Route
+                    path='/businesses/create/step-3'
+                    element={
+                        <AppLayout>
+                            <Step3 />
+                        </AppLayout>
+                    }
+                />
+                <Route
+                    path='/businesses/create/step-4'
+                    element={
+                        <AppLayout>
+                            <Step4 />
+                        </AppLayout>
+                    }
+                />
+            </Route>
 
             <Route path="/introduction" element={<Intro />} />
 

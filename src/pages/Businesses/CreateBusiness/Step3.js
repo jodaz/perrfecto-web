@@ -6,13 +6,16 @@ import GalleryInput from '../../../components/GalleryInput'
 import { ADD_PHOTOS } from '../../../validations';
 import { useForm } from 'react-hook-form';
 import { saveStep, useMultiStepForm } from '../../../context/MultiStepContext';
+import { useNavigate } from 'react-router-dom';
 
 const Step3 = () => {
+    const navigate = useNavigate()
     const { dispatch } = useMultiStepForm();
     const { control, handleSubmit } = useForm();
 
     const onSubmit = data => {
         saveStep(dispatch, data);
+        navigate('/businesses/create/step-4')
     }
 
     return (

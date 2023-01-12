@@ -13,6 +13,9 @@ function stepsReducer(state, action) {
                     ...action.payload
                 }
             }
+            case 'CLEAR': {
+                return initialState;
+            }
             default: {
                 throw new Error(`Unhandled action type: ${action.type}`)
             }
@@ -51,9 +54,20 @@ async function saveStep(dispatch, payload) {
     }
 }
 
+async function clearForm(dispatch) {
+    try {
+        dispatch({
+            type: 'CLEAR'
+        })
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 export {
     MultiStepProvider,
     MultiStepContext,
     useMultiStepForm,
-    saveStep
+    saveStep,
+    clearForm
 }

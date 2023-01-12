@@ -14,8 +14,10 @@ import provincias from '../../../utils/provincias'
 import ciudades from '../../../utils/ciudades'
 import MapInput from '../../../components/Forms/MapInput';
 import { saveStep, useMultiStepForm } from '../../../context/MultiStepContext';
+import { useNavigate } from 'react-router-dom';
 
 const Step2 = () => {
+    const navigate = useNavigate()
     const { dispatch, state } = useMultiStepForm();
     const {
         control,
@@ -36,6 +38,7 @@ const Step2 = () => {
 
     const onSubmit = data => {
         saveStep(dispatch, data);
+        navigate('/businesses/create/step-3')
     }
 
     React.useEffect(() => {
