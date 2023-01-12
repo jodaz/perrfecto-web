@@ -20,7 +20,7 @@ const MapInput = ({ control, watch, setValue }) => {
                     const { lat, lng } = marker.getLatLng()
 
                     setValue('lat', lat)
-                    setValue('lng', lng)
+                    setValue('leng', lng)
                 }
             },
         }),
@@ -38,7 +38,7 @@ const MapInput = ({ control, watch, setValue }) => {
             />
             <TextInput
                 control={control}
-                name="lng"
+                name="leng"
                 sx={{
                     display: 'none'
                 }}

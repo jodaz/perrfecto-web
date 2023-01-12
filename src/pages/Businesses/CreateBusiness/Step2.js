@@ -30,7 +30,7 @@ const Step2 = () => {
     } = useForm({
         defaultValues: {
             lat: 37.32485,
-            lng: -5.934162
+            leng: -5.934162
         }
     });
     const [cities, setCities] = React.useState([])
@@ -72,7 +72,7 @@ const Step2 = () => {
             <Box p={2}>
                 <TextInput
                     control={control}
-                    name='address'
+                    name='business_dir'
                     label='Dirección'
                     rules={BUSINESS_ADDRESS.rules}
                     validations={BUSINESS_ADDRESS.messages}
