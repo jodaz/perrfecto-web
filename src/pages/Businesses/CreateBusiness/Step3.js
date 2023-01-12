@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import GalleryInput from '../../../components/GalleryInput'
 import { ADD_PHOTOS } from '../../../validations';
@@ -30,6 +31,14 @@ const Step3 = ({ control }) => (
                 rules={ADD_PHOTOS.rules}
                 validations={ADD_PHOTOS.messages}
             />
+        </Box>
+        <Box sx={{ p: 2 }}>
+            <Button
+                variant='contained'
+                type='submit'
+            >
+                Guardar
+            </Button>
         </Box>
     </Box>
 );
