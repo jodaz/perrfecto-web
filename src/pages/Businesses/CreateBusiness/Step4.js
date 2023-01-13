@@ -25,6 +25,7 @@ const Step4 = () => {
 
         const data = {
             ...restData,
+            email: 'prueba@prueba.com',
             id_category: category.id,
             province: province.nombre,
             city: city.nombre
