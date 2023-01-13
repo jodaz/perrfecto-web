@@ -83,13 +83,19 @@ const ShowCategory = ({ close, name, id }) => {
                 <Box p={2}>
                     <MarketSearchBox />
                 </Box>
-                <Stack
-                    p={2}
-                    orientation='vertical'
-                    spacing={2}
-                >
-                    {businesses.map(item => <BusinessCard {...item} handleSelect={handleOpenShowBusiness} />)}
-                </Stack>
+                {data.length ? (
+                    <Stack
+                        p={2}
+                        orientation='vertical'
+                        spacing={2}
+                    >
+                        {data.map(item => <BusinessCard {...item} handleSelect={handleOpenShowBusiness} />)}
+                    </Stack>
+                ) : (
+                    <Box p={2}>
+                        <Box>No hay negocios registrados</Box>
+                    </Box>
+                )}
             </Box>
         </SettingsLayout>
     )
