@@ -16,11 +16,12 @@ const ShowMarket = ({
     facebook,
     instagram,
     website,
-    images,
-    name,
+    AnnMultimedia,
+    business_name,
     province,
     city,
     description,
+    User,
     close
 }) => (
     <Slide direction="left" in={true} mountOnEnter unmountOnExit>
@@ -46,7 +47,7 @@ const ShowMarket = ({
                         <ChevronLeft color="#fff" />
                     </IconButton>
                 </Box>
-                <PhotoGallery images={JSON.parse(images)} />
+                <PhotoGallery images={getImages(AnnMultimedia.map(item => item.name))} />
             </Box>
             <Box sx={{
                 borderRadius: '24px 24px 0px 0px',
@@ -65,7 +66,7 @@ const ShowMarket = ({
                         color="text.primary"
                         fontWeight={500}
                     >
-                        {name}
+                        {business_name}
                     </Typography>
                     <Button
                         color="info"
@@ -85,7 +86,7 @@ const ShowMarket = ({
                             alignItems: 'center'
                         }}
                     >
-                        <Phone size={18} /><Box mr='10px' />  {phone}
+                        <Phone size={18} /><Box mr='10px' />  +{User.code_phone} {User.phone}
                     </Typography>
                     <Typography
                         variant="subtitle1"

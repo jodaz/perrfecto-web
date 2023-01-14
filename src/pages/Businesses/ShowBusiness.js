@@ -19,7 +19,7 @@ const ShowBusiness = ({ close, ...item }) => {
         facebook,
         instagram,
         website,
-        images,
+        AnnMultimedia,
         name,
         province,
         city,
@@ -73,7 +73,7 @@ const ShowBusiness = ({ close, ...item }) => {
                     width: '100%',
                     position: 'relative'
                 }}>
-                    <PhotoGallery images={JSON.parse(images)} />
+                    <PhotoGallery images={getImages(AnnMultimedia.map(item => item.name))} />
                 </Box>
                 <Box sx={{
                     borderRadius: '24px 24px 0px 0px',
