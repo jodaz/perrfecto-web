@@ -4,6 +4,7 @@ import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
 import CardMedia from '@mui/material/CardMedia';
 import { ChevronRight } from 'lucide-react';
+import getUserPhoto from '../../utils/getUserPhoto'
 
 const BusinessCard = ({ handleSelect, ...data }) => (
     <Card
@@ -25,7 +26,7 @@ const BusinessCard = ({ handleSelect, ...data }) => (
             width="50px"
             height="50px"
             alt="Beside Myself album cover"
-            src={JSON.parse(data.images)[0]}
+            src={getUserPhoto(data.AnnMultimedia[0].name)}
             sx={{
                 maxWidth: '50px',
                 maxHeight: '50px',
@@ -46,7 +47,7 @@ const BusinessCard = ({ handleSelect, ...data }) => (
                     textAlign: 'start',
                 }}
             >
-                {data.name}
+                {data.business_name}
             </Typography>
             <Typography
                 component="div"
