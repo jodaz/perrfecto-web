@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Slide from '@mui/material/Slide';
@@ -105,7 +106,8 @@ const ShowMarket = ({
                             color="primary"
                             variant="contained"
                             target='_blank'
-                            href={website}
+                            href={`//${website}`}
+                            component={Link}
                         >
                             Ir a la página
                             <ArrowRight />
@@ -116,7 +118,8 @@ const ShowMarket = ({
                             color="info"
                             variant="contained"
                             target='_blank'
-                            href={facebook}
+                            href={`//${facebook}`}
+                            component={Link}
                         >
                             Ir a facebook
                             <ArrowRight />
@@ -127,7 +130,7 @@ const ShowMarket = ({
                             color="success"
                             variant="contained"
                             target='_blank'
-                            href={instagram}
+                            href={`//${instagram}`}
                         >
                             Ir a instagram
                             <ArrowRight />
