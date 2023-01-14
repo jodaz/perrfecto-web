@@ -10,6 +10,7 @@ import { Phone, MapPin, ChevronLeft, ArrowRight } from 'lucide-react'
 import getUserPhoto from '../../utils/getUserPhoto';
 import PhotoGallery from '../../components/Modals/ShowCard/PhotoGallery';
 import ShowBusinessLocation from '../Businesses/ShowBusinessLocation';
+import ContactBusiness from '../../components/Modals/ContactBusiness';
 
 const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
@@ -25,6 +26,7 @@ const ShowMarket = ({ close, ...restData }) => {
         description,
         User
     } = restData
+    const [openContactDialog, setOpenContactDialog] = React.useState(false)
     const [selectedItem, setSelectedItem] = React.useState(null);
     const [showBusinessLocation, setShowBusinessLocation] = React.useState(false)
 
@@ -109,6 +111,7 @@ const ShowMarket = ({ close, ...restData }) => {
                                 display: 'flex',
                                 alignItems: 'center'
                             }}
+                            onClick={() => setOpenContactDialog(true)}
                         >
                             <Phone size={18} /><Box mr='10px' />  +{User.code_phone} {User.phone}
                         </Typography>
@@ -160,6 +163,13 @@ const ShowMarket = ({ close, ...restData }) => {
                             </Button>
                         )}
                     </Stack>
+                    {openContactDialog && (
+                        <ContactBusiness
+                            {...restData}
+                            open={openContactDialog}
+                            handleClose={() => setOpenContactDialog(false)}
+                        />
+                    )}
                 </Box>
             </Box>
         </Slide>
