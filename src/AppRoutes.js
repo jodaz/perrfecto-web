@@ -52,6 +52,7 @@ import Step1 from './pages/Businesses/CreateBusiness/Step1';
 import Step2 from './pages/Businesses/CreateBusiness/Step2';
 import Step3 from './pages/Businesses/CreateBusiness/Step3';
 import Step4 from './pages/Businesses/CreateBusiness/Step4';
+import BlogCreate from './pages/Blog/BlogCreate';
 
 function AppRoutes() {
     let location = useLocation();
@@ -91,6 +92,14 @@ function AppRoutes() {
                 element={
                     <AppLayout>
                         <Blog />
+                    </AppLayout>
+                }
+            />
+            <Route
+                path='/blog/create'
+                element={
+                    <AppLayout>
+                        <BlogCreate />
                     </AppLayout>
                 }
             />
