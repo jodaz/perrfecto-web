@@ -53,16 +53,16 @@ const onlyUserLinks = [
 
 const onlyBusiness = [
     {
-        label: 'Blog',
-        icon: <Newspaper color='#ccc' />,
-        active: <Newspaper color='#A167C9' />,
-        route: '/blog'
-    },
-    {
         label: 'Marketplace',
         icon: <StoreIcon color='#ccc' />,
         active: <StoreIcon />,
         route: '/market'
+    },
+    {
+        label: 'Blog',
+        icon: <Newspaper color='#ccc' />,
+        active: <Newspaper color='#A167C9' />,
+        route: '/blog'
     },
     {
         label: 'Perfil',
