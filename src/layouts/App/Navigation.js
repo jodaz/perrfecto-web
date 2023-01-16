@@ -3,8 +3,6 @@ import LinkBehavior from '../../components/LinkBehavior'
 import { Toolbar, IconButton, Tooltip } from "@mui/material"
 import { useLocation } from 'react-router-dom';
 // Icons
-import { ReactComponent as HuellaIcon } from '../../assets/icons/Huella.svg'
-import { ReactComponent as HuellaActiveIcon } from '../../assets/icons/PawHouseActive.svg'
 import { ReactComponent as StoreIcon } from '../../assets/icons/Store.svg'
 import { Newspaper } from 'lucide-react';
 import { MessageCircle } from 'lucide-react';
@@ -13,13 +11,17 @@ import { User } from 'lucide-react';
 import { Dog } from 'lucide-react';
 import PrivateRoute from '../../components/PrivateRoute';
 
-const generalLinks = [
+const smallScreenOnly = [
     {
         label: 'Inicio',
-        icon: <HuellaIcon />,
-        active: <HuellaActiveIcon />,
-        route: '/home'
-    },
+        icon: <Home color='#ccc' />,
+        active: <Home color='#A167C9' />,
+        route: '/home',
+        smallScreensOnly: true
+    }
+]
+
+const generalLinks = [
     {
         label: 'Marketplace',
         icon: <StoreIcon />,
@@ -51,22 +53,16 @@ const onlyUserLinks = [
 
 const onlyBusiness = [
     {
-        label: 'Inicio',
-        icon: <Home color='#ccc' />,
-        active: <Home color='#A167C9' />,
-        route: '/home'
+        label: 'Marketplace',
+        icon: <StoreIcon color='#ccc' />,
+        active: <StoreIcon />,
+        route: '/market'
     },
     {
         label: 'Blog',
         icon: <Newspaper color='#ccc' />,
         active: <Newspaper color='#A167C9' />,
         route: '/blog'
-    },
-    {
-        label: 'Marketplace',
-        icon: <StoreIcon color='#ccc' />,
-        active: <StoreIcon />,
-        route: '/market'
     },
     {
         label: 'Perfil',
@@ -100,6 +96,11 @@ const Navigation = ({ isSmall }) => {
             backgroundColor: '#fff',
             height: isSmall ? '100%' : 'unset'
         }}>
+            {isSmall && (
+                <PrivateRoute authorize='user,guest,business' unauthorized={null}>
+                    {renderLinks(smallScreenOnly)}
+                </PrivateRoute>
+            )}
             <PrivateRoute authorize='user,guest' unauthorized={null}>
                 {renderLinks(generalLinks)}
             </PrivateRoute>

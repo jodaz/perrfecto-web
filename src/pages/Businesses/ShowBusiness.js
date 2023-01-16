@@ -18,8 +18,8 @@ const ShowBusiness = ({ close, ...item }) => {
         phone,
         facebook,
         instagram,
-        website,
-        images,
+        web_site,
+        AnnMultimedia,
         name,
         province,
         city,
@@ -73,7 +73,7 @@ const ShowBusiness = ({ close, ...item }) => {
                     width: '100%',
                     position: 'relative'
                 }}>
-                    <PhotoGallery images={JSON.parse(images)} />
+                    <PhotoGallery images={getImages(AnnMultimedia.map(item => item.name))} />
                 </Box>
                 <Box sx={{
                     borderRadius: '24px 24px 0px 0px',
@@ -127,12 +127,12 @@ const ShowBusiness = ({ close, ...item }) => {
                         spacing={1}
                         sx={{ p: 2, width: 'fit-content' }}
                     >
-                        {website && (
+                        {web_site && (
                             <Button
                                 color="primary"
                                 variant="contained"
                                 target='_blank'
-                                href={website}
+                                href={web_site}
                             >
                                 Ir a la página
                                 <ArrowRight />

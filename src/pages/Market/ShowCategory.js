@@ -5,6 +5,8 @@ import BusinessCard from '../Businesses/BusinessCard';
 import SettingsLayout from '../../layouts/SettingsLayout';
 import MarketSearchBox from './MarketSearchBox';
 import ShowMarket from './ShowMarket';
+import useEffectOnce from '../../utils/useEffectOnce';
+import { apiProvider } from '../../api';
 
 const showBusiness = {
     name: 'Petshop',
@@ -29,7 +31,8 @@ const businesses = [
     showBusiness
 ]
 
-const ShowCategory = ({ close, title }) => {
+const ShowCategory = ({ close, name, id }) => {
+    const [data, setData] = React.useState([])
     const [selectedItem, setSelectedItem] = React.useState(null);
     const [showBusiness, setShowBusiness] = React.useState(false)
 
@@ -42,6 +45,22 @@ const ShowCategory = ({ close, title }) => {
         setShowBusiness(false)
     }
 
+    const fetchBusinesses = async () => {
+        try {
+            const res = await apiProvider.get(`api/business-ann/ads?id_category=${id}`)
+
+            if (res.status >= 200 && res.status < 300) {
+                const { data: { data } } = res;
+
+                setData(data);
+            }
+        } catch (error) {
+            console.log("error ", error)
+        }
+    }
+
+    useEffectOnce(() => { fetchBusinesses() }, [])
+
     if (showBusiness) {
         return (
             <ShowMarket
@@ -53,7 +72,7 @@ const ShowCategory = ({ close, title }) => {
 
     return (
         <SettingsLayout
-            title={title}
+            title={name}
             handleGoBack={close}
         >
             <Box sx={{
@@ -64,13 +83,19 @@ const ShowCategory = ({ close, title }) => {
                 <Box p={2}>
                     <MarketSearchBox />
                 </Box>
-                <Stack
-                    p={2}
-                    orientation='vertical'
-                    spacing={2}
-                >
-                    {businesses.map(item => <BusinessCard {...item} handleSelect={handleOpenShowBusiness} />)}
-                </Stack>
+                {data.length ? (
+                    <Stack
+                        p={2}
+                        orientation='vertical'
+                        spacing={2}
+                    >
+                        {data.map(item => <BusinessCard {...item} handleSelect={handleOpenShowBusiness} />)}
+                    </Stack>
+                ) : (
+                    <Box p={2}>
+                        <Box>No hay negocios registrados</Box>
+                    </Box>
+                )}
             </Box>
         </SettingsLayout>
     )

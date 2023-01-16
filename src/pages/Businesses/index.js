@@ -77,13 +77,13 @@ const Businesses = () => {
                         title='Crear negocio'
                     />
                 </Box>
-                <Stack
+                {/* <Stack
                     p={2}
                     orientation='vertical'
                     spacing={2}
                 >
                     {businesses.map(item => <BusinessCard {...item} handleSelect={handleOpenShowBusiness} />)}
-                </Stack>
+                </Stack> */}
             </Box>
         </SettingsLayout>
     )
