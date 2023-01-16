@@ -15,10 +15,13 @@ import { saveStep, useMultiStepForm } from '../../../context/MultiStepContext';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 
+const categoryName = 'TIENDAS DE MASCOTAS';
+
 const EditBusinessStep1 = () => {
     const navigate = useNavigate();
     const { state: { user } } = useAuth();
     const { dispatch } = useMultiStepForm();
+    const [categories, setCategories] = React.useState([])
     const {
         control,
         handleSubmit,
@@ -27,10 +30,15 @@ const EditBusinessStep1 = () => {
         }
     } = useForm({
         defaultValues: {
-            whatsapp: user.tlf
+            business_name: 'Jodaz PetShop',
+            facebook: 'https://facebook.com/jodaz',
+            instagram: 'https://instagram.com/jodaz',
+            web_site: 'https://web_site.com/jodaz',
+            description: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores ',
+            category: categories.find(({ name }) => name === categoryName), // error aqui
+            whatsapp: '+58 04261843880'
         }
     });
-    const [categories, setCategories] = React.useState([])
 
     const fetchCategories = async () => {
         try {
@@ -48,7 +56,7 @@ const EditBusinessStep1 = () => {
 
     const onSubmit = data => {
         saveStep(dispatch, data);
-        navigate('/businesses/create/step-2')
+        navigate('/businesses/edit/step-2')
     }
 
     useEffectOnce(() => { fetchCategories() }, [])
@@ -88,6 +96,7 @@ const EditBusinessStep1 = () => {
                         name="category"
                         label='Categoría'
                         options={categories}
+                        defaultValue={categories.find(({ name }) => name === categoryName)}
                         optionLabel='name'
                     />
                 </Box>

@@ -18,7 +18,7 @@ import { useNavigate } from 'react-router-dom';
 
 const CreateBusinessStep2 = () => {
     const navigate = useNavigate()
-    const { dispatch, state } = useMultiStepForm();
+    const { dispatch } = useMultiStepForm();
     const {
         control,
         watch,

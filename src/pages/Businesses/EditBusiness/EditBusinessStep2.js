@@ -16,29 +16,32 @@ import MapInput from '../../../components/Forms/MapInput';
 import { saveStep, useMultiStepForm } from '../../../context/MultiStepContext';
 import { useNavigate } from 'react-router-dom';
 
+const selectedProvince = name => provincias.find(({ nombre }) => nombre === name)
+const selectedCity = name => ciudades.find(({ nombre }) => nombre === name)
+
 const EditBusinessStep2 = () => {
     const navigate = useNavigate()
-    const { dispatch, state } = useMultiStepForm();
+    const { dispatch } = useMultiStepForm();
     const {
         control,
         watch,
         setValue,
         handleSubmit,
-        formState: {
-            isSubmitting
-        }
     } = useForm({
-        defaultValues: {
+        defaultValues: React.useMemo(() => ({
             lat: 37.32485,
-            leng: -5.934162
-        }
+            business_dir: 'Avenida siempreviva',
+            leng: -5.934162,
+            'province': selectedProvince('Zaragoza'),
+            'city': selectedCity('Abanto')
+        }))
     });
     const [cities, setCities] = React.useState([])
     const province = watch('province')
 
     const onSubmit = data => {
         saveStep(dispatch, data);
-        navigate('/businesses/create/step-3')
+        navigate('/businesses/edit/step-3')
     }
 
     React.useEffect(() => {
@@ -92,21 +95,19 @@ const EditBusinessStep2 = () => {
                     noOptionsText='Sin resultados'
                 />
             </Box>
-            {!!(cities.length) && (
-                <Box p={2}>
-                    <SelectInput
-                        control={control}
-                        name="city"
-                        label='Ciudad'
-                        options={cities}
-                        optionLabel='nombre'
-                        InputProps={{
-                            placeholder: 'Seleccione una ciudad'
-                        }}
-                        noOptionsText='Sin resultados'
-                    />
-                </Box>
-            )}
+            <Box p={2}>
+                <SelectInput
+                    control={control}
+                    name="city"
+                    label='Ciudad'
+                    options={cities}
+                    optionLabel='nombre'
+                    InputProps={{
+                        placeholder: 'Seleccione una ciudad'
+                    }}
+                    noOptionsText='Sin resultados'
+                />
+            </Box>
             <Box sx={{
                 height: 'fit-content',
                 flex: 1

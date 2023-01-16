@@ -48,10 +48,15 @@ import EditOwnerAge from './pages/PersonalInformation/EditOwnerAge';
 import EditOwnerProfilePictures from './pages/Profile/EditOwnerProfilePictures';
 import Businesses from './pages/Businesses';
 import CreateBusiness from './pages/Businesses/CreateBusiness';
+import EditBusiness from './pages/Businesses/EditBusiness';
 import CreateBusinessStep1 from './pages/Businesses/CreateBusiness/CreateBusinessStep1';
 import CreateBusinessStep2 from './pages/Businesses/CreateBusiness/CreateBusinessStep2';
 import CreateBusinessStep3 from './pages/Businesses/CreateBusiness/CreateBusinessStep3';
 import CreateBusinessStep4 from './pages/Businesses/CreateBusiness/CreateBusinessStep4';
+import EditBusinessStep1 from './pages/Businesses/EditBusiness/EditBusinessStep1';
+import EditBusinessStep2 from './pages/Businesses/EditBusiness/EditBusinessStep2';
+import EditBusinessStep3 from './pages/Businesses/EditBusiness/EditBusinessStep3';
+import EditBusinessStep4 from './pages/Businesses/EditBusiness/EditBusinessStep4';
 import BlogCreate from './pages/Blog/BlogCreate';
 
 function AppRoutes() {
@@ -359,6 +364,44 @@ function AppRoutes() {
                     element={
                         <AppLayout>
                             <CreateBusinessStep4 />
+                        </AppLayout>
+                    }
+                />
+            </Route>
+            <Route path="/businesses/edit" element={
+                <AppLayout>
+                    <EditBusiness />
+                </AppLayout>
+            }>
+                <Route
+                    path='/businesses/edit'
+                    element={
+                        <AppLayout>
+                            <EditBusinessStep1 />
+                        </AppLayout>
+                    }
+                />
+                <Route
+                    path='/businesses/edit/step-2'
+                    element={
+                        <AppLayout>
+                            <EditBusinessStep2 />
+                        </AppLayout>
+                    }
+                />
+                <Route
+                    path='/businesses/edit/step-3'
+                    element={
+                        <AppLayout>
+                            <EditBusinessStep3 />
+                        </AppLayout>
+                    }
+                />
+                <Route
+                    path='/businesses/edit/step-4'
+                    element={
+                        <AppLayout>
+                            <EditBusinessStep4 />
                         </AppLayout>
                     }
                 />
