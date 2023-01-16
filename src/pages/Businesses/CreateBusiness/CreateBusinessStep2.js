@@ -86,6 +86,8 @@ const CreateBusinessStep2 = () => {
                     label='Provincia'
                     options={provincias}
                     optionLabel='nombre'
+                    rules={PROVINCE.rules}
+                    validations={PROVINCE.messages}
                     InputProps={{
                         placeholder: 'Seleccione una provincia'
                     }}
@@ -99,6 +101,8 @@ const CreateBusinessStep2 = () => {
                         name="city"
                         label='Ciudad'
                         options={cities}
+                        rules={CITY.rules}
+                        validations={CITY.messages}
                         optionLabel='nombre'
                         InputProps={{
                             placeholder: 'Seleccione una ciudad'
