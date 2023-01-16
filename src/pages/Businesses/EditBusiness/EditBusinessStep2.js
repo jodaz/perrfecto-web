@@ -15,6 +15,7 @@ import ciudades from '../../../utils/ciudades'
 import MapInput from '../../../components/Forms/MapInput';
 import { saveStep, useMultiStepForm } from '../../../context/MultiStepContext';
 import { useNavigate } from 'react-router-dom';
+import Stepper from '../Stepper';
 
 const selectedProvince = name => provincias.find(({ nombre }) => nombre === name)
 const selectedCity = name => ciudades.find(({ nombre }) => nombre === name)
@@ -55,15 +56,7 @@ const EditBusinessStep2 = () => {
 
     return (
         <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-            <Box p={2}>
-                <Typography
-                    variant="subtitle1"
-                    color="text.secondary"
-                    fontWeight={500}
-                >
-                    PASO 2
-                </Typography>
-            </Box>
+            <Stepper title='PASO 2' type='edit' />
             <Box p={2}>
                 <Typography
                     variant="subtitle1"

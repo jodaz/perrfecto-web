@@ -15,6 +15,7 @@ import ciudades from '../../../utils/ciudades'
 import MapInput from '../../../components/Forms/MapInput';
 import { saveStep, useMultiStepForm } from '../../../context/MultiStepContext';
 import { useNavigate } from 'react-router-dom';
+import Stepper from '../Stepper';
 
 const CreateBusinessStep2 = () => {
     const navigate = useNavigate()
@@ -52,15 +53,10 @@ const CreateBusinessStep2 = () => {
 
     return (
         <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-            <Box p={2}>
-                <Typography
-                    variant="subtitle1"
-                    color="text.secondary"
-                    fontWeight={500}
-                >
-                    PASO 2
-                </Typography>
-            </Box>
+            <Stepper
+                type="create"
+                title="PASO 2"
+            />
             <Box p={2}>
                 <Typography
                     variant="subtitle1"

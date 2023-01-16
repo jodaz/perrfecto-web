@@ -14,6 +14,7 @@ import { useForm } from 'react-hook-form'
 import { saveStep, useMultiStepForm } from '../../../context/MultiStepContext';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
+import Stepper from '../Stepper';
 
 const categoryName = 'TIENDAS DE MASCOTAS';
 
@@ -63,15 +64,7 @@ const EditBusinessStep1 = () => {
 
     return (
         <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-            <Box p={2}>
-                <Typography
-                    variant="subtitle1"
-                    color="text.secondary"
-                    fontWeight={500}
-                >
-                    PASO 1
-                </Typography>
-            </Box>
+            <Stepper title='PASO 1' type='edit' />
             <Box p={2}>
                 <Typography
                     variant="subtitle1"

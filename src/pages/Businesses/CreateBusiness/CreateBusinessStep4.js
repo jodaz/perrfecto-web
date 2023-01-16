@@ -104,6 +104,7 @@ const CreateBusinessStep4 = () => {
                                 variant="h5"
                                 color="text.primary"
                                 fontWeight={500}
+                                textAlign='left'
                             >
                                 {state.business_name}
                             </Typography>
@@ -112,9 +113,11 @@ const CreateBusinessStep4 = () => {
                                 sx={{
                                     padding: 0,
                                     margin: 0,
-                                    justifyContent: 'start'
+                                    justifyContent: 'start',
+                                    textAlign: 'left'
                                 }}
                                 // onClick={() => handleOpenShowBusinessLocation(restData)}
+                                textAlign='left'
                             >
                                 <MapPin size={18} /> {state.city.nombre}, {state.province.nombre}
                             </Button>

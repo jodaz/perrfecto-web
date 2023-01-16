@@ -7,6 +7,7 @@ import { ADD_PHOTOS } from '../../../validations';
 import { useForm } from 'react-hook-form';
 import { saveStep, useMultiStepForm } from '../../../context/MultiStepContext';
 import { useNavigate } from 'react-router-dom';
+import Stepper from '../Stepper';
 
 const CreateBusinessStep3 = () => {
     const navigate = useNavigate()
@@ -20,15 +21,10 @@ const CreateBusinessStep3 = () => {
 
     return (
         <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-            <Box p={2}>
-                <Typography
-                    variant="subtitle1"
-                    color="text.secondary"
-                    fontWeight={500}
-                >
-                    PASO 3
-                </Typography>
-            </Box>
+            <Stepper
+                title='PASO 3'
+                type="create"
+            />
             <Box p={2}>
                 <Typography
                     variant="subtitle1"

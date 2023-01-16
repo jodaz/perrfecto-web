@@ -8,6 +8,7 @@ import {
 } from '../../../validations';
 import { apiProvider } from '../../../api';
 import Button from '@mui/material/Button';
+import Stepper from '../Stepper';
 import SelectInput from '../../../components/Forms/SelectInput';
 import useEffectOnce from '../../../utils/useEffectOnce';
 import { useForm } from 'react-hook-form'
@@ -55,15 +56,7 @@ const CreateBusinessStep1 = () => {
 
     return (
         <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-            <Box p={2}>
-                <Typography
-                    variant="subtitle1"
-                    color="text.secondary"
-                    fontWeight={500}
-                >
-                    PASO 1
-                </Typography>
-            </Box>
+            <Stepper title='PASO 1' type='create' />
             <Box p={2}>
                 <Typography
                     variant="subtitle1"
