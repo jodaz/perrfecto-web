@@ -6,16 +6,21 @@ import { fileProvider } from '../../../api';
 import formDataHandler from '../../../utils/formDataHandler'
 import { useForm } from 'react-hook-form';
 import { clearForm, useMultiStepForm } from '../../../context/MultiStepContext';
+import PublicationWait from '../../../components/Modals/PublicationWait';
+import OverlayLoader from '../../../components/Modals/OverlayLoader';
 import { useNavigate } from 'react-router-dom';
 import { useAuth, renewToken } from '../../../context/AuthContext';
 
 const Step4 = () => {
+    const [openWarning, setOpenWarning] = React.useState(false)
+    const [openOverlayLoader, setOpenOverlayLoader] = React.useState(false)
     const navigate = useNavigate()
     const { state: { user }, dispatchAuth } = useAuth();
     const { state, dispatch } = useMultiStepForm();
     const { handleSubmit } = useForm();
 
     const onSubmit = async () => {
+        setOpenOverlayLoader(true)
         const {
             category,
             province,
@@ -38,8 +43,8 @@ const Step4 = () => {
 
             if (res.status >= 200 && res.status < 300) {
                 renewToken(dispatchAuth, user)
-                // setOpenWarning(true)
-                // setOpenOverlayLoader(false)
+                setOpenWarning(true)
+                setOpenOverlayLoader(false)
 
                 clearForm(dispatch)
                 navigate('/businesses')
@@ -48,6 +53,10 @@ const Step4 = () => {
             // setOpenOverlayLoader(false)
             console.log(error)
         }
+    }
+
+    const handleCloseWarning = () => {
+        setOpenWarning(false);
     }
 
     return (
@@ -70,6 +79,8 @@ const Step4 = () => {
                     Publicar
                 </Button>
             </Box>
+            <PublicationWait open={openWarning} handleClose={handleCloseWarning} />
+            <OverlayLoader open={openOverlayLoader} />
         </Box>
     );
 }
