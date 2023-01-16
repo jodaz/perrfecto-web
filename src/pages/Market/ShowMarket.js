@@ -18,7 +18,7 @@ const ShowMarket = ({ close, ...restData }) => {
     const {
         facebook,
         instagram,
-        website,
+        web_site,
         AnnMultimedia,
         business_name,
         province,
@@ -127,12 +127,12 @@ const ShowMarket = ({ close, ...restData }) => {
                         spacing={1}
                         sx={{ p: 2, width: 'fit-content' }}
                     >
-                        {website && (
+                        {web_site && (
                             <Button
                                 color="primary"
                                 variant="contained"
                                 target='_blank'
-                                href={`//${website}`}
+                                href={`//${web_site}`}
                                 component={Link}
                             >
                                 Ir a la página
