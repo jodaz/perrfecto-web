@@ -48,10 +48,10 @@ import EditOwnerAge from './pages/PersonalInformation/EditOwnerAge';
 import EditOwnerProfilePictures from './pages/Profile/EditOwnerProfilePictures';
 import Businesses from './pages/Businesses';
 import CreateBusiness from './pages/Businesses/CreateBusiness';
-import Step1 from './pages/Businesses/CreateBusiness/Step1';
-import Step2 from './pages/Businesses/CreateBusiness/Step2';
-import Step3 from './pages/Businesses/CreateBusiness/Step3';
-import Step4 from './pages/Businesses/CreateBusiness/Step4';
+import CreateBusinessStep1 from './pages/Businesses/CreateBusiness/CreateBusinessStep1';
+import CreateBusinessStep2 from './pages/Businesses/CreateBusiness/CreateBusinessStep2';
+import CreateBusinessStep3 from './pages/Businesses/CreateBusiness/CreateBusinessStep3';
+import CreateBusinessStep4 from './pages/Businesses/CreateBusiness/CreateBusinessStep4';
 import BlogCreate from './pages/Blog/BlogCreate';
 
 function AppRoutes() {
@@ -334,7 +334,7 @@ function AppRoutes() {
                     path='/businesses/create'
                     element={
                         <AppLayout>
-                            <Step1 />
+                            <CreateBusinessStep1 />
                         </AppLayout>
                     }
                 />
@@ -342,7 +342,7 @@ function AppRoutes() {
                     path='/businesses/create/step-2'
                     element={
                         <AppLayout>
-                            <Step2 />
+                            <CreateBusinessStep2 />
                         </AppLayout>
                     }
                 />
@@ -350,7 +350,7 @@ function AppRoutes() {
                     path='/businesses/create/step-3'
                     element={
                         <AppLayout>
-                            <Step3 />
+                            <CreateBusinessStep3 />
                         </AppLayout>
                     }
                 />
@@ -358,7 +358,7 @@ function AppRoutes() {
                     path='/businesses/create/step-4'
                     element={
                         <AppLayout>
-                            <Step4 />
+                            <CreateBusinessStep4 />
                         </AppLayout>
                     }
                 />

@@ -17,7 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth, renewToken } from '../../../context/AuthContext';
 import PhotoGallery from '../../../components/Modals/ShowCard/PhotoGallery';
 
-const Step4 = () => {
+const CreateBusinessStep4 = () => {
     const [openWarning, setOpenWarning] = React.useState(false)
     const [openOverlayLoader, setOpenOverlayLoader] = React.useState(false)
     const navigate = useNavigate()
@@ -194,4 +194,4 @@ const Step4 = () => {
     );
 }
 
-export default Step4
+export default CreateBusinessStep4

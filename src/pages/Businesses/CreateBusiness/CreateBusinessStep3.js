@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 import { saveStep, useMultiStepForm } from '../../../context/MultiStepContext';
 import { useNavigate } from 'react-router-dom';
 
-const Step3 = () => {
+const CreateBusinessStep3 = () => {
     const navigate = useNavigate()
     const { dispatch } = useMultiStepForm();
     const { control, handleSubmit } = useForm();
@@ -57,4 +57,4 @@ const Step3 = () => {
     );
 }
 
-export default Step3
+export default CreateBusinessStep3

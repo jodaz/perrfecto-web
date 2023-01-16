@@ -15,7 +15,7 @@ import { saveStep, useMultiStepForm } from '../../../context/MultiStepContext';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 
-const Step1 = () => {
+const CreateBusinessStep1 = () => {
     const navigate = useNavigate();
     const { state: { user } } = useAuth();
     const { dispatch } = useMultiStepForm();
@@ -147,4 +147,4 @@ const Step1 = () => {
     );
 }
 
-export default Step1
+export default CreateBusinessStep1

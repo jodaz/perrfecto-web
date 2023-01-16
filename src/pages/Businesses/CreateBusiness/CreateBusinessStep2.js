@@ -16,7 +16,7 @@ import MapInput from '../../../components/Forms/MapInput';
 import { saveStep, useMultiStepForm } from '../../../context/MultiStepContext';
 import { useNavigate } from 'react-router-dom';
 
-const Step2 = () => {
+const CreateBusinessStep2 = () => {
     const navigate = useNavigate()
     const { dispatch, state } = useMultiStepForm();
     const {
@@ -125,4 +125,4 @@ const Step2 = () => {
     );
 }
 
-export default Step2
+export default CreateBusinessStep2
