@@ -23,7 +23,7 @@ import NewPassword from './components/Modals/NewPassword';
 import AskCode from './components/Modals/AskCode';
 import Notifications from './pages/Notifications'
 import CreateProfileWelcome from './components/CreateProfileWelcome';
-import Business from './pages/Business';
+import BusinessLanding from './pages/BusinessLanding';
 import RegisterBusiness from './components/Modals/RegisterBusiness';
 import Terms from './pages/Terms';
 import PetProfile from './pages/Profile/PetProfile';
@@ -46,6 +46,18 @@ import EditCertificates from './pages/PetInformation/EditCertificates';
 import EditAd from './pages/Ad/EditAd';
 import EditOwnerAge from './pages/PersonalInformation/EditOwnerAge';
 import EditOwnerProfilePictures from './pages/Profile/EditOwnerProfilePictures';
+import Businesses from './pages/Businesses';
+import CreateBusiness from './pages/Businesses/CreateBusiness';
+import EditBusiness from './pages/Businesses/EditBusiness';
+import CreateBusinessStep1 from './pages/Businesses/CreateBusiness/CreateBusinessStep1';
+import CreateBusinessStep2 from './pages/Businesses/CreateBusiness/CreateBusinessStep2';
+import CreateBusinessStep3 from './pages/Businesses/CreateBusiness/CreateBusinessStep3';
+import CreateBusinessStep4 from './pages/Businesses/CreateBusiness/CreateBusinessStep4';
+import EditBusinessStep1 from './pages/Businesses/EditBusiness/EditBusinessStep1';
+import EditBusinessStep2 from './pages/Businesses/EditBusiness/EditBusinessStep2';
+import EditBusinessStep3 from './pages/Businesses/EditBusiness/EditBusinessStep3';
+import EditBusinessStep4 from './pages/Businesses/EditBusiness/EditBusinessStep4';
+import BlogCreate from './pages/Blog/BlogCreate';
 
 function AppRoutes() {
     let location = useLocation();
@@ -85,6 +97,14 @@ function AppRoutes() {
                 element={
                     <AppLayout>
                         <Blog />
+                    </AppLayout>
+                }
+            />
+            <Route
+                path='/blog/create'
+                element={
+                    <AppLayout>
+                        <BlogCreate />
                     </AppLayout>
                 }
             />
@@ -296,13 +316,95 @@ function AppRoutes() {
             </Route>
             <Route path="/register/welcome" element={<CreateProfileWelcome location={location} />} />
 
-            {/** Bussiness routes */}
+            {/** Businesss routes */}
             <Route path="/business" element={
                 <LandingLayout dark>
-                    <Business />
+                    <BusinessLanding />
                 </LandingLayout>
             }>
                 <Route path="/business/register" element={<RegisterBusiness location={location} />} />
+            </Route>
+
+            <Route path="/businesses" element={
+                <AppLayout>
+                    <Businesses />
+                </AppLayout>
+            } />
+            <Route path="/businesses/create" element={
+                <AppLayout>
+                    <CreateBusiness />
+                </AppLayout>
+            }>
+                <Route
+                    path='/businesses/create'
+                    element={
+                        <AppLayout>
+                            <CreateBusinessStep1 />
+                        </AppLayout>
+                    }
+                />
+                <Route
+                    path='/businesses/create/step-2'
+                    element={
+                        <AppLayout>
+                            <CreateBusinessStep2 />
+                        </AppLayout>
+                    }
+                />
+                <Route
+                    path='/businesses/create/step-3'
+                    element={
+                        <AppLayout>
+                            <CreateBusinessStep3 />
+                        </AppLayout>
+                    }
+                />
+                <Route
+                    path='/businesses/create/step-4'
+                    element={
+                        <AppLayout>
+                            <CreateBusinessStep4 />
+                        </AppLayout>
+                    }
+                />
+            </Route>
+            <Route path="/businesses/edit" element={
+                <AppLayout>
+                    <EditBusiness />
+                </AppLayout>
+            }>
+                <Route
+                    path='/businesses/edit'
+                    element={
+                        <AppLayout>
+                            <EditBusinessStep1 />
+                        </AppLayout>
+                    }
+                />
+                <Route
+                    path='/businesses/edit/step-2'
+                    element={
+                        <AppLayout>
+                            <EditBusinessStep2 />
+                        </AppLayout>
+                    }
+                />
+                <Route
+                    path='/businesses/edit/step-3'
+                    element={
+                        <AppLayout>
+                            <EditBusinessStep3 />
+                        </AppLayout>
+                    }
+                />
+                <Route
+                    path='/businesses/edit/step-4'
+                    element={
+                        <AppLayout>
+                            <EditBusinessStep4 />
+                        </AppLayout>
+                    }
+                />
             </Route>
 
             <Route path="/introduction" element={<Intro />} />

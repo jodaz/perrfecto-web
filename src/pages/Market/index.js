@@ -89,7 +89,7 @@ const Marketplace = () => {
             </Box>
             <MarketFilterDrawer />
         </Box>
-    );
+    )
 }
 
 export default Marketplace
