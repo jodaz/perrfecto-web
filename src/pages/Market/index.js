@@ -7,6 +7,7 @@ import MarketSearchBox from './MarketSearchBox';
 import ShowCategory from './ShowCategory';
 import useEffectOnce from '../../utils/useEffectOnce';
 import { apiProvider } from '../../api';
+import MarketFilterDrawer from '../../components/MarketFilterDrawer';
 
 const Marketplace = () => {
     const [loadingCategories, setLoadingCategories] = React.useState(false)
@@ -54,7 +55,7 @@ const Marketplace = () => {
         <Box sx={{
             display: 'flex',
             flexDirection: 'column'
-        }}>
+        }} id='market-drawer-container'>
             <Box p={2}>
                 <Typography
                     variant="subtitle"
@@ -76,6 +77,7 @@ const Marketplace = () => {
                     loading={loadingCategories}
                 />
             </Box>
+            <MarketFilterDrawer />
         </Box>
     )
 }

@@ -6,6 +6,7 @@ import esLocale from 'date-fns/locale/es';
 // All routes
 import AppRoutes from './AppRoutes'
 // Contexts
+import { BusinessProvider } from './context/BusinessContext'
 import { AuthProvider } from './context/AuthContext'
 import { FavouriteProvider } from './context/FavouriteContext'
 import { GuestProvider } from './context/GuestContext'
@@ -20,7 +21,9 @@ const App = () => (
                     <GuestProvider>
                         <PublicationProvider>
                             <MultiStepProvider>
-                                <AppRoutes />
+                                <BusinessProvider>
+                                    <AppRoutes />
+                                </BusinessProvider>
                             </MultiStepProvider>
                         </PublicationProvider>
                     </GuestProvider>
