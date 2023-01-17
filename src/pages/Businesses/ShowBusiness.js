@@ -18,6 +18,7 @@ const ShowBusiness = ({ close, ...item }) => {
         phone,
         facebook,
         instagram,
+        whatsApp,
         web_site,
         AnnMultimedia,
         name,
@@ -105,16 +106,18 @@ const ShowBusiness = ({ close, ...item }) => {
                         >
                             <MapPin size={18} /> {city}, {province}
                         </Button>
-                        <Typography
-                            variant="subtitle1"
-                            color="info.main"
-                            sx={{
-                                display: 'flex',
-                                alignItems: 'center'
-                            }}
-                        >
-                            <Phone size={18} /><Box mr='10px' />  {phone}
-                        </Typography>
+                        {whatsApp && (
+                            <Typography
+                                variant="subtitle1"
+                                color="info.main"
+                                sx={{
+                                    display: 'flex',
+                                    alignItems: 'center'
+                                }}
+                            >
+                                <Phone size={18} /><Box mr='10px' />  {phone}
+                            </Typography>
+                        )}
                         <Typography
                             variant="subtitle1"
                             color="text.secondary"
