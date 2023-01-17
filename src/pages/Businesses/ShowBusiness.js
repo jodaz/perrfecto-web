@@ -9,6 +9,7 @@ import PhotoGallery from '../../components/Modals/ShowCard/PhotoGallery';
 import Menu from '../../components/Menu';
 import SettingsLayout from '../../layouts/SettingsLayout';
 import DeleteBusiness from '../../components/Modals/DeleteBusiness';
+import ShowBusinessLocation from './ShowBusinessLocation';
 
 const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
@@ -26,6 +27,15 @@ const ShowBusiness = ({ close, ...item }) => {
         city,
         description
     } = item
+    const [showBusinessLocation, setShowBusinessLocation] = React.useState(false)
+
+    const handleOpenShowBusinessLocation = async () => {
+        setShowBusinessLocation(true);
+    }
+
+    const handleCloseShowBusinessLocation = () => {
+        setShowBusinessLocation(false)
+    }
 
     const handleOpenDeleteModal = async () => {
         setOpenDeleteModal(true);
@@ -57,6 +67,15 @@ const ShowBusiness = ({ close, ...item }) => {
             </Box>
         </Menu>
     )
+
+    if (showBusinessLocation) {
+        return (
+            <ShowBusinessLocation
+                close={handleCloseShowBusinessLocation}
+                {...item}
+            />
+        )
+    }
 
     return (
         <SettingsLayout
@@ -103,6 +122,7 @@ const ShowBusiness = ({ close, ...item }) => {
                                 margin: 0,
                                 justifyContent: 'start'
                             }}
+                            onClick={handleOpenShowBusinessLocation}
                         >
                             <MapPin size={18} /> {city}, {province}
                         </Button>
