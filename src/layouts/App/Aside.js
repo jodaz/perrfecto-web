@@ -24,7 +24,6 @@ const Sidebar = ({ children }) => {
                 '& .MuiDrawer-paper': {
                     width: drawerWidth,
                     boxSizing: 'border-box',
-                    border: 'none'
                 },
                 zIndex: 1000
             }}

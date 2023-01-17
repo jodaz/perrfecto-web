@@ -3,6 +3,8 @@ import LinkBehavior from '../../components/LinkBehavior'
 import { Toolbar, IconButton, Tooltip } from "@mui/material"
 import { useLocation } from 'react-router-dom';
 // Icons
+import { ReactComponent as HuellaIcon } from '../../assets/icons/Huella.svg'
+import { ReactComponent as HuellaActiveIcon } from '../../assets/icons/PawHouseActive.svg'
 import { ReactComponent as StoreIcon } from '../../assets/icons/Store.svg'
 import { Newspaper } from 'lucide-react';
 import { MessageCircle } from 'lucide-react';
@@ -11,28 +13,27 @@ import { User } from 'lucide-react';
 import { Dog } from 'lucide-react';
 import PrivateRoute from '../../components/PrivateRoute';
 
-const smallScreenOnly = [
+const generalLinks = [
     {
         label: 'Inicio',
-        icon: <Home color='#ccc' />,
-        active: <Home color='#A167C9' />,
+        icon: <HuellaIcon />,
+        active: <HuellaActiveIcon />,
         route: '/home',
-        smallScreensOnly: true
-    }
-]
-
-const generalLinks = [
+        role: 'user,guest'
+    },
     {
         label: 'Marketplace',
         icon: <StoreIcon />,
         active: <StoreIcon />,
-        route: '/market'
+        route: '/market',
+        role: 'user,guest'
     },
     {
         label: 'Blog',
         icon: <Newspaper color='#ccc' />,
         active: <Newspaper color='#A167C9' />,
-        route: '/blog'
+        route: '/blog',
+        role: 'user,guest'
     }
 ];
 
@@ -41,34 +42,46 @@ const onlyUserLinks = [
         label: 'Chat',
         icon: <MessageCircle color='#ccc' />,
         active: <MessageCircle color='#A167C9' />,
-        route: '/chat'
+        route: '/chat',
+        role: 'user'
     },
     {
         label: 'Perfil',
         icon: <Dog color='#ccc' />,
         active: <Dog color='#A167C9' />,
-        route: '/profile'
+        route: '/profile',
+        role: 'user'
     },
 ]
 
-const onlyBusiness = [
+const onlyBussines = [
     {
-        label: 'Marketplace',
-        icon: <StoreIcon color='#ccc' />,
-        active: <StoreIcon />,
-        route: '/market'
+        label: 'Inicio',
+        icon: <Home color='#ccc' />,
+        active: <Home color='#A167C9' />,
+        route: '/home',
+        role: 'bussines'
     },
     {
         label: 'Blog',
         icon: <Newspaper color='#ccc' />,
         active: <Newspaper color='#A167C9' />,
-        route: '/blog'
+        route: '/blog',
+        role: 'bussines'
+    },
+    {
+        label: 'Marketplace',
+        icon: <StoreIcon color='#ccc' />,
+        active: <StoreIcon />,
+        route: '/market',
+        role: 'bussines'
     },
     {
         label: 'Perfil',
         icon: <User color='#ccc' />,
         active: <User color='#A167C9' />,
-        route: '/profile'
+        route: '/profile',
+        role: 'bussines'
     }
 ]
 
@@ -96,19 +109,14 @@ const Navigation = ({ isSmall }) => {
             backgroundColor: '#fff',
             height: isSmall ? '100%' : 'unset'
         }}>
-            {isSmall && (
-                <PrivateRoute authorize='user,guest,business' unauthorized={null}>
-                    {renderLinks(smallScreenOnly)}
-                </PrivateRoute>
-            )}
             <PrivateRoute authorize='user,guest' unauthorized={null}>
                 {renderLinks(generalLinks)}
             </PrivateRoute>
             <PrivateRoute authorize='user' unauthorized={null}>
                 {renderLinks(onlyUserLinks)}
             </PrivateRoute>
-            <PrivateRoute authorize='business' unauthorized={null}>
-                {renderLinks(onlyBusiness)}
+            <PrivateRoute authorize='bussines' unauthorized={null}>
+                {renderLinks(onlyBussines)}
             </PrivateRoute>
         </Toolbar>
     )

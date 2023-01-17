@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
 import { ChevronLeft } from 'lucide-react';
 
-const ProfileToolbar = ({ title, handleGoBack, rightIconComponent }) => {
+const ProfileToolbar = ({ title }) => {
     const navigate = useNavigate();
 
     return (
@@ -17,18 +17,13 @@ const ProfileToolbar = ({ title, handleGoBack, rightIconComponent }) => {
                 boxShadow: 'inset 0px -1px 0px rgba(0, 0, 0, 0.12)'
             }}>
                 <Box>
-                    <IconButton onClick={handleGoBack ? handleGoBack : () => navigate(-1)}>
+                    <IconButton onClick={() => navigate(-1)}>
                         <ChevronLeft />
                     </IconButton>
                 </Box>
                 <Box sx={{ fontWeight: 500, flex: 1, textAlign: 'center' }}>
                     {title}
                 </Box>
-                {rightIconComponent && (
-                    <Box component={'div'}>
-                        {React.cloneElement(rightIconComponent)}
-                    </Box>
-                )}
             </Toolbar>
             <Divider />
         </Box>

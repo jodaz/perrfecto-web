@@ -112,8 +112,6 @@ const PetOwner = () => {
                         icon={<Newspaper />}
                         title='Crear publicación'
                         color="primary"
-                        component={LinkBehavior}
-                        to='/blog/create'
                     />
                     {!!(!user.birth_date || !user.img_profile || !user.province) && (
                         <CustomButton
