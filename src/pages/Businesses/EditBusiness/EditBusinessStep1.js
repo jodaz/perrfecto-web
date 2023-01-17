@@ -25,19 +25,15 @@ const EditBusinessStep1 = () => {
     const [categories, setCategories] = React.useState([])
     const {
         control,
-        handleSubmit,
-        formState: {
-            isSubmitting
-        }
+        handleSubmit
     } = useForm({
         defaultValues: {
-            business_name: 'Jodaz PetShop',
-            facebook: 'https://facebook.com/jodaz',
-            instagram: 'https://instagram.com/jodaz',
-            web_site: 'https://web_site.com/jodaz',
-            description: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores ',
-            category: categories.find(({ name }) => name === categoryName), // error aqui
-            whatsapp: '+58 04261843880'
+            business_name: user.publication.business_name,
+            facebook: user.publication.facebook,
+            instagram: user.publication.instagram,
+            web_site: user.publication.web_site,
+            description: user.publication.description,
+            whatsapp: user.publication.whatsApp
         }
     });
 
