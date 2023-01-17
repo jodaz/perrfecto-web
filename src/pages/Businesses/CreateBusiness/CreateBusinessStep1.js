@@ -22,12 +22,10 @@ const CreateBusinessStep1 = () => {
     const { dispatch } = useMultiStepForm();
     const {
         control,
-        handleSubmit,
-        formState: {
-            isSubmitting
-        }
+        handleSubmit
     } = useForm({
         defaultValues: {
+            business_name: user.business_name,
             whatsapp: user.tlf
         }
     });
