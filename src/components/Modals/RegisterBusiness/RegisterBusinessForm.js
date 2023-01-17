@@ -48,7 +48,7 @@ const RegisterBusinessForm = ({ isSmall }) => {
                     data: data,
                     token: token
                 })
-                navigate('/home')
+                navigate('/market')
             }
         } catch (error) {
             const err = await error.response.data.text()

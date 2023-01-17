@@ -20,7 +20,7 @@ import SelectInput from '../Forms/SelectInput';
 import provincias from '../../utils/provincias';
 import dirtyCities from '../../utils/ciudades';
 
-const RegisterOwner = ({ open, handleClose, redirect = '/home' }) => {
+const RegisterOwner = ({ open, handleClose, redirect = '/market' }) => {
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const [errorAlert, setErrorAlert] = React.useState(false)
     const { control, handleSubmit, watch, setError, formState: {
