@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import RegisterBusinessForm from './RegisterBusinessForm';
 import { Typography, Link as MuiLink, styled } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import EllipseImage from '../../EllipseImage';
 
 const Link = styled(MuiLink)(({ theme }) => ({
     color: theme.palette.primary.contrastText,
@@ -15,6 +14,20 @@ const Link = styled(MuiLink)(({ theme }) => ({
         textDecoration: 'underline'
     }
 }));
+
+const EllipseComponent = ({
+    n,
+    sx
+}) => (
+    <Box
+        component='img'
+        src={`/images/default/Ellipse${n}.png`}
+        sx={{
+            position: 'absolute',
+            ...sx
+        }}
+    />
+)
 
 const RegisterBusiness = ({ location }) => {
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
@@ -39,16 +52,16 @@ const RegisterBusiness = ({ location }) => {
                         fontWeight: 400,
                         position: 'relative'
                     }}>
-                        <EllipseImage sx={{ bottom: 0, right: 0 }} n={'Ellipse9'} />
-                        <EllipseImage sx={{ right: '50px', top: '550px' }} n={'Ellipse8'} />
-                        <EllipseImage sx={{ right: '50px', top: '550px' }} n={'Ellipse8'} />
-                        <EllipseImage sx={{ right: '50px', top: '350px' }} n={'Ellipse7'} />
-                        <EllipseImage sx={{ right: 0, top: '50px' }} n={'Ellipse6'} />
-                        <EllipseImage sx={{ top: '200px', left: '150px' }} n={'Ellipse5'} />
-                        <EllipseImage sx={{ top: '450px', left: '50px' }} n={'Ellipse4'} />
-                        <EllipseImage sx={{ top: '200px' }} n={'Ellipse1'} />
-                        <EllipseImage sx={{ bottom: '0' }} n={'Ellipse2'} />
-                        <EllipseImage sx={{ top: '0' }} n={'Ellipse3'} />
+                        <EllipseComponent sx={{ bottom: 0, right: 0 }} n={9} />
+                        <EllipseComponent sx={{ right: '50px', top: '550px' }} n={8} />
+                        <EllipseComponent sx={{ right: '50px', top: '550px' }} n={8} />
+                        <EllipseComponent sx={{ right: '50px', top: '350px' }} n={7} />
+                        <EllipseComponent sx={{ right: 0, top: '50px' }} n={6} />
+                        <EllipseComponent sx={{ top: '200px', left: '150px' }} n={5} />
+                        <EllipseComponent sx={{ top: '450px', left: '50px' }} n={4} />
+                        <EllipseComponent sx={{ top: '200px' }} n={1} />
+                        <EllipseComponent sx={{ bottom: '0' }} n={2} />
+                        <EllipseComponent sx={{ top: '0' }} n={3} />
                         <Box sx={{
                             margin: 5,
                             zIndex: 1000,

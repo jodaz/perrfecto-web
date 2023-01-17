@@ -11,7 +11,6 @@ import { AuthProvider } from './context/AuthContext'
 import { FavouriteProvider } from './context/FavouriteContext'
 import { GuestProvider } from './context/GuestContext'
 import { PublicationProvider } from './context/PublicationContext';
-import { MultiStepProvider } from './context/MultiStepContext';
 
 const App = () => (
     <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={esLocale}>

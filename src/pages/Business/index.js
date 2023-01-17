@@ -8,7 +8,7 @@ import { Outlet } from 'react-router-dom'
 import Dog1 from '../../assets/images/Dog1.png'
 import Dog2 from '../../assets/images/Dog2.png'
 
-const BusinessLanding = () => {
+const Business = () => {
     const matches = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
     return (
@@ -58,16 +58,17 @@ const BusinessLanding = () => {
                             left: 0,
                             zIndex: 1
                         }}>
-                            <Box component='div' sx={{
-                                background: `url(${Dog2}) no-repeat center center`,
-                                height: matches ? '200px' : '250px',
-                                width: matches ? '175px' : '225px',
-                                borderRadius: '10px',
-                                position: 'absolute',
-                                top: '25%',
-                                left: matches ? '40%' : '50%',
-                                zIndex: 10
-                            }} />
+
+                        <Box component='div' sx={{
+                            background: `url(${Dog2}) no-repeat center center`,
+                            height: matches ? '200px' : '250px',
+                            width: matches ? '175px' : '225px',
+                            borderRadius: '10px',
+                            position: 'absolute',
+                            top: '25%',
+                            left: matches ? '40%' : '50%',
+                            zIndex: 10
+                        }} />
                         </Box>
                     </Box>
                     <Box sx={{ p: 1 }}>
@@ -82,4 +83,4 @@ const BusinessLanding = () => {
     );
 }
 
-export default BusinessLanding;
+export default Business;
