@@ -76,7 +76,7 @@ const CallToProfile = ({ location }) => {
                                         variant="contained"
                                         fullWidth
                                         component={LinkBehavior}
-                                        to='/home'
+                                        to='/market'
                                         sx={{
                                             backgroundColor: '#ccc',
                                             '&:hover': {

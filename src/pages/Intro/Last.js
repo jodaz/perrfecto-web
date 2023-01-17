@@ -15,7 +15,7 @@ const Last = ({ jumpIntro }) => {
             <Box>
                 Comienza a disfrutar de TinderDogs
             </Box>
-            <Button variant="contained" component={LinkBehavior} to='/home' onClick={jumpIntro}>
+            <Button variant="contained" component={LinkBehavior} to='/market' onClick={jumpIntro}>
                 Comenzar
             </Button>
         </>

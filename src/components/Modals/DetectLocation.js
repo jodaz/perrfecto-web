@@ -19,7 +19,7 @@ export default function DetectLocation({ location }) {
 
     React.useEffect(() => {
         if (coords) {
-            navigate('/home')
+            navigate('/market')
         }
     }, [coords])
 

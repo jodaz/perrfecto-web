@@ -51,7 +51,7 @@ export default function Login({ location }) {
                 if (data.data.role == 'user') {
                     navigate('/detect-location')
                 } else {
-                    navigate('/home')
+                    navigate('/market')
                 }
             }
         } catch (error) {
@@ -87,7 +87,7 @@ export default function Login({ location }) {
 
     const handleGuestButton = () => {
         guestUser(dispatch)
-        navigate('/home')
+        navigate('/market')
     }
 
     return (
