@@ -8,16 +8,25 @@ import { useForm } from 'react-hook-form';
 import { saveStep, useMultiStepForm } from '../../../context/MultiStepContext';
 import { useNavigate } from 'react-router-dom';
 import Stepper from '../Stepper';
+import { useAuth } from '../../../context/AuthContext';
+import getUserPhoto from '../../../utils/getUserPhoto';
+
+const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
 const EditBusinessStep3 = () => {
     const navigate = useNavigate()
     const { dispatch } = useMultiStepForm();
-    const { control, handleSubmit } = useForm();
+    const { control, handleSubmit, setValue } = useForm();
+    const { state: { user } } = useAuth();
 
     const onSubmit = data => {
         saveStep(dispatch, data);
-        navigate('/businesses/create/step-4')
+        navigate('/businesses/edit/step-4')
     }
+
+    React.useEffect(() => {
+        setValue("files", getImages(user.publication.AnnMultimedia.map(item => item.name)))
+    }, [user.publication.AnnMultimedia.length])
 
     return (
         <Box component="form" onSubmit={handleSubmit(onSubmit)}>

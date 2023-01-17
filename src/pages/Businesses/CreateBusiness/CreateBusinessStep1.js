@@ -4,7 +4,8 @@ import Typography from '@mui/material/Typography';
 import TextInput from '../../../components/Forms/TextInput';
 import {
     DESCRIPTION,
-    BUSINESS_NAME
+    BUSINESS_NAME,
+    CATEGORY
 } from '../../../validations';
 import { apiProvider } from '../../../api';
 import Button from '@mui/material/Button';
@@ -80,6 +81,8 @@ const CreateBusinessStep1 = () => {
                         label='Categoría'
                         options={categories}
                         optionLabel='name'
+                        rules={CATEGORY.rules}
+                        validations={CATEGORY.messages}
                     />
                 </Box>
             )}

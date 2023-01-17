@@ -16,6 +16,7 @@ import MapInput from '../../../components/Forms/MapInput';
 import { saveStep, useMultiStepForm } from '../../../context/MultiStepContext';
 import { useNavigate } from 'react-router-dom';
 import Stepper from '../Stepper';
+import { useAuth } from '../../../context/AuthContext';
 
 const selectedProvince = name => provincias.find(({ nombre }) => nombre === name)
 const selectedCity = name => ciudades.find(({ nombre }) => nombre === name)
@@ -23,6 +24,7 @@ const selectedCity = name => ciudades.find(({ nombre }) => nombre === name)
 const EditBusinessStep2 = () => {
     const navigate = useNavigate()
     const { dispatch } = useMultiStepForm();
+    const { state: { user } } = useAuth();
     const {
         control,
         watch,
@@ -30,11 +32,11 @@ const EditBusinessStep2 = () => {
         handleSubmit,
     } = useForm({
         defaultValues: React.useMemo(() => ({
-            lat: 37.32485,
-            business_dir: 'Avenida siempreviva',
-            leng: -5.934162,
-            'province': selectedProvince('Zaragoza'),
-            'city': selectedCity('Abanto')
+            lat: user.publication.lat,
+            business_dir: user.publication.business_dir,
+            leng: user.publication.leng,
+            province: selectedProvince(user.publication.province),
+            city: selectedCity(user.publication.city)
         }))
     });
     const [cities, setCities] = React.useState([])

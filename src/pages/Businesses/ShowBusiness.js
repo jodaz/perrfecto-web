@@ -10,6 +10,7 @@ import Menu from '../../components/Menu';
 import SettingsLayout from '../../layouts/SettingsLayout';
 import DeleteBusiness from '../../components/Modals/DeleteBusiness';
 import ShowBusinessLocation from './ShowBusinessLocation';
+import LinkBehavior from '../../components/LinkBehavior';
 
 const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
@@ -47,10 +48,13 @@ const ShowBusiness = ({ close, ...item }) => {
 
     const renderMenu = () => (
         <Menu>
-            <Box sx={{
+            <Box component={LinkBehavior}
+                sx={{
                 display: 'flex',
-                alignItems: 'center'
-            }}>
+                alignItems: 'center',
+                color: 'unset',
+                textDecoration: 'none',
+            }} to='/businesses/edit'>
                 <Edit />
                 <Box sx={{ paddingLeft: '0.5rem' }}>
                     Editar negocio
