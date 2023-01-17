@@ -58,9 +58,12 @@ import EditBusinessStep2 from './pages/Businesses/EditBusiness/EditBusinessStep2
 import EditBusinessStep3 from './pages/Businesses/EditBusiness/EditBusinessStep3';
 import EditBusinessStep4 from './pages/Businesses/EditBusiness/EditBusinessStep4';
 import BlogCreate from './pages/Blog/BlogCreate';
+import { useAuth } from './context/AuthContext';
+import BusinessProfile from './pages/Profile/BusinessProfile';
 
 function AppRoutes() {
     let location = useLocation();
+    const { state: { user } } = useAuth();
 
     return (
         <Routes>
@@ -241,7 +244,7 @@ function AppRoutes() {
                 element={
                     <AppLayout>
                         <Profile location={location}>
-                            <PetProfile />
+                            {(user.role == 'user') ? <PetProfile /> : <BusinessProfile />}
                         </Profile>
                     </AppLayout>
                 }

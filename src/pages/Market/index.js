@@ -16,7 +16,7 @@ const Marketplace = () => {
     const [loadingCategories, setLoadingCategories] = React.useState(false)
     const [categories, setCategories] = React.useState([])
     const [selectedItem, setSelectedItem] = React.useState(null);
-    const [showBusiness, setShowCategory] = React.useState(false)
+    const [showCategory, setShowCategory] = React.useState(false)
     const { dispatch } = useBusinesses();
 
     const fetchCategories = async () => {
@@ -46,7 +46,7 @@ const Marketplace = () => {
 
     useEffectOnce(() => { fetchCategories() }, [])
 
-    if (showBusiness) {
+    if (showCategory) {
         return (
             <ShowCategory
                 close={handleCloseShowCategory}
