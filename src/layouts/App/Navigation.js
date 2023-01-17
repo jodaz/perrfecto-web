@@ -4,6 +4,7 @@ import { Toolbar, IconButton, Tooltip } from "@mui/material"
 import { useLocation } from 'react-router-dom';
 // Icons
 import { ReactComponent as StoreIcon } from '../../assets/icons/Store.svg'
+import { ReactComponent as StoreActiveIcon } from '../../assets/icons/StoreActive.svg'
 import { Newspaper } from 'lucide-react';
 import { MessageCircle } from 'lucide-react';
 import { Home } from 'lucide-react';
@@ -25,7 +26,7 @@ const generalLinks = [
     {
         label: 'Marketplace',
         icon: <StoreIcon />,
-        active: <StoreIcon />,
+        active: <StoreActiveIcon />,
         route: '/market'
     },
     {
@@ -55,7 +56,7 @@ const onlyBusiness = [
     {
         label: 'Marketplace',
         icon: <StoreIcon color='#ccc' />,
-        active: <StoreIcon />,
+        active: <StoreActiveIcon />,
         route: '/market'
     },
     {
