@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box'
+import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import FeaturedBusinesses from '../Businesses/FeaturedBusinesses';
 import Categories from './Categories';
@@ -8,12 +9,15 @@ import ShowCategory from './ShowCategory';
 import useEffectOnce from '../../utils/useEffectOnce';
 import { apiProvider } from '../../api';
 import MarketFilterDrawer from '../../components/MarketFilterDrawer';
+import { SlidersHorizontal } from 'lucide-react';
+import { toggleFilters, useBusinesses } from '../../context/BusinessContext';
 
 const Marketplace = () => {
     const [loadingCategories, setLoadingCategories] = React.useState(false)
     const [categories, setCategories] = React.useState([])
     const [selectedItem, setSelectedItem] = React.useState(null);
     const [showBusiness, setShowCategory] = React.useState(false)
+    const { dispatch } = useBusinesses();
 
     const fetchCategories = async () => {
         setLoadingCategories(true)
@@ -56,15 +60,21 @@ const Marketplace = () => {
             display: 'flex',
             flexDirection: 'column'
         }} id='market-drawer-container'>
-            <Box p={2}>
+            <Box sx={{
+                p: 2,
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center'
+            }}>
                 <Typography
-                    variant="subtitle"
+                    variant="h5"
                     fontWeight={700}
-                    mb={2}
-                    fontSize='1.5rem'
                 >
                     Market
                 </Typography>
+                <IconButton>
+                    <SlidersHorizontal onClick={() => toggleFilters(dispatch)}/>
+                </IconButton>
             </Box>
             <MarketSearchBox />
             <Box p={2}>
