@@ -74,7 +74,7 @@ export default function DetectLocation({ location }) {
                                     color: '#fff',
                                     backgroundColor: alpha(`#000`, 0.3)
                                 }
-                            }} onClick={() => navigate('/home')}>
+                            }} onClick={() => navigate('/market')}>
                                 No por el momento
                             </Button>
                         </Box>
