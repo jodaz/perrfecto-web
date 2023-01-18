@@ -8,12 +8,12 @@ import { useForm } from 'react-hook-form';
 import { saveStep, useMultiStepForm } from '../../../context/MultiStepContext';
 import { useNavigate } from 'react-router-dom';
 import Stepper from '../Stepper';
-import { useAuth } from '../../../context/AuthContext';
-import getUserPhoto from '../../../utils/getUserPhoto';
-
-const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
+import { useAuth, renewToken } from '../../../context/AuthContext';
+import DeletePhotoWarning from '../../../components/Modals/DeletePhotoWarning';
 
 const EditBusinessStep3 = () => {
+    const [openDeletePhoto, setOpenDeletePhoto] = React.useState(false);
+    const [selectedPhoto, setSelectedPhoto] = React.useState(null)
     const navigate = useNavigate()
     const { dispatch } = useMultiStepForm();
     const { control, handleSubmit, setValue } = useForm();
@@ -24,8 +24,18 @@ const EditBusinessStep3 = () => {
         navigate('/businesses/edit/step-4')
     }
 
+    const handleOpenDeletePhoto = (file) => {
+        setOpenDeletePhoto(true);
+        setSelectedPhoto(file)
+    }
+
+    const handleCloseDeletePhoto = () => {
+        setOpenDeletePhoto(false)
+        setSelectedPhoto(null)
+    }
+
     React.useEffect(() => {
-        setValue("files", getImages(user.publication.AnnMultimedia.map(item => item.name)))
+        setValue("files", user.publication.AnnMultimedia.map(item => item.name))
     }, [user.publication.AnnMultimedia.length])
 
     return (
@@ -45,6 +55,7 @@ const EditBusinessStep3 = () => {
                     name='files'
                     rules={ADD_PHOTOS.rules}
                     validations={ADD_PHOTOS.messages}
+                    deletePhotoHandler={handleOpenDeletePhoto}
                 />
             </Box>
             <Box sx={{ p: 2 }}>
@@ -55,6 +66,15 @@ const EditBusinessStep3 = () => {
                     Siguiente
                 </Button>
             </Box>
+            {(selectedPhoto) && (
+                <DeletePhotoWarning
+                    open={openDeletePhoto}
+                    handleClose={handleCloseDeletePhoto}
+                    file={selectedPhoto}
+                    endpoint={`api/business-ann/file`}
+                    sideAction={() => renewToken(dispatch, user)}
+                />
+            )}
         </Box>
     );
 }

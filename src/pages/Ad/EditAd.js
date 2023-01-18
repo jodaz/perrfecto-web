@@ -124,6 +124,7 @@ const EditAd = () => {
     }
 
     React.useEffect(() => {
+        console.log(JSON.parse(user.publication.multimedia))
         setValue("files", JSON.parse(user.publication.multimedia))
     }, [user.publication.multimedia.length])
 
