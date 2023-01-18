@@ -31,7 +31,8 @@ const ContactBusiness = ({ User, AnnMultimedia, handleClose, open }) => (
                     variant="subtitle1"
                     textAlign='center'
                 >
-                    Haz click en el botón para enviar tu mensaje.
+                    Al hacer click en Whatsapp se abrira el chat para que puedas
+                    contactar con el negocio.
                 </Typography>
             </Box>
             <Box sx={{ p: 2 }}>
@@ -44,6 +45,15 @@ const ContactBusiness = ({ User, AnnMultimedia, handleClose, open }) => (
                         fullWidth
                     >
                         <WhatsApp /> Whatsapp
+                    </Button>
+                </Box>
+                <Box sx={{ p: 1 }}>
+                    <Button
+                        color="info"
+                        onClick={handleClose}
+                        fullWidth
+                    >
+                        Cancelar
                     </Button>
                 </Box>
             </Box>
