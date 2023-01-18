@@ -61,10 +61,12 @@ const Businesses = () => {
                     orientation='vertical'
                     spacing={2}
                 >
-                    <BusinessCard
-                        {...user.publication}
-                        handleSelect={handleOpenShowBusiness}
-                    />
+                    {user.publication && (
+                        <BusinessCard
+                            {...user.publication}
+                            handleSelect={handleOpenShowBusiness}
+                        />
+                    )}
                 </Stack>
             </Box>
         </SettingsLayout>

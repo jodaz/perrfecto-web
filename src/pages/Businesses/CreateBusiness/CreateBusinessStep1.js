@@ -89,7 +89,7 @@ const CreateBusinessStep1 = () => {
             <Box p={2}>
                 <TextInput
                     control={control}
-                    name='whatsapp'
+                    name='whatsApp'
                     label='WhatsApp (negocio)'
                 />
             </Box>

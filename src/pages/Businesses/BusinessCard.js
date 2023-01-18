@@ -25,7 +25,7 @@ const BusinessCard = ({ handleSelect, ...data }) => (
             component="img"
             width="50px"
             height="50px"
-            alt="Beside Myself album cover"
+            alt="business_cover"
             src={getUserPhoto(data.AnnMultimedia[0].name)}
             sx={{
                 maxWidth: '50px',
