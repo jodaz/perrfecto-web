@@ -60,6 +60,7 @@ import EditBusinessStep4 from './pages/Businesses/EditBusiness/EditBusinessStep4
 import BlogCreate from './pages/Blog/BlogCreate';
 import { useAuth } from './context/AuthContext';
 import BusinessProfile from './pages/Profile/BusinessProfile';
+import PublishedBlogsListing from './pages/Blog/PublishedBlogsListing';
 
 function AppRoutes() {
     let location = useLocation();
@@ -92,6 +93,14 @@ function AppRoutes() {
                 element={
                     <AppLayout>
                         <Chat />
+                    </AppLayout>
+                }
+            />
+            <Route
+                path='/blogs/me'
+                element={
+                    <AppLayout>
+                        <PublishedBlogsListing />
                     </AppLayout>
                 }
             />
