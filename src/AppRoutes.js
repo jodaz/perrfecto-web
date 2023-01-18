@@ -96,7 +96,7 @@ function AppRoutes() {
                 }
             />
             <Route
-                path='/blog'
+                path='/blogs'
                 element={
                     <AppLayout>
                         <Blog />
@@ -104,7 +104,7 @@ function AppRoutes() {
                 }
             />
             <Route
-                path='/blog/create'
+                path='/blogs/create'
                 element={
                     <AppLayout>
                         <BlogCreate />

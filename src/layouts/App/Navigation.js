@@ -33,7 +33,7 @@ const generalLinks = [
         label: 'Blog',
         icon: <Newspaper color='#ccc' />,
         active: <Newspaper color='#A167C9' />,
-        route: '/blog'
+        route: '/blogs'
     }
 ];
 
@@ -63,7 +63,7 @@ const onlyBusiness = [
         label: 'Blog',
         icon: <Newspaper color='#ccc' />,
         active: <Newspaper color='#A167C9' />,
-        route: '/blog'
+        route: '/blogs'
     },
     {
         label: 'Perfil',
