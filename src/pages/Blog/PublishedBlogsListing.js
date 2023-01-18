@@ -3,6 +3,7 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import PostCard from './PostCard';
+import PublishedBlog from './PublishedBlog';
 
 const posts = [
     {
@@ -13,7 +14,8 @@ const posts = [
         name: 'Mason',
         lastName: 'Eduard',
         commentsCount: 12,
-        likesCount: 187
+        likesCount: 187,
+        description: 'Pelos por el suelo, el sofá, la alfombra,… en aquellos lugares en los que nuestra'
     },
     {
         title: '¿Cómo prevenir el frio en los perros?',
@@ -23,7 +25,8 @@ const posts = [
         name: 'Mason',
         lastName: 'Eduard',
         commentsCount: 12,
-        likesCount: 187
+        likesCount: 187,
+        description: 'Pelos por el suelo, el sofá, la alfombra,… en aquellos lugares en los que nuestra'
     },
     {
         title: '¿Cómo prevenir el frio en los perros?',
@@ -33,11 +36,33 @@ const posts = [
         name: 'Mason',
         lastName: 'Eduard',
         commentsCount: 12,
-        likesCount: 187
+        likesCount: 187,
+        description: 'Pelos por el suelo, el sofá, la alfombra,… en aquellos lugares en los que nuestra'
     }
 ]
 
 const PublishedBlogsListing = () => {
+    const [selectedItem, setSelectedItem] = React.useState(null);
+    const [showPost, setShowPost] = React.useState(false)
+
+    const handleSelectPost = async (data) => {
+        setSelectedItem(data);
+        setShowPost(true);
+    }
+
+    const handleCloseSelectPost = () => {
+        setShowPost(false)
+    }
+
+    if (showPost) {
+        return (
+            <PublishedBlog
+                closePost={handleCloseSelectPost}
+                {...selectedItem}
+            />
+        )
+    }
+
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', p: 2 }}>
             <Typography
@@ -54,7 +79,12 @@ const PublishedBlogsListing = () => {
                     mt: 2
                 }}
             >
-                {posts.map(post => <PostCard {...post} />)}
+                {posts.map(post =>
+                    <PostCard
+                        {...post}
+                        handleClick={handleSelectPost}
+                    />
+                )}
             </Stack>
         </Box>
     );
