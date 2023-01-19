@@ -13,7 +13,7 @@ import {
 import PublicationWait from '../../components/Modals/PublicationWait';
 import OverlayLoader from '../../components/Modals/OverlayLoader';
 
-const BlogEdit = () => {
+const BlogEdit = ({ goBack, ...restData }) => {
     const [openWarning, setOpenWarning] = React.useState(false)
     const [openOverlayLoader, setOpenOverlayLoader] = React.useState(false)
     const {
@@ -21,10 +21,7 @@ const BlogEdit = () => {
         handleSubmit,
         formState: { isSubmitting },
     } = useForm({
-        defaultValues: {
-            title: 'Descripción alucinante',
-            description: 'holasaaaasadadajkhajkfhajkfjkafjkafjka'
-        }
+        defaultValues: restData
     });
 
     const onSubmit = data => {
@@ -41,7 +38,7 @@ const BlogEdit = () => {
     }
 
     return (
-        <SettingsLayout title="Editar publicación">
+        <SettingsLayout title="Editar publicación" handleGoBack={goBack}>
             <Box sx={{
                 display: 'flex',
                 flexDirection: 'column',

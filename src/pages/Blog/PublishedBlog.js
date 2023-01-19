@@ -6,10 +6,9 @@ import Stack from '@mui/material/Stack';
 import Menu from '../../components/Menu';
 import IconButton from '@mui/material/IconButton';
 import { Trash2, ChevronLeft, Edit, MoreVertical } from 'lucide-react'
-import getUserPhoto from '../../utils/getUserPhoto';
 import { format } from 'date-fns';
-import { es } from 'date-fns/locale'
-import LinkBehavior from '../../components/LinkBehavior';
+import { es } from 'date-fns/locale';
+import BlogEdit from './BlogEdit';
 
 const PublishedBlog = ({ closePost, ...restData }) => {
     const {
@@ -21,6 +20,24 @@ const PublishedBlog = ({ closePost, ...restData }) => {
         img_profile,
         published_at
     } = restData
+    const [editPost, setEditPost] = React.useState(false)
+
+    const handleEditPost = async () => {
+        setEditPost(true);
+    }
+
+    const handleCloseSelectPost = () => {
+        setEditPost(false)
+    }
+
+    if (editPost) {
+        return (
+            <BlogEdit
+                goBack={handleCloseSelectPost}
+                {...restData}
+            />
+        )
+    }
 
     return (
         <Slide direction="left" in={true} mountOnEnter unmountOnExit>
@@ -80,12 +97,12 @@ const PublishedBlog = ({ closePost, ...restData }) => {
                                 }
                             }}
                         >
-                            <Box component={LinkBehavior} sx={{
+                            <Box sx={{
                                 display: 'flex',
                                 textDecoration: 'none',
                                 color: 'unset',
                                 alignItems: 'center'
-                            }} to='/blogs/edit'>
+                            }} onClick={handleEditPost}>
                                 <Edit />
                                 <Box sx={{ paddingLeft: '0.5rem' }}>
                                     Editar blog
