@@ -25,7 +25,8 @@ const ShowBusiness = ({ close, ...item }) => {
         name,
         province,
         city,
-        description
+        description,
+        business_name
     } = item
     const [showBusinessLocation, setShowBusinessLocation] = React.useState(false)
 
@@ -82,7 +83,7 @@ const ShowBusiness = ({ close, ...item }) => {
 
     return (
         <SettingsLayout
-            title='Negocio'
+            title={business_name}
             handleGoBack={close}
             rightIconComponent={renderMenu()}
         >
