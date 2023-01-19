@@ -26,7 +26,7 @@ const BusinessCard = ({ handleSelect, ...data }) => (
             width="50px"
             height="50px"
             alt="business_cover"
-            src={getUserPhoto(data.AnnMultimedia[0].name)}
+            src={data.AnnMultimedia.length && getUserPhoto(data.AnnMultimedia[0].name)}
             sx={{
                 maxWidth: '50px',
                 maxHeight: '50px',

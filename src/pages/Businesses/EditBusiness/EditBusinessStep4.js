@@ -16,6 +16,7 @@ import OverlayLoader from '../../../components/Modals/OverlayLoader';
 import { useNavigate } from 'react-router-dom';
 import { useAuth, renewToken } from '../../../context/AuthContext';
 import PhotoGallery from '../../../components/Modals/ShowCard/PhotoGallery';
+import getUserPhoto from '../../../utils/getUserPhoto';
 
 const EditBusinessStep4 = () => {
     const [openWarning, setOpenWarning] = React.useState(false)
@@ -50,8 +51,6 @@ const EditBusinessStep4 = () => {
                 province: province.nombre,
                 city: city.nombre
             }
-
-            console.log(data)
 
             const formData = await formDataHandler(data, 'files')
 
@@ -97,7 +96,7 @@ const EditBusinessStep4 = () => {
                     }}
                 >
                     <PhotoGallery
-                        images={state.files.map(item => item.preview)}
+                        images={state.files.map(item => typeof(item) == 'string' ? getUserPhoto(item) : item.preview)}
                     />
                     <CardContent
                         sx={{
