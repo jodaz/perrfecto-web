@@ -17,7 +17,7 @@ const EditBusinessStep3 = () => {
     const navigate = useNavigate()
     const { dispatch } = useMultiStepForm();
     const { control, handleSubmit, setValue } = useForm();
-    const { state: { user } } = useAuth();
+    const { state: { user }, dispatch: authDispatch } = useAuth();
 
     const onSubmit = data => {
         saveStep(dispatch, data);
@@ -74,7 +74,7 @@ const EditBusinessStep3 = () => {
                     handleClose={handleCloseDeletePhoto}
                     file={selectedPhoto.id}
                     endpoint={`api/business-ann/file`}
-                    sideAction={() => renewToken(dispatch, user)}
+                    sideAction={() => renewToken(authDispatch, user)}
                 />
             )}
         </Box>
