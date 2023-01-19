@@ -2,8 +2,11 @@ import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import PostCard from './PostCard';
 import PublishedBlog from './PublishedBlog';
+import LinkBehavior from '../../components/LinkBehavior'
+import { ArrowLeft } from 'lucide-react';
 
 const posts = [
     {
@@ -65,13 +68,32 @@ const PublishedBlogsListing = () => {
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', p: 2 }}>
-            <Typography
-                variant="subtitle1"
-                fontWeight={500}
-                fontSize='1.2rem'
-            >
-                Mis blogs
-            </Typography>
+            <Box sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                flex: 1
+            }}>
+                <Typography
+                    variant="subtitle1"
+                    fontWeight={500}
+                    fontSize='1.2rem'
+                >
+                    Mis blogs
+                </Typography>
+                <Button
+                    component={LinkBehavior}
+                    variant="outlined"
+                    to='/blogs'
+                    sx={{
+                        fontSize: '0.9rem',
+                        padding: '0.4rem 0.7rem',
+                        fontWeight: 500
+                    }}
+                >
+                    <ArrowLeft /> Volver
+                </Button>
+            </Box>
             <Stack
                 direction={'column'}
                 spacing={3}
