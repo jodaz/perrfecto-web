@@ -54,7 +54,7 @@ const EditBusinessStep4 = () => {
 
             const formData = await formDataHandler(data, 'files')
 
-            const res = await fileProvider.put(`/api/business-ann/ad-edit/${user.publication.id}`, formData)
+            const res = await fileProvider.put(`/api/business-ann/ann-edit/${user.publication.id}`, formData)
 
             if (res.status >= 200 && res.status < 300) {
                 renewToken(dispatchAuth, user)

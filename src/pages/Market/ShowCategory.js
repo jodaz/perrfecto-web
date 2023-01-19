@@ -47,7 +47,7 @@ const ShowCategory = ({ close, name, id }) => {
 
     const fetchBusinesses = async () => {
         try {
-            const res = await apiProvider.get(`api/business-ann/ads?id_category=${id}`)
+            const res = await apiProvider.get(`/api/business-ann/anns?id_category=${id}`)
 
             if (res.status >= 200 && res.status < 300) {
                 const { data: { data } } = res;
