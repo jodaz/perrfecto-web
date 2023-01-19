@@ -3,9 +3,9 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Slide from '@mui/material/Slide';
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
+import Menu from '../../components/Menu';
 import IconButton from '@mui/material/IconButton';
-import { Phone, MapPin, ChevronLeft, ArrowRight } from 'lucide-react'
+import { Trash2, ChevronLeft, Edit, MoreVertical } from 'lucide-react'
 import getUserPhoto from '../../utils/getUserPhoto';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale'
@@ -29,7 +29,7 @@ const PublishedBlog = ({ closePost, ...restData }) => {
             }}>
                 <Box sx={{
                     flex: 1,
-                    height: 300,
+                    height: 'fit-content',
                     width: '100%',
                     position: 'relative'
                 }}>
@@ -48,7 +48,7 @@ const PublishedBlog = ({ closePost, ...restData }) => {
                     <Box
                         component="img"
                         width="100%"
-                        height="300px"
+                        height="350px"
                         alt='blog_post.png'
                         src={image}
                     />
@@ -59,7 +59,46 @@ const PublishedBlog = ({ closePost, ...restData }) => {
                     flexDirection: 'column',
                     borderTopLeftRadius: '16px',
                     borderTopRightRadius: '16px',
+                    position: 'relative'
                 }}>
+                    <Box sx={{
+                        position: 'absolute',
+                        zIndex: 100,
+                        bgcolor: 'rgba(0, 0, 0, 0.36)',
+                        borderRadius: '100px',
+                        right: 20,
+                        top: 20
+                    }}>
+                        <Menu
+                            icon={<MoreVertical />}
+                            IconButtonProps={{
+                                sx: {
+                                    backgroundColor: '#fff',
+                                    border: 'none',
+                                    color: 'none'
+                                }
+                            }}
+                        >
+                            <Box sx={{
+                                display: 'flex',
+                                alignItems: 'center'
+                            }}>
+                                <Edit />
+                                <Box sx={{ paddingLeft: '0.5rem' }}>
+                                    Editar blog
+                                </Box>
+                            </Box>
+                            <Box sx={{
+                                display: 'flex',
+                                alignItems: 'center'
+                            }}>
+                                <Trash2 />
+                                <Box sx={{ paddingLeft: '0.5rem' }}>
+                                    Eliminar blog
+                                </Box>
+                            </Box>
+                        </Menu>
+                    </Box>
                     <Stack
                         orientation='vertical'
                         spacing={1}
@@ -74,13 +113,27 @@ const PublishedBlog = ({ closePost, ...restData }) => {
                         >
                             {format(published_at, 'MMMM d, y', { locale: es })}
                         </Typography>
-                        <Typography
-                            component="div"
-                            variant="body2"
-                            color="text.primary"
-                        >
-                            {`${name} ${lastName}`}
-                        </Typography>
+                        <Box sx={{ display: 'flex', justifyContent: 'start', flex: 1 }}>
+                            <Box
+                                component="img"
+                                alt='blog_post.png'
+                                src={img_profile}
+                                sx={{
+                                    maxWidth: 22,
+                                    maxHeight: 22,
+                                    borderRadius: 1,
+                                    mr: 1
+                                }}
+                            />
+                            <Typography
+                                component="div"
+                                variant="caption"
+                                color="text.secondary"
+                                fontWeight={500}
+                            >
+                                {`${name} ${lastName}`}
+                            </Typography>
+                        </Box>
                         <Typography
                             variant="h5"
                             color="text.primary"
