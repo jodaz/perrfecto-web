@@ -24,7 +24,9 @@ const EditBusinessStep3 = () => {
         navigate('/businesses/edit/step-4')
     }
 
-    const handleOpenDeletePhoto = (file) => {
+    const handleOpenDeletePhoto = fileName => {
+        const file = user.publication.AnnMultimedia.find(({ name }) => name == fileName)
+
         setOpenDeletePhoto(true);
         setSelectedPhoto(file)
     }
@@ -70,7 +72,7 @@ const EditBusinessStep3 = () => {
                 <DeletePhotoWarning
                     open={openDeletePhoto}
                     handleClose={handleCloseDeletePhoto}
-                    file={selectedPhoto}
+                    file={selectedPhoto.id}
                     endpoint={`api/business-ann/file`}
                     sideAction={() => renewToken(dispatch, user)}
                 />
