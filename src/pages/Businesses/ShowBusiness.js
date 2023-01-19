@@ -17,7 +17,6 @@ const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 const ShowBusiness = ({ close, ...item }) => {
     const [openDeleteModal, setOpenDeleteModal] = React.useState(false)
     const {
-        phone,
         facebook,
         instagram,
         whatsApp,
@@ -139,7 +138,7 @@ const ShowBusiness = ({ close, ...item }) => {
                                     alignItems: 'center'
                                 }}
                             >
-                                <Phone size={18} /><Box mr='10px' />  {phone}
+                                <Phone size={18} /><Box mr='10px' />  {whatsApp}
                             </Typography>
                         )}
                         <Typography
