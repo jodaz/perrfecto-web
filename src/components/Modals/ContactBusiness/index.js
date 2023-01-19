@@ -49,7 +49,7 @@ const ContactBusiness = ({ User, AnnMultimedia, handleClose, open }) => (
                 </Box>
                 <Box sx={{ p: 1 }}>
                     <Button
-                        color="info"
+                        sx={{ color: '#858585' }}
                         onClick={handleClose}
                         fullWidth
                     >
