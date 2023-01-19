@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import LinkBehavior from '../../components/LinkBehavior';
 import {
@@ -16,6 +17,7 @@ import PhotoInput from '../../components/Forms/PhotoInput';
 import { fileProvider, apiProvider } from '../../api'
 import formDataHandler from '../../utils/formDataHandler';
 import MyAdCard from '../Ad/MyAds/MyAdCard';
+import LatestPublishedBlogs from '../Blog/LatestPublishedBlogs';
 
 const RegisterDog = React.lazy(() => import('../../components/RegisterDog'));
 
@@ -132,9 +134,18 @@ const PetProfile = () => {
             </Box>
             <Box sx={{ width: '100%', mb: 1 }}>
                 {!!(user.publication) && (
-                    <MyAdCard {...user} />
+                    <>
+                        <Typography
+                            variant="h6"
+                            padding='2rem 2rem 0 1rem'
+                        >
+                            Mi anuncio
+                        </Typography>
+                        <MyAdCard {...user} />
+                    </>
                 )}
             </Box>
+            <LatestPublishedBlogs />
         </>
     );
 }
