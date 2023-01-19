@@ -9,6 +9,7 @@ import { Trash2, ChevronLeft, Edit, MoreVertical } from 'lucide-react'
 import getUserPhoto from '../../utils/getUserPhoto';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale'
+import LinkBehavior from '../../components/LinkBehavior';
 
 const PublishedBlog = ({ closePost, ...restData }) => {
     const {
@@ -79,10 +80,12 @@ const PublishedBlog = ({ closePost, ...restData }) => {
                                 }
                             }}
                         >
-                            <Box sx={{
+                            <Box component={LinkBehavior} sx={{
                                 display: 'flex',
+                                textDecoration: 'none',
+                                color: 'unset',
                                 alignItems: 'center'
-                            }}>
+                            }} to='/blogs/edit'>
                                 <Edit />
                                 <Box sx={{ paddingLeft: '0.5rem' }}>
                                     Editar blog

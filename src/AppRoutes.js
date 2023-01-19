@@ -3,6 +3,7 @@ import {
     Routes,
     useLocation
 } from 'react-router-dom'
+import { useAuth } from './context/AuthContext';
 // Layouts
 import AppLayout from './layouts/App';
 import LandingLayout from './layouts/LandingLayout';
@@ -58,7 +59,6 @@ import EditBusinessStep2 from './pages/Businesses/EditBusiness/EditBusinessStep2
 import EditBusinessStep3 from './pages/Businesses/EditBusiness/EditBusinessStep3';
 import EditBusinessStep4 from './pages/Businesses/EditBusiness/EditBusinessStep4';
 import BlogCreate from './pages/Blog/BlogCreate';
-import { useAuth } from './context/AuthContext';
 import BusinessProfile from './pages/Profile/BusinessProfile';
 import PublishedBlogsListing from './pages/Blog/PublishedBlogsListing';
 
@@ -120,6 +120,7 @@ function AppRoutes() {
                     </AppLayout>
                 }
             />
+
             {/**
              * Publication routes
              */}
