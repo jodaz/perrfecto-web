@@ -3,6 +3,7 @@ import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
 import CardMedia from '@mui/material/CardMedia';
+import { ReactComponent as RocketIcon } from '../../assets/icons/Rocket.svg'
 import { ChevronRight } from 'lucide-react';
 import getUserPhoto from '../../utils/getUserPhoto'
 
@@ -21,18 +22,20 @@ const BusinessCard = ({ handleSelect, ...data }) => (
         }}
         onClick={() => handleSelect(data)}
     >
-        <CardMedia
-            component="img"
-            width="50px"
-            height="50px"
-            alt="business_cover"
-            src={data.AnnMultimedia.length && getUserPhoto(data.AnnMultimedia[0].name)}
-            sx={{
-                maxWidth: '50px',
-                maxHeight: '50px',
-                borderRadius: '12px',
-            }}
-        />
+        {(data.AnnMultimedia.length) ? (
+            <CardMedia
+                component="img"
+                width="50px"
+                height="50px"
+                alt="business_cover"
+                src={getUserPhoto(data.AnnMultimedia[0].name)}
+                sx={{
+                    maxWidth: '50px',
+                    maxHeight: '50px',
+                    borderRadius: '12px',
+                }}
+            />
+        ) : <Box height='50px'><RocketIcon /></Box>}
         <Box sx={{
             display: 'flex',
             flexDirection: 'column',
