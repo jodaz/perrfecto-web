@@ -138,7 +138,7 @@ const EditBusinessStep4 = () => {
                                     alignItems: 'center'
                                 }}
                             >
-                                <Phone size={18} /><Box mr='10px' />  + {state.whatsapp}
+                                <Phone size={18} /><Box mr='10px' />  + {state.whatsApp}
                             </Typography>
                             <Typography
                                 variant="subtitle1"

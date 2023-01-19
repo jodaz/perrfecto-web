@@ -16,20 +16,20 @@ import MapInput from '../../../components/Forms/MapInput';
 import { saveStep, useMultiStepForm } from '../../../context/MultiStepContext';
 import { useNavigate } from 'react-router-dom';
 import Stepper from '../Stepper';
+import { useAuth } from '../../../context/AuthContext';
 
 const CreateBusinessStep2 = () => {
+    const { state: { user } } = useAuth();
     const navigate = useNavigate()
     const { dispatch } = useMultiStepForm();
     const {
         control,
         watch,
         setValue,
-        handleSubmit,
-        formState: {
-            isSubmitting
-        }
+        handleSubmit
     } = useForm({
         defaultValues: {
+            business_dir: user.business_dir,
             lat: 37.32485,
             leng: -5.934162
         }

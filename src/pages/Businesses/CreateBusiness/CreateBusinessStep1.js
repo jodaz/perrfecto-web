@@ -27,7 +27,7 @@ const CreateBusinessStep1 = () => {
     } = useForm({
         defaultValues: {
             business_name: user.business_name,
-            whatsapp: user.tlf
+            whatsApp: user.tlf
         }
     });
     const [categories, setCategories] = React.useState([])
