@@ -106,7 +106,7 @@ const PetProfile = () => {
                             title='Crear publicación'
                             color="primary"
                             component={LinkBehavior}
-                            to='/blog/create'
+                            to='/blogs/create'
                         />
                         {(!user.publication) && (
                             <CustomButton

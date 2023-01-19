@@ -113,7 +113,7 @@ const PetOwner = () => {
                         title='Crear publicación'
                         color="primary"
                         component={LinkBehavior}
-                        to='/blog/create'
+                        to='/blogs/create'
                     />
                     {!!(!user.birth_date || !user.img_profile || !user.province) && (
                         <CustomButton
