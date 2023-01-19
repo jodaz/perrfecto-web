@@ -115,6 +115,7 @@ const RegisterBusinessForm = ({ isSmall }) => {
                         rules={PHONE.rules}
                         validations={PHONE.messages}
                         placeholder='Ingresar teléfono'
+                        disabled={isSubmitting}
                     />
                 </Box>
                 <Box sx={{ p: 1 }}>
