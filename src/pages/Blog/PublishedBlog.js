@@ -9,6 +9,7 @@ import { Trash2, ChevronLeft, Edit, MoreVertical } from 'lucide-react'
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import BlogEdit from './BlogEdit';
+import DeletePublication from '../../components/Modals/DeletePublication';
 
 const PublishedBlog = ({ closePost, ...restData }) => {
     const {
@@ -20,20 +21,21 @@ const PublishedBlog = ({ closePost, ...restData }) => {
         img_profile,
         published_at
     } = restData
+    const [deletePost, setDeletePost] = React.useState(false)
     const [editPost, setEditPost] = React.useState(false)
 
-    const handleEditPost = async () => {
-        setEditPost(true);
+    const handleDeletePost = async () => {
+        setDeletePost(!deletePost);
     }
 
-    const handleCloseSelectPost = () => {
-        setEditPost(false)
+    const handleEditPost = async () => {
+        setEditPost(!editPost);
     }
 
     if (editPost) {
         return (
             <BlogEdit
-                goBack={handleCloseSelectPost}
+                goBack={handleEditPost}
                 {...restData}
             />
         )
@@ -111,7 +113,7 @@ const PublishedBlog = ({ closePost, ...restData }) => {
                             <Box sx={{
                                 display: 'flex',
                                 alignItems: 'center'
-                            }}>
+                            }} onClick={handleDeletePost}>
                                 <Trash2 />
                                 <Box sx={{ paddingLeft: '0.5rem' }}>
                                     Eliminar blog
@@ -168,6 +170,11 @@ const PublishedBlog = ({ closePost, ...restData }) => {
                             {description}
                         </Typography>
                     </Stack>
+                    <DeletePublication
+                        open={deletePost}
+                        handleClose={handleDeletePost}
+                        item={restData}
+                    />
                 </Box>
             </Box>
         </Slide>
