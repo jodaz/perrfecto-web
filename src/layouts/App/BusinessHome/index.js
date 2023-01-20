@@ -75,7 +75,7 @@ const BusinessHome = () => (
                 <IconButtonWithTitle
                     title="Blog"
                     icon={<BlogIcon />}
-                    to='/blog'
+                    to='/blogs/create'
                 />
             </Stack>
         </Box>

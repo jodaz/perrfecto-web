@@ -5,7 +5,7 @@ import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Link from '@mui/material/Link';
 import CardContent from '@mui/material/CardContent';
-import { Phone, MapPin, Trash2, Edit, ArrowRight } from 'lucide-react'
+import { Phone, MapPin, ArrowRight } from 'lucide-react'
 import Typography from '@mui/material/Typography';
 import { fileProvider } from '../../../api';
 import formDataHandler from '../../../utils/formDataHandler'
@@ -43,7 +43,7 @@ const CreateBusinessStep4 = () => {
         }
 
         const formData = await formDataHandler(data, 'files')
-        console.log(formData)
+
         try {
             const res = await fileProvider.post('/api/business-ann/new', formData)
 

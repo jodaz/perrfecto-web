@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { useForm } from "react-hook-form";
 import GalleryInput from '../../components/GalleryInput'
+import { fileProvider } from '../../api';
 import TextInput from "../../components/Forms/TextInput";
 import {
     DESCRIPTION,
@@ -12,19 +13,30 @@ import {
 } from '../../validations'
 import PublicationWait from '../../components/Modals/PublicationWait';
 import OverlayLoader from '../../components/Modals/OverlayLoader';
+import formDataHandler from '../../utils/formDataHandler';
+import { useNavigate } from 'react-router-dom';
 
 const BlogCreate = () => {
     const [openWarning, setOpenWarning] = React.useState(false)
     const [openOverlayLoader, setOpenOverlayLoader] = React.useState(false)
     const { control, handleSubmit, formState: { isSubmitting } } = useForm();
 
-    const onSubmit = data => {
+    const onSubmit = async data => {
         setOpenOverlayLoader(true)
 
-        setTimeout(() => {
-            setOpenWarning(true)
+        const formData = await formDataHandler(data, 'files')
+
+        try {
+            const res = await fileProvider.post('/api/blog/new', formData)
+
+            if (res.status >= 200 && res.status < 300) {
+                setOpenWarning(true)
+                setOpenOverlayLoader(false)
+            }
+        } catch (error) {
             setOpenOverlayLoader(false)
-        }, 3000)
+            console.log(error)
+        }
     }
 
     const handleCloseWarning = () => {
@@ -47,6 +59,7 @@ const BlogCreate = () => {
                         disabled={isSubmitting}
                         rules={ADD_PHOTOS.rules}
                         validations={ADD_PHOTOS.messages}
+                        maxFiles={1}
                     />
                 </Box>
                 <Box p={2}>
