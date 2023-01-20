@@ -7,12 +7,13 @@ import Stack from '@mui/material/Stack';
 import { ThumbsUp, MessageSquare } from 'lucide-react';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale'
+import getUserPhoto from '../../utils/getUserPhoto';
 
 const PostCard = ({ handleClick, ...data }) => {
     const {
         title,
-        image,
-        published_at,
+        BlogMultimedia,
+        createdAt,
         commentsCount,
         likesCount
     } = data;
@@ -36,8 +37,8 @@ const PostCard = ({ handleClick, ...data }) => {
                 component="img"
                 width="130"
                 height="140"
-                alt="Beside Myself album cover"
-                src={image}
+                alt="post_cover"
+                src={getUserPhoto(BlogMultimedia[0].name)}
                 sx={{
                     borderRadius: 2,
                 }}
@@ -67,7 +68,7 @@ const PostCard = ({ handleClick, ...data }) => {
                         fontWeight={500}
                         sx={{ textAlign: { xm: 'center', sm: 'start' }, textTransform: 'capitalize' }}
                     >
-                        {format(published_at, 'MMMM d, y', { locale: es })}
+                        {format(new Date(createdAt), 'MMMM d, y', { locale: es })}
                     </Typography>
                 </Box>
                 <Stack

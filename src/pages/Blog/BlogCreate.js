@@ -14,7 +14,6 @@ import {
 import PublicationWait from '../../components/Modals/PublicationWait';
 import OverlayLoader from '../../components/Modals/OverlayLoader';
 import formDataHandler from '../../utils/formDataHandler';
-import { useNavigate } from 'react-router-dom';
 
 const BlogCreate = () => {
     const [openWarning, setOpenWarning] = React.useState(false)

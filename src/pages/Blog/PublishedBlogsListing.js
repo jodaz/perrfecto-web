@@ -8,6 +8,8 @@ import PublishedBlog from './PublishedBlog';
 import LinkBehavior from '../../components/LinkBehavior'
 import { ArrowLeft } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { apiProvider } from '../../api';
+import useEffectOnce from '../../utils/useEffectOnce';
 
 const posts = [
     {
@@ -46,6 +48,7 @@ const posts = [
 ]
 
 const PublishedBlogsListing = () => {
+    const [blogs, setBlogs] = React.useState([])
     const { state: { isAuth } } = useAuth();
     const [selectedItem, setSelectedItem] = React.useState(null);
     const [showPost, setShowPost] = React.useState(false)
@@ -58,6 +61,22 @@ const PublishedBlogsListing = () => {
     const handleCloseSelectPost = () => {
         setShowPost(false)
     }
+
+    const fetchBlogs = async () => {
+        try {
+            const res = await apiProvider.get('api/blog/blog-by-uid')
+
+            if (res.status >= 200 && res.status < 300) {
+                const { data: { data: { data } } } = res;
+
+                setBlogs(data)
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    useEffectOnce(() => { fetchBlogs() }, []);
 
     if (showPost) {
         return (
@@ -105,9 +124,9 @@ const PublishedBlogsListing = () => {
                     mt: 2
                 }}
             >
-                {posts.map(post =>
+                {blogs.map(blog =>
                     <PostCard
-                        {...post}
+                        {...blog}
                         handleClick={handleSelectPost}
                     />
                 )}
