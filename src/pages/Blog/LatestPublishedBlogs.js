@@ -6,7 +6,6 @@ import Button from '@mui/material/Button';
 import PostCard from './PostCard';
 import PublishedBlog from './PublishedBlog';
 import LinkBehavior from '../../components/LinkBehavior'
-import { ArrowLeft } from 'lucide-react';
 
 const posts = [
     {

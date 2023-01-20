@@ -7,6 +7,7 @@ import PostCard from './PostCard';
 import PublishedBlog from './PublishedBlog';
 import LinkBehavior from '../../components/LinkBehavior'
 import { ArrowLeft } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
 
 const posts = [
     {
@@ -45,6 +46,7 @@ const posts = [
 ]
 
 const PublishedBlogsListing = () => {
+    const { state: { isAuth } } = useAuth();
     const [selectedItem, setSelectedItem] = React.useState(null);
     const [showPost, setShowPost] = React.useState(false)
 
@@ -81,18 +83,20 @@ const PublishedBlogsListing = () => {
                 >
                     Mis blogs
                 </Typography>
-                <Button
-                    component={LinkBehavior}
-                    variant="outlined"
-                    to='/blogs'
-                    sx={{
-                        fontSize: '0.9rem',
-                        padding: '0.4rem 0.7rem',
-                        fontWeight: 500
-                    }}
-                >
-                    <ArrowLeft /> Volver
-                </Button>
+                {(isAuth) && (
+                    <Button
+                        component={LinkBehavior}
+                        variant="outlined"
+                        to='/blogs'
+                        sx={{
+                            fontSize: '0.9rem',
+                            padding: '0.4rem 0.7rem',
+                            fontWeight: 500
+                        }}
+                    >
+                        <ArrowLeft /> Volver
+                    </Button>
+                )}
             </Box>
             <Stack
                 direction={'column'}

@@ -20,7 +20,7 @@ import { useAuth } from '../../../context/AuthContext';
 const CreateBusinessStep1 = () => {
     const navigate = useNavigate();
     const { state: { user } } = useAuth();
-    const { dispatch } = useMultiStepForm();
+    const { state, dispatch } = useMultiStepForm();
     const {
         control,
         handleSubmit

@@ -43,7 +43,7 @@ const CreateBusinessStep4 = () => {
         }
 
         const formData = await formDataHandler(data, 'files')
-
+        console.log(formData)
         try {
             const res = await fileProvider.post('/api/business-ann/new', formData)
 

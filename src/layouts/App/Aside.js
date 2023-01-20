@@ -37,7 +37,7 @@ const Sidebar = ({ children }) => {
                 justifyContent: 'space-between'
             }}>
                 {(user.role == 'user') && <Camera color="#fff" />}
-                <Logo />
+                <Logo dark />
                 <NotificationButton />
             </Toolbar>
             <Divider />
