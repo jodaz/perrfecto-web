@@ -8,6 +8,7 @@ const PasswordInput = ({
     initiallyVisible = false,
     visibilityIcon,
     visibilityOffIcon,
+    disabled,
     ...rest
 }) => {
     const [visible, setVisible] = useState(initiallyVisible);
@@ -21,7 +22,7 @@ const PasswordInput = ({
             type={visible ? 'text' : 'password'}
             InputProps={{
                 endAdornment: (
-                    <InputAdornment position="end">
+                    <InputAdornment position="end" disablePointerEvents={disabled}>
                         <IconButton
                             aria-label={
                                 visible
@@ -35,6 +36,7 @@ const PasswordInput = ({
                     </InputAdornment>
                 ),
             }}
+            disabled={disabled}
             {...rest}
         />
     );
