@@ -2,60 +2,55 @@ import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
+import LoadingIndicator from '../../components/LoadingIndicator'
 import PostCard from './PostCard';
+import { apiProvider } from '../../api';
+import useEffectOnce from '../../utils/useEffectOnce';
 
-const posts = [
-    {
-        title: '¿Cómo prevenir el frio en los perros?',
-        image: '/images/samples/sad-pupi.png',
-        published_at: new Date(),
-        img_profile: '/images/samples/sad-pupi.png',
-        name: 'Mason',
-        lastName: 'Eduard',
-        commentsCount: 12,
-        likesCount: 187
-    },
-    {
-        title: '¿Cómo prevenir el frio en los perros?',
-        image: '/images/samples/sad-pupi.png',
-        published_at: new Date(),
-        img_profile: '/images/samples/sad-pupi.png',
-        name: 'Mason',
-        lastName: 'Eduard',
-        commentsCount: 12,
-        likesCount: 187
-    },
-    {
-        title: '¿Cómo prevenir el frio en los perros?',
-        image: '/images/samples/sad-pupi.png',
-        published_at: new Date(),
-        img_profile: '/images/samples/sad-pupi.png',
-        name: 'Mason',
-        lastName: 'Eduard',
-        commentsCount: 12,
-        likesCount: 187
+const FeaturedPosts = () => {
+    const [loading, setLoading] = React.useState(true)
+    const [blogs, setBlogs] = React.useState([])
+
+    const fetchBlogs = async () => {
+        setLoading(true)
+        try {
+            const res = await apiProvider.get('api/blog/blogs')
+
+            if (res.status >= 200 && res.status < 300) {
+                const { data: { data: { data } } } = res;
+
+                setBlogs(data)
+                setLoading(false)
+            }
+        } catch (e) {
+            console.log(e);
+            setLoading(false)
+        }
     }
-]
 
-export default function FeaturedPosts({ openPost }) {
+    useEffectOnce(() => { fetchBlogs() }, []);
+
+    if (loading) return <LoadingIndicator />
+
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-            <Typography
-                variant="subtitle1"
-                fontWeight={500}
-                fontSize='1.2rem'
-            >
-                Destacados
-            </Typography>
-            <Stack
-                direction={'column'}
-                spacing={3}
-                sx={{
-                    mt: 2
-                }}
-            >
-                {posts.map(post => <PostCard {...post} handleClick={openPost} />)}
-            </Stack>
+            {(blogs.length) ? (
+                <Stack
+                    direction={'column'}
+                    spacing={3}
+                    sx={{
+                        mt: 2
+                    }}
+                >
+                    {blogs.map(post => <PostCard {...post} />)}
+                </Stack>
+            ) : (
+                <Typography variant="subtitle1">
+                    Aún no tenemos blogs destacados
+                </Typography>
+            )}
         </Box>
     );
 }
+
+export default FeaturedPosts
