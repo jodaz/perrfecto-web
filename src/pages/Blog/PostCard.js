@@ -8,6 +8,7 @@ import { ThumbsUp, MessageSquare } from 'lucide-react';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale'
 import getUserPhoto from '../../utils/getUserPhoto';
+import LinkBehavior from '../../components/LinkBehavior';
 
 const PostCard = ({ handleClick, ...data }) => {
     const {
@@ -24,6 +25,8 @@ const PostCard = ({ handleClick, ...data }) => {
             sx={{
                 display: 'flex',
                 border: 'none',
+                textDecoration: 'none',
+                color: 'unset',
                 flexDirection: { xs: 'column', sm: 'row' },
                 transition: '0.3s',
                 cursor: 'pointer',
@@ -31,16 +34,21 @@ const PostCard = ({ handleClick, ...data }) => {
                     opacity: 0.75
                 }
             }}
-            onClick={() => handleClick(data)}
+            component={LinkBehavior}
+            to={`/blogs/${data.id}`}
         >
             <CardMedia
                 component="img"
-                width="130"
-                height="140"
+                width="130px"
+                height="140px"
                 alt="post_cover"
                 src={getUserPhoto(BlogMultimedia[0].name)}
                 sx={{
                     borderRadius: 2,
+                    minWidth: '130px',
+                    minHeight: '130px',
+                    maxWidth: '130px',
+                    maxHeight: '130px'
                 }}
             />
             <Box sx={{
