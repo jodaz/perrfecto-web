@@ -40,7 +40,7 @@ const PostCard = ({
             width="130px"
             height="140px"
             alt="post_cover"
-            src={getUserPhoto(BlogMultimedia[0].name)}
+            src={BlogMultimedia.length ? getUserPhoto(BlogMultimedia[0].name) : null}
             sx={{
                 borderRadius: 2,
                 minWidth: '130px',

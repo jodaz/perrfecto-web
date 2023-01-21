@@ -17,9 +17,12 @@ import OverlayLoader from '../../components/Modals/OverlayLoader';
 import { useAuth } from '../../context/AuthContext';
 import useEffectOnce from '../../utils/useEffectOnce';
 import LoadingIndicator from '../../components/LoadingIndicator';
+import DeletePhotoWarning from '../../components/Modals/DeletePhotoWarning';
 
 const BlogEditLayout = ({
     BlogMultimedia,
+    currAuthUser,
+    sideAction,
     ...restData
 }) => {
     const {
@@ -30,7 +33,8 @@ const BlogEditLayout = ({
     } = useForm({
         defaultValues: restData
     });
-    const [deletePost, setDeletePost] = React.useState(false)
+    const [openDeletePhoto, setOpenDeletePhoto] = React.useState(false);
+    const [selectedPhoto, setSelectedPhoto] = React.useState(null)
     const [openWarning, setOpenWarning] = React.useState(false)
     const [openOverlayLoader, setOpenOverlayLoader] = React.useState(false)
 
@@ -47,8 +51,16 @@ const BlogEditLayout = ({
         setOpenWarning(false);
     }
 
-    const handleDeletePost = async () => {
-        setDeletePost(!deletePost);
+    const handleOpenDeletePhoto = fileName => {
+        const file = BlogMultimedia.find(({ name }) => name == fileName)
+
+        setOpenDeletePhoto(true);
+        setSelectedPhoto(file)
+    }
+
+    const handleCloseDeletePhoto = () => {
+        setOpenDeletePhoto(false)
+        setSelectedPhoto(null)
     }
 
     React.useEffect(() => {
@@ -68,6 +80,7 @@ const BlogEditLayout = ({
                         name='files'
                         disabled={isSubmitting}
                         rules={ADD_PHOTOS.rules}
+                        deletePhotoHandler={handleOpenDeletePhoto}
                         validations={ADD_PHOTOS.messages}
                     />
                 </Box>
@@ -109,6 +122,15 @@ const BlogEditLayout = ({
                 <OverlayLoader
                     open={openOverlayLoader}
                 />
+                {(selectedPhoto) && (
+                    <DeletePhotoWarning
+                        open={openDeletePhoto}
+                        handleClose={handleCloseDeletePhoto}
+                        file={selectedPhoto.id}
+                        endpoint={`/api/blog/file`}
+                        sideAction={sideAction}
+                    />
+                )}
             </Box>
         </SettingsLayout>
     )
@@ -147,7 +169,13 @@ const BlogEdit = () => {
 
     if (loading) return <LoadingIndicator />
 
-    return <BlogEditLayout {...blog} />;
+    return (
+        <BlogEditLayout
+            {...blog}
+            currAuthUser={user}
+            sideAction={fetchBlog}
+        />
+    );
 }
 
 export default BlogEdit;
