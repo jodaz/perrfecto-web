@@ -56,7 +56,7 @@ const PublishedBlogLayout = ({
                     width="100%"
                     height="350px"
                     alt='blog_post.png'
-                    src={getUserPhoto(BlogMultimedia[0].name)}
+                    src={BlogMultimedia.length ? getUserPhoto(BlogMultimedia[0].name) : null}
                 />
             </Box>
             <Box sx={{

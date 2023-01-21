@@ -16,18 +16,18 @@ const DeletePublication = ({ open, handleClose, item }) => {
     const redirect = useNavigate()
 
     const deletePost = async () => {
-        // try {
-        //     const res = await apiProvider.delete(`api/publication/${item.id}`)
+        try {
+            const res = await apiProvider.delete(`api/blog/${item.id}`)
 
-        //     if (res.status >= 200 && res.status < 300) {
-        //         renewToken(dispatch, user);
+            if (res.status >= 200 && res.status < 300) {
+                renewToken(dispatch, user);
                 redirect(-1)
-        //     }
+            }
 
-        //     return res;
-        // } catch (e) {
-        //     console.log(e);
-        // }
+            return res;
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     const handleDelete = async () => {
