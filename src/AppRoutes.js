@@ -61,6 +61,7 @@ import EditBusinessStep4 from './pages/Businesses/EditBusiness/EditBusinessStep4
 import BlogCreate from './pages/Blog/BlogCreate';
 import BusinessProfile from './pages/Profile/BusinessProfile';
 import PublishedBlogsListing from './pages/Blog/PublishedBlogsListing';
+import PublishedBlog from './pages/Blog/PublishedBlog';
 
 function AppRoutes() {
     let location = useLocation();
@@ -97,18 +98,26 @@ function AppRoutes() {
                 }
             />
             <Route
-                path='/blogs/me'
-                element={
-                    <AppLayout>
-                        <PublishedBlogsListing />
-                    </AppLayout>
-                }
-            />
-            <Route
                 path='/blogs'
                 element={
                     <AppLayout>
                         <Blog />
+                    </AppLayout>
+                }
+            />
+            <Route
+                path='/blogs/:id'
+                element={
+                    <AppLayout>
+                        <PublishedBlog />
+                    </AppLayout>
+                }
+            />
+            <Route
+                path='/blogs/me'
+                element={
+                    <AppLayout>
+                        <PublishedBlogsListing />
                     </AppLayout>
                 }
             />
