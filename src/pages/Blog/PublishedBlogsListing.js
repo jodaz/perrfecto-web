@@ -4,65 +4,41 @@ import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import PostCard from './PostCard';
-import PublishedBlog from './PublishedBlog';
 import LinkBehavior from '../../components/LinkBehavior'
 import { ArrowLeft } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { apiProvider } from '../../api';
 import useEffectOnce from '../../utils/useEffectOnce';
+import LoadingIndicator from '../../components/LoadingIndicator';
 
-const posts = [
-    {
-        title: '¿Cómo prevenir el frio en los perros?',
-        image: '/images/samples/sad-pupi.png',
-        published_at: new Date(),
-        img_profile: '/images/samples/sad-pupi.png',
-        name: 'Mason',
-        lastName: 'Eduard',
-        commentsCount: 12,
-        likesCount: 187,
-        description: 'Pelos por el suelo, el sofá, la alfombra,… en aquellos lugares en los que nuestra'
-    },
-    {
-        title: '¿Cómo prevenir el frio en los perros?',
-        image: '/images/samples/sad-pupi.png',
-        published_at: new Date(),
-        img_profile: '/images/samples/sad-pupi.png',
-        name: 'Mason',
-        lastName: 'Eduard',
-        commentsCount: 12,
-        likesCount: 187,
-        description: 'Pelos por el suelo, el sofá, la alfombra,… en aquellos lugares en los que nuestra'
-    },
-    {
-        title: '¿Cómo prevenir el frio en los perros?',
-        image: '/images/samples/sad-pupi.png',
-        published_at: new Date(),
-        img_profile: '/images/samples/sad-pupi.png',
-        name: 'Mason',
-        lastName: 'Eduard',
-        commentsCount: 12,
-        likesCount: 187,
-        description: 'Pelos por el suelo, el sofá, la alfombra,… en aquellos lugares en los que nuestra'
-    }
-]
+const MyBlogs = ({ blogs }) => (
+    <Box sx={{ display: 'flex', flexDirection: 'column', p: 2 }}>
+        {(blogs.length) ? (
+            <Stack
+                direction={'column'}
+                spacing={3}
+                sx={{
+                    mt: 2
+                }}
+            >
+                {blogs.map(blog => <PostCard {...blog} /> )}
+            </Stack>
+        ) : (
+            <Typography variant="subtitle1">
+                Aún no has publicado ningún blog
+            </Typography>
+        )}
+    </Box>
+);
 
 const PublishedBlogsListing = () => {
+    const [loading, setLoading] = React.useState(true)
     const [blogs, setBlogs] = React.useState([])
     const { state: { isAuth } } = useAuth();
-    const [selectedItem, setSelectedItem] = React.useState(null);
-    const [showPost, setShowPost] = React.useState(false)
-
-    const handleSelectPost = async (data) => {
-        setSelectedItem(data);
-        setShowPost(true);
-    }
-
-    const handleCloseSelectPost = () => {
-        setShowPost(false)
-    }
 
     const fetchBlogs = async () => {
+        setLoading(true)
+
         try {
             const res = await apiProvider.get('api/blog/blog-by-uid')
 
@@ -70,22 +46,15 @@ const PublishedBlogsListing = () => {
                 const { data: { data: { data } } } = res;
 
                 setBlogs(data)
+                setLoading(false)
             }
         } catch (e) {
             console.log(e);
+            setLoading(false)
         }
     }
 
     useEffectOnce(() => { fetchBlogs() }, []);
-
-    if (showPost) {
-        return (
-            <PublishedBlog
-                closePost={handleCloseSelectPost}
-                {...selectedItem}
-            />
-        )
-    }
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', p: 2 }}>
@@ -117,20 +86,10 @@ const PublishedBlogsListing = () => {
                     </Button>
                 )}
             </Box>
-            <Stack
-                direction={'column'}
-                spacing={3}
-                sx={{
-                    mt: 2
-                }}
-            >
-                {blogs.map(blog =>
-                    <PostCard
-                        {...blog}
-                        handleClick={handleSelectPost}
-                    />
-                )}
-            </Stack>
+            {(loading)
+                ? <LoadingIndicator />
+                : <MyBlogs blogs={blogs} />
+            }
         </Box>
     );
 }
