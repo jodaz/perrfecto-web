@@ -25,6 +25,7 @@ const PublishedBlogLayout = ({
     likesCount,
     currAuthUser,
     handleDeletePost,
+    User,
     navigate
 }) => (
     <Slide direction="left" in={true} mountOnEnter unmountOnExit>
@@ -66,46 +67,48 @@ const PublishedBlogLayout = ({
                 borderTopRightRadius: '16px',
                 position: 'relative'
             }}>
-                <Box sx={{
-                    position: 'absolute',
-                    zIndex: 100,
-                    bgcolor: 'rgba(0, 0, 0, 0.36)',
-                    borderRadius: '100px',
-                    right: 20,
-                    top: 20
-                }}>
-                    {/* <Menu
-                        icon={<MoreVertical />}
-                        IconButtonProps={{
-                            sx: {
-                                backgroundColor: '#fff',
-                                border: 'none',
-                                color: 'none'
-                            }
-                        }}
-                    >
-                        <Box sx={{
-                            display: 'flex',
-                            textDecoration: 'none',
-                            color: 'unset',
-                            alignItems: 'center'
-                        }} onClick={handleEditPost}>
-                            <Edit />
-                            <Box sx={{ paddingLeft: '0.5rem' }}>
-                                Editar blog
+                {(User.email == currAuthUser.email) && (
+                    <Box sx={{
+                        position: 'absolute',
+                        zIndex: 100,
+                        bgcolor: 'rgba(0, 0, 0, 0.36)',
+                        borderRadius: '100px',
+                        right: 20,
+                        top: 20
+                    }}>
+                        <Menu
+                            icon={<MoreVertical />}
+                            IconButtonProps={{
+                                sx: {
+                                    backgroundColor: '#fff',
+                                    border: 'none',
+                                    color: 'none'
+                                }
+                            }}
+                        >
+                            <Box sx={{
+                                display: 'flex',
+                                textDecoration: 'none',
+                                color: 'unset',
+                                alignItems: 'center'
+                            }}>
+                                <Edit />
+                                <Box sx={{ paddingLeft: '0.5rem' }}>
+                                    Editar blog
+                                </Box>
                             </Box>
-                        </Box>
-                        <Box sx={{
-                            display: 'flex',
-                            alignItems: 'center'
-                        }} onClick={handleDeletePost}>
-                            <Trash2 />
-                            <Box sx={{ paddingLeft: '0.5rem' }}>
-                                Eliminar blog
+                            <Box sx={{
+                                display: 'flex',
+                                alignItems: 'center'
+                            }} onClick={handleDeletePost}>
+                                <Trash2 />
+                                <Box sx={{ paddingLeft: '0.5rem' }}>
+                                    Eliminar blog
+                                </Box>
                             </Box>
-                        </Box>
-                    </Menu> */}
-                </Box>
+                        </Menu>
+                    </Box>
+                )}
                 <Stack
                     orientation='vertical'
                     spacing={1}
@@ -121,10 +124,10 @@ const PublishedBlogLayout = ({
                         {format(new Date(createdAt), 'MMMM d, y', { locale: es })}
                     </Typography>
                     <Box sx={{ display: 'flex', justifyContent: 'start', flex: 1 }}>
-                        {/* <Box
+                        <Box
                             component="img"
                             alt='blog_post.png'
-                            src={img_profile}
+                            src={getUserPhoto(User.img_profile)}
                             sx={{
                                 maxWidth: 22,
                                 maxHeight: 22,
@@ -138,8 +141,8 @@ const PublishedBlogLayout = ({
                             color="text.secondary"
                             fontWeight={500}
                         >
-                            {`${name} ${lastName}`}
-                        </Typography> */}
+                            {`${User.name} ${User?.lastName}`}
+                        </Typography>
                     </Box>
                     <Typography
                         variant="h5"
