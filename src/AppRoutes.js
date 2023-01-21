@@ -62,6 +62,7 @@ import BlogCreate from './pages/Blog/BlogCreate';
 import BusinessProfile from './pages/Profile/BusinessProfile';
 import PublishedBlogsListing from './pages/Blog/PublishedBlogsListing';
 import PublishedBlog from './pages/Blog/PublishedBlog';
+import BlogEdit from './pages/Blog/BlogEdit';
 
 function AppRoutes() {
     let location = useLocation();
@@ -110,6 +111,14 @@ function AppRoutes() {
                 element={
                     <AppLayout>
                         <PublishedBlog />
+                    </AppLayout>
+                }
+            />
+            <Route
+                path='/blogs/:id/edit'
+                element={
+                    <AppLayout>
+                        <BlogEdit />
                     </AppLayout>
                 }
             />

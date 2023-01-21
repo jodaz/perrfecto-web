@@ -91,7 +91,7 @@ const PublishedBlogLayout = ({
                                 textDecoration: 'none',
                                 color: 'unset',
                                 alignItems: 'center'
-                            }}>
+                            }} onClick={() => navigate(`edit`)}>
                                 <Edit />
                                 <Box sx={{ paddingLeft: '0.5rem' }}>
                                     Editar blog
