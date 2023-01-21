@@ -12,7 +12,7 @@ import useEffectOnce from '../../utils/useEffectOnce';
 import LoadingIndicator from '../../components/LoadingIndicator';
 
 const MyBlogs = ({ blogs }) => (
-    <Box sx={{ display: 'flex', flexDirection: 'column', p: 2 }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', mt: '10px' }}>
         {(blogs.length) ? (
             <Stack
                 direction={'column'}
