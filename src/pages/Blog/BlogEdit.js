@@ -18,8 +18,10 @@ import { useAuth } from '../../context/AuthContext';
 import useEffectOnce from '../../utils/useEffectOnce';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import DeletePhotoWarning from '../../components/Modals/DeletePhotoWarning';
+import formDataHandler from '../../utils/formDataHandler';
 
 const BlogEditLayout = ({
+    id,
     BlogMultimedia,
     currAuthUser,
     sideAction,
@@ -38,13 +40,37 @@ const BlogEditLayout = ({
     const [openWarning, setOpenWarning] = React.useState(false)
     const [openOverlayLoader, setOpenOverlayLoader] = React.useState(false)
 
-    const onSubmit = data => {
+    const onSubmit = async (values) => {
+        let filteredFiles = []
         setOpenOverlayLoader(true)
 
-        setTimeout(() => {
-            setOpenWarning(true)
+        try {
+            const {
+                files,
+                ...restValues
+            } = values
+
+            if (files.length) {
+                filteredFiles = files.filter(file => typeof(file) != 'string')
+            }
+
+            const data = {
+                ...restValues,
+                files: filteredFiles,
+            }
+
+            const formData = await formDataHandler(data, 'files')
+
+            const res = await fileProvider.put(`/api/blog/update-blog/${id}`, formData)
+
+            if (res.status >= 200 && res.status < 300) {
+                setOpenWarning(true)
+                setOpenOverlayLoader(false)
+            }
+        } catch (error) {
             setOpenOverlayLoader(false)
-        }, 3000)
+            console.log(error)
+        }
     }
 
     const handleCloseWarning = () => {
