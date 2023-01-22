@@ -15,8 +15,8 @@ const PostCard = ({
     title,
     BlogMultimedia,
     createdAt,
-    commentsCount,
-    likesCount
+    CommentsCount = 0,
+    LikesCount = 0
 }) => (
     <Card
         variant="outlined"
@@ -88,13 +88,13 @@ const PostCard = ({
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     <ThumbsUp color="#5E5E5E" />
                     <Typography variant="body2" ml={1} color="#5E5E5E">
-                        {likesCount}
+                        {LikesCount}
                     </Typography>
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     <MessageSquare color="#5E5E5E" />
                     <Typography variant="body2" ml={1} color="#5E5E5E">
-                        {commentsCount}
+                        {CommentsCount}
                     </Typography>
                 </Box>
             </Stack>
