@@ -16,6 +16,7 @@ import LoadingIndicator from '../../components/LoadingIndicator';
 import { useNavigate, useParams } from 'react-router-dom';
 import getUserPhoto from '../../utils/getUserPhoto';
 import { ThumbsUp, MessageSquare } from 'lucide-react';
+import CommentsDrawer from './CommentsDrawer';
 
 const PublishedBlogLayout = ({
     title,
@@ -27,13 +28,14 @@ const PublishedBlogLayout = ({
     User,
     CommentsCount = 0,
     LikesCount = 0,
-    navigate
+    navigate,
+    toggleComments
 }) => (
     <Slide direction="left" in={true} mountOnEnter unmountOnExit>
         <Box sx={{
             height: '100%',
             width: '100%'
-        }}>
+        }} id='comments-drawer-container'>
             <Box sx={{
                 flex: 1,
                 height: 'fit-content',
@@ -174,7 +176,7 @@ const PublishedBlogLayout = ({
                             {LikesCount}
                         </Typography>
                     </Box>
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }} onClick={toggleComments}>
                         <MessageSquare color="#5E5E5E" />
                         <Typography variant="body2" ml={1} color="#5E5E5E">
                             {CommentsCount}
@@ -193,6 +195,7 @@ const PublishedBlog = () => {
     const [blog, setBlog] = React.useState([])
     const [deletePost, setDeletePost] = React.useState(false)
     const { state: { user } } = useAuth()
+    const [openComments, setOpenComments] = React.useState(false)
 
     const fetchBlog = async () => {
         setLoading(true)
@@ -212,6 +215,10 @@ const PublishedBlog = () => {
         }
     }
 
+    const toggleComments = () => {
+        setOpenComments(!openComments)
+    }
+
     const handleDeletePost = async () => {
         setDeletePost(!deletePost);
     }
@@ -220,6 +227,8 @@ const PublishedBlog = () => {
 
     if (loading) return <LoadingIndicator />
 
+    console.log(openComments)
+
     return (
         <>
             <PublishedBlogLayout
@@ -227,11 +236,16 @@ const PublishedBlog = () => {
                 handleDeletePost={handleDeletePost}
                 currAuthUser={user}
                 navigate={navigate}
+                toggleComments={toggleComments}
             />
             <DeletePublication
                 open={deletePost}
                 handleClose={handleDeletePost}
                 item={blog}
+            />
+            <CommentsDrawer
+                openComments={openComments}
+                handleClose={toggleComments}
             />
         </>
     )

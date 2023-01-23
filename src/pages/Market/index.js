@@ -12,7 +12,7 @@ import { apiProvider } from '../../api';
 import MarketFilterDrawer from '../../components/MarketFilterDrawer';
 import { SlidersHorizontal } from 'lucide-react';
 import BusinessCard from '../Businesses/BusinessCard';
-import { toggleFilters, useBusinesses } from '../../context/BusinessContext';
+import { toggleFilters, useBusinesses, selectItem } from '../../context/BusinessContext';
 import ShowMarket from './ShowMarket';
 
 const Marketplace = () => {
@@ -83,7 +83,12 @@ const Marketplace = () => {
                     orientation='vertical'
                     spacing={2}
                 >
-                    {publications.map(item => <BusinessCard {...item} />)}
+                    {publications.map(item => (
+                        <BusinessCard
+                            {...item}
+                            handleSelect={() => selectItem(dispatch, { item: item, type: 'business' })}
+                        />
+                    ))}
                 </Stack>
             )}
             <MarketFilterDrawer />
