@@ -13,13 +13,12 @@ import MarketFilterDrawer from '../../components/MarketFilterDrawer';
 import { SlidersHorizontal } from 'lucide-react';
 import BusinessCard from '../Businesses/BusinessCard';
 import { toggleFilters, useBusinesses } from '../../context/BusinessContext';
+import ShowMarket from './ShowMarket';
 
 const Marketplace = () => {
     const [loadingCategories, setLoadingCategories] = React.useState(false)
     const [categories, setCategories] = React.useState([])
-    const [selectedItem, setSelectedItem] = React.useState(null);
-    const [showCategory, setShowCategory] = React.useState(false)
-    const { state: { isLoaded, publications }, dispatch } = useBusinesses();
+    const { state: { isLoaded, publications, selectedItem }, dispatch } = useBusinesses();
 
     const fetchCategories = async () => {
         setLoadingCategories(true)
@@ -37,24 +36,10 @@ const Marketplace = () => {
         }
     }
 
-    const handleOpenShowCategory = async (data) => {
-        setSelectedItem(data);
-        setShowCategory(true);
-    }
-
-    const handleCloseShowCategory = () => {
-        setShowCategory(false)
-    }
-
     useEffectOnce(() => { fetchCategories() }, [])
 
-    if (showCategory) {
-        return (
-            <ShowCategory
-                close={handleCloseShowCategory}
-                {...selectedItem}
-            />
-        )
+    if (selectedItem) {
+        return (selectedItem.type == 'category') ? <ShowCategory /> : <ShowMarket />;
     }
 
     return (
@@ -88,7 +73,6 @@ const Marketplace = () => {
                     <Box p={2}>
                         <Categories
                             data={categories}
-                            handleSelect={handleOpenShowCategory}
                             loading={loadingCategories}
                         />
                     </Box>

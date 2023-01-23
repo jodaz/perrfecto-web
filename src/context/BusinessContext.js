@@ -4,6 +4,7 @@ import { apiProvider } from '../api'
 const BusinessContext = React.createContext()
 
 const initialState = {
+    selectedItem: null,
     publications: [],
     isLoaded: false,
     isLoading: false,
@@ -32,6 +33,18 @@ function publicationReducer(state, action) {
                     ...state,
                     isLoading: true,
                     isLoaded: false,
+                }
+            }
+            case 'SELECT_ITEM': {
+                return {
+                    ...state,
+                    selectedItem: action.payload
+                }
+            }
+            case 'RESET_ITEM': {
+                return {
+                    ...state,
+                    selectedItem: null
                 }
             }
             case 'RESET': {
@@ -97,6 +110,27 @@ async function toggleFilters(dispatch) {
     }
 }
 
+async function selectItem(dispatch, data) {
+    try {
+        dispatch({
+            type: 'SELECT_ITEM',
+            payload: data
+        })
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+async function resetItem(dispatch) {
+    try {
+        dispatch({
+            type: 'RESET_ITEM'
+        })
+    } catch (e) {
+        console.log(e)
+    }
+}
+
 async function resetFilters(dispatch) {
     try {
         dispatch({
@@ -113,5 +147,7 @@ export {
     BusinessContext,
     toggleFilters,
     fetchBusinesses,
-    resetFilters
+    resetFilters,
+    selectItem,
+    resetItem
 }

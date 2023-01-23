@@ -4,50 +4,17 @@ import Stack from '@mui/material/Stack';
 import BusinessCard from '../Businesses/BusinessCard';
 import SettingsLayout from '../../layouts/SettingsLayout';
 import MarketSearchBox from './MarketSearchBox';
-import ShowMarket from './ShowMarket';
 import useEffectOnce from '../../utils/useEffectOnce';
 import { apiProvider } from '../../api';
+import { useBusinesses, resetItem, selectItem } from '../../context/BusinessContext';
 
-const showBusiness = {
-    name: 'Petshop',
-    province: 'España',
-    city: 'Sevilla',
-    description: 'Hola, somos un Petshop. En nuestro negocio se encuentran diferentes productos para tu mascota. Apostamos siempre por la calidad del servicio que brindamos. Para más información click en el botón',
-    images: JSON.stringify([
-        '/images/samples/sad-pupi.png',
-        '/images/samples/sad-pupi.png',
-        '/images/samples/sad-pupi.png',
-        '/images/samples/sad-pupi.png'
-    ]),
-    phone: '+58 0426 1843880',
-    facebook: 'https://facebook.com',
-    instagram: 'https://instagram.com',
-    website: 'https://facebook.com'
-}
-
-const businesses = [
-    showBusiness,
-    showBusiness,
-    showBusiness
-]
-
-const ShowCategory = ({ close, name, id }) => {
+const ShowCategory = () => {
+    const { state: { selectedItem }, dispatch } = useBusinesses();
     const [data, setData] = React.useState([])
-    const [selectedItem, setSelectedItem] = React.useState(null);
-    const [showBusiness, setShowBusiness] = React.useState(false)
-
-    const handleOpenShowBusiness = async (data) => {
-        setSelectedItem(data);
-        setShowBusiness(true);
-    }
-
-    const handleCloseShowBusiness = () => {
-        setShowBusiness(false)
-    }
 
     const fetchBusinesses = async () => {
         try {
-            const res = await apiProvider.get(`/api/business-ann/anns?id_category=${id}`)
+            const res = await apiProvider.get(`/api/business-ann/anns?id_category=${selectedItem.item.id}`)
 
             if (res.status >= 200 && res.status < 300) {
                 const { data: { data } } = res;
@@ -61,19 +28,10 @@ const ShowCategory = ({ close, name, id }) => {
 
     useEffectOnce(() => { fetchBusinesses() }, [])
 
-    if (showBusiness) {
-        return (
-            <ShowMarket
-                close={handleCloseShowBusiness}
-                {...selectedItem}
-            />
-        )
-    }
-
     return (
         <SettingsLayout
-            title={name}
-            handleGoBack={close}
+            title={selectedItem.item.name}
+            handleGoBack={() => resetItem(dispatch)}
         >
             <Box sx={{
                 display: 'flex',
@@ -89,7 +47,12 @@ const ShowCategory = ({ close, name, id }) => {
                         orientation='vertical'
                         spacing={2}
                     >
-                        {data.map(item => <BusinessCard {...item} handleSelect={handleOpenShowBusiness} />)}
+                        {data.map(item => (
+                            <BusinessCard
+                                {...item}
+                                handleSelect={() => selectItem(dispatch, { item: item, type: 'business' })}
+                            />
+                        ))}
                     </Stack>
                 ) : (
                     <Box p={2}>

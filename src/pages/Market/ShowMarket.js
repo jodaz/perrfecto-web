@@ -11,27 +11,16 @@ import getUserPhoto from '../../utils/getUserPhoto';
 import PhotoGallery from '../../components/Modals/ShowCard/PhotoGallery';
 import ShowBusinessLocation from '../Businesses/ShowBusinessLocation';
 import ContactBusiness from '../../components/Modals/ContactBusiness';
+import { useBusinesses, resetItem } from '../../context/BusinessContext';
 
 const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
-const ShowMarket = ({ close, ...restData }) => {
-    const {
-        facebook,
-        instagram,
-        web_site,
-        AnnMultimedia,
-        business_name,
-        province,
-        city,
-        description,
-        User
-    } = restData
+const ShowMarket = () => {
+    const { state: { selectedItem: { item } }, dispatch } = useBusinesses();
     const [openContactDialog, setOpenContactDialog] = React.useState(false)
-    const [selectedItem, setSelectedItem] = React.useState(null);
     const [showBusinessLocation, setShowBusinessLocation] = React.useState(false)
 
-    const handleOpenShowBusinessLocation = async (data) => {
-        setSelectedItem(data);
+    const handleOpenShowBusinessLocation = async () => {
         setShowBusinessLocation(true);
     }
 
@@ -43,10 +32,22 @@ const ShowMarket = ({ close, ...restData }) => {
         return (
             <ShowBusinessLocation
                 close={handleCloseShowBusinessLocation}
-                {...selectedItem}
+                {...item}
             />
         )
     }
+
+    const {
+        facebook,
+        instagram,
+        web_site,
+        AnnMultimedia,
+        business_name,
+        province,
+        city,
+        description,
+        User
+    } = item
 
     return (
         <Slide direction="left" in={true} mountOnEnter unmountOnExit>
@@ -68,7 +69,7 @@ const ShowMarket = ({ close, ...restData }) => {
                         left: 20,
                         top: 20
                     }}>
-                        <IconButton onClick={close}>
+                        <IconButton onClick={() => resetItem(dispatch)}>
                             <ChevronLeft color="#fff" />
                         </IconButton>
                     </Box>
@@ -100,7 +101,7 @@ const ShowMarket = ({ close, ...restData }) => {
                                 margin: 0,
                                 justifyContent: 'start'
                             }}
-                            onClick={() => handleOpenShowBusinessLocation(restData)}
+                            onClick={() => handleOpenShowBusinessLocation(item)}
                         >
                             <MapPin size={18} /> {city}, {province}
                         </Button>
@@ -165,7 +166,7 @@ const ShowMarket = ({ close, ...restData }) => {
                     </Stack>
                     {openContactDialog && (
                         <ContactBusiness
-                            {...restData}
+                            {...item}
                             open={openContactDialog}
                             handleClose={() => setOpenContactDialog(false)}
                         />
