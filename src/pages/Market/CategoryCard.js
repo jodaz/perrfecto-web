@@ -34,6 +34,7 @@ const CategoryCard = ({
             alt="category_pic"
             src={getUserPhoto(img)}
             sx={{
+                background: theme => `${theme.palette.text.tertiary} !important`,
                 borderRadius: '12px',
             }}
         />
