@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box'
+import Stack from '@mui/material/Stack'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import FeaturedBusinesses from '../Businesses/FeaturedBusinesses';
@@ -10,6 +11,7 @@ import useEffectOnce from '../../utils/useEffectOnce';
 import { apiProvider } from '../../api';
 import MarketFilterDrawer from '../../components/MarketFilterDrawer';
 import { SlidersHorizontal } from 'lucide-react';
+import BusinessCard from '../Businesses/BusinessCard';
 import { toggleFilters, useBusinesses } from '../../context/BusinessContext';
 
 const Marketplace = () => {
@@ -17,7 +19,7 @@ const Marketplace = () => {
     const [categories, setCategories] = React.useState([])
     const [selectedItem, setSelectedItem] = React.useState(null);
     const [showCategory, setShowCategory] = React.useState(false)
-    const { dispatch } = useBusinesses();
+    const { state: { isLoaded, publications }, dispatch } = useBusinesses();
 
     const fetchCategories = async () => {
         setLoadingCategories(true)
@@ -77,16 +79,29 @@ const Marketplace = () => {
                 </IconButton>
             </Box>
             <MarketSearchBox />
-            <Box p={2}>
-                <FeaturedBusinesses />
-            </Box>
-            <Box p={2}>
-                <Categories
-                    data={categories}
-                    handleSelect={handleOpenShowCategory}
-                    loading={loadingCategories}
-                />
-            </Box>
+            {(!isLoaded) ?
+            (
+                <>
+                    <Box p={2}>
+                        <FeaturedBusinesses />
+                    </Box>
+                    <Box p={2}>
+                        <Categories
+                            data={categories}
+                            handleSelect={handleOpenShowCategory}
+                            loading={loadingCategories}
+                        />
+                    </Box>
+                </>
+            ) : (
+                <Stack
+                    p={2}
+                    orientation='vertical'
+                    spacing={2}
+                >
+                    {publications.map(item => <BusinessCard {...item} />)}
+                </Stack>
+            )}
             <MarketFilterDrawer />
         </Box>
     )

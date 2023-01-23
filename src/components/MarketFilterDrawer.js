@@ -11,7 +11,8 @@ import SelectInput from './Forms/SelectInput';
 import {
     fetchBusinesses,
     useBusinesses,
-    toggleFilters
+    toggleFilters,
+    resetFilters
 } from '../context/BusinessContext';
 import TextInput from './Forms/TextInput';
 import { alpha } from '@mui/material';
@@ -45,8 +46,7 @@ const MarketFilterDrawer = () => {
 
     const resetFilter = () => {
         reset();
-        toggleFilters(dispatch)
-        fetchBusinesses(dispatch)
+        resetFilters(dispatch)
     }
 
     const onSubmit = async values => {

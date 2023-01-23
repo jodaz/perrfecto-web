@@ -12,7 +12,8 @@ const RecentPostCard = ({
     id,
     title,
     BlogMultimedia,
-    createdAt
+    createdAt,
+    User
 }) => (
     <Card
         variant="outlined"
@@ -61,10 +62,10 @@ const RecentPostCard = ({
                 </Typography>
                 <Box sx={{ display: 'flex', mt: 1}}>
                     <Box sx={{ display: 'flex', justifyContent: 'start', flex: 1 }}>
-                        {/* <Box
+                        <Box
                             component="img"
                             alt='blog_post.png'
-                            src={img_profile}
+                            src={User.img_profile}
                             sx={{
                                 maxWidth: 22,
                                 maxHeight: 22,
@@ -78,8 +79,8 @@ const RecentPostCard = ({
                             color="text.secondary"
                             fontWeight={500}
                         >
-                            {`${name} ${lastName}`}
-                        </Typography> */}
+                            {`${User.name} ${User.lastName}`}
+                        </Typography>
                     </Box>
                     <Typography
                         component="div"

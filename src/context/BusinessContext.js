@@ -5,7 +5,7 @@ const BusinessContext = React.createContext()
 
 const initialState = {
     publications: [],
-    isLoaded: true,
+    isLoaded: false,
     isLoading: false,
     openFilter: false
 }
@@ -33,6 +33,9 @@ function publicationReducer(state, action) {
                     isLoading: true,
                     isLoaded: false,
                 }
+            }
+            case 'RESET': {
+                return initialState
             }
             default: {
                 throw new Error(`Unhandled action type: ${action.type}`)
@@ -67,7 +70,7 @@ async function fetchBusinesses(dispatch, query) {
             type: 'LOADING'
         })
 
-        const res = await apiProvider.get('api/publication/publications', {
+        const res = await apiProvider.get('api/business-ann/anns-by-filter', {
             params: query
         })
 
@@ -94,10 +97,21 @@ async function toggleFilters(dispatch) {
     }
 }
 
+async function resetFilters(dispatch) {
+    try {
+        dispatch({
+            type: 'RESET'
+        })
+    } catch (e) {
+        console.log(e)
+    }
+}
+
 export {
     useBusinesses,
     BusinessProvider,
     BusinessContext,
     toggleFilters,
-    fetchBusinesses
+    fetchBusinesses,
+    resetFilters
 }
