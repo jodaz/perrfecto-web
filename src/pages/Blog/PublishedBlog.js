@@ -15,17 +15,18 @@ import { apiProvider } from '../../api';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import { useNavigate, useParams } from 'react-router-dom';
 import getUserPhoto from '../../utils/getUserPhoto';
+import { ThumbsUp, MessageSquare } from 'lucide-react';
 
 const PublishedBlogLayout = ({
     title,
     BlogMultimedia,
     createdAt,
-    commentsCount,
     description,
-    likesCount,
     currAuthUser,
     handleDeletePost,
     User,
+    CommentsCount = 0,
+    LikesCount = 0,
     navigate
 }) => (
     <Slide direction="left" in={true} mountOnEnter unmountOnExit>
@@ -157,6 +158,28 @@ const PublishedBlogLayout = ({
                     >
                         {description}
                     </Typography>
+                </Stack>
+                <Stack
+                    direction="row"
+                    spacing={1}
+                    p={2}
+                    sx={{
+                        justifyContent: { xs: 'space-between', sm: 'flex-start' },
+                        alignItems: 'center'
+                    }}
+                >
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <ThumbsUp color="#5E5E5E" />
+                        <Typography variant="body2" ml={1} color="#5E5E5E">
+                            {LikesCount}
+                        </Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <MessageSquare color="#5E5E5E" />
+                        <Typography variant="body2" ml={1} color="#5E5E5E">
+                            {CommentsCount}
+                        </Typography>
+                    </Box>
                 </Stack>
             </Box>
         </Box>
