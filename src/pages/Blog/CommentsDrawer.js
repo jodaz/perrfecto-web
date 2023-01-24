@@ -64,7 +64,11 @@ const CommentsDrawer = ({ openComments, handleClose, item }) => {
                         </Box>
                     )}
                 </Box>
-                <Box sx={{ p: 3 }}>
+                <Box
+                    p={3}
+                    component="form"
+                    onSubmit={handleSubmit(onSubmit)}
+                >
                     <TextInput
                         name='msg'
                         control={control}
