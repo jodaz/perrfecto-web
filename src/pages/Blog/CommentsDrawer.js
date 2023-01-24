@@ -1,60 +1,35 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
-import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import DialogTitle from '../../components/DialogTitle';
 import TextInput from '../../components/Forms/TextInput';
 import { useForm } from "react-hook-form";
-import { alpha } from '@mui/material';
-import { useGeolocated } from 'react-geolocated';
+import { apiProvider } from '../../api';
 
-const CommentsDrawer = ({ openComments, handleClose }) => {
-    const { control, handleSubmit, watch, reset, formState: {
+const CommentsDrawer = ({ openComments, handleClose, item }) => {
+    const { control, handleSubmit, setValue, formState: {
         isSubmitting
     }} = useForm({
         reValidateMode: "onBlur"
     });
-    const { coords, isGeolocationAvailable, getPosition, isGeolocationEnabled } =
-        useGeolocated({
-            positionOptions: {
-                enableHighAccuracy: false,
-            }
-        }
-    );
 
     const toggleDrawer = () => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
-        }
 
-        handleClose();
+            handleClose();
+        }
     };
 
-    const resetFilter = () => {}
-
     const onSubmit = async values => {
-        const parsedData = {};
-
         try {
-            let {
-                province,
-                city,
-                distance
-            } = values;
+            if (!values.msg) return;
 
-            if (province) {
-                parsedData.province = province.nombre;
-            }
-            if (city) {
-                parsedData.city = city.nombre;
-            }
-            if (distance) {
-                const { latitude, longitude } = coords
+            const res = await apiProvider.post(`/api/blog/add-commentary/${item.id}`, values)
 
-                parsedData.lat = latitude
-                parsedData.lon = longitude
-                parsedData.km = distance;
+            if (res.status >= 200 || res.status < 300) {
+                setValue('msg', '');
             }
         } catch (error) {
             console.log(error)
@@ -62,16 +37,18 @@ const CommentsDrawer = ({ openComments, handleClose }) => {
     };
 
     const list = (anchor) => (
-        <Box onKeyDown={toggleDrawer(anchor, false)} component="form" onSubmit={handleSubmit(onSubmit)}>
-            <DialogTitle onClose={toggleDrawer(anchor, false)}>
+        // <Box onKeyDown={() => handleClose()} component="form" onSubmit={handleSubmit(onSubmit)}>
+        <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+            <DialogTitle onClose={() => handleClose()}>
                 Comentarios
             </DialogTitle>
             <Divider />
             <Box sx={{ p: 3 }}>
                 <TextInput
-                    name='comment'
+                    name='msg'
                     control={control}
                     placeholder="Escribe un comentario"
+                    disabled={isSubmitting}
                 />
             </Box>
         </Box>

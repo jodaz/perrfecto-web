@@ -251,6 +251,7 @@ const PublishedBlog = () => {
             <CommentsDrawer
                 openComments={openComments}
                 handleClose={toggleComments}
+                item={blog}
             />
         </>
     )
