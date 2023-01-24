@@ -11,14 +11,22 @@ const LikePostButton = ({ id, type }) => {
 
     const handleSubmitLike = async (event) => {
         try {
-            if (type == 'post') {
-                await apiProvider.post('/api/blog/like', {
-                    blog_id: id
-                })
-            } else {
-                await apiProvider.post('/api/blog/like-commentary', {
-                    commentary_id: id
-                })
+            switch (type) {
+                case 'post': {
+                    return await apiProvider.post('/api/blog/like', {
+                        blog_id: id
+                    })
+                }
+                case 'comment': {
+                    return await apiProvider.post('/api/blog/like-commentary', {
+                        commentary_id: id
+                    })
+                }
+                case 'reply': {
+                    return await apiProvider.post('/api/blog/like-reply-blog', {
+                        reply_id: id
+                    })
+                }
             }
         } catch (error) {
             console.log(error)

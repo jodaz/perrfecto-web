@@ -14,7 +14,6 @@ const ReplyCard = ({
     User,
     msg,
     createdAt,
-    ReplyBlogs = [],
     LikesCount = 0
 }) => (
     <Box sx={{
@@ -75,7 +74,7 @@ const ReplyCard = ({
                 }}
             >
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <LikePostButton id={id} type='comment' />
+                    <LikePostButton id={id} type='reply' />
                     <Typography variant="body2" ml={1} color="#5E5E5E">
                         {LikesCount}
                     </Typography>
