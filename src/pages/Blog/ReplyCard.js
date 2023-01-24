@@ -1,16 +1,15 @@
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
+import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
-import { MessageSquare } from 'lucide-react';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale'
 import getUserPhoto from '../../utils/getUserPhoto';
 import LikePostButton from '../../components/Buttons/LikePostButton';
-import ReplyCard from './ReplyCard';
 
-const CommentCard = ({
+const ReplyCard = ({
     id,
     User,
     msg,
@@ -81,25 +80,9 @@ const CommentCard = ({
                         {LikesCount}
                     </Typography>
                 </Box>
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <MessageSquare color="#5E5E5E" />
-                    <Typography variant="body2" ml={1} color="#5E5E5E">
-                        {ReplyBlogs.length}
-                    </Typography>
-                </Box>
             </Stack>
-            {!!(ReplyBlogs.length) && (
-                <Box sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    overflowY: 'auto',
-                    height: '100%'
-                }}>
-                    {ReplyBlogs.map(reply => <ReplyCard {...reply} />)}
-                </Box>
-            )}
         </Box>
     </Box>
 );
 
-export default CommentCard
+export default ReplyCard
