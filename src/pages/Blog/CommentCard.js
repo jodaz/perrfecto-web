@@ -1,4 +1,5 @@
 import * as React from 'react';
+import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
@@ -16,7 +17,8 @@ const CommentCard = ({
     msg,
     createdAt,
     ReplyBlogs = [],
-    LikesCount = 0
+    LikesCount = 0,
+    openReply
 }) => (
     <Box sx={{
         p: 1,
@@ -82,7 +84,9 @@ const CommentCard = ({
                     </Typography>
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <MessageSquare color="#5E5E5E" />
+                    <IconButton onClick={openReply}>
+                        <MessageSquare color="#5E5E5E" />
+                    </IconButton>
                     <Typography variant="body2" ml={1} color="#5E5E5E">
                         {ReplyBlogs.length}
                     </Typography>

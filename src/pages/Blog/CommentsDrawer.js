@@ -3,37 +3,30 @@ import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Divider from '@mui/material/Divider';
 import DialogTitle from '../../components/DialogTitle';
-import TextInput from '../../components/Forms/TextInput';
-import { useForm } from "react-hook-form";
-import { apiProvider } from '../../api';
 import CommentCard from './CommentCard';
+import CommentBox from './CommentBox';
 
 const CommentsDrawer = ({ openComments, handleClose, item }) => {
-    const { control, handleSubmit, setValue, formState: {
-        isSubmitting
-    }} = useForm({
-        reValidateMode: "onBlur"
-    });
+    const [commentItem, setCommentItem] = React.useState(item) // Blog by default
+    const [isReplying, setIsReplying] = React.useState(false);
+
+    const toggleReply = (comment = null) => {
+        console.log(comment)
+        if (comment) {
+            setCommentItem(comment)
+        } else {
+            console.log(item)
+            setCommentItem(item)
+        }
+
+        setIsReplying(!isReplying)
+    };
 
     const toggleDrawer = () => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
 
             handleClose();
-        }
-    };
-
-    const onSubmit = async values => {
-        try {
-            if (!values.msg) return;
-
-            const res = await apiProvider.post(`/api/blog/add-commentary/${item.id}`, values)
-
-            if (res.status >= 200 || res.status < 300) {
-                setValue('msg', '');
-            }
-        } catch (error) {
-            console.log(error)
         }
     };
 
@@ -57,25 +50,24 @@ const CommentsDrawer = ({ openComments, handleClose, item }) => {
                     height: '100%'
                 }}>
                     {item.Comments.length
-                    ? item.Comments.map(item => <CommentCard {...item} />)
+                    ? item.Comments.map(comment => (
+                        <CommentCard
+                            {...comment}
+                            openReply={() => toggleReply(comment)}
+                        />
+                    ))
                     : (
                         <Box m={1}>
                             Sin comentarios
                         </Box>
                     )}
                 </Box>
-                <Box
-                    p={3}
-                    component="form"
-                    onSubmit={handleSubmit(onSubmit)}
-                >
-                    <TextInput
-                        name='msg'
-                        control={control}
-                        placeholder="Escribe un comentario"
-                        disabled={isSubmitting}
-                    />
-                </Box>
+                <Divider />
+                <CommentBox
+                    item={commentItem}
+                    isReplying={isReplying}
+                    closeReply={() => toggleReply()}
+                />
             </Box>
         </>
     );
