@@ -56,8 +56,6 @@ const CommentsDrawer = ({ openComments, handleClose }) => {
                 parsedData.lon = longitude
                 parsedData.km = distance;
             }
-
-            // await fetchBusinesses(dispatch, parsedData)
         } catch (error) {
             console.log(error)
         }

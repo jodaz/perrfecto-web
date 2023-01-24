@@ -15,10 +15,12 @@ import { apiProvider } from '../../api';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import { useNavigate, useParams } from 'react-router-dom';
 import getUserPhoto from '../../utils/getUserPhoto';
-import { ThumbsUp, MessageSquare } from 'lucide-react';
+import { MessageSquare } from 'lucide-react';
 import CommentsDrawer from './CommentsDrawer';
+import LikePostButton from '../../components/Buttons/LikePostButton';
 
 const PublishedBlogLayout = ({
+    id,
     title,
     BlogMultimedia,
     createdAt,
@@ -171,13 +173,15 @@ const PublishedBlogLayout = ({
                     }}
                 >
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <ThumbsUp color="#5E5E5E" />
+                        <LikePostButton id={id} type='post' />
                         <Typography variant="body2" ml={1} color="#5E5E5E">
                             {LikesCount}
                         </Typography>
                     </Box>
                     <Box sx={{ display: 'flex', alignItems: 'center' }} onClick={toggleComments}>
-                        <MessageSquare color="#5E5E5E" />
+                        <IconButton>
+                            <MessageSquare color="#5E5E5E" />
+                        </IconButton>
                         <Typography variant="body2" ml={1} color="#5E5E5E">
                             {CommentsCount}
                         </Typography>
@@ -226,8 +230,6 @@ const PublishedBlog = () => {
     useEffectOnce(() => { fetchBlog() }, []);
 
     if (loading) return <LoadingIndicator />
-
-    console.log(openComments)
 
     return (
         <>
