@@ -6,6 +6,7 @@ import DialogTitle from '../../components/DialogTitle';
 import TextInput from '../../components/Forms/TextInput';
 import { useForm } from "react-hook-form";
 import { apiProvider } from '../../api';
+import CommentCard from './CommentCard';
 
 const CommentsDrawer = ({ openComments, handleClose, item }) => {
     const { control, handleSubmit, setValue, formState: {
@@ -38,20 +39,41 @@ const CommentsDrawer = ({ openComments, handleClose, item }) => {
 
     const list = (anchor) => (
         // <Box onKeyDown={() => handleClose()} component="form" onSubmit={handleSubmit(onSubmit)}>
-        <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+        <>
             <DialogTitle onClose={() => handleClose()}>
                 Comentarios
             </DialogTitle>
             <Divider />
-            <Box sx={{ p: 3 }}>
-                <TextInput
-                    name='msg'
-                    control={control}
-                    placeholder="Escribe un comentario"
-                    disabled={isSubmitting}
-                />
+            <Box sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                overflowY: 'auto',
+                height: '100%'
+            }}>
+                <Box sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    overflowY: 'auto',
+                    height: '100%'
+                }}>
+                    {item.Comments.length
+                    ? item.Comments.map(item => <CommentCard {...item} />)
+                    : (
+                        <Box m={1}>
+                            Sin comentarios
+                        </Box>
+                    )}
+                </Box>
+                <Box sx={{ p: 3 }}>
+                    <TextInput
+                        name='msg'
+                        control={control}
+                        placeholder="Escribe un comentario"
+                        disabled={isSubmitting}
+                    />
+                </Box>
             </Box>
-        </Box>
+        </>
     );
 
     return (
@@ -67,7 +89,8 @@ const CommentsDrawer = ({ openComments, handleClose, item }) => {
                             borderTopLeftRadius: '12px',
                             borderTopRightRadius: '12px',
                             width: '99%',
-                            bottom: 0
+                            bottom: 0,
+                            height: '50%'
                         },
                     }}
                     PaperProps={{ style: { position: 'absolute' } }}
