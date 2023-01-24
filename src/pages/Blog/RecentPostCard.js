@@ -66,7 +66,7 @@ const RecentPostCard = ({
                             <Box
                                 component="img"
                                 alt='blog_post.png'
-                                src={User.img_profile}
+                                src={getUserPhoto(User.img_profile)}
                                 sx={{
                                     maxWidth: 22,
                                     maxHeight: 22,

@@ -9,7 +9,7 @@ const LikePostButton = ({ id, type }) => {
     const { state: { isAuth } } = useAuth();
     const { dispatch } = useGuest();
 
-    const handleSubmitLike = async () => {
+    const handleSubmitLike = async (event) => {
         try {
             if (type == 'post') {
                 await apiProvider.post('/api/blog/like', {
