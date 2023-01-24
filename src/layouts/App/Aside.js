@@ -24,6 +24,7 @@ const Sidebar = ({ children }) => {
                 '& .MuiDrawer-paper': {
                     width: drawerWidth,
                     boxSizing: 'border-box',
+                    border: 'none'
                 },
                 zIndex: 1000
             }}
@@ -36,13 +37,13 @@ const Sidebar = ({ children }) => {
                 justifyContent: 'space-between'
             }}>
                 {(user.role == 'user') && <Camera color="#fff" />}
-                <Logo />
+                <Logo dark />
                 <NotificationButton />
             </Toolbar>
             <Divider />
             <Navigation />
             <Box
-                sx={{ height: '100%', maxWidth: 'inherit' }}
+                sx={{ height: '100%', maxWidth: drawerWidth }}
                 id="drawer-container"
             >
                 {children}

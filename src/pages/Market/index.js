@@ -1,10 +1,99 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
+import Box from '@mui/material/Box'
+import Stack from '@mui/material/Stack'
+import IconButton from '@mui/material/IconButton'
+import Typography from '@mui/material/Typography'
+import FeaturedBusinesses from '../Businesses/FeaturedBusinesses';
+import Categories from './Categories';
+import MarketSearchBox from './MarketSearchBox';
+import ShowCategory from './ShowCategory';
+import useEffectOnce from '../../utils/useEffectOnce';
+import { apiProvider } from '../../api';
+import MarketFilterDrawer from '../../components/MarketFilterDrawer';
+import { SlidersHorizontal } from 'lucide-react';
+import BusinessCard from '../Businesses/BusinessCard';
+import { toggleFilters, useBusinesses, selectItem } from '../../context/BusinessContext';
+import ShowMarket from './ShowMarket';
 
-export default function Market() {
+const Marketplace = () => {
+    const [loadingCategories, setLoadingCategories] = React.useState(false)
+    const [categories, setCategories] = React.useState([])
+    const { state: { isLoaded, publications, selectedItem }, dispatch } = useBusinesses();
+
+    const fetchCategories = async () => {
+        setLoadingCategories(true)
+        try {
+            const res = await apiProvider.get('api/category/categories')
+
+            if (res.status >= 200 && res.status < 300) {
+                const { data: { data } } = res;
+
+                setCategories(data);
+                setLoadingCategories(false)
+            }
+        } catch (error) {
+            console.log("error ", error)
+        }
+    }
+
+    useEffectOnce(() => { fetchCategories() }, [])
+
+    if (selectedItem) {
+        return (selectedItem.type == 'category') ? <ShowCategory /> : <ShowMarket />;
+    }
+
     return (
-        <Box sx={{ display: 'flex' }}>
-            {/* Aqui va el contenido del market */}
+        <Box sx={{
+            display: 'flex',
+            flexDirection: 'column'
+        }} id='market-drawer-container'>
+            <Box sx={{
+                p: 2,
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center'
+            }}>
+                <Typography
+                    variant="h5"
+                    fontWeight={700}
+                >
+                    Market
+                </Typography>
+                <IconButton>
+                    <SlidersHorizontal onClick={() => toggleFilters(dispatch)}/>
+                </IconButton>
+            </Box>
+            <MarketSearchBox />
+            {(!isLoaded) ?
+            (
+                <>
+                    <Box p={2}>
+                        <FeaturedBusinesses />
+                    </Box>
+                    <Box p={2}>
+                        <Categories
+                            data={categories}
+                            loading={loadingCategories}
+                        />
+                    </Box>
+                </>
+            ) : (
+                <Stack
+                    p={2}
+                    orientation='vertical'
+                    spacing={2}
+                >
+                    {publications.map(item => (
+                        <BusinessCard
+                            {...item}
+                            handleSelect={() => selectItem(dispatch, { item: item, type: 'business' })}
+                        />
+                    ))}
+                </Stack>
+            )}
+            <MarketFilterDrawer />
         </Box>
-    );
+    )
 }
+
+export default Marketplace

@@ -142,33 +142,35 @@ const Dropzone = ({
                         <PlusCircle color='#858585' />
                     </Box>
                 )}
-                <Box sx={{
-                    display: 'flex',
-                    p: 2,
-                    width: '100px',
-                    textAlign: 'center',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexDirection: 'column'
-                }}>
+                {!(files.length == maxFiles) && (
                     <Box sx={{
-                        width: 'fit-content',
-                        bgcolor: '#ECECEC',
                         display: 'flex',
-                        justifyContent: 'center',
+                        p: 2,
+                        width: '100px',
+                        textAlign: 'center',
                         alignItems: 'center',
-                        borderRadius: 100,
+                        justifyContent: 'center',
+                        flexDirection: 'column'
                     }}>
-                        <IconButton color="text.tertiary" disabled={disabled}>
-                            <PlusCircle />
-                        </IconButton>
+                        <Box sx={{
+                            width: 'fit-content',
+                            bgcolor: '#ECECEC',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            borderRadius: 100,
+                        }}>
+                            <IconButton color="text.tertiary" disabled={disabled}>
+                                <PlusCircle />
+                            </IconButton>
+                        </Box>
+                        {message && (
+                            <Typography fontSize={12} color="text.tertiary">
+                                {message}
+                            </Typography>
+                        )}
                     </Box>
-                    {message && (
-                        <Typography fontSize={12} color="text.tertiary">
-                            {message}
-                        </Typography>
-                    )}
-                </Box>
+                )}
             </Box>
         </Box>
     );

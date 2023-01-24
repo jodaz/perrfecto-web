@@ -6,10 +6,12 @@ import esLocale from 'date-fns/locale/es';
 // All routes
 import AppRoutes from './AppRoutes'
 // Contexts
+import { BusinessProvider } from './context/BusinessContext'
 import { AuthProvider } from './context/AuthContext'
 import { FavouriteProvider } from './context/FavouriteContext'
 import { GuestProvider } from './context/GuestContext'
 import { PublicationProvider } from './context/PublicationContext';
+import { MultiStepProvider } from './context/MultiStepContext';
 
 const App = () => (
     <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={esLocale}>
@@ -18,7 +20,11 @@ const App = () => (
                 <FavouriteProvider>
                     <GuestProvider>
                         <PublicationProvider>
-                            <AppRoutes />
+                            <MultiStepProvider>
+                                <BusinessProvider>
+                                    <AppRoutes />
+                                </BusinessProvider>
+                            </MultiStepProvider>
                         </PublicationProvider>
                     </GuestProvider>
                 </FavouriteProvider>

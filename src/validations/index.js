@@ -160,6 +160,15 @@ export const PROVINCE = {
     }
 }
 
+export const CATEGORY = {
+    rules: {
+        required: true,
+    },
+    messages: {
+        required: "Seleccione una categoría.",
+    }
+}
+
 export const PHOTO = {
     rules: {
         required: true,

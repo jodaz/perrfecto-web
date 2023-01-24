@@ -1,17 +1,9 @@
 import * as React from 'react'
-import Box from '@mui/material/Box'
-import LogoImage from '../assets/icons/logo.png'
-import Typography from '@mui/material/Typography';
+import { ReactComponent as LogoSvg } from '../assets/icons/Logo.svg'
+import { ReactComponent as LogoTransparentSvg } from '../assets/icons/LogoTransparent.svg'
 
-const Logo = ({
-    color = 'secondary.main',
-    height = '30px',
-    width = '30px'
-}) => (
-    <Box sx={{ display: 'flex', alignItems: 'center', color: '#fff', fontWeight: 900, fontSize: '1.15rem' }}>
-        <img src={LogoImage} height={height} width={width} />
-        <Typography sx={{ p: 1 }} color={color}>Tinderdogs</Typography>
-    </Box>
+const Logo = ({ dark }) => (
+    dark ? <LogoSvg /> : <LogoTransparentSvg />
 );
 
 export default Logo;

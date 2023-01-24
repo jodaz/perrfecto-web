@@ -29,7 +29,8 @@ export default function AppLayout({ children }) {
                 </>
             ) : (
                 <Box sx={{
-                    height: '90vh'
+                    height: '90vh',
+                    overflowY: 'scroll'
                 }}>
                     {children}
                 </Box>

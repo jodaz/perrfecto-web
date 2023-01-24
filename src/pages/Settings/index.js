@@ -30,8 +30,8 @@ const ListTitle = ({ children }) => (
     </ListItem>
 )
 
-const Settings = ({ title }) => {
-    const { dispatch } = useAuth();
+const Settings = () => {
+    const { dispatch, state: { user } } = useAuth();
 
     return (
         <SettingsLayout title="Configuraciones">
@@ -55,10 +55,12 @@ const Settings = ({ title }) => {
                             to="owner"
                             title="Información personal"
                         />
-                        <ListItemLink
-                            to="pet"
-                            title="Información de la mascota"
-                        />
+                        {(user.role == 'user') && (
+                            <ListItemLink
+                                to="pet"
+                                title="Información de la mascota"
+                            />
+                        )}
                     </List>
                     <List>
                         <ListTitle>
