@@ -30,6 +30,8 @@ const MyAdCard = ({ fullWidth, ...data  }) => {
         setOpenDeleteModal(false)
     }
 
+    console.log(data)
+
     return (
         <Card sx={{
             maxWidth: '100%',
@@ -105,8 +107,12 @@ const MyAdCard = ({ fullWidth, ...data  }) => {
                         mb: 1
                     }
                 }}>
-                    <ListCertificates {...data} />
-                    <ShowVaccines {...data} />
+                    {!!data.dog.Certificates.length && (
+                        <ListCertificates {...data} />
+                    )}
+                    {!!data.dog.Vaccines.length && (
+                        <ShowVaccines {...data} />
+                    )}
                 </Box>
                 <DeleteAd
                     open={openDeleteModal}
