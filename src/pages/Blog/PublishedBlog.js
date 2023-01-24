@@ -31,12 +31,14 @@ const PublishedBlogLayout = ({
     CommentsCount = 0,
     LikesCount = 0,
     navigate,
+    openComments,
     toggleComments
 }) => (
     <Slide direction="left" in={true} mountOnEnter unmountOnExit>
         <Box sx={{
             height: '100%',
-            width: '100%'
+            width: '100%',
+            overflowY: openComments ? 'hidden' : 'auto'
         }} id='comments-drawer-container'>
             <Box sx={{
                 flex: 1,
@@ -242,6 +244,7 @@ const PublishedBlog = () => {
                 currAuthUser={user}
                 navigate={navigate}
                 toggleComments={toggleComments}
+                openComments={openComments}
             />
             <DeletePublication
                 open={deletePost}

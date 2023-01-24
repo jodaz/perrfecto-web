@@ -11,7 +11,8 @@ const Profile = ({ children }) => {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'start',
-            height: '100%'
+            height: '100%',
+            overflowY: 'auto'
         }}>
             {children}
         </Box>

@@ -7,13 +7,17 @@ import RecentPosts from './RecentPosts';
 import LinkBehavior from '../../components/LinkBehavior'
 
 const Blog = () => (
-    <Box sx={{ display: 'flex', width: 'inherit' }}>
+    <Box sx={{
+        width: 'inherit',
+        overflowY: 'auto'
+    }}>
         <Box sx={{ p: 2, flex: 1 }}>
             <Box sx={{
                 display: 'flex',
                 width: '100%',
                 justifyContent: 'space-between',
                 alignItems: 'center',
+                overflowY: 'auto',
                 mb: 2
             }}>
                 <Typography

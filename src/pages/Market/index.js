@@ -45,7 +45,8 @@ const Marketplace = () => {
     return (
         <Box sx={{
             display: 'flex',
-            flexDirection: 'column'
+            flexDirection: 'column',
+            overflowY: 'auto'
         }} id='market-drawer-container'>
             <Box sx={{
                 p: 2,

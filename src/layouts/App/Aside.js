@@ -43,7 +43,11 @@ const Sidebar = ({ children }) => {
             <Divider />
             <Navigation />
             <Box
-                sx={{ height: '100%', maxWidth: drawerWidth }}
+                sx={{
+                    height: '100%',
+                    maxWidth: drawerWidth,
+                    overflowY: 'hidden'
+                }}
                 id="drawer-container"
             >
                 {children}
