@@ -62,24 +62,27 @@ const RecentPostCard = ({
                 </Typography>
                 <Box sx={{ display: 'flex', mt: 1}}>
                     <Box sx={{ display: 'flex', justifyContent: 'start', flex: 1 }}>
-                        <Box
-                            component="img"
-                            alt='blog_post.png'
-                            src={User.img_profile}
-                            sx={{
-                                maxWidth: 22,
-                                maxHeight: 22,
-                                borderRadius: 1,
-                                mr: 1
-                            }}
-                        />
+                        {User.img_profile && (
+                            <Box
+                                component="img"
+                                alt='blog_post.png'
+                                src={User.img_profile}
+                                sx={{
+                                    maxWidth: 22,
+                                    maxHeight: 22,
+                                    borderRadius: 1,
+                                    mr: 1
+                                }}
+                            />
+                        )}
                         <Typography
                             component="div"
                             variant="caption"
                             color="text.secondary"
                             fontWeight={500}
                         >
-                            {`${User.name} ${User.lastName}`}
+                            {`${User.name} `}
+                            {User.lastName && `${User.lastName}`}
                         </Typography>
                     </Box>
                     <Typography

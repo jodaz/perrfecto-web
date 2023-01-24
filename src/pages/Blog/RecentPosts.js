@@ -52,7 +52,11 @@ const RecentPosts = () =>  {
     if (loading) return <LoadingIndicator />
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+        <Box sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            width: { sm: '320px', md: '320px' }
+        }}>
             {(blogs.length) ? (
                 <SwiperStyled
                     slidesPerView={1}
