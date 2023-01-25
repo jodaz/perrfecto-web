@@ -10,10 +10,10 @@ import { renewToken, useAuth } from '../../../context/AuthContext';
 import { alpha } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-const DeletePublication = ({ open, handleClose, item }) => {
+const DeletePublication = ({ open, handleClose, item, redirect = -1 }) => {
     const [onSubmit, setOnSubmit] = React.useState(false);
     const { dispatch, state: { user } } = useAuth();
-    const redirect = useNavigate()
+    const navigate = useNavigate()
 
     const deletePost = async () => {
         try {
@@ -21,7 +21,7 @@ const DeletePublication = ({ open, handleClose, item }) => {
 
             if (res.status >= 200 && res.status < 300) {
                 renewToken(dispatch, user);
-                redirect(-1)
+                navigate(redirect)
             }
 
             return res;

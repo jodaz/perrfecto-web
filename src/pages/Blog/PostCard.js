@@ -10,119 +10,147 @@ import { es } from 'date-fns/locale'
 import getUserPhoto from '../../utils/getUserPhoto';
 import PostMenu from './PostMenu';
 import LinkBehavior from '../../components/LinkBehavior';
+import Skeleton from "@mui/material/Skeleton";
 
 const PostCard = ({
-    id,
-    title,
-    BlogMultimedia,
-    createdAt,
-    CommentsCount = 0,
-    LikesCount = 0,
     showMenu,
     handleDelete,
-    showStatus
-}) => (
-    <Card
-        variant="outlined"
-        sx={{
-            display: 'flex',
-            border: 'none',
-            flexDirection: { xs: 'column', sm: 'row' }
-        }}
-    >
-        <Box sx={{
-            display: 'flex',
-            textDecoration: 'none',
-            color: 'unset',
-            flex: 1,
-            transition: '0.3s',
-            cursor: 'pointer',
-            '&: hover': {
-                opacity: 0.75
-            }
-        }} to={`/blogs/${id}`} component={LinkBehavior}>
-            <CardMedia
-                component="img"
-                width="130px"
-                height="140px"
-                alt="post_cover"
-                src={BlogMultimedia.length ? getUserPhoto(BlogMultimedia[0].name) : null}
-                sx={{
-                    borderRadius: 2,
-                    minWidth: '130px',
-                    minHeight: '130px',
-                    maxWidth: '130px',
-                    maxHeight: '130px'
-                }}
-            />
+    showStatus,
+    item
+}) => {
+    const loading = item == null;
+
+    return (
+        <Card
+            variant="outlined"
+            sx={{
+                display: 'flex',
+                border: 'none',
+                flexDirection: { xs: 'column', sm: 'row' }
+            }}
+        >
             <Box sx={{
                 display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                px: { xs: 0, sm: 2 }
-            }}>
-                <Box>
-                    <Typography
-                        variant="body1"
-                        color="text.secondary"
-                        fontWeight={700}
+                textDecoration: 'none',
+                color: 'unset',
+                flex: 1,
+                transition: '0.3s',
+                cursor: 'pointer',
+                '&: hover': {
+                    opacity: 0.75
+                }
+            }} to={!loading ? `/blogs/${item.id}` : null} component={LinkBehavior}>
+                {loading ? (
+                    <Skeleton
+                        animation="wave"
+                        variant="circular"
+                        width={40}
+                        height={40}
+                    />
+                ) : (
+                    <CardMedia
+                        component="img"
+                        width="130px"
+                        height="140px"
+                        alt="post_cover"
+                        src={item.BlogMultimedia.length ? getUserPhoto(item.BlogMultimedia[0].name) : null}
                         sx={{
-                            textAlign: { xs: 'center', sm: 'start' },
-                            mt: { xs: 1.5, sm: 0 },
+                            borderRadius: 2,
+                            minWidth: '130px',
+                            minHeight: '130px',
+                            maxWidth: '130px',
+                            maxHeight: '130px'
                         }}
-                    >
-                        {title}
-                    </Typography>
-                    <Typography
-                        component="div"
-                        variant="caption"
-                        color="text.tertiary"
-                        fontWeight={500}
-                        sx={{ textAlign: { xm: 'center', sm: 'start' }, textTransform: 'capitalize' }}
-                    >
-                        {format(new Date(createdAt), 'MMMM d, y', { locale: es })}
-                    </Typography>
-                    {(showStatus) && (
-                        <Typography
-                            variant="body1"
-                            color="success.main"
-                            fontWeight={500}
-                            fontSize={12}
+                    />
+                )}
+                <Box sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    flex: 1,
+                    px: { xs: 0, sm: 2 }
+                }}>
+                    {loading ? (
+                        <Skeleton
+                            animation="wave"
+                            height={10}
+                            width="80%"
+                            style={{ marginBottom: 6 }}
+                        />
+                    ) : (
+                        <Box>
+                            <Typography
+                                variant="body1"
+                                color="text.secondary"
+                                fontWeight={700}
+                                sx={{
+                                    textAlign: { xs: 'center', sm: 'start' },
+                                    mt: { xs: 1.5, sm: 0 },
+                                }}
+                            >
+                                {item.title}
+                            </Typography>
+                            <Typography
+                                component="div"
+                                variant="caption"
+                                color="text.tertiary"
+                                fontWeight={500}
+                                sx={{ textAlign: { xm: 'center', sm: 'start' }, textTransform: 'capitalize' }}
+                            >
+                                {format(new Date(item.createdAt), 'MMMM d, y', { locale: es })}
+                            </Typography>
+                            {(showStatus) && (
+                                <Typography
+                                    variant="body1"
+                                    color="success.main"
+                                    fontWeight={500}
+                                    fontSize={12}
+                                >
+                                    Publicado
+                                </Typography>
+                            )}
+                        </Box>
+                    )}
+                    {loading ? (
+                        <Skeleton
+                            animation="wave"
+                            height={10}
+                            width="40%"
+                            style={{ marginBottom: 6 }}
+                        />
+                    ) : (
+                        <Stack
+                            direction="row"
+                            spacing={1}
+                            sx={{
+                                justifyContent: { xs: 'space-between', sm: 'flex-start' },
+                                alignItems: 'center'
+                            }}
                         >
-                            Publicado
-                        </Typography>
+                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                <ThumbsUp color="#5E5E5E" />
+                                <Typography variant="body2" ml={1} color="#5E5E5E">
+                                    {item.LikesCount}
+                                </Typography>
+                            </Box>
+                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                <MessageSquare color="#5E5E5E" />
+                                <Typography variant="body2" ml={1} color="#5E5E5E">
+                                    {item.CommentsCount}
+                                </Typography>
+                            </Box>
+                        </Stack>
                     )}
                 </Box>
-                <Stack
-                    direction="row"
-                    spacing={1}
-                    sx={{
-                        justifyContent: { xs: 'space-between', sm: 'flex-start' },
-                        alignItems: 'center'
-                    }}
-                >
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <ThumbsUp color="#5E5E5E" />
-                        <Typography variant="body2" ml={1} color="#5E5E5E">
-                            {LikesCount}
-                        </Typography>
-                    </Box>
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <MessageSquare color="#5E5E5E" />
-                        <Typography variant="body2" ml={1} color="#5E5E5E">
-                            {CommentsCount}
-                        </Typography>
-                    </Box>
-                </Stack>
             </Box>
-        </Box>
-        {showMenu && (
-            <PostMenu
-                item={{ id: id }}
-                handleDeletePost={handleDelete}
-            />
-        )}
-    </Card>
-);
+            {!!!(loading && showMenu) && (
+                <PostMenu
+                    item={{ id: item.id }}
+                    handleDeletePost={handleDelete}
+                />
+            )}
+        </Card>
+    );
+}
 
 export default PostCard

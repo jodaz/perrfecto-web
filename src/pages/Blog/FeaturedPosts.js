@@ -42,7 +42,7 @@ const FeaturedPosts = () => {
                         mt: 2
                     }}
                 >
-                    {blogs.map(post => <PostCard {...post} />)}
+                    {blogs.map(post => <PostCard item={post} />)}
                 </Stack>
             ) : (
                 <Typography variant="subtitle1">
