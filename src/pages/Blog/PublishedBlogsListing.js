@@ -9,8 +9,9 @@ import useEffectOnce from '../../utils/useEffectOnce';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import SettingsLayout from '../../layouts/SettingsLayout';
 import { SlidersHorizontal } from 'lucide-react';
+import DeletePublication from '../../components/Modals/DeletePublication';
 
-const MyBlogs = ({ blogs }) => (
+const MyBlogs = ({ blogs, handleDeletePost }) => (
     <Box sx={{ display: 'flex', flexDirection: 'column', mt: '10px' }}>
         {(blogs.length) ? (
             <Stack
@@ -20,7 +21,13 @@ const MyBlogs = ({ blogs }) => (
                     mt: 2
                 }}
             >
-                {blogs.map(blog => <PostCard {...blog} showMenu /> )}
+                {blogs.map(blog => (
+                    <PostCard
+                        {...blog}
+                        handleDelete={() => handleDeletePost(blog)}
+                        showMenu
+                    />
+                ))}
             </Stack>
         ) : (
             <Typography variant="subtitle1">
@@ -31,8 +38,14 @@ const MyBlogs = ({ blogs }) => (
 );
 
 const PublishedBlogsListing = () => {
+    const [deletePost, setDeletePost] = React.useState(null)
     const [loading, setLoading] = React.useState(true)
     const [blogs, setBlogs] = React.useState([])
+
+    const handleDeletePost = async (post = null) => {
+        console.log(post)
+        setDeletePost(post ? post : null);
+    }
 
     const fetchBlogs = async () => {
         setLoading(true)
@@ -71,9 +84,14 @@ const PublishedBlogsListing = () => {
             }}>
                 {(loading)
                     ? <LoadingIndicator />
-                    : <MyBlogs blogs={blogs} />
+                    : <MyBlogs blogs={blogs} handleDeletePost={handleDeletePost} />
                 }
             </Box>
+            <DeletePublication
+                open={deletePost}
+                handleClose={() => handleDeletePost(null)}
+                item={deletePost}
+            />
         </SettingsLayout>
     );
 }

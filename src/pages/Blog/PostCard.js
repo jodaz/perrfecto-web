@@ -18,7 +18,8 @@ const PostCard = ({
     createdAt,
     CommentsCount = 0,
     LikesCount = 0,
-    showMenu
+    showMenu,
+    handleDelete
 }) => (
     <Card
         variant="outlined"
@@ -105,7 +106,10 @@ const PostCard = ({
             </Box>
         </Box>
         {showMenu && (
-            <PostMenu item={{ id: id }} />
+            <PostMenu
+                item={{ id: id }}
+                handleDeletePost={handleDelete}
+            />
         )}
     </Card>
 );
