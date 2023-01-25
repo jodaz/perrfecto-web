@@ -30,8 +30,6 @@ const MyAdCard = ({ fullWidth, ...data  }) => {
         setOpenDeleteModal(false)
     }
 
-    console.log(data)
-
     return (
         <Card sx={{
             maxWidth: '100%',
@@ -53,6 +51,14 @@ const MyAdCard = ({ fullWidth, ...data  }) => {
                         }
                     }}
                 >
+                    <Box
+                        component={LinkBehavior}
+                        to={`/profile/ads/show`}
+                        width='inherit'
+                        sx={{ textDecoration: 'none', color: 'unset' }}
+                    >
+                        Ver anuncio
+                    </Box>
                     <Box
                         component={LinkBehavior}
                         to={`ads/${publication.id}/edit`}

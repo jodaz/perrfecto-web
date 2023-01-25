@@ -63,6 +63,8 @@ import BusinessProfile from './pages/Profile/BusinessProfile';
 import PublishedBlogsListing from './pages/Blog/PublishedBlogsListing';
 import PublishedBlog from './pages/Blog/PublishedBlog';
 import BlogEdit from './pages/Blog/BlogEdit';
+import ShowAd from './pages/Ad/ShowAd';
+import OnlyDesktop from './layouts/App/OnlyDesktop';
 
 function AppRoutes() {
     let location = useLocation();
@@ -73,14 +75,6 @@ function AppRoutes() {
             <Route
                 path='*'
                 element=<NotFound />
-            />
-            <Route
-                path='/home'
-                element={
-                    <AppLayout>
-                        <Home />
-                    </AppLayout>
-                }
             />
             <Route
                 path='/market'
@@ -161,9 +155,10 @@ function AppRoutes() {
             <Route
                 path='/profile/ads/show'
                 element={
-                    <AppLayout>
-                        <CreateAd location={location} />
-                    </AppLayout>
+                    <OnlyDesktop
+                        aside={<PetProfile />}
+                        principal={<ShowAd location={location} />}
+                    />
                 }
             />
             <Route
