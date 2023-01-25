@@ -5,7 +5,6 @@ import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import FeaturedBusinesses from '../Businesses/FeaturedBusinesses';
 import Categories from './Categories';
-import MarketSearchBox from './MarketSearchBox';
 import ShowCategory from './ShowCategory';
 import useEffectOnce from '../../utils/useEffectOnce';
 import { apiProvider } from '../../api';
@@ -14,6 +13,7 @@ import { SlidersHorizontal } from 'lucide-react';
 import BusinessCard from '../Businesses/BusinessCard';
 import { toggleFilters, useBusinesses, selectItem } from '../../context/BusinessContext';
 import ShowMarket from './ShowMarket';
+import SearchBox from '../../components/SearchBox';
 
 const Marketplace = () => {
     const [loadingCategories, setLoadingCategories] = React.useState(false)
@@ -63,7 +63,7 @@ const Marketplace = () => {
                     <SlidersHorizontal onClick={() => toggleFilters(dispatch)}/>
                 </IconButton>
             </Box>
-            <MarketSearchBox />
+            <SearchBox />
             {(!isLoaded) ?
             (
                 <>

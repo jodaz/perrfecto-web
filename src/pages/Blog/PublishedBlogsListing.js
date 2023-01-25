@@ -10,6 +10,7 @@ import LoadingIndicator from '../../components/LoadingIndicator';
 import SettingsLayout from '../../layouts/SettingsLayout';
 import { SlidersHorizontal } from 'lucide-react';
 import DeletePublication from '../../components/Modals/DeletePublication';
+import SearchBox from '../../components/SearchBox';
 
 const MyBlogs = ({ blogs, handleDeletePost }) => (
     <Box sx={{ display: 'flex', flexDirection: 'column', mt: '10px' }}>
@@ -83,6 +84,9 @@ const PublishedBlogsListing = () => {
                 flex: 1,
                 flexDirection: 'column',
             }}>
+                <Box sx={{ margin: '10px 0' }}>
+                    <SearchBox />
+                </Box>
                 {(loading)
                     ? <LoadingIndicator />
                     : <MyBlogs blogs={blogs} handleDeletePost={handleDeletePost} />

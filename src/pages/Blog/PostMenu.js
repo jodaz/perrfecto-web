@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Menu from '../../components/Menu';
-import { Trash2, Edit, MoreVertical } from 'lucide-react'
+import { Trash2, Edit, MoreVertical, Star } from 'lucide-react'
 import LinkBehavior from '../../components/LinkBehavior';
 
 const PostMenu = ({
@@ -18,6 +18,18 @@ const PostMenu = ({
             }
         }}
     >
+        <Box onClick={() => null}
+            sx={{
+            display: 'flex',
+            alignItems: 'center',
+            color: 'unset',
+            textDecoration: 'none',
+        }}>
+            <Star />
+            <Box sx={{ paddingLeft: '0.5rem' }}>
+                Destacar publicación
+            </Box>
+        </Box>
         <Box component={LinkBehavior} sx={{
             display: 'flex',
             textDecoration: 'none',
