@@ -26,6 +26,7 @@ const MyBlogs = ({ blogs, handleDeletePost }) => (
                         {...blog}
                         handleDelete={() => handleDeletePost(blog)}
                         showMenu
+                        showStatus
                     />
                 ))}
             </Stack>

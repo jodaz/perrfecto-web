@@ -19,7 +19,8 @@ const PostCard = ({
     CommentsCount = 0,
     LikesCount = 0,
     showMenu,
-    handleDelete
+    handleDelete,
+    showStatus
 }) => (
     <Card
         variant="outlined"
@@ -81,6 +82,16 @@ const PostCard = ({
                     >
                         {format(new Date(createdAt), 'MMMM d, y', { locale: es })}
                     </Typography>
+                    {(showStatus) && (
+                        <Typography
+                            variant="body1"
+                            color="success.main"
+                            fontWeight={500}
+                            fontSize={12}
+                        >
+                            Publicado
+                        </Typography>
+                    )}
                 </Box>
                 <Stack
                     direction="row"
