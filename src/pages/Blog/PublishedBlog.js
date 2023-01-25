@@ -18,6 +18,7 @@ import getUserPhoto from '../../utils/getUserPhoto';
 import { MessageSquare } from 'lucide-react';
 import CommentsDrawer from './CommentsDrawer';
 import LikePostButton from '../../components/Buttons/LikePostButton';
+import PostMenu from './PostMenu';
 
 const PublishedBlogLayout = ({
     id,
@@ -26,12 +27,12 @@ const PublishedBlogLayout = ({
     createdAt,
     description,
     currAuthUser,
-    handleDeletePost,
     User,
     CommentsCount = 0,
     LikesCount = 0,
     navigate,
-    toggleComments
+    toggleComments,
+    handleDeletePost
 }) => (
     <Slide direction="left" in={true} mountOnEnter unmountOnExit>
         <Box sx={{
@@ -81,37 +82,7 @@ const PublishedBlogLayout = ({
                         right: 20,
                         top: 20
                     }}>
-                        <Menu
-                            icon={<MoreVertical />}
-                            IconButtonProps={{
-                                sx: {
-                                    backgroundColor: '#fff',
-                                    border: 'none',
-                                    color: 'none'
-                                }
-                            }}
-                        >
-                            <Box sx={{
-                                display: 'flex',
-                                textDecoration: 'none',
-                                color: 'unset',
-                                alignItems: 'center'
-                            }} onClick={() => navigate(`edit`)}>
-                                <Edit />
-                                <Box sx={{ paddingLeft: '0.5rem' }}>
-                                    Editar blog
-                                </Box>
-                            </Box>
-                            <Box sx={{
-                                display: 'flex',
-                                alignItems: 'center'
-                            }} onClick={handleDeletePost}>
-                                <Trash2 />
-                                <Box sx={{ paddingLeft: '0.5rem' }}>
-                                    Eliminar blog
-                                </Box>
-                            </Box>
-                        </Menu>
+                        <PostMenu item={{ id: id }} handleDeletePost={handleDeletePost} />
                     </Box>
                 )}
                 <Stack
