@@ -3,11 +3,12 @@ import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
 import CardMedia from '@mui/material/CardMedia';
+import getUserPhoto from '../../utils/getUserPhoto'
 
 const FeaturedBusinessCard = ({
-    handleClick,
-    title,
-    image
+    business_name,
+    AnnMultimedia,
+    onClick
 }) => (
     <Card
         variant="outlined"
@@ -18,20 +19,19 @@ const FeaturedBusinessCard = ({
             flexDirection: { xs: 'column', sm: 'row' },
             transition: '0.3s',
             cursor: 'pointer',
-            // width: "150px",
             height: "170px",
             '&: hover': {
                 opacity: 0.75
             }
         }}
-        // onClick={() => handleClick(data)}
+        onClick={onClick}
     >
         <CardMedia
             component="img"
             width="inherit"
             height="inherit"
             alt="Beside Myself album cover"
-            src={image}
+            src={getUserPhoto(AnnMultimedia[0].name)}
             sx={{
                 borderRadius: '12px',
                 background: 'linear-gradient(180deg, rgba(0, 0, 0, 0) 31.77%, rgba(0, 0, 0, 0.64) 100%), url(.jpg)'
@@ -51,7 +51,7 @@ const FeaturedBusinessCard = ({
                     mt: { xs: 1.5, sm: 0 },
                 }}
             >
-                {title}
+                {business_name}
             </Typography>
         </Box>
     </Card>

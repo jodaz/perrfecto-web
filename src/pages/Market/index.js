@@ -68,6 +68,16 @@ const Marketplace = () => {
             (
                 <>
                     <Box p={2}>
+                        <Typography
+                            variant="subtitle1"
+                            fontWeight={500}
+                            fontSize='1rem'
+                            mb={2}
+                            color="text.secondary"
+                            textTransform={'uppercase'}
+                        >
+                            Negocios destacados
+                        </Typography>
                         <FeaturedBusinesses />
                     </Box>
                     <Box p={2}>
