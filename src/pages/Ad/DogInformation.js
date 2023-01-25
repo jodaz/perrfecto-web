@@ -7,23 +7,28 @@ import { useAuth } from '../../context/AuthContext'
 import getYearsFromYear from '../../utils/getYearsFromYear';
 import { useNavigate } from 'react-router-dom';
 
-const DogInformation = () => {
+const DogInformation = ({ hideTitle }) => {
     const { state: { user } } = useAuth();
     const { dog } = user
     const redirect = useNavigate()
 
     return (
-        <>
-            <Box sx={{ display: 'flex', }}>
-                <Typography
-                    variant="body2"
-                    color="text.tertiary"
-                    textTransform={'uppercase'}
-                    gutterBottom
-                >
-                    información de la mascota
-                </Typography>
-            </Box>
+        <Box sx={{
+            display: 'flex',
+            flexDirection: 'column'
+        }}>
+            {!(hideTitle) && (
+                <Box sx={{ display: 'flex', }}>
+                    <Typography
+                        variant="body2"
+                        color="text.tertiary"
+                        textTransform={'uppercase'}
+                        gutterBottom
+                    >
+                        información de la mascota
+                    </Typography>
+                </Box>
+            )}
             <Typography
                 variant="h6"
                 textTransform='capitalize'
@@ -85,7 +90,7 @@ const DogInformation = () => {
                     </Typography>
                 )}
             </Box>
-        </>
+        </Box>
     );
 }
 

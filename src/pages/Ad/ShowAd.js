@@ -4,8 +4,7 @@ import Slide from '@mui/material/Slide';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
-import PublicationDescription from '../../components/FeedCard/PublicationDescription';
-import { Mail, Phone, ChevronLeft } from 'lucide-react'
+import { ChevronLeft, MoreVertical } from 'lucide-react'
 import LinkBehavior from '../../components/LinkBehavior';
 import MessageIconButton from '../../components/Buttons/MessageButton/MessageIconButton';
 import ListCertificates from '../certificates/ListCertificates'
@@ -14,28 +13,33 @@ import getUserPhoto from '../../utils/getUserPhoto';
 import PhotoGallery from '../../components/Modals/ShowCard/PhotoGallery';
 import { useAuth } from '../../context/AuthContext';
 import LikeIconButton from '../../components/Buttons/LikeButton/LikeIconButton';
+import DogInformation from './DogInformation';
+import AdOptionsDrawer from './AdOptionsDrawer';
+import Menu from '../../components/Menu';
 
 const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
 const ShowAd = () => {
+    const [openMenu, setOpenMenu] = React.useState(false)
     const { state: { user: { publication, dog, ...restUser } } } = useAuth()
     const {
         multimedia,
-        interests,
-        permission_tlf,
         description,
         LikesCount
     } = publication;
     const adPictures = getImages(JSON.parse(multimedia))
 
+    const toggleMenu = () => setOpenMenu(!openMenu)
+
     return (
         <Slide direction="left" in={true} mountOnEnter unmountOnExit>
             <Box sx={{
-                height: '100%',
-                width: '100%',
+                height: '660px',
+                width: '350px',
+                maxWidth: '350px',
                 backgroundColor: '#fff',
                 borderRadius: '9px'
-            }}>
+            }}  id='showAd-drawer-container'>
                 <Box sx={{
                     flex: 1,
                     height: 300,
@@ -60,48 +64,43 @@ const ShowAd = () => {
                 <Box sx={{
                     borderRadius: '24px 24px 0px 0px',
                     display: 'flex',
-                    flexDirection: 'column'
+                    flexDirection: 'column',
+                    width: '320px',
+                    p: 4
                 }}>
-                    <Box sx={{ p: 2 }}>
-                        <Typography variant="h5" color="text.secondary" fontWeight={500}>
-                            {dog.name}
-                        </Typography>
-                        <PublicationDescription
-                            color='info.main'
-                            dotColor='info'
-                            age={dog.dogAge}
-                            breed={dog.breed}
-                            province={restUser.province}
-                            city={restUser.city}
-                        />
-                        <Box sx={{ mt: 1 }}>
-                            <Typography variant="body1" color="text.secondary" gutterBottom sx={{ display: 'flex', alignItems: 'center' }}>
-                                <Mail size={20} />
-                                <Box marginRight='1rem' />
-                                {restUser.email}
-                            </Typography>
-                            {(restUser.phone && permission_tlf) && (
-                                <Typography
-                                    variant="body1"
-                                    color="text.secondary"
-                                    gutterBottom
-                                    sx={{ display: 'flex', alignItems: 'center' }}
+                    <Box sx={{
+                        display: 'flex',
+                        width: '100%'
+                    }}>
+                        <Box sx={{
+                            flex: 1
+                        }}>
+                            <DogInformation hideTitle />
+                        </Box>
+                        <Box>
+                            {/* <IconButton onClick={toggleMenu}>
+                                <MoreVertical />
+                            </IconButton> */}
+                            <Menu icon={<MoreVertical />}>
+                                <Box
+                                    component={LinkBehavior}
+                                    to={`/profile/ads/${publication.id}/edit`}
+                                    width='inherit'
+                                    sx={{ textDecoration: 'none', color: 'unset' }}
                                 >
-                                    <Box>
-                                        <Phone size={20} />
-                                    </Box>
-                                    <Box marginRight='1rem' />
-                                    +{restUser.code_phone} {restUser.phone}
-                                </Typography>
-                            )}
+                                    Editar anuncio
+                                </Box>
+                            </Menu>
                         </Box>
                     </Box>
-                    <Box sx={{ p: 2 }}>
-                        <Typography variant="subtitle1" color="text.secondary">
-                            {description}
-                        </Typography>
-                    </Box>
-                    <Box sx={{ display: 'flex', p: 1 }}>
+                    <Typography
+                        variant="subtitle1"
+                        color="text.secondary"
+                        mt={2}
+                    >
+                        {description}
+                    </Typography>
+                    <Stack spacing={2} direction="row" mt={2}>
                         {!!dog.Vaccines.length && (
                             <Box sx={{ p: 1 }}>
                                 <ShowVaccines
@@ -122,14 +121,17 @@ const ShowAd = () => {
                                 />
                             </Box>
                         )}
-                    </Box>
-                    <Box sx={{ p: 2 }}>
-                        <Stack spacing={2} direction="row" mt={2}>
-                            <LikeIconButton likes={LikesCount} />
-                            <MessageIconButton active={true} />
-                        </Stack>
-                    </Box>
+                    </Stack>
+                    <Stack spacing={2} direction="row" mt={2}>
+                        <LikeIconButton likes={LikesCount} />
+                        <MessageIconButton active={true} />
+                    </Stack>
                 </Box>
+                {/* <AdOptionsDrawer
+                    open={openMenu}
+                    handleClose={toggleMenu}
+                    publication={publication}
+                /> */}
             </Box>
         </Slide>
     )

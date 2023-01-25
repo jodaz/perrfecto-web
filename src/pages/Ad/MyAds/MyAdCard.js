@@ -61,7 +61,7 @@ const MyAdCard = ({ fullWidth, ...data  }) => {
                     </Box>
                     <Box
                         component={LinkBehavior}
-                        to={`ads/${publication.id}/edit`}
+                        to={`/profile/ads/${publication.id}/edit`}
                         width='inherit'
                         sx={{ textDecoration: 'none', color: 'unset' }}
                     >
