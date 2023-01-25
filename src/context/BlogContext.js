@@ -29,7 +29,7 @@ function blogReducer(state, action) {
             case 'SEARCH_BLOG': {
                 return {
                     ...state,
-                    items: state.items.filter(item => item.Ad.publi.name.match(action.payload)),
+                    items: filterBlogs(state.items, action.payload),
                     is_searching: true
                 }
             }
@@ -45,6 +45,9 @@ function blogReducer(state, action) {
                     items: state.items.filter(({ id }) => id != action.payload.id),
                     is_searching: false
                 }
+            }
+            case 'RESET': {
+                return initialState
             }
             default: {
                 throw new Error(`Unhandled action type: ${action.type}`)
@@ -105,6 +108,19 @@ async function searchBlogs(dispatch, search) {
     }
 }
 
+/**
+ * items: state
+ * payload: parameters for filtering
+ * @param {*} values
+ */
+async function filterBlogs(items, payload) {
+    try {
+        console.log(items, payload)
+    } catch (e) {
+        console.log()
+    }
+}
+
 async function toggleFilters(dispatch) {
     try {
         dispatch({
@@ -115,11 +131,22 @@ async function toggleFilters(dispatch) {
     }
 }
 
+async function resetFilters(dispatch) {
+    try {
+        dispatch({
+            type: 'RESET'
+        })
+    } catch (e) {
+        console.log(e)
+    }
+}
+
 export {
     toggleFilters,
     useBlogs,
     BlogProvider,
     BlogContext,
     searchBlogs,
-    fetchBlogs
+    fetchBlogs,
+    resetFilters
 }

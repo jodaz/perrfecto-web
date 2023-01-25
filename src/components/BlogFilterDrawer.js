@@ -7,10 +7,11 @@ import DialogTitle from './DialogTitle';
 import { useForm } from "react-hook-form";
 import SelectInput from './Forms/SelectInput';
 import {
-    useBusinesses,
+    useBlogs,
     toggleFilters,
-    resetFilters
-} from '../context/BusinessContext';
+    resetFilters,
+    searchBlogs
+} from '../context/BlogContext';
 import { alpha } from '@mui/material';
 
 const statuses = [
@@ -24,7 +25,7 @@ const BlogFilterDrawer = () => {
     }} = useForm({
         reValidateMode: "onBlur"
     });
-    const { state: { openFilter }, dispatch } = useBusinesses();
+    const { state: { openFilter }, dispatch } = useBlogs();
 
     const toggleDrawer = () => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -44,7 +45,7 @@ const BlogFilterDrawer = () => {
         const parsedData = {};
 
         try {
-            console.log(values)
+            searchBlogs(dispatch, values)
         } catch (error) {
             console.log(error)
         }
@@ -63,7 +64,6 @@ const BlogFilterDrawer = () => {
                     disabled={isSubmitting}
                     label='Estado'
                     options={statuses}
-                    optionLabel='nombre'
                     InputProps={{
                         placeholder: 'Seleccione'
                     }}
