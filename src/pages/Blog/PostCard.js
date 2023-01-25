@@ -9,6 +9,7 @@ import { format } from 'date-fns';
 import { es } from 'date-fns/locale'
 import getUserPhoto from '../../utils/getUserPhoto';
 import PostMenu from './PostMenu';
+import LinkBehavior from '../../components/LinkBehavior';
 
 const PostCard = ({
     id,
@@ -24,80 +25,84 @@ const PostCard = ({
         sx={{
             display: 'flex',
             border: 'none',
+            flexDirection: { xs: 'column', sm: 'row' }
+        }}
+    >
+        <Box sx={{
+            display: 'flex',
             textDecoration: 'none',
             color: 'unset',
-            flexDirection: { xs: 'column', sm: 'row' },
+            flex: 1,
             transition: '0.3s',
             cursor: 'pointer',
             '&: hover': {
                 opacity: 0.75
             }
-        }}
-    >
-        <CardMedia
-            component="img"
-            width="130px"
-            height="140px"
-            alt="post_cover"
-            src={BlogMultimedia.length ? getUserPhoto(BlogMultimedia[0].name) : null}
-            sx={{
-                borderRadius: 2,
-                minWidth: '130px',
-                minHeight: '130px',
-                maxWidth: '130px',
-                maxHeight: '130px'
-            }}
-        />
-        <Box sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            px: { xs: 0, sm: 2 },
-            flex: 1
-        }}>
-            <Box>
-                <Typography
-                    variant="body1"
-                    color="text.secondary"
-                    fontWeight={700}
+        }} to={`/blogs/${id}`} component={LinkBehavior}>
+            <CardMedia
+                component="img"
+                width="130px"
+                height="140px"
+                alt="post_cover"
+                src={BlogMultimedia.length ? getUserPhoto(BlogMultimedia[0].name) : null}
+                sx={{
+                    borderRadius: 2,
+                    minWidth: '130px',
+                    minHeight: '130px',
+                    maxWidth: '130px',
+                    maxHeight: '130px'
+                }}
+            />
+            <Box sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                px: { xs: 0, sm: 2 }
+            }}>
+                <Box>
+                    <Typography
+                        variant="body1"
+                        color="text.secondary"
+                        fontWeight={700}
+                        sx={{
+                            textAlign: { xs: 'center', sm: 'start' },
+                            mt: { xs: 1.5, sm: 0 },
+                        }}
+                    >
+                        {title}
+                    </Typography>
+                    <Typography
+                        component="div"
+                        variant="caption"
+                        color="text.tertiary"
+                        fontWeight={500}
+                        sx={{ textAlign: { xm: 'center', sm: 'start' }, textTransform: 'capitalize' }}
+                    >
+                        {format(new Date(createdAt), 'MMMM d, y', { locale: es })}
+                    </Typography>
+                </Box>
+                <Stack
+                    direction="row"
+                    spacing={1}
                     sx={{
-                        textAlign: { xs: 'center', sm: 'start' },
-                        mt: { xs: 1.5, sm: 0 },
+                        justifyContent: { xs: 'space-between', sm: 'flex-start' },
+                        alignItems: 'center'
                     }}
                 >
-                    {title}
-                </Typography>
-                <Typography
-                    component="div"
-                    variant="caption"
-                    color="text.tertiary"
-                    fontWeight={500}
-                    sx={{ textAlign: { xm: 'center', sm: 'start' }, textTransform: 'capitalize' }}
-                >
-                    {format(new Date(createdAt), 'MMMM d, y', { locale: es })}
-                </Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <ThumbsUp color="#5E5E5E" />
+                        <Typography variant="body2" ml={1} color="#5E5E5E">
+                            {LikesCount}
+                        </Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <MessageSquare color="#5E5E5E" />
+                        <Typography variant="body2" ml={1} color="#5E5E5E">
+                            {CommentsCount}
+                        </Typography>
+                    </Box>
+                </Stack>
             </Box>
-            <Stack
-                direction="row"
-                spacing={1}
-                sx={{
-                    justifyContent: { xs: 'space-between', sm: 'flex-start' },
-                    alignItems: 'center'
-                }}
-            >
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <ThumbsUp color="#5E5E5E" />
-                    <Typography variant="body2" ml={1} color="#5E5E5E">
-                        {LikesCount}
-                    </Typography>
-                </Box>
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <MessageSquare color="#5E5E5E" />
-                    <Typography variant="body2" ml={1} color="#5E5E5E">
-                        {CommentsCount}
-                    </Typography>
-                </Box>
-            </Stack>
         </Box>
         {showMenu && (
             <PostMenu item={{ id: id }} />
