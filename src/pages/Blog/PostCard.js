@@ -8,8 +8,7 @@ import { ThumbsUp, MessageSquare } from 'lucide-react';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale'
 import getUserPhoto from '../../utils/getUserPhoto';
-import LinkBehavior from '../../components/LinkBehavior';
-import LikePostButton from '../../components/Buttons/LikePostButton';
+import PostMenu from './PostMenu';
 
 const PostCard = ({
     id,
@@ -17,7 +16,8 @@ const PostCard = ({
     BlogMultimedia,
     createdAt,
     CommentsCount = 0,
-    LikesCount = 0
+    LikesCount = 0,
+    showMenu
 }) => (
     <Card
         variant="outlined"
@@ -33,8 +33,6 @@ const PostCard = ({
                 opacity: 0.75
             }
         }}
-        component={LinkBehavior}
-        to={`/blogs/${id}`}
     >
         <CardMedia
             component="img"
@@ -54,7 +52,8 @@ const PostCard = ({
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
-            px: { xs: 0, sm: 2 }
+            px: { xs: 0, sm: 2 },
+            flex: 1
         }}>
             <Box>
                 <Typography
@@ -100,6 +99,9 @@ const PostCard = ({
                 </Box>
             </Stack>
         </Box>
+        {showMenu && (
+            <PostMenu item={{ id: id }} />
+        )}
     </Card>
 );
 

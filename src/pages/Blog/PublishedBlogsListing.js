@@ -1,15 +1,14 @@
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
+import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import PostCard from './PostCard';
-import LinkBehavior from '../../components/LinkBehavior'
-import { ArrowLeft } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
 import { apiProvider } from '../../api';
 import useEffectOnce from '../../utils/useEffectOnce';
 import LoadingIndicator from '../../components/LoadingIndicator';
+import SettingsLayout from '../../layouts/SettingsLayout';
+import { SlidersHorizontal } from 'lucide-react';
 
 const MyBlogs = ({ blogs }) => (
     <Box sx={{ display: 'flex', flexDirection: 'column', mt: '10px' }}>
@@ -21,7 +20,7 @@ const MyBlogs = ({ blogs }) => (
                     mt: 2
                 }}
             >
-                {blogs.map(blog => <PostCard {...blog} /> )}
+                {blogs.map(blog => <PostCard {...blog} showMenu /> )}
             </Stack>
         ) : (
             <Typography variant="subtitle1">
@@ -34,7 +33,6 @@ const MyBlogs = ({ blogs }) => (
 const PublishedBlogsListing = () => {
     const [loading, setLoading] = React.useState(true)
     const [blogs, setBlogs] = React.useState([])
-    const { state: { isAuth } } = useAuth();
 
     const fetchBlogs = async () => {
         setLoading(true)
@@ -57,40 +55,26 @@ const PublishedBlogsListing = () => {
     useEffectOnce(() => { fetchBlogs() }, []);
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', p: 2 }}>
-            <Box sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                flex: 1
-            }}>
-                <Typography
-                    variant="subtitle1"
-                    fontWeight={500}
-                    fontSize='1.2rem'
-                >
-                    Mis blogs
-                </Typography>
-                {(isAuth) && (
-                    <Button
-                        component={LinkBehavior}
-                        variant="outlined"
-                        to='/blogs'
-                        sx={{
-                            fontSize: '0.9rem',
-                            padding: '0.4rem 0.7rem',
-                            fontWeight: 500
-                        }}
-                    >
-                        <ArrowLeft /> Volver
-                    </Button>
-                )}
-            </Box>
-            {(loading)
-                ? <LoadingIndicator />
-                : <MyBlogs blogs={blogs} />
+        <SettingsLayout
+            title="Mis blogs"
+            rightIconComponent={
+                <IconButton>
+                    <SlidersHorizontal />
+                </IconButton>
             }
-        </Box>
+        >
+            <Box sx={{
+                p: 1,
+                display: 'flex',
+                flex: 1,
+                flexDirection: 'column',
+            }}>
+                {(loading)
+                    ? <LoadingIndicator />
+                    : <MyBlogs blogs={blogs} />
+                }
+            </Box>
+        </SettingsLayout>
     );
 }
 
