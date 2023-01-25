@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import InstagramModal from '../InstagramModal';
 import getUserPhoto from '../../../utils/getUserPhoto';
 
-const ContactBusiness = ({ User, AnnMultimedia, handleClose, open }) => (
+const ContactBusiness = ({ whatsApp, AnnMultimedia, handleClose, open }) => (
     <InstagramModal handleClose={handleClose} open={open}>
         <Box sx={{
             display: 'flex',
@@ -20,11 +20,13 @@ const ContactBusiness = ({ User, AnnMultimedia, handleClose, open }) => (
             borderRadius: 4,
             marginRight: '1rem'
         }}>
-            <Avatar sx={{
-                border: '2px solid #F59E0B',
-                height: '85px',
-                width: '85px'
-            }} src={getUserPhoto(AnnMultimedia[0].name)} />
+            {AnnMultimedia.length && (
+                <Avatar sx={{
+                    border: '2px solid #F59E0B',
+                    height: '85px',
+                    width: '85px'
+                }} src={getUserPhoto(AnnMultimedia[0].name)} />
+            )}
             <Box sx={{ p: 2 }}>
                 <Typography
                     color="text.secondary"
@@ -41,7 +43,7 @@ const ContactBusiness = ({ User, AnnMultimedia, handleClose, open }) => (
                         variant="contained"
                         color="success"
                         target='_blank'
-                        href={`https://wa.me/${User.code_phone}${User.phone}`}
+                        href={`https://wa.me/${whatsApp}`}
                         fullWidth
                     >
                         <WhatsApp /> Whatsapp
