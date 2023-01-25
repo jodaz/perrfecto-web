@@ -46,7 +46,7 @@ const ShowMarket = () => {
         province,
         city,
         description,
-        User
+        whatsApp
     } = item
 
     return (
@@ -105,17 +105,19 @@ const ShowMarket = () => {
                         >
                             <MapPin size={18} /> {city}, {province}
                         </Button>
-                        <Typography
-                            variant="subtitle1"
-                            color="info.main"
-                            sx={{
-                                display: 'flex',
-                                alignItems: 'center'
-                            }}
-                            onClick={() => setOpenContactDialog(true)}
-                        >
-                            <Phone size={18} /><Box mr='10px' />  +{User.code_phone} {User.phone}
-                        </Typography>
+                        {whatsApp && (
+                            <Typography
+                                variant="subtitle1"
+                                color="info.main"
+                                sx={{
+                                    display: 'flex',
+                                    alignItems: 'center'
+                                }}
+                                onClick={() => setOpenContactDialog(true)}
+                            >
+                                <Phone size={18} /><Box mr='10px' />  +{whatsApp}
+                            </Typography>
+                        )}
                         <Typography
                             variant="subtitle1"
                             color="text.secondary"
