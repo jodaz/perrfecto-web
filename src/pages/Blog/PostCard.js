@@ -143,7 +143,7 @@ const PostCard = ({
                     )}
                 </Box>
             </Box>
-            {!!!(loading && showMenu) && (
+            {(showMenu && !loading) && (
                 <PostMenu
                     item={{ id: item.id }}
                     handleDeletePost={handleDelete}
