@@ -3,7 +3,7 @@ import InstagramModal from '../InstagramModal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { Trash2 } from 'lucide-react';
+import { Star } from 'lucide-react';
 import Stack from '@mui/material/Stack';
 import { alpha } from '@mui/material';
 import SuccessfulFeatureBusiness from './SuccessfulFeatureBusiness';
@@ -62,7 +62,7 @@ const FeatureBusiness = ({ open, handleClose, closeBusiness, item }) => {
                     : (
                         <>
                             <Box sx={{ p: 1, textAlign: 'center' }}>
-                                <Trash2 size={48} />
+                                <Star size={48} color="#F59E0B" />
                             </Box>
                             <Box sx={{ p: 1 }}>
                                 <Typography
@@ -79,7 +79,7 @@ const FeatureBusiness = ({ open, handleClose, closeBusiness, item }) => {
                                     Al destacar su negocio, se monstrará en la pantalla principal del Market
                                 </Typography>
                                 <Stack direction="column">
-                                    <Button color="error" disabled={onSubmit} onClick={handleSubmit}>
+                                    <Button color="primary" disabled={onSubmit} onClick={handleSubmit}>
                                         Destacar negocio
                                     </Button>
                                     <Button onClick={handleClose} disabled={onSubmit} sx={{
@@ -88,7 +88,7 @@ const FeatureBusiness = ({ open, handleClose, closeBusiness, item }) => {
                                             backgroundColor: `${alpha('#858585', 0.1)}`
                                         }
                                     }}>
-                                        Volver
+                                        Cancelar
                                     </Button>
                                 </Stack>
                             </Box>
