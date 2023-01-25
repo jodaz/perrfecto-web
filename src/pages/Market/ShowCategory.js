@@ -12,6 +12,8 @@ const ShowCategory = () => {
     const { state: { selectedItem }, dispatch } = useBusinesses();
     const [data, setData] = React.useState([])
 
+    const filterFunction = data => console.log(data)
+
     const fetchBusinesses = async () => {
         try {
             const res = await apiProvider.get(`/api/business-ann/anns?id_category=${selectedItem.item.id}`)
@@ -39,7 +41,7 @@ const ShowCategory = () => {
                 height: '100%'
             }}>
                 <Box p={2}>
-                    <SearchBox />
+                    <SearchBox filter={filterFunction} />
                 </Box>
                 {data.length ? (
                     <Stack

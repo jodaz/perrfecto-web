@@ -113,9 +113,18 @@ async function searchBlogs(dispatch, search) {
  * payload: parameters for filtering
  * @param {*} values
  */
-async function filterBlogs(items, payload) {
+async function filterBlogs(items, payload, dispatch) {
     try {
-        console.log(items, payload)
+        let newItems = items;
+
+        if (payload.search) {
+            newItems = items.filter(item => item.title.match(payload.search))
+        }
+
+        dispatch({
+            type: 'FETCH_BLOGS',
+            payload: newItems
+        })
     } catch (e) {
         console.log()
     }
@@ -136,6 +145,7 @@ async function resetFilters(dispatch) {
         dispatch({
             type: 'RESET'
         })
+        fetchBlogs(dispatch)
     } catch (e) {
         console.log(e)
     }

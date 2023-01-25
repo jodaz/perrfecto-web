@@ -10,7 +10,7 @@ import { SlidersHorizontal } from 'lucide-react';
 import DeletePublication from '../../components/Modals/DeletePublication';
 import SearchBox from '../../components/SearchBox';
 import BlogFilterDrawer from '../../components/BlogFilterDrawer';
-import { useBlogs, fetchBlogs } from '../../context/BlogContext';
+import { useBlogs, fetchBlogs, toggleFilters, searchBlogs } from '../../context/BlogContext';
 
 const PublishedBlogsListing = () => {
     const [deletePost, setDeletePost] = React.useState(null)
@@ -26,7 +26,7 @@ const PublishedBlogsListing = () => {
         <SettingsLayout
             title="Mis blogs"
             rightIconComponent={
-                <IconButton>
+                <IconButton onClick={() => toggleFilters(dispatch)}>
                     <SlidersHorizontal />
                 </IconButton>
             }
@@ -38,7 +38,7 @@ const PublishedBlogsListing = () => {
                 flexDirection: 'column',
             }} id="blog-drawer-container">
                 <Box sx={{ margin: '10px 0' }}>
-                    <SearchBox />
+                    <SearchBox filter={(data) => searchBlogs(dispatch, data)} />
                 </Box>
                 <Box sx={{ display: 'flex', flexDirection: 'column', mt: '10px' }}>
                     {(items.length) ? (

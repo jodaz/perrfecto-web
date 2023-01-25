@@ -20,6 +20,8 @@ const Marketplace = () => {
     const [categories, setCategories] = React.useState([])
     const { state: { isLoaded, publications, selectedItem }, dispatch } = useBusinesses();
 
+    const filterFunction = data => console.log(data)
+
     const fetchCategories = async () => {
         setLoadingCategories(true)
         try {
@@ -63,7 +65,7 @@ const Marketplace = () => {
                     <SlidersHorizontal onClick={() => toggleFilters(dispatch)}/>
                 </IconButton>
             </Box>
-            <SearchBox />
+            <SearchBox filter={filterFunction} />
             {(!isLoaded) ?
             (
                 <>

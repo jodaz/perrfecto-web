@@ -2,9 +2,11 @@ import * as React from 'react';
 import { InputAdornment, InputBase } from '@mui/material';
 import { Search } from 'lucide-react';
 
-const SearchBox = () => {
+const SearchBox = ({ filter }) => {
     const handleOnChange = (e) => {
-        console.log(e.currentTarget.value)
+        filter({
+            search: e.currentTarget.value
+        })
     }
 
     return (
