@@ -147,9 +147,7 @@ function AppRoutes() {
             <Route
                 path='/profile/ads/:id/edit'
                 element={
-                    <AppLayout>
-                        <EditAd location={location} />
-                    </AppLayout>
+                    <EditAd location={location} />
                 }
             />
             <Route

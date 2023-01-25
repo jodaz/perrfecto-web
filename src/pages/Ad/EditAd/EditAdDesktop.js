@@ -2,21 +2,23 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import SettingsLayout from '../../layouts/SettingsLayout';
+import SettingsLayout from '../../../layouts/SettingsLayout';
 import { useForm } from "react-hook-form";
-import { useAuth, renewToken } from '../../context/AuthContext'
-import TextInput from '../../components/Forms/TextInput';
-import SwitchInput from '../../components/Forms/SwitchInput';
-import { apiProvider, fileProvider } from '../../api';
-import GalleryInput from '../../components/GalleryInput';
-import InterestInput from '../../components/InterestInput';
-import formDataHandler from '../../utils/formDataHandler';
-import PublicationWait from '../../components/Modals/PublicationWait';
-import OverlayLoader from '../../components/Modals/OverlayLoader';
-import useEffectOnce from '../../utils/useEffectOnce'
-import DeletePhotoWarning from '../../components/Modals/DeletePhotoWarning';
-import DogInformation from './DogInformation';
-import { DESCRIPTION, ADD_PHOTOS } from '../../validations';
+import { useAuth, renewToken } from '../../../context/AuthContext'
+import TextInput from '../../../components/Forms/TextInput';
+import SwitchInput from '../../../components/Forms/SwitchInput';
+import { apiProvider, fileProvider } from '../../../api';
+import GalleryInput from '../../../components/GalleryInput';
+import InterestInput from '../../../components/InterestInput';
+import formDataHandler from '../../../utils/formDataHandler';
+import PublicationWait from '../../../components/Modals/PublicationWait';
+import OverlayLoader from '../../../components/Modals/OverlayLoader';
+import useEffectOnce from '../../../utils/useEffectOnce'
+import DeletePhotoWarning from '../../../components/Modals/DeletePhotoWarning';
+import DogInformation from '../DogInformation';
+import { DESCRIPTION, ADD_PHOTOS } from '../../../validations';
+import DialogTitle from '../../../components/DialogTitle';
+import { useNavigate } from 'react-router-dom';
 
 const selectedItems = labels => labels.map(({ AdInterest }) => AdInterest.id_interest)
 
@@ -42,8 +44,9 @@ const SwitchInputContainer = ({
     </Box>
 )
 
-const EditAd = () => {
+const EditAdDesktop = () => {
     const { state: { user }, dispatch } = useAuth();
+    const navigate = useNavigate();
     const [openWarning, setOpenWarning] = React.useState(false)
     const [openDeletePhoto, setOpenDeletePhoto] = React.useState(false);
     const [selectedPhoto, setSelectedPhoto] = React.useState(null)
@@ -129,11 +132,20 @@ const EditAd = () => {
     }, [user.publication.multimedia.length])
 
     return (
-        <SettingsLayout title='Editar anuncio'>
+        <Box sx={{
+            background: '#fff',
+            boxShadow: '0px 2px 20px rgba(133, 133, 133, 0.25)',
+            borderRadius: '12px',
+            position: 'relative'
+        }}>
+            <DialogTitle onClose={() => navigate(-1)}>
+                Editar anuncio
+            </DialogTitle>
             <Box id="drawer-container" sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                position: 'relative'
+                position: 'relative',
+                width: '600px'
             }} component="form" onSubmit={handleSubmit(onSubmit)}>
                 <Box sx={{ p: 2 }}>
                     <GalleryInput
@@ -150,7 +162,7 @@ const EditAd = () => {
                         message='Tienes un máximo de 15 fotos'
                     />
                 </Box>
-                <Box sx={{ p: 2 }} id="drawer-container">
+                <Box sx={{ p: 2, display: 'flex' }} id="drawer-container">
                     <DogInformation />
                     <Box sx={{ pt: 2, pb: 2 }}>
                         <InterestInput
@@ -160,58 +172,58 @@ const EditAd = () => {
                             isSubmitting={isSubmitting}
                         />
                     </Box>
-                    <Box sx={{ pt: 2, pb: 2, color: 'black' }}>
-                        <TextInput
-                            name='description'
-                            control={control}
-                            label='Descripción:'
-                            placeholder='Escribir aquí'
-                            multiline
-                            maxRows={4}
-                            rows={4}
-                            rules={DESCRIPTION.rules}
-                            validations={DESCRIPTION.messages}
-                            labelColor="text"
-                            sx={{
-                                border: 'none !important',
-                                padding: 0,
-                                '&.Mui-focused': {
-                                    boxShadow: 'none',
-                                    borderColor: 'none'
-                                },
-                            }}
-                        />
-                    </Box>
-                    <Box>
-                        <Typography
-                            variant="body2"
-                            color="text.tertiary"
-                            textTransform='uppercase'
-                            gutterBottom
-                        >
-                            Permisos
-                        </Typography>
-                        <SwitchInputContainer
-                            label='Visualizar número de teléfono'
-                            control={control}
-                            name='permission_tlf'
-                        />
-                        <SwitchInputContainer
-                            label='Activar geolocalización'
-                            control={control}
-                            name='permission_geolocation'
-                        />
-                        <SwitchInputContainer
-                            label='Habilitar Whatsapp'
-                            control={control}
-                            name='permission_whatsapp'
-                        />
-                    </Box>
-                    <Box sx={{ p: 2 }}>
-                        <Button variant="contained" type="submit" fullWidth>
-                            Guardar
-                        </Button>
-                    </Box>
+                </Box>
+                <Box sx={{ p: 2, color: 'black' }}>
+                    <TextInput
+                        name='description'
+                        control={control}
+                        label='Descripción:'
+                        placeholder='Escribir aquí'
+                        multiline
+                        maxRows={4}
+                        rows={4}
+                        rules={DESCRIPTION.rules}
+                        validations={DESCRIPTION.messages}
+                        labelColor="text"
+                        sx={{
+                            border: 'none !important',
+                            padding: 0,
+                            '&.Mui-focused': {
+                                boxShadow: 'none',
+                                borderColor: 'none'
+                            },
+                        }}
+                    />
+                </Box>
+                <Box sx={{ p: 2 }}>
+                    <Typography
+                        variant="body2"
+                        color="text.tertiary"
+                        textTransform='uppercase'
+                        gutterBottom
+                    >
+                        Permisos
+                    </Typography>
+                    <SwitchInputContainer
+                        label='Visualizar número de teléfono'
+                        control={control}
+                        name='permission_tlf'
+                    />
+                    <SwitchInputContainer
+                        label='Activar geolocalización'
+                        control={control}
+                        name='permission_geolocation'
+                    />
+                    <SwitchInputContainer
+                        label='Habilitar Whatsapp'
+                        control={control}
+                        name='permission_whatsapp'
+                    />
+                </Box>
+                <Box sx={{ p: 2 }}>
+                    <Button variant="contained" type="submit" fullWidth>
+                        Guardar
+                    </Button>
                 </Box>
             </Box>
             <PublicationWait open={openWarning} handleClose={handleCloseWarning} />
@@ -223,8 +235,8 @@ const EditAd = () => {
                 endpoint={`api/publication/img_posted/${user.publication.id}`}
                 sideAction={() => renewToken(dispatch, user)}
             />
-        </SettingsLayout>
+        </Box>
     );
 }
 
-export default EditAd
+export default EditAdDesktop
