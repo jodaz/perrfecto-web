@@ -9,7 +9,7 @@ import { alpha } from '@mui/material';
 import SuccessfulFeatureBusiness from './SuccessfulFeatureBusiness';
 import { apiProvider } from '../../../api';
 
-const FeatureBusiness = ({ open, handleClose, closeBusiness, item }) => {
+const FeatureBusiness = ({ open, handleClose, item }) => {
     const [onSubmit, setOnSubmit] = React.useState(false);
     const [success, setSuccess] = React.useState(false)
 
@@ -41,7 +41,7 @@ const FeatureBusiness = ({ open, handleClose, closeBusiness, item }) => {
             }}
             open={open}
         >
-            {(success) ? <SuccessfulFeatureBusiness handleClose={closeBusiness}/>
+            {(success) ? <SuccessfulFeatureBusiness handleClose={handleClose}/>
             : (
                 <Box sx={{
                     display: 'flex',
