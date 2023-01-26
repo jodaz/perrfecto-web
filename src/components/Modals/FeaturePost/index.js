@@ -9,7 +9,7 @@ import { alpha } from '@mui/material';
 import SuccessfulFeaturePost from './SuccessfulFeaturePost';
 import { apiProvider } from '../../../api';
 
-const FeaturePost = ({ open, handleClose, closeBusiness, item }) => {
+const FeaturePost = ({ open, handleClose, item }) => {
     const [onSubmit, setOnSubmit] = React.useState(false);
     const [success, setSuccess] = React.useState(false)
 
@@ -41,7 +41,7 @@ const FeaturePost = ({ open, handleClose, closeBusiness, item }) => {
             }}
             open={open}
         >
-            {(success) ? <SuccessfulFeaturePost handleClose={closeBusiness}/>
+            {(success) ? <SuccessfulFeaturePost handleClose={handleClose}/>
             : (
                 <Box sx={{
                     display: 'flex',
@@ -58,7 +58,7 @@ const FeaturePost = ({ open, handleClose, closeBusiness, item }) => {
                     background: '#fff'
                 }}>
                     {(success)
-                        ? <SuccessfulFeaturePost />
+                        ? <SuccessfulFeaturePost handleClose={handleClose} />
                     : (
                         <>
                             <Box sx={{ p: 1, textAlign: 'center' }}>
@@ -70,17 +70,17 @@ const FeaturePost = ({ open, handleClose, closeBusiness, item }) => {
                                     gutterBottom
                                     fontWeight={500}
                                 >
-                                    ¿Estás seguro que deseas destacar su negocio?
+                                    ¿Estás seguro que deseas destacar esta publicación?
                                 </Typography>
                                 <Typography
                                     variant="body2"
                                     gutterBottom
                                 >
-                                    Al destacar su negocio, se monstrará en la pantalla principal del Market
+                                    Al destacar su publicación, se monstrará en la pantalla principal del blog
                                 </Typography>
                                 <Stack direction="column">
                                     <Button color="primary" disabled={onSubmit} onClick={handleSubmit}>
-                                        Destacar negocio
+                                        Destacar publicación
                                     </Button>
                                     <Button onClick={handleClose} disabled={onSubmit} sx={{
                                         color: '#858585',
