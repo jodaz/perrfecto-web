@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import { Phone, MapPin, Trash2, Edit, ArrowRight, Star, Info } from 'lucide-react'
+import { Phone, MapPin, Edit, ArrowRight, Star } from 'lucide-react'
 import getUserPhoto from '../../utils/getUserPhoto';
 import PhotoGallery from '../../components/Modals/ShowCard/PhotoGallery';
 import Menu from '../../components/Menu';
@@ -12,10 +12,12 @@ import SettingsLayout from '../../layouts/SettingsLayout';
 import FeatureBusiness from '../../components/Modals/FeatureBusiness';
 import ShowBusinessLocation from './ShowBusinessLocation';
 import LinkBehavior from '../../components/LinkBehavior';
+import { useAuth } from '../../context/AuthContext'
 
 const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
 const ShowBusiness = ({ close, ...item }) => {
+    const { state: { user } } = useAuth()
     const [featureBusiness, setFeatureBusiness] = React.useState(false)
     const {
         facebook,
@@ -27,7 +29,7 @@ const ShowBusiness = ({ close, ...item }) => {
         province,
         city,
         description,
-        business_name
+        business_name,
     } = item
     const [showBusinessLocation, setShowBusinessLocation] = React.useState(false)
 
@@ -105,11 +107,13 @@ const ShowBusiness = ({ close, ...item }) => {
                     borderTopRightRadius: '16px',
                     justifyContent: 'space-between'
                 }}>
-                    <Box sx={{ margin: '10px 10px 0 0', alignSelf: 'end' }}>
-                        <Tooltip title="Debe esperar 24 horas para que su negocio deje de ser destacado.">
-                            <Star color='#F59E0B' />
-                        </Tooltip>
-                    </Box>
+                    {(user.featured) && (
+                        <Box sx={{ margin: '10px 10px 0 0', alignSelf: 'end' }}>
+                            <Tooltip title="Debe esperar 24 horas para que su negocio deje de ser destacado.">
+                                <Star color='#F59E0B' />
+                            </Tooltip>
+                        </Box>
+                    )}
                     <Stack
                         orientation='vertical'
                         spacing={1}
