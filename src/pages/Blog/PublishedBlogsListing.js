@@ -11,14 +11,19 @@ import DeletePublication from '../../components/Modals/DeletePublication';
 import SearchBox from '../../components/SearchBox';
 import BlogFilterDrawer from '../../components/BlogFilterDrawer';
 import { useBlogs, fetchBlogs, toggleFilters, searchBlogs } from '../../context/BlogContext';
+import PostMenu from './PostMenu'
+import FeaturePost from '../../components/Modals/FeaturePost';
 
 const PublishedBlogsListing = () => {
+    const [featurePost, setFeaturePost] = React.useState(null)
     const [deletePost, setDeletePost] = React.useState(null)
     const { state: { items }, dispatch } = useBlogs()
 
     const handleDeletePost = async (post = null) => {
         setDeletePost(post ? post : null);
     }
+
+    const toggleFeaturePost = (post = null) => setFeaturePost(post ? post : null)
 
     useEffectOnce(() => { fetchBlogs(dispatch) }, []);
 
@@ -53,8 +58,14 @@ const PublishedBlogsListing = () => {
                                 <PostCard
                                     item={blog}
                                     handleDelete={() => handleDeletePost(blog)}
-                                    showMenu
                                     showStatus
+                                    menu={
+                                        <PostMenu
+                                            item={blog}
+                                            handleDeletePost={handleDeletePost}
+                                            openFeaturePost={() => toggleFeaturePost(blog)}
+                                        />
+                                    }
                                 />
                             ))}
                         </Stack>
@@ -72,6 +83,12 @@ const PublishedBlogsListing = () => {
                 redirect='/blogs/me'
             />
             <BlogFilterDrawer />
+            <FeaturePost
+                open={featurePost}
+                handleClose={() => toggleFeaturePost(null)}
+                item={featurePost}
+                redirect='/blogs/me'
+            />
         </SettingsLayout>
     );
 }
