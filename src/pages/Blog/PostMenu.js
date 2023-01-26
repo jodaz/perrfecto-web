@@ -6,7 +6,8 @@ import LinkBehavior from '../../components/LinkBehavior';
 
 const PostMenu = ({
     item,
-    handleDeletePost
+    handleDeletePost,
+    openFeaturePost
 }) => (
     <Menu
         icon={<MoreVertical />}
@@ -18,7 +19,7 @@ const PostMenu = ({
             }
         }}
     >
-        <Box onClick={() => null}
+        <Box onClick={openFeaturePost}
             sx={{
             display: 'flex',
             alignItems: 'center',

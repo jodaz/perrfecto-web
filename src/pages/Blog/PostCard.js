@@ -8,12 +8,11 @@ import { ThumbsUp, MessageSquare } from 'lucide-react';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale'
 import getUserPhoto from '../../utils/getUserPhoto';
-import PostMenu from './PostMenu';
 import LinkBehavior from '../../components/LinkBehavior';
 import Skeleton from "@mui/material/Skeleton";
 
 const PostCard = ({
-    showMenu,
+    menu,
     handleDelete,
     showStatus,
     item
@@ -143,11 +142,8 @@ const PostCard = ({
                     )}
                 </Box>
             </Box>
-            {(showMenu && !loading) && (
-                <PostMenu
-                    item={{ id: item.id }}
-                    handleDeletePost={handleDelete}
-                />
+            {(menu && !loading) && (
+                <>{menu}</>
             )}
         </Card>
     );

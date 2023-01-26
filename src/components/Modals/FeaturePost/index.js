@@ -6,18 +6,18 @@ import Typography from '@mui/material/Typography';
 import { Star } from 'lucide-react';
 import Stack from '@mui/material/Stack';
 import { alpha } from '@mui/material';
-import SuccessfulFeatureBusiness from './SuccessfulFeatureBusiness';
+import SuccessfulFeaturePost from './SuccessfulFeaturePost';
 import { apiProvider } from '../../../api';
 
-const FeatureBusiness = ({ open, handleClose, item }) => {
+const FeaturePost = ({ open, handleClose, item }) => {
     const [onSubmit, setOnSubmit] = React.useState(false);
     const [success, setSuccess] = React.useState(false)
 
     const handleSubmit = async () => {
         setOnSubmit(true);
         try {
-            const res = await apiProvider.post('/api/announcement/new-featured', {
-                id_ann: item.id
+            const res = await apiProvider.post('/api/blog/new-featured', {
+                blog_id: item.id
             })
 
             if (res.status >= 200 && res.status < 300) {
@@ -41,7 +41,7 @@ const FeatureBusiness = ({ open, handleClose, item }) => {
             }}
             open={open}
         >
-            {(success) ? <SuccessfulFeatureBusiness handleClose={handleClose}/>
+            {(success) ? <SuccessfulFeaturePost handleClose={handleClose}/>
             : (
                 <Box sx={{
                     display: 'flex',
@@ -58,7 +58,7 @@ const FeatureBusiness = ({ open, handleClose, item }) => {
                     background: '#fff'
                 }}>
                     {(success)
-                        ? <SuccessfulFeatureBusiness />
+                        ? <SuccessfulFeaturePost handleClose={handleClose} />
                     : (
                         <>
                             <Box sx={{ p: 1, textAlign: 'center' }}>
@@ -70,17 +70,17 @@ const FeatureBusiness = ({ open, handleClose, item }) => {
                                     gutterBottom
                                     fontWeight={500}
                                 >
-                                    ¿Estás seguro que deseas destacar su negocio?
+                                    ¿Estás seguro que deseas destacar esta publicación?
                                 </Typography>
                                 <Typography
                                     variant="body2"
                                     gutterBottom
                                 >
-                                    Al destacar su negocio, se monstrará en la pantalla principal del Market
+                                    Al destacar su publicación, se monstrará en la pantalla principal del blog
                                 </Typography>
                                 <Stack direction="column">
                                     <Button color="primary" disabled={onSubmit} onClick={handleSubmit}>
-                                        Destacar negocio
+                                        Destacar publicación
                                     </Button>
                                     <Button onClick={handleClose} disabled={onSubmit} sx={{
                                         color: '#858585',
@@ -100,4 +100,4 @@ const FeatureBusiness = ({ open, handleClose, item }) => {
     );
 }
 
-export default FeatureBusiness
+export default FeaturePost
