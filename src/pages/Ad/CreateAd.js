@@ -46,7 +46,12 @@ const CreateAd = () => {
     const { control, handleSubmit, watch, formState: {
         isSubmitting
     }} = useForm({
-        reValidateMode: "onBlur"
+        reValidateMode: "onBlur",
+        defaultValues: {
+            permission_tlf: true,
+            permission_whatsapp: true,
+            permission_geolocation: true
+        }
     });
     const { state: { user }, dispatch } = useAuth();
     const insterestsValues = watch('interests')
