@@ -63,6 +63,7 @@ import BusinessProfile from './pages/Profile/BusinessProfile';
 import PublishedBlogsListing from './pages/Blog/PublishedBlogsListing';
 import PublishedBlog from './pages/Blog/PublishedBlog';
 import BlogEdit from './pages/Blog/BlogEdit';
+import UpdatePassword from './pages/account/UpdatePassword';
 
 function AppRoutes() {
     let location = useLocation();
@@ -310,6 +311,14 @@ function AppRoutes() {
                 element={
                     <AppLayout>
                         <Account location={location} />
+                    </AppLayout>
+                }
+            />
+            <Route
+                path='/profile/settings/account/security'
+                element={
+                    <AppLayout>
+                        <UpdatePassword />
                     </AppLayout>
                 }
             />

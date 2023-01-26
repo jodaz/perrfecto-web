@@ -1,11 +1,13 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
+import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 import SettingsLayout from '../../layouts/SettingsLayout';
 import AccountDeleteWarning from '../../components/Modals/AccountDeleteWarning';
 import LinkBehavior from '../../components/LinkBehavior';
 import getSearchParams from '../../utils/getSearchParams';
 import { useNavigate } from 'react-router-dom';
+import ListItemLink from '../../components/ListItemLink';
 
 const Account = ({ location }) => {
     const openDeleteModal = getSearchParams(location, 'delete')
@@ -21,6 +23,9 @@ const Account = ({ location }) => {
                 justifyContent: 'space-between'
             }}>
                 <Box sx={{ p: 2 }}>
+                    <Divider />
+                    <ListItemLink to='security' title='Contraseña' />
+                    <Divider />
                 </Box>
                 <Box sx={{ p: 2 }}>
                     <Button
