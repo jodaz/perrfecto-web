@@ -64,6 +64,7 @@ import PublishedBlogsListing from './pages/Blog/PublishedBlogsListing';
 import PublishedBlog from './pages/Blog/PublishedBlog';
 import BlogEdit from './pages/Blog/BlogEdit';
 import UpdatePassword from './pages/account/UpdatePassword';
+import UpdateEmailAndPhone from './pages/account/UpdateEmailAndPhone';
 
 function AppRoutes() {
     let location = useLocation();
@@ -319,6 +320,14 @@ function AppRoutes() {
                 element={
                     <AppLayout>
                         <UpdatePassword />
+                    </AppLayout>
+                }
+            />
+            <Route
+                path='/profile/settings/account/access'
+                element={
+                    <AppLayout>
+                        <UpdateEmailAndPhone />
                     </AppLayout>
                 }
             />
