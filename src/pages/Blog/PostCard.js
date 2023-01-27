@@ -10,10 +10,10 @@ import { es } from 'date-fns/locale'
 import getUserPhoto from '../../utils/getUserPhoto';
 import LinkBehavior from '../../components/LinkBehavior';
 import Skeleton from "@mui/material/Skeleton";
+import FeaturedMark from './FeaturedMark';
 
 const PostCard = ({
     menu,
-    handleDelete,
     showStatus,
     item
 }) => {
@@ -47,20 +47,23 @@ const PostCard = ({
                         height={40}
                     />
                 ) : (
-                    <CardMedia
-                        component="img"
-                        width="130px"
-                        height="140px"
-                        alt="post_cover"
-                        src={item.BlogMultimedia.length ? getUserPhoto(item.BlogMultimedia[0].name) : null}
-                        sx={{
-                            borderRadius: 2,
-                            minWidth: '130px',
-                            minHeight: '130px',
-                            maxWidth: '130px',
-                            maxHeight: '130px'
-                        }}
-                    />
+                    <Box position="relative">
+                        <CardMedia
+                            width="130px"
+                            height="140px"
+                            alt="post_cover"
+                            image={item.BlogMultimedia.length ? getUserPhoto(item.BlogMultimedia[0].name) : null}
+                            sx={{
+                                borderRadius: 2,
+                                minWidth: '130px',
+                                minHeight: '130px',
+                                maxWidth: '130px',
+                                maxHeight: '130px'
+                            }}
+                        >
+                            {item.featured_blog && <FeaturedMark position={{ top: 10, left: 10 }} />}
+                        </CardMedia>
+                    </Box>
                 )}
                 <Box sx={{
                     display: 'flex',

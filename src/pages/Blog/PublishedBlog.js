@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Slide from '@mui/material/Slide';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
-import { ChevronLeft } from 'lucide-react'
+import { ChevronLeft, Star } from 'lucide-react'
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import DeletePublication from '../../components/Modals/DeletePublication';
@@ -19,6 +19,7 @@ import CommentsDrawer from './CommentsDrawer';
 import LikePostButton from '../../components/Buttons/LikePostButton';
 import PostMenu from './PostMenu';
 import FeaturePost from '../../components/Modals/FeaturePost';
+import FeaturedMark from './FeaturedMark';
 
 const PublishedBlogLayout = ({
     id,
@@ -58,6 +59,7 @@ const PublishedBlogLayout = ({
                         <ChevronLeft color="#fff" />
                     </IconButton>
                 </Box>
+                <FeaturedMark top={20} right={20} />
                 <Box
                     component="img"
                     width="100%"
