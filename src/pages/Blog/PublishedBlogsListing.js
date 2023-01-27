@@ -19,9 +19,7 @@ const PublishedBlogsListing = () => {
     const [deletePost, setDeletePost] = React.useState(null)
     const { state: { items }, dispatch } = useBlogs()
 
-    const handleDeletePost = async (post = null) => {
-        setDeletePost(post ? post : null);
-    }
+    const handleDeletePost = (post = null) => setDeletePost(post ? post : null)
 
     const toggleFeaturePost = (post = null) => setFeaturePost(post ? post : null)
 
@@ -57,12 +55,11 @@ const PublishedBlogsListing = () => {
                             {items.map(blog => (
                                 <PostCard
                                     item={blog}
-                                    handleDelete={() => handleDeletePost(blog)}
                                     showStatus
                                     menu={
                                         <PostMenu
                                             item={blog}
-                                            handleDeletePost={handleDeletePost}
+                                            handleDeletePost={() => handleDeletePost(blog)}
                                             openFeaturePost={() => toggleFeaturePost(blog)}
                                         />
                                     }
@@ -81,6 +78,7 @@ const PublishedBlogsListing = () => {
                 handleClose={() => handleDeletePost(null)}
                 item={deletePost}
                 redirect='/blogs/me'
+                sideAction={() => fetchBlogs(dispatch)}
             />
             <BlogFilterDrawer />
             <FeaturePost
