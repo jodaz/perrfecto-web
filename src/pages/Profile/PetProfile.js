@@ -94,6 +94,15 @@ const PetProfile = () => {
                             />
                         )}
                     </Box>
+                    {(user.dog) && (
+                        <Typography
+                            color="text.tertiary"
+                            variant="subtitle1"
+                            textAlign='center'
+                        >
+                            {user.dog.name}
+                        </Typography>
+                    )}
                     <Box sx={{
                         display: 'flex',
                         justifyContent: 'space-around',

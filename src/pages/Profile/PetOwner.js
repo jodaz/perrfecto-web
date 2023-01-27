@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import LinkBehavior from '../../components/LinkBehavior';
 import {
     PlusSquare,
@@ -91,6 +92,13 @@ const PetOwner = () => {
                         handleDelete={() => deletePhoto(currProfilePic)}
                     />
                 </Box>
+                <Typography
+                    color="text.tertiary"
+                    variant="subtitle1"
+                    textAlign='center'
+                >
+                    {user.name} {user.lastName && `${user.lastName}`}
+                </Typography>
                 <Box sx={{
                     display: 'flex',
                     justifyContent: 'space-around',
