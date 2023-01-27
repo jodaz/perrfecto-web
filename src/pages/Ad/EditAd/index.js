@@ -6,7 +6,7 @@ import EditAdDesktop from './EditAdDesktop';
 import PetProfile from '../../Profile/PetProfile';
 
 const EditAd = () => {
-    const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
+    const isSmall = useMediaQuery(theme => theme.breakpoints.down('md'));
 
     if (isSmall) {
         return <EditAdMobile />

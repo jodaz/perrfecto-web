@@ -2,7 +2,6 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import SettingsLayout from '../../../layouts/SettingsLayout';
 import { useForm } from "react-hook-form";
 import { useAuth, renewToken } from '../../../context/AuthContext'
 import TextInput from '../../../components/Forms/TextInput';
@@ -20,7 +19,7 @@ import { DESCRIPTION, ADD_PHOTOS } from '../../../validations';
 import DialogTitle from '../../../components/DialogTitle';
 import { useNavigate } from 'react-router-dom';
 
-const selectedItems = labels => labels.map(({ AdInterest }) => AdInterest.id_interest)
+const selectedItems = labels => labels.map(({ id }) => id)
 
 const SwitchInputContainer = ({
     control,
@@ -143,9 +142,11 @@ const EditAdDesktop = () => {
             </DialogTitle>
             <Box id="drawer-container" sx={{
                 display: 'flex',
+                maxHeight: '660px',
                 flexDirection: 'column',
                 position: 'relative',
-                width: 'fit-content'
+                width: 'fit-content',
+                overflowY: 'auto'
             }} component="form" onSubmit={handleSubmit(onSubmit)}>
                 <Box sx={{ padding: '0 1rem' }}>
                     <GalleryInput
@@ -168,7 +169,7 @@ const EditAdDesktop = () => {
                         flexDirection: 'column',
                         flex: 1
                     }}>
-                        <Box p={2}>
+                        <Box padding='0 1rem 1rem 1rem'>
                             <DogInformation desktop/>
                         </Box>
                         <Box p={2}>
@@ -198,7 +199,7 @@ const EditAdDesktop = () => {
                         display: 'flex',
                         flexDirection: 'column',
                         flex: 1,
-                        p: 1,
+                        padding: '0 1rem 1rem 1rem',
                         width: '290px'
                     }}>
                         <Box sx={{ pt: 2, pb: 2 }}>
@@ -236,7 +237,7 @@ const EditAdDesktop = () => {
                         </Box>
                     </Box>
                 </Box>
-                <Box sx={{ p: 2, textAlign: 'center' }}>
+                <Box sx={{ padding: '0 1rem 1rem 1rem', textAlign: 'center' }}>
                     <Button variant="contained" type="submit">
                         Guardar
                     </Button>

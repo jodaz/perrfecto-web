@@ -124,7 +124,7 @@ const CreateAd = () => {
                         message='Tienes un máximo de 15 fotos disponibles'
                     />
                 </Box>
-                <Box sx={{ p: 2 }} id="drawer-container">
+                <Box sx={{ p: 2 }} id="interests-drawer-container">
                     <DogInformation hideInterests />
                     <Box sx={{ pt: 2, pb: 2 }}>
                         <InterestInput
