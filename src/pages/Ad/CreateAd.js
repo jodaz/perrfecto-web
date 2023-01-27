@@ -125,7 +125,7 @@ const CreateAd = () => {
                     />
                 </Box>
                 <Box sx={{ p: 2 }} id="drawer-container">
-                    <DogInformation />
+                    <DogInformation hideInterests />
                     <Box sx={{ pt: 2, pb: 2 }}>
                         <InterestInput
                             control={control}
@@ -182,7 +182,12 @@ const CreateAd = () => {
                         />
                     </Box>
                     <Box sx={{ p: 2 }}>
-                        <Button variant="contained" type="submit" fullWidth>
+                        <Button
+                            variant="contained"
+                            type="submit"
+                            fullWidth
+                            disabled={isSubmitting}
+                        >
                             Guardar
                         </Button>
                     </Box>

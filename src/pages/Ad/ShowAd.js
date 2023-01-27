@@ -28,21 +28,20 @@ const ShowAd = () => {
         LikesCount
     } = publication;
     const adPictures = getImages(JSON.parse(multimedia))
-
     const toggleMenu = () => setOpenMenu(!openMenu)
 
     return (
         <Slide direction="left" in={true} mountOnEnter unmountOnExit>
             <Box sx={{
-                height: '660px',
-                width: '350px',
-                maxWidth: '350px',
+                height: 'fit-content',
+                width: 'fit-content',
+                maxWidth: '600px',
                 backgroundColor: '#fff',
                 borderRadius: '9px'
             }}  id='showAd-drawer-container'>
                 <Box sx={{
                     flex: 1,
-                    height: 300,
+                    height: 280,
                     width: '100%',
                     position: 'relative',
                     borderRadius: '9px 9px 0 0'
@@ -65,8 +64,8 @@ const ShowAd = () => {
                     borderRadius: '24px 24px 0px 0px',
                     display: 'flex',
                     flexDirection: 'column',
-                    width: '320px',
-                    p: 4
+                    width: 'fit-content',
+                    p: 3
                 }}>
                     <Box sx={{
                         display: 'flex',
@@ -78,9 +77,6 @@ const ShowAd = () => {
                             <DogInformation hideTitle />
                         </Box>
                         <Box>
-                            {/* <IconButton onClick={toggleMenu}>
-                                <MoreVertical />
-                            </IconButton> */}
                             <Menu icon={<MoreVertical />}>
                                 <Box
                                     component={LinkBehavior}
@@ -96,30 +92,26 @@ const ShowAd = () => {
                     <Typography
                         variant="subtitle1"
                         color="text.secondary"
-                        mt={2}
+                        mt={1}
                     >
                         {description}
                     </Typography>
-                    <Stack spacing={2} direction="row" mt={2}>
+                    <Stack spacing={2} direction="row" mt={1}>
                         {!!dog.Vaccines.length && (
-                            <Box sx={{ p: 1 }}>
-                                <ShowVaccines
-                                    name={restUser.name}
-                                    lastName={restUser.lastName}
-                                    img_profile={restUser.img_profile}
-                                    dog={dog}
-                                />
-                            </Box>
+                            <ShowVaccines
+                                name={restUser.name}
+                                lastName={restUser.lastName}
+                                img_profile={restUser.img_profile}
+                                dog={dog}
+                            />
                         )}
                         {!!dog.Certificates.length && (
-                            <Box sx={{ p: 1 }}>
-                                <ListCertificates
-                                    name={restUser.name}
-                                    lastName={restUser.lastName}
-                                    img_profile={restUser.img_profile}
-                                    dog={dog}
-                                />
-                            </Box>
+                            <ListCertificates
+                                name={restUser.name}
+                                lastName={restUser.lastName}
+                                img_profile={restUser.img_profile}
+                                dog={dog}
+                            />
                         )}
                     </Stack>
                     <Stack spacing={2} direction="row" mt={2}>
@@ -127,11 +119,6 @@ const ShowAd = () => {
                         <MessageIconButton active={true} />
                     </Stack>
                 </Box>
-                {/* <AdOptionsDrawer
-                    open={openMenu}
-                    handleClose={toggleMenu}
-                    publication={publication}
-                /> */}
             </Box>
         </Slide>
     )
