@@ -63,6 +63,9 @@ import BusinessProfile from './pages/Profile/BusinessProfile';
 import PublishedBlogsListing from './pages/Blog/PublishedBlogsListing';
 import PublishedBlog from './pages/Blog/PublishedBlog';
 import BlogEdit from './pages/Blog/BlogEdit';
+import ShowAd from './pages/Ad/ShowAd';
+import OnlyDesktop from './layouts/App/OnlyDesktop';
+import PrivateRoute from './components/PrivateRoute';
 
 function AppRoutes() {
     let location = useLocation();
@@ -73,14 +76,6 @@ function AppRoutes() {
             <Route
                 path='*'
                 element=<NotFound />
-            />
-            <Route
-                path='/home'
-                element={
-                    <AppLayout>
-                        <Home />
-                    </AppLayout>
-                }
             />
             <Route
                 path='/market'
@@ -117,25 +112,31 @@ function AppRoutes() {
             <Route
                 path='/blogs/:id/edit'
                 element={
-                    <AppLayout>
-                        <BlogEdit />
-                    </AppLayout>
+                    <PrivateRoute authorize='user,business' unauthorized={<NotFound />}>
+                        <AppLayout>
+                            <BlogEdit />
+                        </AppLayout>
+                    </PrivateRoute>
                 }
             />
             <Route
                 path='/blogs/me'
                 element={
-                    <AppLayout>
-                        <PublishedBlogsListing />
-                    </AppLayout>
+                    <PrivateRoute authorize='user,business' unauthorized={<NotFound />}>
+                        <AppLayout>
+                            <PublishedBlogsListing />
+                        </AppLayout>
+                    </PrivateRoute>
                 }
             />
             <Route
                 path='/blogs/create'
                 element={
-                    <AppLayout>
-                        <BlogCreate />
-                    </AppLayout>
+                    <PrivateRoute authorize='user,business' unauthorized={<NotFound />}>
+                        <AppLayout>
+                            <BlogCreate />
+                        </AppLayout>
+                    </PrivateRoute>
                 }
             />
 
@@ -145,25 +146,28 @@ function AppRoutes() {
             <Route
                 path='/profile/ads/create'
                 element={
-                    <AppLayout>
-                        <CreateAd location={location} />
-                    </AppLayout>
+                    <PrivateRoute authorize='user,business' unauthorized={<NotFound />}>
+                        <AppLayout>
+                            <CreateAd location={location} />
+                        </AppLayout>
+                    </PrivateRoute>
                 }
             />
             <Route
                 path='/profile/ads/:id/edit'
                 element={
-                    <AppLayout>
+                    <PrivateRoute authorize='user,business' unauthorized={<NotFound />}>
                         <EditAd location={location} />
-                    </AppLayout>
+                    </PrivateRoute>
                 }
             />
             <Route
                 path='/profile/ads/show'
                 element={
-                    <AppLayout>
-                        <CreateAd location={location} />
-                    </AppLayout>
+                    <OnlyDesktop
+                        aside={<PetProfile />}
+                        principal={<ShowAd location={location} />}
+                    />
                 }
             />
             <Route

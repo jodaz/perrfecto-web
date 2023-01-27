@@ -1,29 +1,34 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { MapPin, Phone, Mail } from 'lucide-react';
+import { MapPin, Phone, Mail, Compass } from 'lucide-react';
 import CircleIcon from '@mui/icons-material/FiberManualRecord';
 import { useAuth } from '../../context/AuthContext'
 import getYearsFromYear from '../../utils/getYearsFromYear';
 import { useNavigate } from 'react-router-dom';
 
-const DogInformation = () => {
+const DogInformation = ({ hideTitle, hideInterests }) => {
     const { state: { user } } = useAuth();
-    const { dog } = user
+    const { dog, publication } = user
     const redirect = useNavigate()
 
     return (
-        <>
-            <Box sx={{ display: 'flex', }}>
-                <Typography
-                    variant="body2"
-                    color="text.tertiary"
-                    textTransform={'uppercase'}
-                    gutterBottom
-                >
-                    información de la mascota
-                </Typography>
-            </Box>
+        <Box sx={{
+            display: 'flex',
+            flexDirection: 'column'
+        }}>
+            {!(hideTitle) && (
+                <Box sx={{ display: 'flex', }}>
+                    <Typography
+                        variant="body2"
+                        color="text.tertiary"
+                        textTransform={'uppercase'}
+                        gutterBottom
+                    >
+                        información de la mascota
+                    </Typography>
+                </Box>
+            )}
             <Typography
                 variant="h6"
                 textTransform='capitalize'
@@ -58,9 +63,25 @@ const DogInformation = () => {
                         color='info.main'
                         sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
                     >
-                        <MapPin size={20} />
+                        <Box marginRight={'5px'}>
+                            <MapPin />
+                        </Box>
                         {user.province},&nbsp;
                         {user.city}
+                    </Typography>
+                )}
+            </Box>
+            <Box sx={{ mt: 1 }}>
+                {!!(!hideInterests && publication.interests.length) && (
+                    <Typography
+                        variant="body2"
+                        sx={{ display: 'flex', alignItems: 'start' }}
+                        color="text.secondary"
+                    >
+                        <Box marginRight={'5px'}>
+                            <Compass />
+                        </Box>
+                        {publication.interests.map(interest => `${interest.name}. `)}
                     </Typography>
                 )}
             </Box>
@@ -85,7 +106,7 @@ const DogInformation = () => {
                     </Typography>
                 )}
             </Box>
-        </>
+        </Box>
     );
 }
 

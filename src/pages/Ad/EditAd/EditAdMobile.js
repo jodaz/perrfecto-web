@@ -2,22 +2,23 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import SettingsLayout from '../../layouts/SettingsLayout';
+import SettingsLayout from '../../../layouts/SettingsLayout';
 import { useForm } from "react-hook-form";
-import { useAuth, renewToken } from '../../context/AuthContext'
-import TextInput from '../../components/Forms/TextInput';
-import SwitchInput from '../../components/Forms/SwitchInput';
-import { apiProvider, fileProvider } from '../../api';
-import GalleryInput from '../../components/GalleryInput';
-import InterestInput from '../../components/InterestInput';
-import formDataHandler from '../../utils/formDataHandler';
-import PublicationWait from '../../components/Modals/PublicationWait';
-import OverlayLoader from '../../components/Modals/OverlayLoader';
-import useEffectOnce from '../../utils/useEffectOnce'
-import DogInformation from './DogInformation';
-import { DESCRIPTION, ADD_PHOTOS } from '../../validations';
-import { Info } from 'lucide-react'
+import { useAuth, renewToken } from '../../../context/AuthContext'
+import TextInput from '../../../components/Forms/TextInput';
+import SwitchInput from '../../../components/Forms/SwitchInput';
+import { apiProvider, fileProvider } from '../../../api';
+import GalleryInput from '../../../components/GalleryInput';
+import InterestInput from '../../../components/InterestInput';
+import formDataHandler from '../../../utils/formDataHandler';
+import PublicationWait from '../../../components/Modals/PublicationWait';
+import OverlayLoader from '../../../components/Modals/OverlayLoader';
+import useEffectOnce from '../../../utils/useEffectOnce'
+import DeletePhotoWarning from '../../../components/Modals/DeletePhotoWarning';
+import DogInformation from '../DogInformation';
+import { DESCRIPTION, ADD_PHOTOS } from '../../../validations';
+
+const selectedItems = labels => labels.map(({ AdInterest }) => AdInterest.id_interest)
 
 const SwitchInputContainer = ({
     control,
@@ -41,29 +42,45 @@ const SwitchInputContainer = ({
     </Box>
 )
 
-const CreateAd = () => {
+const EditAdMobile = () => {
+    const { state: { user }, dispatch } = useAuth();
     const [openWarning, setOpenWarning] = React.useState(false)
+    const [openDeletePhoto, setOpenDeletePhoto] = React.useState(false);
+    const [selectedPhoto, setSelectedPhoto] = React.useState(null)
     const [openOverlayLoader, setOpenOverlayLoader] = React.useState(false)
     const [interests, setInterests] = React.useState([])
-    const { control, handleSubmit, watch, formState: {
+    const { control, handleSubmit, watch, setValue, formState: {
         isSubmitting
     }} = useForm({
         reValidateMode: "onBlur",
         defaultValues: {
-            permission_tlf: true,
-            permission_whatsapp: true,
-            permission_geolocation: true
+            interests: user.publication.interests ? selectedItems(user.publication.interests) : null,
+            description: user.publication.description,
+            permission_geolocation: user.publication.permission_geolocation,
+            permission_whatsapp: user.publication.permission_whatsapp,
+            permission_tlf: user.publication.permission_tlf
         }
     });
-    const { state: { user }, dispatch } = useAuth();
     const insterestsValues = watch('interests')
 
-    const onSubmit = async data => {
+    const onSubmit = async (data) => {
+        let filteredFiles = []
+        const { files, ...rest } = data;
+
+        if (files.length) {
+            filteredFiles = files.filter(file => typeof(file) != 'string')
+        }
+
+        const parsedData = {
+            ...rest,
+            files: filteredFiles
+        }
+
         setOpenOverlayLoader(true)
-        const formData = await formDataHandler(data, 'files')
+        const formData = await formDataHandler(parsedData, 'files')
 
         try {
-            const res = await fileProvider.post('/api/publication/new', formData)
+            const res = await fileProvider.put(`/api/publication/edit/${user.publication.id}`, formData)
 
             if (res.status >= 200 && res.status < 300) {
                 renewToken(dispatch, user)
@@ -96,20 +113,24 @@ const CreateAd = () => {
         setOpenWarning(false);
     }
 
+    const handleOpenDeletePhoto = (file) => {
+        setOpenDeletePhoto(true);
+        setSelectedPhoto(file)
+    }
+
+    const handleCloseDeletePhoto = () => {
+        setOpenDeletePhoto(false)
+        setSelectedPhoto(null)
+    }
+
+    React.useEffect(() => {
+        console.log(JSON.parse(user.publication.multimedia))
+        setValue("files", JSON.parse(user.publication.multimedia))
+    }, [user.publication.multimedia.length])
+
     return (
-        <SettingsLayout
-            title='Crear anuncio'
-            rightIconComponent={
-                <Tooltip
-                    title='Recuerda que puedes añadir imágenes de 800px por 800px de mínimo y 1080px por 1080px de máximo'
-                >
-                    <Box p={2} color="text.tertiary">
-                        <Info />
-                    </Box>
-                </Tooltip>
-            }
-        >
-            <Box sx={{
+        <SettingsLayout title='Editar anuncio'>
+            <Box id="drawer-container" sx={{
                 display: 'flex',
                 flexDirection: 'column',
                 position: 'relative'
@@ -120,12 +141,17 @@ const CreateAd = () => {
                         name='files'
                         rules={ADD_PHOTOS.rules}
                         validations={ADD_PHOTOS.messages}
+                        deletePhotoHandler={handleOpenDeletePhoto}
+                        accept={{
+                            'image/*': [],
+                            'video/mp4': []
+                        }}
                         maxFiles={15}
-                        message='Tienes un máximo de 15 fotos disponibles'
+                        message='Tienes un máximo de 15 fotos'
                     />
                 </Box>
                 <Box sx={{ p: 2 }} id="drawer-container">
-                    <DogInformation hideInterests />
+                    <DogInformation />
                     <Box sx={{ pt: 2, pb: 2 }}>
                         <InterestInput
                             control={control}
@@ -143,9 +169,9 @@ const CreateAd = () => {
                             multiline
                             maxRows={4}
                             rows={4}
-                            labelColor="text"
                             rules={DESCRIPTION.rules}
                             validations={DESCRIPTION.messages}
+                            labelColor="text"
                             sx={{
                                 border: 'none !important',
                                 padding: 0,
@@ -182,12 +208,7 @@ const CreateAd = () => {
                         />
                     </Box>
                     <Box sx={{ p: 2 }}>
-                        <Button
-                            variant="contained"
-                            type="submit"
-                            fullWidth
-                            disabled={isSubmitting}
-                        >
+                        <Button variant="contained" type="submit" fullWidth>
                             Guardar
                         </Button>
                     </Box>
@@ -195,8 +216,15 @@ const CreateAd = () => {
             </Box>
             <PublicationWait open={openWarning} handleClose={handleCloseWarning} />
             <OverlayLoader open={openOverlayLoader} />
+            <DeletePhotoWarning
+                open={openDeletePhoto}
+                handleClose={handleCloseDeletePhoto}
+                file={selectedPhoto}
+                endpoint={`api/publication/img_posted/${user.publication.id}`}
+                sideAction={() => renewToken(dispatch, user)}
+            />
         </SettingsLayout>
     );
 }
 
-export default CreateAd
+export default EditAdMobile

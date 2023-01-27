@@ -5,11 +5,9 @@ import getUserPhoto from "../../../utils/getUserPhoto";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { Mail, Phone } from 'lucide-react';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Menu from "../../../components/Menu";
 import DeleteAd from "../../../components/Modals/DeleteAd";
-import { Chip } from '@mui/material';
 import LinkBehavior from '../../../components/LinkBehavior';
 import ShowVaccines from '../../Vaccines/ShowVaccines';
 import ListCertificates from '../../certificates/ListCertificates';
@@ -17,13 +15,14 @@ import { Stack } from '@mui/system';
 import StarIconButton from '../../../components/Buttons/FavouriteButton/StarIconButton';
 import LikeIconButton from '../../../components/Buttons/LikeButton/LikeIconButton';
 import MessageIconButton from '../../../components/Buttons/MessageButton/MessageIconButton';
+import DogInformation from '../DogInformation';
 
 const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
 const MyAdCard = ({ fullWidth, ...data  }) => {
-    const { publication, email, phone, code_phone } = data
+    const { publication } = data
     const [openDeleteModal, setOpenDeleteModal] = React.useState(false)
-    const { multimedia, interests, permission_tlf } = publication;
+    const { multimedia } = publication;
     const arrImages = getImages(JSON.parse(multimedia))
 
     const handleCloseDeleteModal = () => {
@@ -53,7 +52,15 @@ const MyAdCard = ({ fullWidth, ...data  }) => {
                 >
                     <Box
                         component={LinkBehavior}
-                        to={`ads/${publication.id}/edit`}
+                        to={`/profile/ads/show`}
+                        width='inherit'
+                        sx={{ textDecoration: 'none', color: 'unset' }}
+                    >
+                        Ver anuncio
+                    </Box>
+                    <Box
+                        component={LinkBehavior}
+                        to={`/profile/ads/${publication.id}/edit`}
                         width='inherit'
                         sx={{ textDecoration: 'none', color: 'unset' }}
                     >
@@ -65,36 +72,9 @@ const MyAdCard = ({ fullWidth, ...data  }) => {
                 </Menu>
             </Box>
             <CardContent>
+                <DogInformation hideTitle />
                 <Typography variant="subtitle1" color="text.secondary" gutterBottom>
                     {publication.description}
-                </Typography>
-                {(interests) && (
-                    <Box spacing={3} sx={{
-                        display: 'flex',
-                        flexWrap: 'wrap',
-                        marginTop: '1rem'
-                    }}>
-                        {interests.map(item => <Chip label={item.name} size="small" sx={{ mb: 1, mr: 1 }} />)}
-                    </Box>
-                )}
-                {(phone && permission_tlf) && (
-                    <Typography
-                        variant="subtitle1"
-                        color="text.secondary"
-                        gutterBottom
-                        sx={{ display: 'flex', alignItems: 'center' }}
-                    >
-                        <Box>
-                            <Phone />
-                        </Box>
-                        <Box marginRight='1rem' />
-                        {code_phone}&nbsp;{phone}
-                    </Typography>
-                )}
-                <Typography variant="subtitle1" color="text.secondary" sx={{ display: 'flex', alignItems: 'center' }}>
-                    <Mail />
-                    <Box marginRight='1rem' />
-                    {email}
                 </Typography>
                 <Box spacing={3} sx={{
                     display: 'flex',
@@ -105,8 +85,12 @@ const MyAdCard = ({ fullWidth, ...data  }) => {
                         mb: 1
                     }
                 }}>
-                    <ListCertificates {...data} />
-                    <ShowVaccines {...data} />
+                    {!!data.dog.Certificates.length && (
+                        <ListCertificates {...data} />
+                    )}
+                    {!!data.dog.Vaccines.length && (
+                        <ShowVaccines {...data} />
+                    )}
                 </Box>
                 <DeleteAd
                     open={openDeleteModal}
