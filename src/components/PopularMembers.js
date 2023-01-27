@@ -3,10 +3,8 @@ import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, A11y } from 'swiper';
-import { alpha, Typography } from '@mui/material';
-import { Plus } from 'lucide-react';
+import Typography from "@mui/material/Typography";
 import { useMediaQuery } from '@mui/material';
-import LinkBehavior from './LinkBehavior'
 import { useAuth } from '../context/AuthContext'
 
 const puppies = [
@@ -70,23 +68,6 @@ const PopularMembers = () => {
                 <Typography variant="subtitle" color='text.secondary'>
                     Miembros populares
                 </Typography>
-                {!user.publication && (
-                    <Box sx={{
-                        padding: '5px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        borderRadius: 50,
-                        cursor: 'pointer',
-                        color: '#fff',
-                        background: theme => theme.palette.primary.main,
-                        '& :hover': {
-                            background: theme => `${alpha(theme.palette.primary.main, 0.9)}`
-                        }
-                    }} component={LinkBehavior} to={!user.dog ? '/profile?dog=true' : '/profile/ads/create'}>
-                        <Plus size={18}/>
-                    </Box>
-                )}
             </Box>
             <Box sx={{
                 width: '100%',
