@@ -17,6 +17,7 @@ import { useForm } from 'react-hook-form';
 import PhotoInput from '../../components/Forms/PhotoInput';
 import { fileProvider, apiProvider } from '../../api'
 import formDataHandler from '../../utils/formDataHandler';
+import LatestPublishedBlogs from '../Blog/LatestPublishedBlogs';
 
 const RegisterOwner = React.lazy(() => import('../../components/RegisterOwner'));
 
@@ -71,7 +72,7 @@ const PetOwner = () => {
     }, [handleSubmit, watch])
 
     return (
-        <Box sx={{ p: 1, textAlign: 'center', backgroundColor: '#f6f6f6', width: '100%' }}>
+        <Box sx={{ p: 1, textAlign: 'center', width: '100%' }}>
             <BasicTabs />
             <Box sx={{
                 marginTop: '1rem',
@@ -144,6 +145,7 @@ const PetOwner = () => {
                     </React.Suspense>
                 )}
             </Box>
+            <LatestPublishedBlogs />
         </Box>
     );
 }

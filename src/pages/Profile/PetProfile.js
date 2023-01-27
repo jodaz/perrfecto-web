@@ -154,7 +154,7 @@ const PetProfile = () => {
                     </>
                 )}
             </Box>
-            {/* <LatestPublishedBlogs /> */}
+            <LatestPublishedBlogs />
         </>
     );
 }
