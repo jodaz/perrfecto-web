@@ -3,9 +3,8 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Slide from '@mui/material/Slide';
 import Stack from '@mui/material/Stack';
-import Menu from '../../components/Menu';
 import IconButton from '@mui/material/IconButton';
-import { Trash2, ChevronLeft, Edit, MoreVertical } from 'lucide-react'
+import { ChevronLeft } from 'lucide-react'
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import DeletePublication from '../../components/Modals/DeletePublication';
@@ -18,6 +17,8 @@ import getUserPhoto from '../../utils/getUserPhoto';
 import { MessageSquare } from 'lucide-react';
 import CommentsDrawer from './CommentsDrawer';
 import LikePostButton from '../../components/Buttons/LikePostButton';
+import PostMenu from './PostMenu';
+import FeaturePost from '../../components/Modals/FeaturePost';
 
 const PublishedBlogLayout = ({
     id,
@@ -26,12 +27,13 @@ const PublishedBlogLayout = ({
     createdAt,
     description,
     currAuthUser,
-    handleDeletePost,
     User,
     CommentsCount = 0,
     LikesCount = 0,
     navigate,
-    toggleComments
+    toggleComments,
+    toggleFeaturePost,
+    handleDeletePost
 }) => (
     <Slide direction="left" in={true} mountOnEnter unmountOnExit>
         <Box sx={{
@@ -81,37 +83,11 @@ const PublishedBlogLayout = ({
                         right: 20,
                         top: 20
                     }}>
-                        <Menu
-                            icon={<MoreVertical />}
-                            IconButtonProps={{
-                                sx: {
-                                    backgroundColor: '#fff',
-                                    border: 'none',
-                                    color: 'none'
-                                }
-                            }}
-                        >
-                            <Box sx={{
-                                display: 'flex',
-                                textDecoration: 'none',
-                                color: 'unset',
-                                alignItems: 'center'
-                            }} onClick={() => navigate(`edit`)}>
-                                <Edit />
-                                <Box sx={{ paddingLeft: '0.5rem' }}>
-                                    Editar blog
-                                </Box>
-                            </Box>
-                            <Box sx={{
-                                display: 'flex',
-                                alignItems: 'center'
-                            }} onClick={handleDeletePost}>
-                                <Trash2 />
-                                <Box sx={{ paddingLeft: '0.5rem' }}>
-                                    Eliminar blog
-                                </Box>
-                            </Box>
-                        </Menu>
+                        <PostMenu
+                            item={{ id: id }}
+                            handleDeletePost={handleDeletePost}
+                            openFeaturePost={toggleFeaturePost}
+                        />
                     </Box>
                 )}
                 <Stack
@@ -198,6 +174,7 @@ const PublishedBlogLayout = ({
 const PublishedBlog = () => {
     const { id } = useParams()
     const navigate = useNavigate()
+    const [featurePost, setFeaturePost] = React.useState(false)
     const [loading, setLoading] = React.useState(true)
     const [blog, setBlog] = React.useState([])
     const [deletePost, setDeletePost] = React.useState(false)
@@ -222,6 +199,8 @@ const PublishedBlog = () => {
         }
     }
 
+    const toggleFeaturePost = () => setFeaturePost(!featurePost)
+
     const toggleComments = () => {
         setOpenComments(!openComments)
     }
@@ -242,6 +221,7 @@ const PublishedBlog = () => {
                 currAuthUser={user}
                 navigate={navigate}
                 toggleComments={toggleComments}
+                toggleFeaturePost={toggleFeaturePost}
             />
             <DeletePublication
                 open={deletePost}
@@ -252,6 +232,12 @@ const PublishedBlog = () => {
                 openComments={openComments}
                 handleClose={toggleComments}
                 item={blog}
+            />
+            <FeaturePost
+                open={featurePost}
+                handleClose={toggleFeaturePost}
+                item={blog}
+                redirect={`/blogs/${blog.id}`}
             />
         </>
     )

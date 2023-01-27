@@ -40,7 +40,7 @@ const ShowBusinessLocation = ({
                 <Typography
                     variant="subtitle1"
                     color="text.secondary"
-                    fontWeight={500}
+                    fontWeight={400}
                     gutterBottom
                 >
                     {business_dir}, {province}, {city}

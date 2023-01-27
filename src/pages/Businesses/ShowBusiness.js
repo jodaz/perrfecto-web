@@ -1,21 +1,24 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import Tooltip from '@mui/material/Tooltip';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import { Phone, MapPin, Trash2, Edit, ArrowRight } from 'lucide-react'
+import { Phone, MapPin, Edit, ArrowRight, Star } from 'lucide-react'
 import getUserPhoto from '../../utils/getUserPhoto';
 import PhotoGallery from '../../components/Modals/ShowCard/PhotoGallery';
 import Menu from '../../components/Menu';
 import SettingsLayout from '../../layouts/SettingsLayout';
-import DeleteBusiness from '../../components/Modals/DeleteBusiness';
+import FeatureBusiness from '../../components/Modals/FeatureBusiness';
 import ShowBusinessLocation from './ShowBusinessLocation';
 import LinkBehavior from '../../components/LinkBehavior';
+import { useAuth } from '../../context/AuthContext'
 
 const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
 const ShowBusiness = ({ close, ...item }) => {
-    const [openDeleteModal, setOpenDeleteModal] = React.useState(false)
+    const { state: { user } } = useAuth()
+    const [featureBusiness, setFeatureBusiness] = React.useState(false)
     const {
         facebook,
         instagram,
@@ -26,7 +29,7 @@ const ShowBusiness = ({ close, ...item }) => {
         province,
         city,
         description,
-        business_name
+        business_name,
     } = item
     const [showBusinessLocation, setShowBusinessLocation] = React.useState(false)
 
@@ -38,16 +41,22 @@ const ShowBusiness = ({ close, ...item }) => {
         setShowBusinessLocation(false)
     }
 
-    const handleOpenDeleteModal = async () => {
-        setOpenDeleteModal(true);
-    }
-
-    const handleCloseDeleteModal = () => {
-        setOpenDeleteModal(false)
-    }
+   const toggleFeatureBusiness = () => setFeatureBusiness(!featureBusiness)
 
     const renderMenu = () => (
         <Menu>
+            <Box onClick={toggleFeatureBusiness}
+                sx={{
+                display: 'flex',
+                alignItems: 'center',
+                color: 'unset',
+                textDecoration: 'none',
+            }}>
+                <Star />
+                <Box sx={{ paddingLeft: '0.5rem' }}>
+                    Destacar negocio
+                </Box>
+            </Box>
             <Box component={LinkBehavior}
                 sx={{
                 display: 'flex',
@@ -58,15 +67,6 @@ const ShowBusiness = ({ close, ...item }) => {
                 <Edit />
                 <Box sx={{ paddingLeft: '0.5rem' }}>
                     Editar negocio
-                </Box>
-            </Box>
-            <Box sx={{
-                display: 'flex',
-                alignItems: 'center'
-            }} onClick={handleOpenDeleteModal}>
-                <Trash2 />
-                <Box sx={{ paddingLeft: '0.5rem' }}>
-                    Eliminar negocio
                 </Box>
             </Box>
         </Menu>
@@ -107,6 +107,13 @@ const ShowBusiness = ({ close, ...item }) => {
                     borderTopRightRadius: '16px',
                     justifyContent: 'space-between'
                 }}>
+                    {(user.featured) && (
+                        <Box sx={{ margin: '10px 10px 0 0', alignSelf: 'end' }}>
+                            <Tooltip title="Debe esperar 24 horas para que su negocio deje de ser destacado.">
+                                <Star color='#F59E0B' />
+                            </Tooltip>
+                        </Box>
+                    )}
                     <Stack
                         orientation='vertical'
                         spacing={1}
@@ -189,10 +196,11 @@ const ShowBusiness = ({ close, ...item }) => {
                         )}
                     </Stack>
                 </Box>
-                <DeleteBusiness
-                    open={openDeleteModal}
-                    handleClose={handleCloseDeleteModal}
+                <FeatureBusiness
+                    open={featureBusiness}
+                    handleClose={toggleFeatureBusiness}
                     closeBusiness={close}
+                    item={item}
                 />
             </Box>
         </SettingsLayout>

@@ -45,7 +45,7 @@ const Dropzone = ({
             setFiles(newFiles);
             onChange(newFiles)
         },
-        disabled: disabled,
+        disabled: disabled || files.length == maxFiles,
         maxFiles: maxFiles
     });
 
@@ -126,7 +126,11 @@ const Dropzone = ({
                     </SwiperStyled>
                 </Box>
             )}
-            <Box {...getRootProps({className: 'dropzone'})} sx={{ display: 'flex' }}>
+            <Box sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                width: '100%'
+            }} {...getRootProps({className: 'dropzone'})}>
                 <input {...getInputProps()} />
                 {(!files.length) &&
                     (<Box sx={{
@@ -142,35 +146,33 @@ const Dropzone = ({
                         <PlusCircle color='#858585' />
                     </Box>
                 )}
-                {!(files.length == maxFiles) && (
+                <Box sx={{
+                    display: 'flex',
+                    p: 1,
+                    width: '100px',
+                    textAlign: 'center',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexDirection: 'column'
+                }}>
                     <Box sx={{
+                        width: 'fit-content',
+                        bgcolor: '#ECECEC',
                         display: 'flex',
-                        p: 2,
-                        width: '100px',
-                        textAlign: 'center',
-                        alignItems: 'center',
                         justifyContent: 'center',
-                        flexDirection: 'column'
+                        alignItems: 'center',
+                        borderRadius: 100,
                     }}>
-                        <Box sx={{
-                            width: 'fit-content',
-                            bgcolor: '#ECECEC',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            borderRadius: 100,
-                        }}>
-                            <IconButton color="text.tertiary" disabled={disabled}>
-                                <PlusCircle />
-                            </IconButton>
-                        </Box>
-                        {message && (
-                            <Typography fontSize={12} color="text.tertiary">
-                                {message}
-                            </Typography>
-                        )}
+                        <IconButton color="text.tertiary" disabled={disabled || files.length == maxFiles}>
+                            <PlusCircle />
+                        </IconButton>
                     </Box>
-                )}
+                    {message && (
+                        <Typography fontSize={12} color="text.tertiary">
+                            {message}
+                        </Typography>
+                    )}
+                </Box>
             </Box>
         </Box>
     );

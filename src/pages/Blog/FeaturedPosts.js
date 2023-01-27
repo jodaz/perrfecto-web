@@ -13,11 +13,12 @@ const FeaturedPosts = () => {
 
     const fetchBlogs = async () => {
         setLoading(true)
+
         try {
-            const res = await apiProvider.get('api/blog/blogs')
+            const res = await apiProvider.get('/api/blog/featured')
 
             if (res.status >= 200 && res.status < 300) {
-                const { data: { data: { data } } } = res;
+                const { data: { data } } = res;
 
                 setBlogs(data)
                 setLoading(false)
@@ -42,7 +43,7 @@ const FeaturedPosts = () => {
                         mt: 2
                     }}
                 >
-                    {blogs.map(post => <PostCard {...post} />)}
+                    {blogs.map(post => <PostCard item={post} />)}
                 </Stack>
             ) : (
                 <Typography variant="subtitle1">

@@ -156,14 +156,6 @@ const BusinessProfile = () => {
                     component={LinkBehavior}
                     to='subscription'
                 />
-                <CustomButton
-                    size={32}
-                    icon={<Flag />}
-                    title='Estado de anuncios'
-                    color="info"
-                    component={LinkBehavior}
-                    to='publications'
-                />
             </Box>
         </Box>
     );
