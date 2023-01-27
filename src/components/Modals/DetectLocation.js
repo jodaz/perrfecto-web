@@ -28,8 +28,8 @@ export default function DetectLocation({ location }) {
             <Box sx={{
                 m: 1,
                 display: 'flex',
-                width: '350px',
-                height: '350px',
+                width: { md: '350px', sm: 'fit-content' },
+                height: { md: '350px', sm: 'fit-content' },
                 p: 3,
                 color: theme => theme.palette.text.secondary,
             }}>
