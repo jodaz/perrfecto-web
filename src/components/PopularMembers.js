@@ -5,7 +5,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, A11y } from 'swiper';
 import Typography from "@mui/material/Typography";
 import { useMediaQuery } from '@mui/material';
-import { useAuth } from '../context/AuthContext'
 
 const puppies = [
     {
@@ -55,7 +54,6 @@ const puppies = [
 ]
 
 const PopularMembers = () => {
-    const { state: { user } } = useAuth();
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('md'));
 
     return (
