@@ -7,11 +7,13 @@ import { Star } from 'lucide-react';
 import Stack from '@mui/material/Stack';
 import { alpha } from '@mui/material';
 import SuccessfulFeaturePost from './SuccessfulFeaturePost';
+import { fetchBlogs, useBlogs } from '../../../context/BlogContext';
 import { apiProvider } from '../../../api';
 
 const FeaturePost = ({ open, handleClose, item }) => {
     const [onSubmit, setOnSubmit] = React.useState(false);
     const [success, setSuccess] = React.useState(false)
+    const { dispatch } = useBlogs()
 
     const handleSubmit = async () => {
         setOnSubmit(true);
@@ -23,6 +25,7 @@ const FeaturePost = ({ open, handleClose, item }) => {
             if (res.status >= 200 && res.status < 300) {
                 setOnSubmit(false)
                 setSuccess(true)
+                fetchBlogs(dispatch)
             }
 
             return res;
