@@ -32,6 +32,7 @@ const PublishedBlogLayout = ({
     CommentsCount = 0,
     LikesCount = 0,
     navigate,
+    featured_blog,
     toggleComments,
     toggleFeaturePost,
     handleDeletePost
@@ -59,7 +60,7 @@ const PublishedBlogLayout = ({
                         <ChevronLeft color="#fff" />
                     </IconButton>
                 </Box>
-                <FeaturedMark top={20} right={20} />
+                {featured_blog && <FeaturedMark top={20} right={20} />}
                 <Box
                     component="img"
                     width="100%"

@@ -4,7 +4,7 @@ import Tooltip from '@mui/material/Tooltip';
 import { Star } from 'lucide-react'
 
 const FeaturedMark = positions => (
-    <Tooltip title="Debe esperar 24 horas para que su post deje de ser destacado.">
+    <Tooltip title="El post estará destacado por 24 horas.">
         <Box sx={{
             position: 'absolute',
             zIndex: 100,
