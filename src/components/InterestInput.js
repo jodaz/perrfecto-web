@@ -96,7 +96,7 @@ const InterestInput = ({
                     PaperProps={{ style: { position: 'absolute' } }}
                     BackdropProps={{ style: { position: 'absolute' } }}
                     ModalProps={{
-                        container: document.getElementById('drawer-container'),
+                        container: document.getElementById('interests-drawer-container'),
                         style: { position: 'absolute' }
                     }}
                 >

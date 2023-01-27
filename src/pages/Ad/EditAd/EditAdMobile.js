@@ -130,7 +130,7 @@ const EditAdMobile = () => {
 
     return (
         <SettingsLayout title='Editar anuncio'>
-            <Box id="drawer-container" sx={{
+            <Box id="interests-drawer-container" sx={{
                 display: 'flex',
                 flexDirection: 'column',
                 position: 'relative'
@@ -150,7 +150,7 @@ const EditAdMobile = () => {
                         message='Tienes un máximo de 15 fotos'
                     />
                 </Box>
-                <Box sx={{ p: 2 }} id="drawer-container">
+                <Box sx={{ p: 2 }}>
                     <DogInformation />
                     <Box sx={{ pt: 2, pb: 2 }}>
                         <InterestInput

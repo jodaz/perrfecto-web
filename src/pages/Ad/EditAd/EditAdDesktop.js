@@ -137,7 +137,7 @@ const EditAdDesktop = () => {
             boxShadow: '0px 2px 20px rgba(133, 133, 133, 0.25)',
             borderRadius: '12px',
             position: 'relative'
-        }}>
+        }} id="interests-drawer-container">
             <DialogTitle onClose={() => navigate(-1)}>
                 Editar anuncio
             </DialogTitle>
@@ -145,9 +145,9 @@ const EditAdDesktop = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 position: 'relative',
-                width: '600px'
+                width: 'fit-content'
             }} component="form" onSubmit={handleSubmit(onSubmit)}>
-                <Box sx={{ p: 2 }}>
+                <Box sx={{ padding: '0 1rem' }}>
                     <GalleryInput
                         control={control}
                         name='files'
@@ -162,66 +162,82 @@ const EditAdDesktop = () => {
                         message='Tienes un máximo de 15 fotos'
                     />
                 </Box>
-                <Box sx={{ p: 2, display: 'flex' }} id="drawer-container">
-                    <DogInformation />
-                    <Box sx={{ pt: 2, pb: 2 }}>
-                        <InterestInput
-                            control={control}
-                            options={interests}
-                            currentValues={insterestsValues}
-                            isSubmitting={isSubmitting}
-                        />
+                <Box display='flex'>
+                    <Box sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        flex: 1
+                    }}>
+                        <Box p={2}>
+                            <DogInformation desktop/>
+                        </Box>
+                        <Box p={2}>
+                            <TextInput
+                                name='description'
+                                control={control}
+                                label='Descripción:'
+                                placeholder='Escribir aquí'
+                                multiline
+                                maxRows={3}
+                                rows={3}
+                                rules={DESCRIPTION.rules}
+                                validations={DESCRIPTION.messages}
+                                labelColor="text"
+                                sx={{
+                                    border: 'none !important',
+                                    padding: 0,
+                                    '&.Mui-focused': {
+                                        boxShadow: 'none',
+                                        borderColor: 'none'
+                                    },
+                                }}
+                            />
+                        </Box>
+                    </Box>
+                    <Box sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        flex: 1,
+                        p: 1,
+                        width: '290px'
+                    }}>
+                        <Box sx={{ pt: 2, pb: 2 }}>
+                            <InterestInput
+                                control={control}
+                                options={interests}
+                                currentValues={insterestsValues}
+                                isSubmitting={isSubmitting}
+                            />
+                        </Box>
+                        <Box>
+                            <Typography
+                                variant="body2"
+                                color="text.tertiary"
+                                textTransform='uppercase'
+                                gutterBottom
+                            >
+                                Permisos
+                            </Typography>
+                            <SwitchInputContainer
+                                label='Visualizar número de teléfono'
+                                control={control}
+                                name='permission_tlf'
+                            />
+                            <SwitchInputContainer
+                                label='Activar geolocalización'
+                                control={control}
+                                name='permission_geolocation'
+                            />
+                            <SwitchInputContainer
+                                label='Habilitar Whatsapp'
+                                control={control}
+                                name='permission_whatsapp'
+                            />
+                        </Box>
                     </Box>
                 </Box>
-                <Box sx={{ p: 2, color: 'black' }}>
-                    <TextInput
-                        name='description'
-                        control={control}
-                        label='Descripción:'
-                        placeholder='Escribir aquí'
-                        multiline
-                        maxRows={4}
-                        rows={4}
-                        rules={DESCRIPTION.rules}
-                        validations={DESCRIPTION.messages}
-                        labelColor="text"
-                        sx={{
-                            border: 'none !important',
-                            padding: 0,
-                            '&.Mui-focused': {
-                                boxShadow: 'none',
-                                borderColor: 'none'
-                            },
-                        }}
-                    />
-                </Box>
-                <Box sx={{ p: 2 }}>
-                    <Typography
-                        variant="body2"
-                        color="text.tertiary"
-                        textTransform='uppercase'
-                        gutterBottom
-                    >
-                        Permisos
-                    </Typography>
-                    <SwitchInputContainer
-                        label='Visualizar número de teléfono'
-                        control={control}
-                        name='permission_tlf'
-                    />
-                    <SwitchInputContainer
-                        label='Activar geolocalización'
-                        control={control}
-                        name='permission_geolocation'
-                    />
-                    <SwitchInputContainer
-                        label='Habilitar Whatsapp'
-                        control={control}
-                        name='permission_whatsapp'
-                    />
-                </Box>
-                <Box sx={{ p: 2 }}>
-                    <Button variant="contained" type="submit" fullWidth>
+                <Box sx={{ p: 2, textAlign: 'center' }}>
+                    <Button variant="contained" type="submit">
                         Guardar
                     </Button>
                 </Box>

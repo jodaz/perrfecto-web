@@ -5,12 +5,31 @@ import { MapPin, Phone, Mail, Compass } from 'lucide-react';
 import CircleIcon from '@mui/icons-material/FiberManualRecord';
 import { useAuth } from '../../context/AuthContext'
 import getYearsFromYear from '../../utils/getYearsFromYear';
-import { useNavigate } from 'react-router-dom';
+import LinkBehavior from '../../components/LinkBehavior';
 
-const DogInformation = ({ hideTitle, hideInterests }) => {
+const Location = ({ user }) => (
+    <Typography
+        component={LinkBehavior}
+        to='/profile/settings/owner/location'
+        color='info.main'
+        sx={{
+            display: 'flex',
+            alignItems: 'center',
+            cursor: 'pointer',
+            textDecoration: 'none'
+        }}
+    >
+        <Box marginRight={'5px'}>
+            <MapPin />
+        </Box>
+        {user.province},&nbsp;
+        {user.city}
+    </Typography>
+)
+
+const DogInformation = ({ hideTitle, hideInterests, desktop }) => {
     const { state: { user } } = useAuth();
     const { dog, publication } = user
-    const redirect = useNavigate()
 
     return (
         <Box sx={{
@@ -54,23 +73,19 @@ const DogInformation = ({ hideTitle, hideInterests }) => {
                     <Typography color="primary.main">
                         {getYearsFromYear(dog.dogAge)} años
                     </Typography>
+                    {(user.province && user.city && desktop) && (
+                        <>
+                            <Box sx={{ fontSize: '6px', padding: '0 8px' }}>
+                                <CircleIcon fontSize='inherit' color='primary' />
+                            </Box>
+                            <Location user={user} />
+                        </>
+                    )}
                 </Box>
             </Box>
-            <Box sx={{ mt: 1 }}>
-                {(user.province && user.city) && (
-                    <Typography
-                        onClick={() => redirect('/profile/settings/owner/location')}
-                        color='info.main'
-                        sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
-                    >
-                        <Box marginRight={'5px'}>
-                            <MapPin />
-                        </Box>
-                        {user.province},&nbsp;
-                        {user.city}
-                    </Typography>
-                )}
-            </Box>
+            {(user.province && user.city && !desktop) && (
+                <Location user={user} />
+            )}
             <Box sx={{ mt: 1 }}>
                 {!!(!hideInterests && publication.interests.length) && (
                     <Typography
