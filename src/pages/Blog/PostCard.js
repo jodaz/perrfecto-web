@@ -42,7 +42,7 @@ const PostCard = ({
                 {loading ? (
                     <Skeleton
                         animation="wave"
-                        variant="circular"
+                        variant="rectangular"
                         width={40}
                         height={40}
                     />
