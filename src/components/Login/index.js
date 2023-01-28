@@ -1,6 +1,5 @@
 import * as React from 'react'
 import Button from '../Button'
-import { alpha } from '@mui/material/styles'
 import Dialog from '@mui/material/Dialog'
 import DialogTitle from '../DialogTitle'
 import Link from '@mui/material/Link'
@@ -195,17 +194,6 @@ export default function Login({ location }) {
                                 disabled={isSubmitting}
                             >
                                 Iniciar sesión
-                            </Button>
-                        </Box>
-                        <Box sx={{ p: 1 }}>
-                            <Button variant="contained" fullWidth sx={{
-                                backgroundColor: '#ccc',
-                                '&:hover': {
-                                    color: '#fff',
-                                    backgroundColor: alpha(`#000`, 0.3)
-                                }
-                            }} onClick={handleGuestButton}>
-                                Ingresar como invitado
                             </Button>
                         </Box>
                         <Box sx={{ p: 1 }}>
