@@ -68,10 +68,7 @@ export default function Login({ location }) {
                         type: 'byrrss'
                     })
                 }
-                if (message.includes('The user does not exist with that email')) {
-                    setErrorAlert('No estás registrado. Crea una cuenta para poder comenzar en TinderDogs.')
-                }
-                if (message.includes('The user does not exist with that phone')) {
+                if (message.includes('The user does not exist')) {
                     setErrorAlert('No estás registrado. Crea una cuenta para poder comenzar en TinderDogs.')
                 }
                 if (message.includes('Wrong Password')) {
