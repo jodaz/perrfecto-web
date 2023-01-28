@@ -7,6 +7,7 @@ import LinkBehavior from '../../components/LinkBehavior';
 import { Outlet, useNavigate } from 'react-router-dom'
 import getSearchParams from '../../utils/getSearchParams';
 import DeletedAccount from '../../components/Modals/DeletedAccount';
+import { alpha } from '@mui/material/styles'
 import { closeGuestWarning, useGuest } from '../../context/GuestContext';
 
 const Landing = ({ location }) => {
@@ -68,6 +69,17 @@ const Landing = ({ location }) => {
                 >
                     Crea un perfil para tu mascota
                 </Button>
+                <Box sx={{ p: 1 }}>
+                    <Button
+                        variant="contained"
+                        fullWidth
+                        color="secondary"
+                        to='/market'
+                        component={LinkBehavior}
+                    >
+                        Ingresar como invitado
+                    </Button>
+                </Box>
                 <Outlet />
             </Box>
             <DeletedAccount open={openDeleteModal} handleClose={() => navigate('/')} />
