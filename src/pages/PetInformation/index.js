@@ -9,21 +9,12 @@ import List from '../../components/List';
 import EditPhoto from './EditPhoto';
 import getYearsFromYear from '../../utils/getYearsFromYear'
 
-const charac = [
-    { name: 'Holis' },
-    { name: 'Holis' },
-    { name: 'Holis' },
-    { name: 'Holis' },
-    { name: 'Holis' },
-    { name: 'Holis' },
-    { name: 'Holis' },
-    { name: 'Holis' },
-]
-
 const PetInformation = () => {
     const [editPhoto, setEditPhoto] = React.useState(false);
     const { state: { user } } = useAuth();
     const { characteristic, Vaccines, Certificates } = user.dog
+
+    const toggleEditPhoto = () => setEditPhoto(!editPhoto)
 
     const renderCharacteristics = () =>  characteristic.map(item => (
         <Chip
@@ -69,10 +60,10 @@ const PetInformation = () => {
                         gutterBottom
                         color="primary"
                         fontWeight={500}
-                        onClick={() => setEditPhoto(true)}
+                        onClick={toggleEditPhoto}
                         sx={{ cursor: 'pointer' }}
                     >
-                        Editar foto
+                        {!editPhoto ? 'Editar foto' : 'Cancelar'}
                     </Typography>
                 </Box>
                 <Box>
