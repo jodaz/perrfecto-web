@@ -127,6 +127,7 @@ const PetProfile = () => {
                                 color="info"
                                 component={LinkBehavior}
                                 to={(user.dog) ? '/profile/ads/create' : '?dog=true'}
+                                notify={!user.dog}
                             />
                         )}
                     </Box>
