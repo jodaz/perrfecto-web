@@ -59,6 +59,22 @@ const PersonalInformation = () => {
                                 </Typography>
                             </>
                         </PrivateRoute>
+                        <PrivateRoute authorize={'business'}>
+                            <>
+                                <ListItemLink
+                                    to="business-name"
+                                    title="Nombre del negocio"
+                                    color="text.tertiary"
+                                />
+                                <Typography variant="subtitle1" ml={2}>
+                                    {user.business_name ? (
+                                        <>
+                                            {user.business_name}
+                                        </>
+                                    ) : 'No registrado'}
+                                </Typography>
+                            </>
+                        </PrivateRoute>
                         <ListItemLink
                             to="names"
                             title="Nombre y apellido"
@@ -79,6 +95,22 @@ const PersonalInformation = () => {
                                             <>{user.province}, {user.city}</>
                                         ) : 'No registrado'}
                                     </Typography>
+                            </>
+                        </PrivateRoute>
+                        <PrivateRoute authorize={'business'}>
+                            <>
+                                <ListItemLink
+                                    to="business-address"
+                                    title="Dirección del negocio"
+                                    color="text.tertiary"
+                                />
+                                <Typography variant="subtitle1" ml={2}>
+                                    {user.business_dir ? (
+                                        <>
+                                            {user.business_dir}
+                                        </>
+                                    ) : 'No registrado'}
+                                </Typography>
                             </>
                         </PrivateRoute>
                     </List>
