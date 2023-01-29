@@ -81,11 +81,6 @@ export default function Login({ location }) {
 
     const handleClose = () => navigate('/')
 
-    const handleGuestButton = () => {
-        guestUser(dispatch)
-        navigate('/market')
-    }
-
     return (
         <Dialog
             onClose={handleClose}

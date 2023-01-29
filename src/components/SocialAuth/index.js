@@ -5,6 +5,7 @@ import {
     LoginSocialGoogle,
     LoginSocialFacebook
 } from 'reactjs-social-login';
+import Alert from '@mui/material/Alert'
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as FacebookIcon } from '../../assets/icons/Facebook.svg'
 import { ReactComponent as GoogleIcon } from '../../assets/icons/Google.svg'
@@ -37,64 +38,74 @@ const SocialAuth = ({ hidePhone }) => {
 
     const onSubmit = async (data) => {
         setError(false);
+        try {
+            const res = await apiProvider.post('/api/auth/social-network', {
+                ...data
+            })
 
-        const res = await apiProvider.post('/api/auth/social-network', {
-            ...data
-        }).catch(error => {
-            if (error.response.status == 400) {
-                setError(true)
+            if (res.status >= 200 && res.status < 300) {
+                const { data } = res;
+
+                loginUser(dispatch, data)
+
+                if (data.data.register) {
+                    return navigate('/register/welcome')
+                } else {
+                    navigate('/detect-location')
+                }
             }
-        });
+        } catch (error) {
+            const message = error.response.data.msg;
 
-        if (res.status >= 200 && res.status < 300) {
-            const { data } = res;
-
-            loginUser(dispatch, data)
-
-            if (data.data.register) {
-                return navigate('/register/welcome')
-            } else {
-                navigate('/detect-location')
+            if (message.includes('deleted')) {
+                setError('Su cuenta ha sido eliminada.')
             }
-        }
+        };
     };
 
     return (
-        <Box sx={{
-            display: 'flex',
-            width: 'fit-content',
-            margin: '1rem auto',
-            justifyContent: 'space-between'
-        }}>
-            <LoginSocialFacebook
-                appId={vars.FacebookID}
-                fieldsProfile={facebookFields}
-                onResolve={({ data }) => onSubmit(data)}
-            >
-                <SocialIcon color="#1B77F2">
-                    <FacebookIcon />
-                </SocialIcon>
-            </LoginSocialFacebook>
-            <LoginSocialGoogle
-                client_id={vars.GoogleID}
-                scope="openid profile email"
-                discoveryDocs="claims_supported"
-                access_type="offline"
-                onResolve={({ data }) => onSubmit(data)}
-            >
-                <SocialIcon color="#ffffff">
-                    <GoogleIcon />
-                </SocialIcon>
-            </LoginSocialGoogle>
-            {(!hidePhone) && (
-                <SocialIcon
-                    color="#35414C"
-                    component={LinkBehavior}
-                    to='?withPhone=true'
-                >
-                    <Smartphone color="#fff" />
-                </SocialIcon>
+        <Box>
+            {(error) && (
+                <Alert severity="error" sx={{ margin: '1.5rem 0' }}>
+                    {error}
+                </Alert>
             )}
+            <Box sx={{
+                display: 'flex',
+                width: 'fit-content',
+                margin: '1rem auto',
+                justifyContent: 'space-between'
+            }}>
+                <LoginSocialFacebook
+                    appId={vars.FacebookID}
+                    fieldsProfile={facebookFields}
+                    onResolve={({ data }) => onSubmit(data)}
+                >
+                    <SocialIcon color="#1B77F2">
+                        <FacebookIcon />
+                    </SocialIcon>
+                </LoginSocialFacebook>
+                <LoginSocialGoogle
+                    client_id={vars.GoogleID}
+                    scope="openid profile email"
+                    discoveryDocs="claims_supported"
+                    access_type="offline"
+                    onResolve={({ data }) => onSubmit(data)}
+                >
+                    <SocialIcon color="#ffffff">
+                        <GoogleIcon />
+                    </SocialIcon>
+                </LoginSocialGoogle>
+                {(!hidePhone) && (
+                    <SocialIcon
+                        color="#35414C"
+                        component={LinkBehavior}
+                        to='?withPhone=true'
+                    >
+                        <Smartphone color="#fff" />
+                    </SocialIcon>
+                )}
+            </Box>
         </Box>
     )
 }
