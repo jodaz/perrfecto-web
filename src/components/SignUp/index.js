@@ -73,7 +73,7 @@ export default function SignUp({ location }) {
         }
     };
 
-    const handleClose = () => navigate('/')
+    const handleClose = () => navigate(-1)
 
     return (
         <Dialog
