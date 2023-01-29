@@ -9,17 +9,6 @@ import List from '../../components/List';
 import EditPhoto from './EditPhoto';
 import getYearsFromYear from '../../utils/getYearsFromYear'
 
-const charac = [
-    { name: 'Holis' },
-    { name: 'Holis' },
-    { name: 'Holis' },
-    { name: 'Holis' },
-    { name: 'Holis' },
-    { name: 'Holis' },
-    { name: 'Holis' },
-    { name: 'Holis' },
-]
-
 const PetInformation = () => {
     const [editPhoto, setEditPhoto] = React.useState(false);
     const { state: { user } } = useAuth();

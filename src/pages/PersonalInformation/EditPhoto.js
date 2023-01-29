@@ -10,7 +10,7 @@ import getUserPhoto from '../../utils/getUserPhoto';
 
 const EditPhoto = ({ isEditing }) => {
     const { state: { user }, dispatch } = useAuth();
-    const currProfilePic = user.img_profile ? JSON.parse(user.img_profile)[0] : null;
+    const [currProfilePic, setCurrProfilePic] = React.useState(null);
     const { handleSubmit, control, watch, formState: {
         isSubmitting
     }} = useForm();
@@ -54,13 +54,19 @@ const EditPhoto = ({ isEditing }) => {
         return () => subscription.unsubscribe();
     }, [handleSubmit, watch])
 
+    React.useEffect(() => {
+        if (JSON.parse(user.img_profile).length) {
+            setCurrProfilePic(getUserPhoto(JSON.parse(user.img_profile)[0]))
+        }
+    }, [JSON.parse(user.img_profile).length])
+
     return (
         <Box sx={{ display: 'flex' }}>
             {isEditing ? (
                 <PhotoInput
                     name="files"
                     control={control}
-                    defaultValue={currProfilePic}
+                    defaultValue={JSON.parse(user.img_profile)[0]}
                     disabled={isSubmitting}
                     handleDelete={deletePhoto}
                 />
