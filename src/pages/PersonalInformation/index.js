@@ -14,6 +14,8 @@ const PersonalInformation = () => {
     const [editPhoto, setEditPhoto] = React.useState(false);
     const { state: { user } } = useAuth();
 
+    const toggleEditPhoto = () => setEditPhoto(!editPhoto)
+
     return (
         <SettingsLayout title='Información personal'>
             <Box sx={{
@@ -34,10 +36,10 @@ const PersonalInformation = () => {
                         gutterBottom
                         color="primary"
                         fontWeight={500}
-                        onClick={() => setEditPhoto(true)}
+                        onClick={toggleEditPhoto}
                         sx={{ cursor: 'pointer' }}
                     >
-                        Editar foto
+                        {!editPhoto ? 'Editar foto' : 'Cancelar'}
                     </Typography>
                 </Box>
                 <Box>
