@@ -30,7 +30,7 @@ const SocialIcon = styled(IconButton)(({ color }) => ({
     }
 }))
 
-const SocialAuth = ({ hidePhone }) => {
+const SocialAuth = ({ hidePhone, location }) => {
     const [error, setError] = React.useState(false)
     const navigate = useNavigate();
     const { dispatch } = useAuth();
@@ -38,9 +38,15 @@ const SocialAuth = ({ hidePhone }) => {
     const onSubmit = async (data) => {
         setError(false);
 
-        const res = await apiProvider.post('/api/auth/social-network', {
-            ...data
-        }).catch(error => {
+        if (location.pathname == '/register') {
+            data.role = 'user'
+        }
+        if (location.pathname == '/business/register') {
+            data.role = 'business'
+        }
+
+        const res = await apiProvider.post('/api/auth/social-network', data)
+            .catch(error => {
             if (error.response.status == 400) {
                 setError(true)
             }
@@ -49,9 +55,10 @@ const SocialAuth = ({ hidePhone }) => {
         if (res.status >= 200 && res.status < 300) {
             const { data } = res;
 
-            loginUser(dispatch, data)
+            loginUser(dispatch, data) // Agregar rol user o business
 
             if (data.data.register) {
+
                 return navigate('/register/welcome')
             } else {
                 navigate('/detect-location')

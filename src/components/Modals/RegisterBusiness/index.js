@@ -7,6 +7,7 @@ import RegisterBusinessForm from './RegisterBusinessForm';
 import { Typography, Link as MuiLink, styled } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import EllipseImage from '../../EllipseImage';
+import SocialAuth from '../../SocialAuth';
 
 const Link = styled(MuiLink)(({ theme }) => ({
     color: theme.palette.primary.contrastText,
@@ -63,6 +64,7 @@ const RegisterBusiness = ({ location }) => {
                                 nuestros <Link href="/terms-conditions" underline="none">Términos y condiciones</Link> y con nuestra
                                     <Link href="/privacy" underline="none">  Política de Privacidad</Link>
                             </Box>
+                            <SocialAuth hidePhone location={location} />
                         </Box>
                     </Box>
                 )}
