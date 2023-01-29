@@ -31,14 +31,22 @@ const SocialIcon = styled(IconButton)(({ color }) => ({
     }
 }))
 
-const SocialAuth = ({ hidePhone }) => {
+const SocialAuth = ({ hidePhone, location }) => {
     const [error, setError] = React.useState(false)
     const navigate = useNavigate();
     const { dispatch } = useAuth();
 
-    const onSubmit = async (data) => {
+    const onSubmit = async data => {
         setError(false);
+
         try {
+            if (location.pathname == '/register') {
+                data.role = 'user'
+            }
+            if (location.pathname == '/business/register') {
+                data.role = 'business'
+            }
+
             const res = await apiProvider.post('/api/auth/social-network', {
                 ...data
             })
@@ -59,6 +67,8 @@ const SocialAuth = ({ hidePhone }) => {
 
             if (message.includes('deleted')) {
                 setError('Su cuenta ha sido eliminada.')
+            } else {
+                setError('Ha ocurrido un error')
             }
         };
     };

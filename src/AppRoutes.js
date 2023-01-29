@@ -66,6 +66,8 @@ import BlogEdit from './pages/Blog/BlogEdit';
 import ShowAd from './pages/Ad/ShowAd';
 import OnlyDesktop from './layouts/App/OnlyDesktop';
 import PrivateRoute from './components/PrivateRoute';
+import EditBusinessName from './pages/PersonalInformation/EditBusinessName';
+import EditBusinessAddress from './pages/PersonalInformation/EditBusinessAddress';
 
 function AppRoutes() {
     let location = useLocation();
@@ -183,6 +185,26 @@ function AppRoutes() {
                 element={
                     <AppLayout>
                         <EditNames location={location} />
+                    </AppLayout>
+                }
+            />
+            <Route
+                path='/profile/settings/owner/business-name'
+                element={
+                    <AppLayout>
+                        <PrivateRoute authorize='business' unauthorized={<NotFound />}>
+                            <EditBusinessName location={location} />
+                        </PrivateRoute>
+                    </AppLayout>
+                }
+            />
+            <Route
+                path='/profile/settings/owner/business-address'
+                element={
+                    <AppLayout>
+                        <PrivateRoute authorize='business' unauthorized={<NotFound />}>
+                            <EditBusinessAddress location={location} />
+                        </PrivateRoute>
                     </AppLayout>
                 }
             />

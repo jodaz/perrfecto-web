@@ -7,6 +7,7 @@ import RegisterBusinessForm from './RegisterBusinessForm';
 import { Typography, Link as MuiLink, styled } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import EllipseImage from '../../EllipseImage';
+import SocialAuth from '../../SocialAuth';
 
 const Link = styled(MuiLink)(({ theme }) => ({
     color: theme.palette.primary.contrastText,
@@ -55,14 +56,30 @@ const RegisterBusiness = ({ location }) => {
                             position: 'absolute',
                             top: 0
                         }}>
-                            <Typography variant="h4" color="secondary.main" sx={{ pb: 4, fontWeight: 500 }}>
+                            <Typography
+                                variant="h4"
+                                color="secondary.main"
+                                sx={{ mb: 4, fontWeight: 500 }}
+                            >
                                 Registra tu negocio
                             </Typography>
-                            <Box>
-                            Al crear una cuenta TinderDogs estás aceptando continuar de acuerdo a
+                            <Typography
+                                variant="subtitle1"
+                                color="secondary.main"
+                            >
+                                Al crear una cuenta TinderDogs estás aceptando continuar de acuerdo a
                                 nuestros <Link href="/terms-conditions" underline="none">Términos y condiciones</Link> y con nuestra
-                                    <Link href="/privacy" underline="none">  Política de Privacidad</Link>
-                            </Box>
+                                <Link href="/privacy" underline="none">  Política de Privacidad</Link>
+                            </Typography>
+                            <Box mt='50px' />
+                            <Typography
+                                variant="subtitle1"
+                                color="secondary.main"
+                                textAlign="center"
+                            >
+                                O continuar con
+                            </Typography>
+                            <SocialAuth hidePhone location={location} />
                         </Box>
                     </Box>
                 )}
