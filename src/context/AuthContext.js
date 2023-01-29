@@ -5,6 +5,8 @@ import { apiProvider } from '../api'
 const setLocalCredentials = async (token, data) => {
     await localStorage.setItem(vars.authToken, token)
     await localStorage.setItem(vars.user, JSON.stringify(data));
+
+    return true;
 }
 
 const AuthContext = React.createContext()
@@ -104,7 +106,8 @@ async function renewToken(dispatch, values) {
                     token: data.token
                 }
             })
-            await setLocalCredentials(data.token, data.data)
+
+            return await setLocalCredentials(data.token, data.data)
         }
     } catch (error) {
         console.log("renew token error ", error)
