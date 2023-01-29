@@ -122,24 +122,28 @@ const ShowFavourite = ({ item, deleteFav, close }) => {
                             {description}
                         </Typography>
                     </Box>
-                    <Box sx={{ display: 'flex', p: 1 }}>
-                        <Box sx={{ p: 1 }}>
-                            <ShowVaccines
-                                name={publi.Owner.name}
-                                lastName={publi.Owner.lastName}
-                                img_profile={publi.Owner.img_profile}
-                                dog={publi}
-                            />
-                        </Box>
-                        <Box sx={{ p: 1 }}>
-                            <ListCertificates
-                                name={publi.Owner.name}
-                                lastName={publi.Owner.lastName}
-                                img_profile={publi.Owner.img_profile}
-                                dog={publi}
-                            />
-                        </Box>
-                    </Box>
+                    <Stack direction="row">
+                        {!!publi.Vaccines.length && (
+                            <Box sx={{ p: 1 }}>
+                                <ShowVaccines
+                                    name={publi.Owner.name}
+                                    lastName={publi.Owner.lastName}
+                                    img_profile={publi.Owner.img_profile}
+                                    dog={publi}
+                                />
+                            </Box>
+                        )}
+                        {!!publi.Certificates.length && (
+                            <Box sx={{ p: 1 }}>
+                                <ListCertificates
+                                    name={publi.Owner.name}
+                                    lastName={publi.Owner.lastName}
+                                    img_profile={publi.Owner.img_profile}
+                                    dog={publi}
+                                />
+                            </Box>
+                        )}
+                    </Stack>
                     <Box sx={{ p: 2 }}>
                         <Stack spacing={2} direction="row" mt={2}>
                             <LikeButton likes={LikesCount} item={item.Ad} />

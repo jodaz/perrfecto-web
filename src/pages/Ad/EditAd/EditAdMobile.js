@@ -2,23 +2,23 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import SettingsLayout from '../../layouts/SettingsLayout';
+import SettingsLayout from '../../../layouts/SettingsLayout';
 import { useForm } from "react-hook-form";
-import { useAuth, renewToken } from '../../context/AuthContext'
-import TextInput from '../../components/Forms/TextInput';
-import SwitchInput from '../../components/Forms/SwitchInput';
-import { apiProvider, fileProvider } from '../../api';
-import GalleryInput from '../../components/GalleryInput';
-import InterestInput from '../../components/InterestInput';
-import formDataHandler from '../../utils/formDataHandler';
-import PublicationWait from '../../components/Modals/PublicationWait';
-import OverlayLoader from '../../components/Modals/OverlayLoader';
-import useEffectOnce from '../../utils/useEffectOnce'
-import DeletePhotoWarning from '../../components/Modals/DeletePhotoWarning';
-import DogInformation from './DogInformation';
-import { DESCRIPTION, ADD_PHOTOS } from '../../validations';
+import { useAuth, renewToken } from '../../../context/AuthContext'
+import TextInput from '../../../components/Forms/TextInput';
+import SwitchInput from '../../../components/Forms/SwitchInput';
+import { apiProvider, fileProvider } from '../../../api';
+import GalleryInput from '../../../components/GalleryInput';
+import InterestInput from '../../../components/InterestInput';
+import formDataHandler from '../../../utils/formDataHandler';
+import PublicationWait from '../../../components/Modals/PublicationWait';
+import OverlayLoader from '../../../components/Modals/OverlayLoader';
+import useEffectOnce from '../../../utils/useEffectOnce'
+import DeletePhotoWarning from '../../../components/Modals/DeletePhotoWarning';
+import DogInformation from '../DogInformation';
+import { DESCRIPTION, ADD_PHOTOS } from '../../../validations';
 
-const selectedItems = labels => labels.map(({ AdInterest }) => AdInterest.id_interest)
+const selectedItems = labels => labels.map(({ id }) => id)
 
 const SwitchInputContainer = ({
     control,
@@ -42,7 +42,7 @@ const SwitchInputContainer = ({
     </Box>
 )
 
-const EditAd = () => {
+const EditAdMobile = () => {
     const { state: { user }, dispatch } = useAuth();
     const [openWarning, setOpenWarning] = React.useState(false)
     const [openDeletePhoto, setOpenDeletePhoto] = React.useState(false);
@@ -130,7 +130,7 @@ const EditAd = () => {
 
     return (
         <SettingsLayout title='Editar anuncio'>
-            <Box id="drawer-container" sx={{
+            <Box id="interests-drawer-container" sx={{
                 display: 'flex',
                 flexDirection: 'column',
                 position: 'relative'
@@ -150,7 +150,7 @@ const EditAd = () => {
                         message='Tienes un máximo de 15 fotos'
                     />
                 </Box>
-                <Box sx={{ p: 2 }} id="drawer-container">
+                <Box sx={{ p: 2 }}>
                     <DogInformation />
                     <Box sx={{ pt: 2, pb: 2 }}>
                         <InterestInput
@@ -227,4 +227,4 @@ const EditAd = () => {
     );
 }
 
-export default EditAd
+export default EditAdMobile

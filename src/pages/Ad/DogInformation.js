@@ -1,29 +1,53 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { MapPin, Phone, Mail } from 'lucide-react';
+import { MapPin, Phone, Mail, Compass } from 'lucide-react';
 import CircleIcon from '@mui/icons-material/FiberManualRecord';
 import { useAuth } from '../../context/AuthContext'
 import getYearsFromYear from '../../utils/getYearsFromYear';
-import { useNavigate } from 'react-router-dom';
+import LinkBehavior from '../../components/LinkBehavior';
 
-const DogInformation = () => {
+const Location = ({ user }) => (
+    <Typography
+        component={LinkBehavior}
+        to='/profile/settings/owner/location'
+        color='info.main'
+        sx={{
+            display: 'flex',
+            alignItems: 'center',
+            cursor: 'pointer',
+            textDecoration: 'none'
+        }}
+    >
+        <Box marginRight={'5px'}>
+            <MapPin />
+        </Box>
+        {user.province},&nbsp;
+        {user.city}
+    </Typography>
+)
+
+const DogInformation = ({ hideTitle, hideInterests, desktop }) => {
     const { state: { user } } = useAuth();
-    const { dog } = user
-    const redirect = useNavigate()
+    const { dog, publication } = user
 
     return (
-        <>
-            <Box sx={{ display: 'flex', }}>
-                <Typography
-                    variant="body2"
-                    color="text.tertiary"
-                    textTransform={'uppercase'}
-                    gutterBottom
-                >
-                    información de la mascota
-                </Typography>
-            </Box>
+        <Box sx={{
+            display: 'flex',
+            flexDirection: 'column'
+        }}>
+            {!(hideTitle) && (
+                <Box sx={{ display: 'flex', }}>
+                    <Typography
+                        variant="body2"
+                        color="text.tertiary"
+                        textTransform={'uppercase'}
+                        gutterBottom
+                    >
+                        información de la mascota
+                    </Typography>
+                </Box>
+            )}
             <Typography
                 variant="h6"
                 textTransform='capitalize'
@@ -49,18 +73,30 @@ const DogInformation = () => {
                     <Typography color="primary.main">
                         {getYearsFromYear(dog.dogAge)} años
                     </Typography>
+                    {(user.province && user.city && desktop) && (
+                        <>
+                            <Box sx={{ fontSize: '6px', padding: '0 8px' }}>
+                                <CircleIcon fontSize='inherit' color='primary' />
+                            </Box>
+                            <Location user={user} />
+                        </>
+                    )}
                 </Box>
             </Box>
+            {(user.province && user.city && !desktop) && (
+                <Location user={user} />
+            )}
             <Box sx={{ mt: 1 }}>
-                {(user.province && user.city) && (
+                {!!(!hideInterests && publication.interests.length) && (
                     <Typography
-                        onClick={() => redirect('/profile/settings/owner/location')}
-                        color='info.main'
-                        sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+                        variant="body2"
+                        sx={{ display: 'flex', alignItems: 'start' }}
+                        color="text.secondary"
                     >
-                        <MapPin size={20} />
-                        {user.province},&nbsp;
-                        {user.city}
+                        <Box marginRight={'5px'}>
+                            <Compass />
+                        </Box>
+                        {publication.interests.map(interest => `${interest.name}. `)}
                     </Typography>
                 )}
             </Box>
@@ -85,7 +121,7 @@ const DogInformation = () => {
                     </Typography>
                 )}
             </Box>
-        </>
+        </Box>
     );
 }
 

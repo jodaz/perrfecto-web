@@ -15,12 +15,9 @@ const LanguageButton = ({ dark }) => {
     )
 
     return (
-        <Button variant="contained" color="secondary" sx={{
-            background: 'rgba(255, 255, 255, 0.12)',
-            color: dark ? '#000' : '#fff'
-        }}>
+        <Button variant="outlined" color="primary">
             <Globe />
-            Español
+            ESP
         </Button>
     )
 }

@@ -1,6 +1,5 @@
 import * as React from 'react'
 import Button from '../Button'
-import { alpha } from '@mui/material/styles'
 import Dialog from '@mui/material/Dialog'
 import DialogTitle from '../DialogTitle'
 import Link from '@mui/material/Link'
@@ -68,10 +67,7 @@ export default function Login({ location }) {
                         type: 'byrrss'
                     })
                 }
-                if (message.includes('The user does not exist with that email')) {
-                    setErrorAlert('No estás registrado. Crea una cuenta para poder comenzar en TinderDogs.')
-                }
-                if (message.includes('The user does not exist with that phone')) {
+                if (message.includes('The user does not exist')) {
                     setErrorAlert('No estás registrado. Crea una cuenta para poder comenzar en TinderDogs.')
                 }
                 if (message.includes('Wrong Password')) {
@@ -84,11 +80,6 @@ export default function Login({ location }) {
     };
 
     const handleClose = () => navigate('/')
-
-    const handleGuestButton = () => {
-        guestUser(dispatch)
-        navigate('/market')
-    }
 
     return (
         <Dialog
@@ -131,7 +122,10 @@ export default function Login({ location }) {
                                 <Box>
                                     Continuar con
                                 </Box>
-                                <SocialAuth hidePhone={isPhoneRegister} />
+                                <SocialAuth
+                                    hidePhone={isPhoneRegister}
+                                    location={location}
+                                />
                             </Box>
                             <Box>
                                 ¿Aún no tienes una cuenta? <Link href="#" underline="none" component={LinkBehavior} to='/register'>Crear cuenta</Link>
@@ -198,17 +192,6 @@ export default function Login({ location }) {
                                 disabled={isSubmitting}
                             >
                                 Iniciar sesión
-                            </Button>
-                        </Box>
-                        <Box sx={{ p: 1 }}>
-                            <Button variant="contained" fullWidth sx={{
-                                backgroundColor: '#ccc',
-                                '&:hover': {
-                                    color: '#fff',
-                                    backgroundColor: alpha(`#000`, 0.3)
-                                }
-                            }} onClick={handleGuestButton}>
-                                Ingresar como invitado
                             </Button>
                         </Box>
                         <Box sx={{ p: 1 }}>

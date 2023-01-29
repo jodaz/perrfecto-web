@@ -145,6 +145,21 @@ const theme = createTheme({
             label: {
                 textTransform: 'uppercase'
             }
+        },
+        MuiTooltip: {
+            styleOverrides: {
+                tooltip:({ theme }) => ({
+                    backgroundColor: '#fff',
+                    color: theme.palette.text.tertiary,
+                    boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.15)',
+                    borderRadius: '5px',
+                    fontSize: '12px',
+                    fontWeight: 400,
+                    padding: '12px',
+                    lineHeight: '16px',
+                    maxWidth: '160px'
+                })
+            }
         }
     }
 }, esES);

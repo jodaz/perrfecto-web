@@ -2,7 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import PawPrints from '../../../assets/images/pawprints.svg'
 import Stack from './Stack';
-import { CircularProgress, Fab, useMediaQuery } from '@mui/material';
+import { CircularProgress, useMediaQuery } from '@mui/material';
 import ContactDialog from '../../../components/Modals/ContactDialog';
 import DogPublication from '../../../components/FeedCard/DogPublication'
 import OwnerPublication from '../../../components/FeedCard/OwnerPublication';

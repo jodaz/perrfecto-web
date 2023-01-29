@@ -3,14 +3,16 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import BusinessCard from '../Businesses/BusinessCard';
 import SettingsLayout from '../../layouts/SettingsLayout';
-import MarketSearchBox from './MarketSearchBox';
 import useEffectOnce from '../../utils/useEffectOnce';
 import { apiProvider } from '../../api';
 import { useBusinesses, resetItem, selectItem } from '../../context/BusinessContext';
+import SearchBox from '../../components/SearchBox';
 
 const ShowCategory = () => {
     const { state: { selectedItem }, dispatch } = useBusinesses();
     const [data, setData] = React.useState([])
+
+    const filterFunction = data => console.log(data)
 
     const fetchBusinesses = async () => {
         try {
@@ -39,7 +41,7 @@ const ShowCategory = () => {
                 height: '100%'
             }}>
                 <Box p={2}>
-                    <MarketSearchBox />
+                    <SearchBox filter={filterFunction} />
                 </Box>
                 {data.length ? (
                     <Stack

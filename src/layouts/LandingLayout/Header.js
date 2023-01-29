@@ -22,7 +22,7 @@ const AnchorTag = styled(Link)(({ theme, dark }) => ({
         padding: '0 1rem',
     },
     fontWeight: '400',
-    color: dark ? `${theme.palette.text.primary}` : `${theme.palette.secondary.main}`,
+    color: dark ? theme.palette.primary.main : theme.palette.text.primary,
     cursor: 'pointer',
     transition: '0.3s',
     '&:hover': {
@@ -45,7 +45,8 @@ const internalLinks = [
     },
     {
         title: 'Registrar negocio',
-        link: '/business'
+        link: '/business',
+        dark: true
     }
 ]
 
@@ -64,12 +65,12 @@ function ResponsiveAppBar({ dark }) {
     const generateButtons = () => (
         <>
             <Box sx={{ p: 1 }}>
-                <LanguageButton dark={dark} />
+                <LanguageButton />
             </Box>
             <Box sx={{ p: 1 }}>
                 <Button
-                    variant="contained"
-                    color={dark ? 'primary' : 'secondary'}
+                    variant="outlined"
+                    color='primary'
                     to='/login'
                     component={LinkBehavior}
                 >
@@ -83,7 +84,7 @@ function ResponsiveAppBar({ dark }) {
         <AppBar
             position="fixed"
             sx={{
-                background: !dark ? 'transparent' : 'linear-gradient(0deg, rgba(161, 103, 201, 0.1), rgba(161, 103, 201, 0.1)),#FFFFFF',
+                background: dark ? 'transparent' : '#FFFFFF',
             }}
         >
             <Container maxWidth="xl">
@@ -106,7 +107,7 @@ function ResponsiveAppBar({ dark }) {
                                     aria-label={link.title}
                                     to={link.link}
                                     component={LinkBehavior}
-                                    dark={dark || matches}
+                                    dark={link.dark}
                                 >
                                     {link.title}
                                 </AnchorTag>

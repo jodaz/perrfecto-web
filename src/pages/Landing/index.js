@@ -1,12 +1,13 @@
 import * as React from 'react'
 import Box from '@mui/material/Box'
-import BackgroundDogs from '../../assets/images/background-dogs.png'
+import Background from '../../assets/images/landing-background.png'
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Button } from '@mui/material';
 import LinkBehavior from '../../components/LinkBehavior';
 import { Outlet, useNavigate } from 'react-router-dom'
 import getSearchParams from '../../utils/getSearchParams';
 import DeletedAccount from '../../components/Modals/DeletedAccount';
+import { alpha } from '@mui/material/styles'
 import { closeGuestWarning, useGuest } from '../../context/GuestContext';
 
 const Landing = ({ location }) => {
@@ -28,7 +29,7 @@ const Landing = ({ location }) => {
             display: 'flex',
             '&:before': {
                 content: '""',
-                background: `url(${BackgroundDogs}) no-repeat center center fixed`,
+                background: `url(${Background}) no-repeat center center fixed`,
                 backgroundSize: 'cover',
                 position: 'absolute',
                 height: '100%',
@@ -55,16 +56,10 @@ const Landing = ({ location }) => {
             }}>
                 <Box sx={{
                     fontWeight: 700,
-                    fontSize: matches ? '3rem' : '4rem',
-                    lineHeight: '76px'
+                    fontSize: matches ? '2rem' : '3rem',
+                    lineHeight: '50px'
                 }}>
-                    Conecta con todos los perros del mundo
-                </Box>
-                <Box sx={{
-                    fontSize: '1.2rem',
-                    lineHeight: '28px'
-                }}>
-                    Conoce nuevas mascotas, en diferentes lugares, pero con los mismos gustos que tú
+                    ¡Haz nuevos amigos y planes con otros amantes de los perros!
                 </Box>
                 <Button
                     variant="contained"
@@ -72,8 +67,19 @@ const Landing = ({ location }) => {
                     to='/register'
                     component={LinkBehavior}
                 >
-                    Crear una cuenta
+                    Crea un perfil para tu mascota
                 </Button>
+                <Box sx={{ p: 1 }}>
+                    <Button
+                        variant="contained"
+                        fullWidth
+                        color="secondary"
+                        to='/market'
+                        component={LinkBehavior}
+                    >
+                        Ingresar como invitado
+                    </Button>
+                </Box>
                 <Outlet />
             </Box>
             <DeletedAccount open={openDeleteModal} handleClose={() => navigate('/')} />

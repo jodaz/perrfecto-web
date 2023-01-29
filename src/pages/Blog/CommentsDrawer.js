@@ -1,80 +1,75 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
-import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import DialogTitle from '../../components/DialogTitle';
-import TextInput from '../../components/Forms/TextInput';
-import { useForm } from "react-hook-form";
-import { alpha } from '@mui/material';
-import { useGeolocated } from 'react-geolocated';
+import CommentCard from './CommentCard';
+import CommentBox from './CommentBox';
 
-const CommentsDrawer = ({ openComments, handleClose }) => {
-    const { control, handleSubmit, watch, reset, formState: {
-        isSubmitting
-    }} = useForm({
-        reValidateMode: "onBlur"
-    });
-    const { coords, isGeolocationAvailable, getPosition, isGeolocationEnabled } =
-        useGeolocated({
-            positionOptions: {
-                enableHighAccuracy: false,
-            }
+const CommentsDrawer = ({ openComments, handleClose, item }) => {
+    const [commentItem, setCommentItem] = React.useState(item) // Blog by default
+    const [isReplying, setIsReplying] = React.useState(false);
+
+    const toggleReply = (comment = null) => {
+        console.log(comment)
+        if (comment) {
+            setCommentItem(comment)
+        } else {
+            console.log(item)
+            setCommentItem(item)
         }
-    );
+
+        setIsReplying(!isReplying)
+    };
 
     const toggleDrawer = () => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
-        }
 
-        handleClose();
-    };
-
-    const resetFilter = () => {}
-
-    const onSubmit = async values => {
-        const parsedData = {};
-
-        try {
-            let {
-                province,
-                city,
-                distance
-            } = values;
-
-            if (province) {
-                parsedData.province = province.nombre;
-            }
-            if (city) {
-                parsedData.city = city.nombre;
-            }
-            if (distance) {
-                const { latitude, longitude } = coords
-
-                parsedData.lat = latitude
-                parsedData.lon = longitude
-                parsedData.km = distance;
-            }
-        } catch (error) {
-            console.log(error)
+            handleClose();
         }
     };
 
     const list = (anchor) => (
-        <Box onKeyDown={toggleDrawer(anchor, false)} component="form" onSubmit={handleSubmit(onSubmit)}>
-            <DialogTitle onClose={toggleDrawer(anchor, false)}>
+        // <Box onKeyDown={() => handleClose()} component="form" onSubmit={handleSubmit(onSubmit)}>
+        <>
+            <DialogTitle onClose={() => handleClose()}>
                 Comentarios
             </DialogTitle>
             <Divider />
-            <Box sx={{ p: 3 }}>
-                <TextInput
-                    name='comment'
-                    control={control}
-                    placeholder="Escribe un comentario"
+            <Box sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                overflowY: 'auto',
+                height: '100%'
+            }}>
+                <Box sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    overflowY: 'auto',
+                    height: '100%'
+                }}>
+                    {item.Comments.length
+                    ? item.Comments.map(comment => (
+                        <CommentCard
+                            {...comment}
+                            openReply={() => toggleReply(comment)}
+                        />
+                    ))
+                    : (
+                        <Box m={1}>
+                            Sin comentarios
+                        </Box>
+                    )}
+                </Box>
+                <Divider />
+                <CommentBox
+                    item={commentItem}
+                    isReplying={isReplying}
+                    closeReply={() => toggleReply()}
                 />
             </Box>
-        </Box>
+        </>
     );
 
     return (
@@ -90,7 +85,8 @@ const CommentsDrawer = ({ openComments, handleClose }) => {
                             borderTopLeftRadius: '12px',
                             borderTopRightRadius: '12px',
                             width: '99%',
-                            bottom: 0
+                            bottom: 0,
+                            height: '50%'
                         },
                     }}
                     PaperProps={{ style: { position: 'absolute' } }}

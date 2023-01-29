@@ -94,6 +94,15 @@ const PetProfile = () => {
                             />
                         )}
                     </Box>
+                    {(user.dog) && (
+                        <Typography
+                            color="text.tertiary"
+                            variant="subtitle1"
+                            textAlign='center'
+                        >
+                            {user.dog.name}
+                        </Typography>
+                    )}
                     <Box sx={{
                         display: 'flex',
                         justifyContent: 'space-around',
@@ -118,6 +127,7 @@ const PetProfile = () => {
                                 color="info"
                                 component={LinkBehavior}
                                 to={(user.dog) ? '/profile/ads/create' : '?dog=true'}
+                                notify={!user.dog}
                             />
                         )}
                     </Box>
@@ -145,7 +155,7 @@ const PetProfile = () => {
                     </>
                 )}
             </Box>
-            {/* <LatestPublishedBlogs /> */}
+            <LatestPublishedBlogs />
         </>
     );
 }

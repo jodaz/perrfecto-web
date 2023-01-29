@@ -5,6 +5,10 @@ import FeaturedBusinessCard from './FeaturedBusinessCard';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Scrollbar, Navigation } from 'swiper';
 import styled from '@emotion/styled';
+import useEffectOnce from '../../utils/useEffectOnce';
+import { apiProvider } from '../../api';
+import LoadingIndicator from '../../components/LoadingIndicator';
+import { useBusinesses, selectItem } from '../../context/BusinessContext';
 
 const SwiperStyled = styled(Swiper)(() => ({
     height: 'inherit',
@@ -19,50 +23,62 @@ const SwiperSlideStyled = styled(SwiperSlide)(() => ({
     textAlign: 'center',
 }))
 
-const businesses = [
-    {
-        title: 'Petshop',
-        image: '/images/samples/sad-pupi.png',
-    },
-    {
-        title: 'Accesorios para perros',
-        image: '/images/samples/sad-pupi.png',
-    },
-    {
-        title: 'Busco un hogar',
-        image: '/images/samples/sad-pupi.png',
-    }
-]
+const FeaturedBusiness = () =>  {
+    const { dispatch } = useBusinesses();
+    const [loading, setLoading] = React.useState(true)
+    const [data, setData] = React.useState([])
 
-const FeaturedBusiness = () =>  (
-    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-        <Typography
-            variant="subtitle1"
-            fontWeight={500}
-            fontSize='1rem'
-            mb={2}
-            color="text.secondary"
-            textTransform={'uppercase'}
-        >
-            Negocios destacados
-        </Typography>
-        <SwiperStyled
-            slidesPerView={businesses.length - 1}
-            scrollbar={{
-                draggable: true
-            }}
-            grabCursor={true}
-            modules={[Scrollbar, Navigation]}
-            spaceBetween={5}
-            navigation
-        >
-            {businesses.map((business, i) => (
-                <SwiperSlideStyled key={i}>
-                    <FeaturedBusinessCard {...business} />
-                </SwiperSlideStyled>
-            ))}
-        </SwiperStyled>
-    </Box>
-);
+    const fetchBusinesses = async () => {
+        setLoading(true)
+
+        try {
+            const res = await apiProvider.get('/api/announcement/featured')
+
+            if (res.status >= 200 && res.status < 300) {
+                const { data: { data } } = res;
+
+                setData(data);
+                setLoading(false)
+            }
+        } catch (error) {
+            console.log("error ", error)
+            setLoading(false)
+        }
+    }
+
+    useEffectOnce(() => { fetchBusinesses() }, [])
+
+    if (loading) return <LoadingIndicator />
+
+    return (
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+            {(data.length) ? (
+                <SwiperStyled
+                    slidesPerView={data.length - 1}
+                    scrollbar={data.length > 1 && ({
+                        draggable: true
+                    })}
+                    grabCursor={true}
+                    modules={data.length > 1 && [Scrollbar, Navigation]}
+                    spaceBetween={data.length > 1 && 5}
+                    navigation={data.length > 1}
+                >
+                    {data.map((business, i) => (
+                        <SwiperSlideStyled key={i}>
+                            <FeaturedBusinessCard
+                                {...business}
+                                onClick={() => selectItem(dispatch, { item: business, type: 'business' })}
+                            />
+                        </SwiperSlideStyled>
+                    ))}
+                </SwiperStyled>
+            ) : (
+                <Typography variant="subtitle1">
+                    Aún no tenemos blogs destacados
+                </Typography>
+            )}
+        </Box>
+    );
+}
 
 export default FeaturedBusiness
