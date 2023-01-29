@@ -55,11 +55,12 @@ const SocialAuth = ({ hidePhone, location }) => {
         if (res.status >= 200 && res.status < 300) {
             const { data } = res;
 
-            loginUser(dispatch, data) // Agregar rol user o business
+            loginUser(dispatch, data)
 
             if (data.data.register) {
-
-                return navigate('/register/welcome')
+                return (location.pathname == '/register')
+                    ? navigate('/register/welcome')
+                    : navigate('/market')
             } else {
                 navigate('/detect-location')
             }

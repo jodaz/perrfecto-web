@@ -29,10 +29,10 @@ const BusinessLanding = () => (
                 <Typography gutterBottom variant="h5" sx={{ fontWeight: 500 }}>
                     Empieza a promocionar tu negocio
                 </Typography>
-                    <Typography gutterBottom variant="subtitle1" color="text.secondary">
-                        Crea tu tienda en pocos pasos y pronto estará disponible
-                        para destacar en TinderDogs y llegar a nuevos clientes.
-                    </Typography>
+                <Typography gutterBottom variant="subtitle1" color="text.secondary">
+                    Crea tu tienda en pocos pasos y pronto estará disponible
+                    para destacar en TinderDogs y llegar a nuevos clientes.
+                </Typography>
             </Box>
             <Box sx={{
                 display: 'flex',
