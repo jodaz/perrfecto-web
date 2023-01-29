@@ -35,6 +35,7 @@ const PublishedBlogLayout = ({
     featured_blog,
     toggleComments,
     toggleFeaturePost,
+    openComments,
     handleDeletePost
 }) => (
     <Slide direction="left" in={true} mountOnEnter unmountOnExit>
