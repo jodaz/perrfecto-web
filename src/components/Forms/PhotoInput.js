@@ -67,7 +67,7 @@ const Dropzone = ({
         }
         return  setFile({ preview: '/images/Avatar.svg' })
     }, [defaultValue])
-    console.log(defaultValue)
+
     return (
         <Box sx={{
             position: 'relative'
