@@ -28,23 +28,27 @@ const DateInput = ({
             rules={rules}
             render={({ field: { onChange, ...restField }, fieldState: { error, value } }) => (
                 <Box mt={2}>
-                    <MobileDatePicker
+                    <DatePicker
                         value={value}
                         label='Seleccione una fecha'
                         disabled={disabled}
                         onChange={value => onChange(value)}
                         components={{
-                            OpenPickerIcon: Calendar
+                            OpenPickerIcon: () => <Calendar />
                         }}
                         renderInput={({ inputRef, inputProps, InputProps }) => (
                             <InputBase
                                 fullWidth
+                                placeholder="Seleccione una fecha"
                                 ref={inputRef}
                                 {...inputProps}
                                 {...InputProps}
                             />
                         )}
                         {...restField}
+                        InputAdornmentProps={{
+                            position: 'start'
+                        }}
                     />
                     {error && (
                         <FormHelperText error>
