@@ -84,7 +84,7 @@ function ResponsiveAppBar({ dark }) {
         <AppBar
             position="fixed"
             sx={{
-                background: dark ? 'transparent' : '#FFFFFF',
+                background: dark ? 'linear-gradient(0deg, rgba(161, 103, 201, 0.1), rgba(161, 103, 201, 0.1)), #FFFFFF;' : '#FFFFFF',
             }}
         >
             <Container maxWidth="xl">
