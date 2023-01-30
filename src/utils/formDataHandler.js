@@ -4,7 +4,6 @@ const formDataHandler = (data, fieldFileName = 'file') => {
 
     if (files) {
         for (let i = 0; i < files.length; i++) {
-            console.log(files[i])
             if (files[i]) { // ignore undefined or null
                 formData.append(fieldFileName, files[i]);
             }
