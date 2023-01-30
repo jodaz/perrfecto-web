@@ -48,7 +48,8 @@ const Favourites = () => {
                 height: '100%',
                 width: '100%',
                 display: 'flex',
-                flexDirection: 'column'
+                flexDirection: 'column',
+                overflowY: 'auto'
             }}>
                 {showFavourite ? (
                     <ShowFavourite

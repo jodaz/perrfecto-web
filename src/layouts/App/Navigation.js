@@ -12,6 +12,13 @@ import { User } from 'lucide-react';
 import { Dog } from 'lucide-react';
 import PrivateRoute from '../../components/PrivateRoute';
 
+const profileIcon = [{
+    label: 'Perfil',
+    icon: <Dog color='#ccc' />,
+    active: <Dog color='#A167C9' />,
+    route: '/profile'
+}]
+
 const smallScreenOnly = [
     {
         label: 'Inicio',
@@ -38,18 +45,13 @@ const generalLinks = [
 ];
 
 const onlyUserLinks = [
+    ...generalLinks,
     {
         label: 'Chat',
         icon: <MessageCircle color='#ccc' />,
         active: <MessageCircle color='#A167C9' />,
         route: '/chat'
-    },
-    {
-        label: 'Perfil',
-        icon: <Dog color='#ccc' />,
-        active: <Dog color='#A167C9' />,
-        route: '/profile'
-    },
+    }
 ]
 
 const onlyBusiness = [
@@ -97,16 +99,14 @@ const Navigation = ({ isSmall }) => {
             backgroundColor: '#fff',
             height: isSmall ? '100%' : 'unset'
         }}>
-            {isSmall && (
-                <PrivateRoute authorize='user,guest,business' unauthorized={null}>
-                    {renderLinks(smallScreenOnly)}
-                </PrivateRoute>
-            )}
-            <PrivateRoute authorize='user,guest' unauthorized={null}>
+            {isSmall && renderLinks(smallScreenOnly)}
+            <PrivateRoute authorize='guest' unauthorized={null}>
                 {renderLinks(generalLinks)}
+                {renderLinks(profileIcon)}
             </PrivateRoute>
             <PrivateRoute authorize='user' unauthorized={null}>
                 {renderLinks(onlyUserLinks)}
+                {renderLinks(profileIcon)}
             </PrivateRoute>
             <PrivateRoute authorize='business' unauthorized={null}>
                 {renderLinks(onlyBusiness)}

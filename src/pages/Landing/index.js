@@ -7,14 +7,15 @@ import LinkBehavior from '../../components/LinkBehavior';
 import { Outlet, useNavigate } from 'react-router-dom'
 import getSearchParams from '../../utils/getSearchParams';
 import DeletedAccount from '../../components/Modals/DeletedAccount';
-import { alpha } from '@mui/material/styles'
 import { closeGuestWarning, useGuest } from '../../context/GuestContext';
+import { guestUser, useAuth } from '../../context/AuthContext'
 
 const Landing = ({ location }) => {
     const { dispatch: guestDispatch } = useGuest()
     const navigate = useNavigate();
     const openDeleteModal = getSearchParams(location, 'delete')
     const matches = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+    const { dispatch: authDispatch } = useAuth();
 
     React.useEffect(() => {
         closeGuestWarning(guestDispatch);
@@ -76,6 +77,7 @@ const Landing = ({ location }) => {
                         color="secondary"
                         to='/market'
                         component={LinkBehavior}
+                        onClick={() => guestUser(authDispatch)}
                     >
                         Ingresar como invitado
                     </Button>

@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Slide from '@mui/material/Slide';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
-import { ChevronLeft, Star } from 'lucide-react'
+import { ChevronLeft } from 'lucide-react'
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import DeletePublication from '../../components/Modals/DeletePublication';
@@ -35,12 +35,14 @@ const PublishedBlogLayout = ({
     featured_blog,
     toggleComments,
     toggleFeaturePost,
+    openComments,
     handleDeletePost
 }) => (
     <Slide direction="left" in={true} mountOnEnter unmountOnExit>
         <Box sx={{
             height: '100%',
-            width: '100%'
+            width: '100%',
+            overflowY: openComments ? 'hidden' : 'auto'
         }} id='comments-drawer-container'>
             <Box sx={{
                 flex: 1,
