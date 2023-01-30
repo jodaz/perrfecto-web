@@ -7,6 +7,7 @@ import InputLabel from '@mui/material/InputLabel';
 import Box from '@mui/material/Box';
 import { Controller } from 'react-hook-form'
 import { Calendar } from 'lucide-react'
+import { IconButton } from '@mui/material';
 
 const DateInput = ({
     control,
@@ -35,7 +36,17 @@ const DateInput = ({
                         onChange={value => onChange(value)}
                         placeholder="Seleccione una fecha"
                         components={{
-                            OpenPickerIcon: () => <Calendar />
+                            OpenPickerIcon: () => (
+                                <Box sx={{
+                                    backgroundColor: theme => theme.palette.primary.main,
+                                    color: '#fff',
+                                    padding: '0.8rem',
+                                    borderRadius: '50px 0px 0 50px',
+                                    marginLeft: '-10px'
+                                }}>
+                                    <Calendar />
+                                </Box>
+                            )
                         }}
                         renderInput={({ inputRef, inputProps, InputProps }) => (
                             <InputBase
