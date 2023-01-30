@@ -31,6 +31,8 @@ import AddCertificates from '../../pages/certificates/AddCertificates';
 import useEffectOnce from '../../utils/useEffectOnce'
 import razas from '../../utils/breeds';
 import generos from '../../utils/generos';
+import InputAdornment from '@mui/material/InputAdornment';
+import { Calendar } from 'lucide-react';
 
 const types = [
     { value: "breed", label: "Raza" },
@@ -277,6 +279,18 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
                             name="dogAge"
                             InputProps={{
                                 placeholder: 'Seleccionar fecha',
+                                startAdornment:
+                                    <InputAdornment position="start">
+                                        <Box sx={{
+                                            backgroundColor: theme => theme.palette.primary.main,
+                                            color: '#fff',
+                                            padding: '0.8rem',
+                                            borderRadius: '50px 0px 0 50px',
+                                            marginLeft: '-10px'
+                                        }}>
+                                            <Calendar />
+                                        </Box>
+                                    </InputAdornment>
                             }}
                             noOptionsText='Sin resultados'
                         />
