@@ -68,6 +68,7 @@ import OnlyDesktop from './layouts/App/OnlyDesktop';
 import PrivateRoute from './components/PrivateRoute';
 import EditBusinessName from './pages/PersonalInformation/EditBusinessName';
 import EditBusinessAddress from './pages/PersonalInformation/EditBusinessAddress';
+import GuestProfile from './pages/Profile/GuestProfile';
 
 function AppRoutes() {
     let location = useLocation();
@@ -298,7 +299,15 @@ function AppRoutes() {
                 element={
                     <AppLayout>
                         <Profile location={location}>
-                            {(user.role == 'user') ? <PetProfile /> : <BusinessProfile />}
+                            <PrivateRoute authorize="user">
+                                <PetProfile />
+                            </PrivateRoute>
+                            <PrivateRoute authorize="business">
+                                <BusinessProfile />
+                            </PrivateRoute>
+                            <PrivateRoute authorize="guest">
+                                <GuestProfile />
+                            </PrivateRoute>
                         </Profile>
                     </AppLayout>
                 }

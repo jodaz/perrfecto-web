@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useAuth } from '../context/AuthContext'
 
-const PrivateRoute = ({ children, authorize = null, unauthorized: Unauthorized }) => {
+const PrivateRoute = ({ children, authorize = null, unauthorized: Unauthorized = null }) => {
     const { state: { user } } = useAuth();
     const [authorized, setAuthorized] = React.useState(null);
 
