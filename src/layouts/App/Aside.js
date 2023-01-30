@@ -10,11 +10,13 @@ import Logo from '../../components/Logo';
 // Icons
 import NotificationButton from './NotificationButton';
 import FilterDrawer from '../../components/FilterDrawer';
+import { useBusinesses } from '../../context/BusinessContext';
 
 const drawerWidth = '350px';
 
 const Sidebar = ({ children }) => {
     const { state: { user } } = useAuth();
+    const { state: { openFilter } } = useBusinesses()
 
     return (
         <Drawer
@@ -46,7 +48,7 @@ const Sidebar = ({ children }) => {
                 sx={{
                     height: '100%',
                     maxWidth: drawerWidth,
-                    overflowY: 'hidden'
+                    overflowY: openFilter ? 'hidden !important' : 'unset'
                 }}
                 id="drawer-container"
             >
