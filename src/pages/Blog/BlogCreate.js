@@ -94,7 +94,11 @@ const BlogCreate = () => {
                     </Button>
                 </Box>
             </Box>
-            <PublicationWait open={openWarning} handleClose={handleCloseWarning} />
+            <PublicationWait
+                open={openWarning}
+                handleClose={handleCloseWarning}
+                redirect="/blogs/me"
+            />
             <OverlayLoader open={openOverlayLoader} />
         </SettingsLayout>
     );

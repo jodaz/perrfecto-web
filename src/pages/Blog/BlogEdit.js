@@ -145,6 +145,7 @@ const BlogEditLayout = ({
                 <PublicationWait
                     open={openWarning}
                     handleClose={handleCloseWarning}
+                    redirect="/blogs/me"
                 />
                 <OverlayLoader
                     open={openOverlayLoader}

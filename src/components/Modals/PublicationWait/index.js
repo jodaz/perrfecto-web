@@ -6,7 +6,11 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import LinkBehavior from '../../LinkBehavior'
 
-const PublicationWait = ({ open, handleClose }) => (
+const PublicationWait = ({
+    open,
+    handleClose,
+    redirect = '/profile'
+}) => (
     <InstagramModal handleClose={handleClose} open={open}>
         <Box sx={{
             display: 'flex',
@@ -36,7 +40,11 @@ const PublicationWait = ({ open, handleClose }) => (
                     La revisión estimada es de 24 horas y se te notificará sobre el estado de tu anuncio
                 </Typography>
                 <Stack direction="column">
-                    <Button color="primary" component={LinkBehavior} to='/profile'>
+                    <Button
+                        color="primary"
+                        component={LinkBehavior}
+                        to={redirect}
+                    >
                         Ok
                     </Button>
                 </Stack>
