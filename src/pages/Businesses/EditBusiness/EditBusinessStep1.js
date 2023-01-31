@@ -33,7 +33,7 @@ const EditBusinessStep1 = () => {
             instagram: user.publication.instagram,
             web_site: user.publication.web_site,
             description: user.publication.description,
-            whatsapp: user.publication.whatsApp
+            whatsApp: user.publication.whatsApp
         }
     });
 
@@ -93,7 +93,7 @@ const EditBusinessStep1 = () => {
             <Box p={2}>
                 <TextInput
                     control={control}
-                    name='whatsapp'
+                    name='whatsApp'
                     label='WhatsApp (negocio)'
                 />
             </Box>
