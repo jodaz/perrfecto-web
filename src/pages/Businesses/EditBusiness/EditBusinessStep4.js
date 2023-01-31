@@ -22,7 +22,7 @@ const EditBusinessStep4 = () => {
     const [openWarning, setOpenWarning] = React.useState(false)
     const [openOverlayLoader, setOpenOverlayLoader] = React.useState(false)
     const navigate = useNavigate()
-    const { state: { user }, dispatchAuth } = useAuth();
+    const { state: { user }, dispatch: dispatchAuth } = useAuth();
     const { state, dispatch } = useMultiStepForm();
     const { handleSubmit } = useForm();
 
