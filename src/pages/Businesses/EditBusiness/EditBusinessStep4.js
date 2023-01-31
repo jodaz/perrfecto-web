@@ -74,6 +74,8 @@ const EditBusinessStep4 = () => {
         setOpenWarning(false);
     }
 
+    if (!Object.keys(state).length) return <></>
+
     return (
         <Box component="form" onSubmit={handleSubmit(onSubmit)}>
             <Box p={2}>
