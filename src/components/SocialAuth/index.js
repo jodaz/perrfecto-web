@@ -47,9 +47,7 @@ const SocialAuth = ({ hidePhone, location }) => {
                 data.role = 'business'
             }
 
-            const res = await apiProvider.post('/api/auth/social-network', {
-                ...data
-            })
+            const res = await apiProvider.post('/api/auth/social-network', data)
 
             if (res.status >= 200 && res.status < 300) {
                 const { data } = res;

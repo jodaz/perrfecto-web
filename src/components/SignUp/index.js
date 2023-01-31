@@ -114,7 +114,7 @@ export default function SignUp({ location }) {
                                 <Box>
                                     Continuar con
                                 </Box>
-                                <SocialAuth hidePhone={isPhoneRegister} />
+                                <SocialAuth hidePhone={isPhoneRegister} location={location} />
                             </Box>
                             <Box>
                                 ¿Ya tienes una cuenta?
