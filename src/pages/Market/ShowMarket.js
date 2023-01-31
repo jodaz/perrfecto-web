@@ -49,6 +49,7 @@ const ShowMarket = () => {
         description,
         whatsApp
     } = item
+    console.log(AnnMultimedia.length)
 
     return (
         <Slide direction="left" in={true} mountOnEnter unmountOnExit>
@@ -62,7 +63,6 @@ const ShowMarket = () => {
                     width: '100%',
                     position: 'relative',
                     justifyContent: 'center',
-                    display: 'flex'
                 }}>
                     <Box sx={{
                         position: 'absolute',
@@ -77,7 +77,15 @@ const ShowMarket = () => {
                         </IconButton>
                     </Box>
                     {AnnMultimedia.length ? (
-                        <PhotoGallery images={getImages(AnnMultimedia.map(item => item.name))} />
+                        <Box sx={{
+                            flex: 1,
+                            height: '100%',
+                            width: '100%'
+                        }}>
+                            <PhotoGallery
+                                images={getImages(AnnMultimedia.map(item => item.name))}
+                            />
+                        </Box>
                     ) : <RocketIcon />}
                 </Box>
                 <Box sx={{
