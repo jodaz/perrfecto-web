@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
 import Stack from '@mui/material/Stack';
+import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
 import { Phone, MapPin, Edit, ArrowRight, Star } from 'lucide-react'
 import getUserPhoto from '../../utils/getUserPhoto';
@@ -166,7 +167,8 @@ const ShowBusiness = ({ close, ...item }) => {
                                 color="primary"
                                 variant="contained"
                                 target='_blank'
-                                href={web_site}
+                                href={`//${web_site}`}
+                                component={Link}
                             >
                                 Ir a la página
                                 <ArrowRight />
@@ -177,7 +179,8 @@ const ShowBusiness = ({ close, ...item }) => {
                                 color="info"
                                 variant="contained"
                                 target='_blank'
-                                href={facebook}
+                                href={`//${facebook}`}
+                                component={Link}
                             >
                                 Ir a facebook
                                 <ArrowRight />
@@ -188,7 +191,7 @@ const ShowBusiness = ({ close, ...item }) => {
                                 color="success"
                                 variant="contained"
                                 target='_blank'
-                                href={instagram}
+                                href={`//${instagram}`}
                             >
                                 Ir a instagram
                                 <ArrowRight />
