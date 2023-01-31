@@ -63,6 +63,7 @@ const ShowMarket = () => {
                     width: '100%',
                     position: 'relative',
                     justifyContent: 'center',
+                    display: 'flex'
                 }}>
                     <Box sx={{
                         position: 'absolute',
