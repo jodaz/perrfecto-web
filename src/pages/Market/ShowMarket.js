@@ -12,6 +12,7 @@ import PhotoGallery from '../../components/Modals/ShowCard/PhotoGallery';
 import ShowBusinessLocation from '../Businesses/ShowBusinessLocation';
 import ContactBusiness from '../../components/Modals/ContactBusiness';
 import { useBusinesses, resetItem } from '../../context/BusinessContext';
+import { ReactComponent as RocketIcon } from '../../assets/icons/Rocket.svg'
 
 const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
@@ -59,7 +60,9 @@ const ShowMarket = () => {
                     flex: 1,
                     height: 300,
                     width: '100%',
-                    position: 'relative'
+                    position: 'relative',
+                    justifyContent: 'center',
+                    display: 'flex'
                 }}>
                     <Box sx={{
                         position: 'absolute',
@@ -73,7 +76,9 @@ const ShowMarket = () => {
                             <ChevronLeft color="#fff" />
                         </IconButton>
                     </Box>
-                    <PhotoGallery images={getImages(AnnMultimedia.map(item => item.name))} />
+                    {AnnMultimedia.length ? (
+                        <PhotoGallery images={getImages(AnnMultimedia.map(item => item.name))} />
+                    ) : <RocketIcon />}
                 </Box>
                 <Box sx={{
                     borderRadius: '24px 24px 0px 0px',

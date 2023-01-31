@@ -14,6 +14,7 @@ import FeatureBusiness from '../../components/Modals/FeatureBusiness';
 import ShowBusinessLocation from './ShowBusinessLocation';
 import LinkBehavior from '../../components/LinkBehavior';
 import { useAuth } from '../../context/AuthContext'
+import { ReactComponent as RocketIcon } from '../../assets/icons/Rocket.svg'
 
 const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
@@ -96,9 +97,14 @@ const ShowBusiness = ({ close, ...item }) => {
                     flex: 1,
                     height: 300,
                     width: '100%',
-                    position: 'relative'
+                    position: 'relative',
+                    justifyContent: 'center',
+                    display: 'flex'
                 }}>
-                    <PhotoGallery images={getImages(AnnMultimedia.map(item => item.name))} />
+                    {AnnMultimedia.length ? (
+                        <PhotoGallery images={getImages(AnnMultimedia.map(item => item.name))} />
+
+                    ) : <RocketIcon />}
                 </Box>
                 <Box sx={{
                     borderRadius: '24px 24px 0px 0px',
