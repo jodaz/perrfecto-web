@@ -78,7 +78,7 @@ const EditBusinessStep3 = () => {
                     variant='contained'
                     type='submit'
                 >
-                    Siguiente
+                    Revisa tu publicación
                 </Button>
             </Box>
             {(selectedPhoto) && (

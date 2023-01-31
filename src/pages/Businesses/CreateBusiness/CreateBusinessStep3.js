@@ -59,7 +59,7 @@ const CreateBusinessStep3 = () => {
                     variant='contained'
                     type='submit'
                 >
-                    Siguiente
+                    Revisa tu publicación
                 </Button>
             </Box>
         </Box>
