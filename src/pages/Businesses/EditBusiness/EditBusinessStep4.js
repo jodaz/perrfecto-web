@@ -124,7 +124,7 @@ const EditBusinessStep4 = () => {
                                 // onClick={() => handleOpenShowBusinessLocation(restData)}
                                 textAlign='left'
                             >
-                                <MapPin size={18} /> {state.city.nombre}, {state.province.nombre}
+                                <MapPin size={18} /> {state.city}, {state.province}
                             </Button>
                             <Typography
                                 variant="subtitle1"
