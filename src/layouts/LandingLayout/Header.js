@@ -65,7 +65,7 @@ function ResponsiveAppBar({ dark }) {
     const generateButtons = () => (
         <>
             <Box sx={{ p: 1 }}>
-                <LanguageButton />
+                <LanguageButton dark={dark} />
             </Box>
             <Box sx={{ p: 1 }}>
                 <Button
