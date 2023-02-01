@@ -16,8 +16,6 @@ const EditBusiness = () => {
                 ...restPublication
             } = user.publication;
 
-            console.log(restPublication)
-
             saveStep(dispatch, {
                 files: AnnMultimedia.map(item => item.name),
                 ...restPublication

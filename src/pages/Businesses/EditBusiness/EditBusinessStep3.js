@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 import { saveStep, useMultiStepForm } from '../../../context/MultiStepContext';
 import { useNavigate } from 'react-router-dom';
 import Stepper from '../Stepper';
-import { useAuth, renewToken } from '../../../context/AuthContext';
+import { useAuth } from '../../../context/AuthContext';
 import Tooltip from '@mui/material/Tooltip';
 import { Info } from 'lucide-react'
 import DeletePhotoWarning from '../../../components/Modals/DeletePhotoWarning';
@@ -17,9 +17,9 @@ const EditBusinessStep3 = () => {
     const [openDeletePhoto, setOpenDeletePhoto] = React.useState(false);
     const [selectedPhoto, setSelectedPhoto] = React.useState(null)
     const navigate = useNavigate()
-    const { dispatch } = useMultiStepForm();
-    const { control, handleSubmit, setValue } = useForm();
-    const { state: { user }, dispatch: authDispatch } = useAuth();
+    const { state, dispatch } = useMultiStepForm();
+    const { control, handleSubmit, setValue, getValues } = useForm();
+    const { state: { user } } = useAuth();
 
     const onSubmit = data => {
         saveStep(dispatch, data);
@@ -38,9 +38,19 @@ const EditBusinessStep3 = () => {
         setSelectedPhoto(null)
     }
 
+    const sideAction = ({ name }) => {
+        const files = getValues('files')
+        const newFiles = files.filter(file => file != name);
+
+        saveStep(dispatch, {
+            ...state,
+            files: newFiles
+        });
+    }
+
     React.useEffect(() => {
-        setValue("files", user.publication.AnnMultimedia.map(item => item.name))
-    }, [user.publication.AnnMultimedia.length])
+        setValue("files", state.files)
+    }, [state])
 
     return (
         <Box component="form" onSubmit={handleSubmit(onSubmit)}>
@@ -87,7 +97,7 @@ const EditBusinessStep3 = () => {
                     handleClose={handleCloseDeletePhoto}
                     file={selectedPhoto.id}
                     endpoint={`api/business-ann/file`}
-                    sideAction={() => renewToken(authDispatch, user)}
+                    sideAction={() => sideAction(selectedPhoto)}
                 />
             )}
         </Box>
