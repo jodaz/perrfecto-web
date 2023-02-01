@@ -71,6 +71,7 @@ import EditBusinessAddress from './pages/PersonalInformation/EditBusinessAddress
 import GuestProfile from './pages/Profile/GuestProfile';
 import ShowMarket from './pages/Market/ShowMarket';
 import ShowBusinessLocation from './pages/Businesses/ShowBusinessLocation';
+import ShowBusiness from './pages/Businesses/ShowBusiness';
 
 function AppRoutes() {
     let location = useLocation();
@@ -412,6 +413,18 @@ function AppRoutes() {
             <Route path="/businesses" element={
                 <AppLayout>
                     <Businesses />
+                </AppLayout>
+            } />
+
+            <Route path="/businesses/:id" element={
+                <AppLayout>
+                    <ShowBusiness />
+                </AppLayout>
+            } />
+
+            <Route path="/businesses/:id/location" element={
+                <AppLayout>
+                    <ShowBusinessLocation location={location} />
                 </AppLayout>
             } />
             <Route path="/businesses/create" element={
