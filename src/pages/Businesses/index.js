@@ -6,31 +6,10 @@ import { ReactComponent as RocketIcon } from '../../assets/icons/Rocket.svg'
 import IconButtonWithTitle from '../../components/IconButtonWithTitle';
 import SettingsLayout from '../../layouts/SettingsLayout';
 import BusinessCard from './BusinessCard';
-import ShowBusiness from './ShowBusiness';
 import { useAuth } from '../../context/AuthContext';
 
 const Businesses = () => {
     const { state: { user } } = useAuth();
-    const [selectedItem, setSelectedItem] = React.useState(null);
-    const [showBusiness, setShowBusiness] = React.useState(false)
-
-    const handleOpenShowBusiness = async (data) => {
-        setSelectedItem(data);
-        setShowBusiness(true);
-    }
-
-    const handleCloseShowBusiness = () => {
-        setShowBusiness(false)
-    }
-
-    if (showBusiness) {
-        return (
-            <ShowBusiness
-                close={handleCloseShowBusiness}
-                {...selectedItem}
-            />
-        )
-    }
 
     return (
         <SettingsLayout title="Negocio">
@@ -62,10 +41,7 @@ const Businesses = () => {
                     spacing={2}
                 >
                     {user.publication && (
-                        <BusinessCard
-                            {...user.publication}
-                            handleSelect={handleOpenShowBusiness}
-                        />
+                        <BusinessCard {...user.publication} />
                     )}
                 </Stack>
             </Box>

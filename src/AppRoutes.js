@@ -69,6 +69,7 @@ import PrivateRoute from './components/PrivateRoute';
 import EditBusinessName from './pages/PersonalInformation/EditBusinessName';
 import EditBusinessAddress from './pages/PersonalInformation/EditBusinessAddress';
 import GuestProfile from './pages/Profile/GuestProfile';
+import ShowMarket from './pages/Market/ShowMarket';
 
 function AppRoutes() {
     let location = useLocation();
@@ -85,6 +86,14 @@ function AppRoutes() {
                 element={
                     <AppLayout>
                         <Market />
+                    </AppLayout>
+                }
+            />
+            <Route
+                path='/market/:id'
+                element={
+                    <AppLayout>
+                        <ShowMarket />
                     </AppLayout>
                 }
             />
