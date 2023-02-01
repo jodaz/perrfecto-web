@@ -55,10 +55,10 @@ const EditPhoto = ({ isEditing }) => {
     }, [handleSubmit, watch])
 
     React.useEffect(() => {
-        if (JSON.parse(user.img_profile).length) {
+        if (user.img_profile) {
             setCurrProfilePic(getUserPhoto(JSON.parse(user.img_profile)[0]))
         }
-    }, [JSON.parse(user.img_profile).length])
+    }, [user.img_profile])
 
     return (
         <Box sx={{ display: 'flex' }}>
@@ -66,13 +66,13 @@ const EditPhoto = ({ isEditing }) => {
                 <PhotoInput
                     name="files"
                     control={control}
-                    defaultValue={JSON.parse(user.img_profile)[0]}
+                    defaultValue={currProfilePic}
                     disabled={isSubmitting}
                     handleDelete={deletePhoto}
                 />
             ) : (
                 <Avatar
-                    src={currProfilePic}
+                    src={currProfilePic ? currProfilePic : '/images/Avatar.svg'}
                     alt="profile_photo"
                     sx={{ height: '125px', width: '125px' }}
                 />
