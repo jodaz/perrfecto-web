@@ -70,6 +70,7 @@ import EditBusinessName from './pages/PersonalInformation/EditBusinessName';
 import EditBusinessAddress from './pages/PersonalInformation/EditBusinessAddress';
 import GuestProfile from './pages/Profile/GuestProfile';
 import ShowMarket from './pages/Market/ShowMarket';
+import ShowBusinessLocation from './pages/Businesses/ShowBusinessLocation';
 
 function AppRoutes() {
     let location = useLocation();
@@ -79,7 +80,7 @@ function AppRoutes() {
         <Routes>
             <Route
                 path='*'
-                element=<NotFound />
+                element={<NotFound />}
             />
             <Route
                 path='/market'
@@ -94,6 +95,14 @@ function AppRoutes() {
                 element={
                     <AppLayout>
                         <ShowMarket />
+                    </AppLayout>
+                }
+            />
+            <Route
+                path='/market/:id/location'
+                element={
+                    <AppLayout>
+                        <ShowBusinessLocation location={location} />
                     </AppLayout>
                 }
             />

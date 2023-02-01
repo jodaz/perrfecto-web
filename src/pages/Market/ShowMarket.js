@@ -102,6 +102,9 @@ const ShowMarketLayout = item => {
                                 margin: 0,
                                 justifyContent: 'start'
                             }}
+                            component={LinkBehavior}
+                            to={`location`}
+                            state={item}
                         >
                             <MapPin size={18} /> {city}, {province}
                         </Button>
