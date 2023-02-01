@@ -9,6 +9,7 @@ import OwnerPublication from '../../../components/FeedCard/OwnerPublication';
 import useEffectOnce from '../../../utils/useEffectOnce';
 import { usePublications, fetchPublications } from '../../../context/PublicationContext';
 import FilterButton from '../../../components/Buttons/FilterButton';
+import InviteUserAlert from '../../../components/InviteUserAlert';
 
 const PopularMembers = React.lazy(() => import('../../../components/PopularMembers'));
 
@@ -71,6 +72,7 @@ const UsersHome = () => {
                     <PopularMembers />
                 </Box>
             </React.Suspense>
+            <InviteUserAlert />
             <Box sx={{
                 display: 'flex',
                 position: 'relative',

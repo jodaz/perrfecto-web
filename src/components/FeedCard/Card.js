@@ -95,7 +95,7 @@ const Card = ({
                 </Typography>
             </Box>
             <MuiCard sx={{
-                height: '60vh',
+                height: '56vh',
                 width: !isSmall ? '300px' : '300px',
                 borderRadius: '20px',
                 position: 'relative',
