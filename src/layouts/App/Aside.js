@@ -7,6 +7,7 @@ import Navigation from './Navigation';
 import { useAuth } from '../../context/AuthContext'
 import { Camera } from 'lucide-react';
 import Logo from '../../components/Logo';
+import PrivateRoute from '../../components/PrivateRoute';
 // Icons
 import NotificationButton from './NotificationButton';
 import FilterDrawer from '../../components/FilterDrawer';
@@ -36,11 +37,13 @@ const Sidebar = ({ children }) => {
             <Toolbar sx={{
                 backgroundColor: theme => theme.palette.primary.main,
                 display: 'flex',
-                justifyContent: 'space-between'
+                justifyContent: (user.role == 'guest') ? 'center' : 'space-between'
             }}>
                 {(user.role == 'user') && <Camera color="#fff" />}
                 <Logo dark />
-                <NotificationButton />
+                <PrivateRoute authorize="user,business">
+                    <NotificationButton />
+                </PrivateRoute>
             </Toolbar>
             <Divider />
             <Navigation />
