@@ -65,9 +65,6 @@ function ResponsiveAppBar({ dark }) {
     const generateButtons = () => (
         <>
             <Box sx={{ p: 1 }}>
-                <LanguageButton dark={dark} />
-            </Box>
-            <Box sx={{ p: 1 }}>
                 <Button
                     variant="outlined"
                     color='primary'
@@ -76,6 +73,9 @@ function ResponsiveAppBar({ dark }) {
                 >
                     Iniciar sesión
                 </Button>
+            </Box>
+            <Box sx={{ p: 1 }}>
+                <LanguageButton dark={dark} />
             </Box>
         </>
     )
