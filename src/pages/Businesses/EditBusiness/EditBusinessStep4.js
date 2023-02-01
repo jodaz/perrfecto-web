@@ -32,9 +32,6 @@ const EditBusinessStep4 = () => {
 
         try {
             const {
-                category,
-                province,
-                city,
                 files,
                 ...restData
             } = state
@@ -46,10 +43,7 @@ const EditBusinessStep4 = () => {
             const data = {
                 ...restData,
                 files: filteredFiles,
-                email: user.email,
-                id_category: category.id,
-                province: province.nombre,
-                city: city.nombre
+                email: user.email
             }
 
             const formData = await formDataHandler(data, 'files')

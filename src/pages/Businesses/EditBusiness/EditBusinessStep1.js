@@ -52,7 +52,12 @@ const EditBusinessStep1 = () => {
     }
 
     const onSubmit = data => {
-        saveStep(dispatch, data);
+        const { category, ...restData } = data;
+
+        saveStep(dispatch, {
+            ...restData,
+            id_category: category.id
+        });
         navigate('/businesses/edit/step-2')
     }
 

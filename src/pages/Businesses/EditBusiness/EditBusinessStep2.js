@@ -43,7 +43,14 @@ const EditBusinessStep2 = () => {
     const province = watch('province')
 
     const onSubmit = data => {
-        saveStep(dispatch, data);
+        const { province, city, ...restData } = data;
+
+        saveStep(dispatch, {
+            ...restData,
+            province: province.nombre,
+            city: city.nombre
+        });
+
         navigate('/businesses/edit/step-3')
     }
 
