@@ -70,7 +70,8 @@ const BlogCreate = () => {
                         disabled={isSubmitting}
                         rules={ADD_PHOTOS.rules}
                         validations={ADD_PHOTOS.messages}
-                        maxFiles={1}
+                        maxFiles={5}
+                        message='Tienes un máximo de 5 fotos disponibles'
                     />
                 </Box>
                 <Box p={2}>
