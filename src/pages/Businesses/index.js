@@ -29,11 +29,13 @@ const Businesses = () => {
                     >
                         Aquí podrás gestionar y crear tus negocios en TinderDogs empresa.
                     </Typography>
-                    <IconButtonWithTitle
-                        to='create'
-                        icon={<RocketIcon />}
-                        title='Crear negocio'
-                    />
+                    {(!user.publication) && (
+                        <IconButtonWithTitle
+                            to='create'
+                            icon={<RocketIcon />}
+                            title='Crear negocio'
+                        />
+                    )}
                 </Box>
                 <Stack
                     p={2}
