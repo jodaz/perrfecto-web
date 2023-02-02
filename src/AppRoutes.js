@@ -69,6 +69,9 @@ import PrivateRoute from './components/PrivateRoute';
 import EditBusinessName from './pages/PersonalInformation/EditBusinessName';
 import EditBusinessAddress from './pages/PersonalInformation/EditBusinessAddress';
 import GuestProfile from './pages/Profile/GuestProfile';
+import ShowMarket from './pages/Market/ShowMarket';
+import ShowBusinessLocation from './pages/Businesses/ShowBusinessLocation';
+import ShowBusiness from './pages/Businesses/ShowBusiness';
 
 function AppRoutes() {
     let location = useLocation();
@@ -78,13 +81,29 @@ function AppRoutes() {
         <Routes>
             <Route
                 path='*'
-                element=<NotFound />
+                element={<NotFound />}
             />
             <Route
                 path='/market'
                 element={
                     <AppLayout>
                         <Market />
+                    </AppLayout>
+                }
+            />
+            <Route
+                path='/market/:id'
+                element={
+                    <AppLayout>
+                        <ShowMarket />
+                    </AppLayout>
+                }
+            />
+            <Route
+                path='/market/:id/location'
+                element={
+                    <AppLayout>
+                        <ShowBusinessLocation location={location} />
                     </AppLayout>
                 }
             />
@@ -396,6 +415,18 @@ function AppRoutes() {
                     <Businesses />
                 </AppLayout>
             } />
+
+            <Route path="/businesses/:id" element={
+                <AppLayout>
+                    <ShowBusiness />
+                </AppLayout>
+            } />
+
+            <Route path="/businesses/:id/location" element={
+                <AppLayout>
+                    <ShowBusinessLocation location={location} />
+                </AppLayout>
+            } />
             <Route path="/businesses/create" element={
                 <AppLayout>
                     <CreateBusiness />
@@ -430,6 +461,14 @@ function AppRoutes() {
                     element={
                         <AppLayout>
                             <CreateBusinessStep4 />
+                        </AppLayout>
+                    }
+                />
+                <Route
+                    path='/businesses/create/step-4/location'
+                    element={
+                        <AppLayout>
+                            <ShowBusinessLocation location={location} />
                         </AppLayout>
                     }
                 />
@@ -468,6 +507,14 @@ function AppRoutes() {
                     element={
                         <AppLayout>
                             <EditBusinessStep4 />
+                        </AppLayout>
+                    }
+                />
+                <Route
+                    path='/businesses/edit/step-4/location'
+                    element={
+                        <AppLayout>
+                            <ShowBusinessLocation location={location} />
                         </AppLayout>
                     }
                 />

@@ -20,7 +20,7 @@ import { useAuth } from '../../../context/AuthContext';
 const CreateBusinessStep1 = () => {
     const navigate = useNavigate();
     const { state: { user } } = useAuth();
-    const { state, dispatch } = useMultiStepForm();
+    const { dispatch } = useMultiStepForm();
     const {
         control,
         handleSubmit
@@ -47,7 +47,12 @@ const CreateBusinessStep1 = () => {
     }
 
     const onSubmit = data => {
-        saveStep(dispatch, data);
+        const { category, ...restData } = data;
+
+        saveStep(dispatch, {
+            ...restData,
+            id_category: category.id
+        });
         navigate('/businesses/create/step-2')
     }
 

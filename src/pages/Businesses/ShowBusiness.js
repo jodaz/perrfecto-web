@@ -11,16 +11,24 @@ import PhotoGallery from '../../components/Modals/ShowCard/PhotoGallery';
 import Menu from '../../components/Menu';
 import SettingsLayout from '../../layouts/SettingsLayout';
 import FeatureBusiness from '../../components/Modals/FeatureBusiness';
-import ShowBusinessLocation from './ShowBusinessLocation';
-import LinkBehavior from '../../components/LinkBehavior';
-import { useAuth } from '../../context/AuthContext'
 import { ReactComponent as RocketIcon } from '../../assets/icons/Rocket.svg'
+import { apiProvider } from '../../api';
+import useEffectOnce from '../../utils/useEffectOnce';
+import { useParams } from 'react-router-dom';
+import LinkBehavior from '../../components/LinkBehavior';
+import LoadingIndicator from '../../components/LoadingIndicator';
+import ContactBusiness from '../../components/Modals/ContactBusiness';
 
 const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
-const ShowBusiness = ({ close, ...item }) => {
-    const { state: { user } } = useAuth()
+const ShowBusinessLayout = item => {
     const [featureBusiness, setFeatureBusiness] = React.useState(false)
+    const [openContactDialog, setOpenContactDialog] = React.useState(false)
+
+    const toggleOpenContactDialog = () => setOpenContactDialog(!openContactDialog)
+
+    const toggleFeatureBusiness = () => setFeatureBusiness(!featureBusiness)
+
     const {
         facebook,
         instagram,
@@ -33,27 +41,16 @@ const ShowBusiness = ({ close, ...item }) => {
         description,
         business_name,
     } = item
-    const [showBusinessLocation, setShowBusinessLocation] = React.useState(false)
-
-    const handleOpenShowBusinessLocation = async () => {
-        setShowBusinessLocation(true);
-    }
-
-    const handleCloseShowBusinessLocation = () => {
-        setShowBusinessLocation(false)
-    }
-
-   const toggleFeatureBusiness = () => setFeatureBusiness(!featureBusiness)
 
     const renderMenu = () => (
         <Menu>
-            <Box onClick={toggleFeatureBusiness}
+            <Box
                 sx={{
                 display: 'flex',
                 alignItems: 'center',
                 color: 'unset',
                 textDecoration: 'none',
-            }}>
+            }} onClick={toggleFeatureBusiness}>
                 <Star />
                 <Box sx={{ paddingLeft: '0.5rem' }}>
                     Destacar negocio
@@ -74,19 +71,9 @@ const ShowBusiness = ({ close, ...item }) => {
         </Menu>
     )
 
-    if (showBusinessLocation) {
-        return (
-            <ShowBusinessLocation
-                close={handleCloseShowBusinessLocation}
-                {...item}
-            />
-        )
-    }
-
     return (
         <SettingsLayout
             title={business_name}
-            handleGoBack={close}
             rightIconComponent={renderMenu()}
         >
             <Box sx={{
@@ -121,13 +108,11 @@ const ShowBusiness = ({ close, ...item }) => {
                     borderTopRightRadius: '16px',
                     justifyContent: 'space-between'
                 }}>
-                    {(user.featured) && (
-                        <Box sx={{ margin: '10px 10px 0 0', alignSelf: 'end' }}>
-                            <Tooltip title="Debe esperar 24 horas para que su negocio deje de ser destacado.">
-                                <Star color='#F59E0B' />
-                            </Tooltip>
-                        </Box>
-                    )}
+                    <Box sx={{ margin: '10px 10px 0 0', alignSelf: 'end' }}>
+                        <Tooltip title="Debe esperar 24 horas para que su negocio deje de ser destacado.">
+                            <Star color='#F59E0B' />
+                        </Tooltip>
+                    </Box>
                     <Stack
                         orientation='vertical'
                         spacing={1}
@@ -147,7 +132,9 @@ const ShowBusiness = ({ close, ...item }) => {
                                 margin: 0,
                                 justifyContent: 'start'
                             }}
-                            onClick={handleOpenShowBusinessLocation}
+                            component={LinkBehavior}
+                            to={`location`}
+                            state={item}
                         >
                             <MapPin size={18} /> {city}, {province}
                         </Button>
@@ -157,8 +144,10 @@ const ShowBusiness = ({ close, ...item }) => {
                                 color="info.main"
                                 sx={{
                                     display: 'flex',
-                                    alignItems: 'center'
+                                    alignItems: 'center',
+                                    cursor: 'pointer'
                                 }}
+                                onClick={toggleOpenContactDialog}
                             >
                                 <Phone size={18} /><Box mr='10px' />  {whatsApp}
                             </Typography>
@@ -215,12 +204,43 @@ const ShowBusiness = ({ close, ...item }) => {
                 <FeatureBusiness
                     open={featureBusiness}
                     handleClose={toggleFeatureBusiness}
-                    closeBusiness={close}
                     item={item}
                 />
+                {openContactDialog && (
+                    <ContactBusiness
+                        {...item}
+                        open={openContactDialog}
+                        handleClose={toggleOpenContactDialog}
+                    />
+                )}
             </Box>
         </SettingsLayout>
     )
 };
+
+const ShowBusiness = () => {
+    const [data, setData] = React.useState(null)
+    const { id } = useParams()
+
+    const fetchBusiness = async () => {
+        try {
+            const res = await apiProvider.get(`/api/business-ann/business/${id}`)
+
+            if (res.status >= 200 && res.status < 300) {
+                const { data: { data } } = res;
+
+                setData(data);
+            }
+        } catch (error) {
+            console.log("error ", error)
+        }
+    }
+
+    useEffectOnce(() => { fetchBusiness() }, [])
+
+    if (!data) return <LoadingIndicator />
+
+    return <ShowBusinessLayout {...data} />
+}
 
 export default ShowBusiness

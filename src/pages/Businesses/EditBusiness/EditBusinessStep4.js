@@ -5,7 +5,7 @@ import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Link from '@mui/material/Link';
 import CardContent from '@mui/material/CardContent';
-import { Phone, MapPin, Trash2, Edit, ArrowRight } from 'lucide-react'
+import { Phone, MapPin, ArrowRight } from 'lucide-react'
 import Typography from '@mui/material/Typography';
 import { fileProvider } from '../../../api';
 import formDataHandler from '../../../utils/formDataHandler'
@@ -17,6 +17,8 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth, renewToken } from '../../../context/AuthContext';
 import PhotoGallery from '../../../components/Modals/ShowCard/PhotoGallery';
 import getUserPhoto from '../../../utils/getUserPhoto';
+import ContactBusiness from '../../../components/Modals/ContactBusiness';
+import LinkBehavior from '../../../components/LinkBehavior';
 
 const EditBusinessStep4 = () => {
     const [openWarning, setOpenWarning] = React.useState(false)
@@ -25,6 +27,9 @@ const EditBusinessStep4 = () => {
     const { state: { user }, dispatch: dispatchAuth } = useAuth();
     const { state, dispatch } = useMultiStepForm();
     const { handleSubmit } = useForm();
+    const [openContactDialog, setOpenContactDialog] = React.useState(false)
+
+    const toggleOpenContactDialog = () => setOpenContactDialog(!openContactDialog)
 
     const onSubmit = async () => {
         let filteredFiles = []
@@ -121,7 +126,9 @@ const EditBusinessStep4 = () => {
                                     justifyContent: 'start',
                                     textAlign: 'left'
                                 }}
-                                // onClick={() => handleOpenShowBusinessLocation(restData)}
+                                component={LinkBehavior}
+                                to={`location`}
+                                state={state}
                                 textAlign='left'
                             >
                                 <MapPin size={18} /> {state.city}, {state.province}
@@ -133,6 +140,7 @@ const EditBusinessStep4 = () => {
                                     display: 'flex',
                                     alignItems: 'center'
                                 }}
+                                onClick={toggleOpenContactDialog}
                             >
                                 <Phone size={18} /><Box mr='10px' />  + {state.whatsApp}
                             </Typography>
@@ -196,6 +204,13 @@ const EditBusinessStep4 = () => {
                     Publicar
                 </Button>
             </Box>
+            {openContactDialog && (
+                <ContactBusiness
+                    {...state}
+                    open={openContactDialog}
+                    handleClose={toggleOpenContactDialog}
+                />
+            )}
             <PublicationWait open={openWarning} handleClose={handleCloseWarning} />
             <OverlayLoader open={openOverlayLoader} />
         </Box>

@@ -9,34 +9,20 @@ import IconButton from '@mui/material/IconButton';
 import { Phone, MapPin, ChevronLeft, ArrowRight } from 'lucide-react'
 import getUserPhoto from '../../utils/getUserPhoto';
 import PhotoGallery from '../../components/Modals/ShowCard/PhotoGallery';
-import ShowBusinessLocation from '../Businesses/ShowBusinessLocation';
 import ContactBusiness from '../../components/Modals/ContactBusiness';
-import { useBusinesses, resetItem } from '../../context/BusinessContext';
 import { ReactComponent as RocketIcon } from '../../assets/icons/Rocket.svg'
+import { apiProvider } from '../../api';
+import useEffectOnce from '../../utils/useEffectOnce';
+import { useParams } from 'react-router-dom';
+import LinkBehavior from '../../components/LinkBehavior';
+import LoadingIndicator from '../../components/LoadingIndicator';
 
 const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
-const ShowMarket = () => {
-    const { state: { selectedItem: { item } }, dispatch } = useBusinesses();
+const ShowMarketLayout = item => {
     const [openContactDialog, setOpenContactDialog] = React.useState(false)
-    const [showBusinessLocation, setShowBusinessLocation] = React.useState(false)
 
-    const handleOpenShowBusinessLocation = async () => {
-        setShowBusinessLocation(true);
-    }
-
-    const handleCloseShowBusinessLocation = () => {
-        setShowBusinessLocation(false)
-    }
-
-    if (showBusinessLocation) {
-        return (
-            <ShowBusinessLocation
-                close={handleCloseShowBusinessLocation}
-                {...item}
-            />
-        )
-    }
+    const toggleOpenContactDialog = () => setOpenContactDialog(!openContactDialog)
 
     const {
         facebook,
@@ -49,7 +35,6 @@ const ShowMarket = () => {
         description,
         whatsApp
     } = item
-    console.log(AnnMultimedia.length)
 
     return (
         <Slide direction="left" in={true} mountOnEnter unmountOnExit>
@@ -73,7 +58,10 @@ const ShowMarket = () => {
                         left: 20,
                         top: 20
                     }}>
-                        <IconButton onClick={() => resetItem(dispatch)}>
+                        <IconButton
+                            component={LinkBehavior}
+                            to={-1}
+                        >
                             <ChevronLeft color="#fff" />
                         </IconButton>
                     </Box>
@@ -115,7 +103,9 @@ const ShowMarket = () => {
                                 margin: 0,
                                 justifyContent: 'start'
                             }}
-                            onClick={() => handleOpenShowBusinessLocation(item)}
+                            component={LinkBehavior}
+                            to={`location`}
+                            state={item}
                         >
                             <MapPin size={18} /> {city}, {province}
                         </Button>
@@ -125,9 +115,10 @@ const ShowMarket = () => {
                                 color="info.main"
                                 sx={{
                                     display: 'flex',
-                                    alignItems: 'center'
+                                    alignItems: 'center',
+                                    cursor: 'pointer'
                                 }}
-                                onClick={() => setOpenContactDialog(true)}
+                                onClick={toggleOpenContactDialog}
                             >
                                 <Phone size={18} /><Box mr='10px' />  +{whatsApp}
                             </Typography>
@@ -184,13 +175,38 @@ const ShowMarket = () => {
                         <ContactBusiness
                             {...item}
                             open={openContactDialog}
-                            handleClose={() => setOpenContactDialog(false)}
+                            handleClose={toggleOpenContactDialog}
                         />
                     )}
                 </Box>
             </Box>
         </Slide>
     )
+}
+
+const ShowMarket = () => {
+    const [data, setData] = React.useState(null)
+    const { id } = useParams()
+
+    const fetchBusiness = async () => {
+        try {
+            const res = await apiProvider.get(`/api/business-ann/business/${id}`)
+
+            if (res.status >= 200 && res.status < 300) {
+                const { data: { data } } = res;
+
+                setData(data);
+            }
+        } catch (error) {
+            console.log("error ", error)
+        }
+    }
+
+    useEffectOnce(() => { fetchBusiness() }, [])
+
+    if (!data) return <LoadingIndicator />
+
+    return <ShowMarketLayout {...data} />
 }
 
 export default ShowMarket

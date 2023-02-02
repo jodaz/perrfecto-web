@@ -6,8 +6,9 @@ import CardMedia from '@mui/material/CardMedia';
 import { ReactComponent as RocketIcon } from '../../assets/icons/Rocket.svg'
 import { ChevronRight } from 'lucide-react';
 import getUserPhoto from '../../utils/getUserPhoto'
+import LinkBehavior from '../../components/LinkBehavior';
 
-const BusinessCard = ({ handleSelect, ...data }) => (
+const BusinessCard = data => (
     <Card
         variant="outlined"
         sx={{
@@ -16,11 +17,14 @@ const BusinessCard = ({ handleSelect, ...data }) => (
             flexDirection: 'row',
             transition: '0.3s',
             cursor: 'pointer',
+            textDecoration: 'none',
+            color: 'unset',
             '&: hover': {
                 opacity: 0.75
             }
         }}
-        onClick={() => handleSelect(data)}
+        component={LinkBehavior}
+        to={`${data.id}`}
     >
         {(data.AnnMultimedia.length) ? (
             <CardMedia

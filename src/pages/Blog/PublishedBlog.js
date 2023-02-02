@@ -114,7 +114,7 @@ const PublishedBlogLayout = ({
                             <Box
                                 component="img"
                                 alt='blog_post.png'
-                                src={getUserPhoto(JSON.parse(User.img_profile))}
+                                src={getUserPhoto(JSON.parse(User.img_profile)[0])}
                                 sx={{
                                     maxWidth: 22,
                                     maxHeight: 22,
