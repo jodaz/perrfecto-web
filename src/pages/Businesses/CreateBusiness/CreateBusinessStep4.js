@@ -129,7 +129,7 @@ const CreateBusinessStep4 = () => {
                                 }}
                                 onClick={toggleOpenContactDialog}
                             >
-                                <Phone size={18} /><Box mr='10px' />  + {state.whatsApp}
+                                <Phone size={18} /><Box mr='10px' />  + {state.code_phone} {state.whatsApp}
                             </Typography>
                             <Typography
                                 variant="subtitle1"

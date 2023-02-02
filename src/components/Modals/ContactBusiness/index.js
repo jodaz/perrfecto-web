@@ -7,7 +7,14 @@ import Typography from '@mui/material/Typography';
 import InstagramModal from '../InstagramModal';
 import getUserPhoto from '../../../utils/getUserPhoto';
 
-const ContactBusiness = ({ whatsApp, AnnMultimedia = [], files = [], handleClose, open }) => (
+const ContactBusiness = ({
+    whatsApp,
+    AnnMultimedia = [],
+    files = [],
+    handleClose,
+    open,
+    code_phone
+}) => (
     <InstagramModal handleClose={handleClose} open={open}>
         <Box sx={{
             display: 'flex',
@@ -49,7 +56,7 @@ const ContactBusiness = ({ whatsApp, AnnMultimedia = [], files = [], handleClose
                         variant="contained"
                         color="success"
                         target='_blank'
-                        href={`https://wa.me/${whatsApp}`}
+                        href={`https://wa.me/${code_phone}${whatsApp}`}
                         fullWidth
                     >
                         <WhatsApp /> Whatsapp
