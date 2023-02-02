@@ -108,7 +108,7 @@ const Dropzone = ({
         } else {
             return setFiles(value);
         }
-    }, [value])
+    }, [value.length])
 
     return (
         <Box sx={{ display: 'flex', mt: 1, mb: 2, opacity: disabled ? 0.8 : 1 }}>
