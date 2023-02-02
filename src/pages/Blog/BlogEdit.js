@@ -24,16 +24,25 @@ const BlogEditLayout = ({
     id,
     BlogMultimedia,
     currAuthUser,
-    sideAction,
-    ...restData
+    title,
+    description
 }) => {
+    const [pictures, setPictures] = React.useState((() => {
+        if (BlogMultimedia.length) {
+            return BlogMultimedia.map(({ name }) => name)
+        }
+    })())
     const {
         control,
         handleSubmit,
         formState: { isSubmitting },
-        setValue
+        setValue,
+        getValues
     } = useForm({
-        defaultValues: restData
+        defaultValues: {
+            title: title,
+            description: description
+        }
     });
     const [openDeletePhoto, setOpenDeletePhoto] = React.useState(false);
     const [selectedPhoto, setSelectedPhoto] = React.useState(null)
@@ -84,14 +93,21 @@ const BlogEditLayout = ({
         setSelectedPhoto(file)
     }
 
+    const sideAction = ({ name }) => {
+        const files = getValues('files')
+        const newFiles = files.filter(file => file != name);
+
+        setPictures(newFiles)
+    }
+
     const handleCloseDeletePhoto = () => {
         setOpenDeletePhoto(false)
         setSelectedPhoto(null)
     }
 
     React.useEffect(() => {
-        setValue("files", BlogMultimedia.map(item => item.name))
-    }, [BlogMultimedia.length])
+        setValue('files', pictures)
+    }, [pictures])
 
     return (
         <SettingsLayout title="Editar publicación">
@@ -156,7 +172,7 @@ const BlogEditLayout = ({
                         handleClose={handleCloseDeletePhoto}
                         file={selectedPhoto.id}
                         endpoint={`/api/blog/file`}
-                        sideAction={sideAction}
+                        sideAction={() => sideAction(selectedPhoto)}
                     />
                 )}
             </Box>
@@ -201,7 +217,6 @@ const BlogEdit = () => {
         <BlogEditLayout
             {...blog}
             currAuthUser={user}
-            sideAction={fetchBlog}
         />
     );
 }

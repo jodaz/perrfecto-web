@@ -20,6 +20,7 @@ import LikePostButton from '../../components/Buttons/LikePostButton';
 import PostMenu from './PostMenu';
 import FeaturePost from '../../components/Modals/FeaturePost';
 import FeaturedMark from './FeaturedMark';
+import PhotoGallery from '../../components/Modals/ShowCard/PhotoGallery';
 
 const PublishedBlogLayout = ({
     id,
@@ -63,13 +64,7 @@ const PublishedBlogLayout = ({
                     </IconButton>
                 </Box>
                 {featured_blog && <FeaturedMark top={20} right={20} />}
-                <Box
-                    component="img"
-                    width="100%"
-                    height="350px"
-                    alt='blog_post.png'
-                    src={BlogMultimedia.length ? getUserPhoto(BlogMultimedia[0].name) : null}
-                />
+                <PhotoGallery images={BlogMultimedia.map(item => getUserPhoto(item.name))} />
             </Box>
             <Box sx={{
                 borderRadius: '24px 24px 0px 0px',
