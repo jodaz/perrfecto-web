@@ -31,7 +31,6 @@ const PublishedBlogLayout = ({
     currAuthUser,
     User,
     CommentsCount = 0,
-    LikesCount = 0,
     navigate,
     featured_blog,
     toggleComments,
@@ -152,12 +151,7 @@ const PublishedBlogLayout = ({
                         alignItems: 'center'
                     }}
                 >
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <LikePostButton id={id} type='post' liked={LikesBlog.length} />
-                        <Typography variant="body2" ml={1} color="#5E5E5E">
-                            {LikesCount}
-                        </Typography>
-                    </Box>
+                    <LikePostButton id={id} type='post' likes={LikesBlog} />
                     <Box sx={{ display: 'flex', alignItems: 'center' }} onClick={toggleComments}>
                         <IconButton>
                             <MessageSquare color="#5E5E5E" />

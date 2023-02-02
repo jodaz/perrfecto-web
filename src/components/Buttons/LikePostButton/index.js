@@ -4,9 +4,11 @@ import { openGuestWarning, useGuest } from '../../../context/GuestContext';
 import { apiProvider } from '../../../api';
 import { ThumbsUp } from 'lucide-react';
 import IconButton from '@mui/material/IconButton';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
-const LikePostButton = ({ id, type, liked }) => {
-    const [isLiked, setIsLiked] = React.useState(liked)
+const LikePostButton = ({ id, type, likes = [] }) => {
+    const [isLiked, setIsLiked] = React.useState(likes.length)
     const { state: { isAuth } } = useAuth();
     const { dispatch } = useGuest();
 
@@ -55,9 +57,14 @@ const LikePostButton = ({ id, type, liked }) => {
     }
 
     return (
-        <IconButton onClick={action}>
-            <ThumbsUp color={isLiked ? '#A167C9' : "#5E5E5E"} />
-        </IconButton>
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <IconButton onClick={action}>
+                <ThumbsUp color={isLiked ? '#A167C9' : "#5E5E5E"} />
+            </IconButton>
+            <Typography variant="body2" ml={1} color="#5E5E5E">
+                {isLiked ? likes.length + 1 : likes.length}
+            </Typography>
+        </Box>
     )
 }
 

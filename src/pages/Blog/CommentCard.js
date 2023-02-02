@@ -18,7 +18,8 @@ const CommentCard = ({
     createdAt,
     ReplyBlogs = [],
     LikesCount = 0,
-    openReply
+    openReply,
+    LikesCommentaryBlog
 }) => (
     <Box sx={{
         p: 1,
@@ -77,12 +78,11 @@ const CommentCard = ({
                     alignItems: 'center'
                 }}
             >
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <LikePostButton id={id} type='comment' />
-                    <Typography variant="body2" ml={1} color="#5E5E5E">
-                        {LikesCount}
-                    </Typography>
-                </Box>
+                <LikePostButton
+                    id={id}
+                    likes={LikesCommentaryBlog}
+                    type='comment'
+                />
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     <IconButton onClick={openReply}>
                         <MessageSquare color="#5E5E5E" />
