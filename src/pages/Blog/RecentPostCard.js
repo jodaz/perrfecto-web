@@ -37,7 +37,7 @@ const RecentPostCard = ({
             width="130"
             height="140"
             alt='blog_post.png'
-            src={getUserPhoto(BlogMultimedia[0].name)}
+            src={BlogMultimedia.length ? getUserPhoto(BlogMultimedia[0].name) : null}
             sx={{
                 borderRadius: 4,
             }}
