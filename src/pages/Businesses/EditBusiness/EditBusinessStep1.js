@@ -67,7 +67,6 @@ const EditBusinessStep1 = () => {
     useEffectOnce(() => { fetchCategories() }, [])
 
     React.useEffect(() => {
-        setValue('code_phone', state.code_phone)
         setValue('whatsApp', state.whatsApp)
     }, [state])
 
@@ -111,6 +110,7 @@ const EditBusinessStep1 = () => {
                     control={control}
                     name="whatsApp"
                     rules={PHONE.rules}
+                    defaultCodePhone={state.code_phone}
                     validations={PHONE.messages}
                     placeholder='Ingresar teléfono'
                 />

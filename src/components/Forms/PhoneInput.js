@@ -21,7 +21,8 @@ const PhoneInput = ({
     type,
     name,
     disabled,
-    validations
+    validations,
+    defaultCodePhone
 }) => {
     const allowOnlyNumber=(value)=>{
         return value.replace(/[^0-9]/g, '')
@@ -46,7 +47,7 @@ const PhoneInput = ({
                             disabled={disabled}
                             startAdornment={
                                 <InputAdornment position="start">
-                                    <CodePopover control={control} />
+                                    <CodePopover defaultCodePhone={defaultCodePhone} control={control} />
                                 </InputAdornment>
                             }
                             inputProps={{ maxLength: 15 }}
