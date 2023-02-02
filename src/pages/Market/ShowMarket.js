@@ -16,6 +16,7 @@ import useEffectOnce from '../../utils/useEffectOnce';
 import { useParams } from 'react-router-dom';
 import LinkBehavior from '../../components/LinkBehavior';
 import LoadingIndicator from '../../components/LoadingIndicator';
+import Tooltip from '@mui/material/Tooltip';
 
 const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
@@ -33,6 +34,7 @@ const ShowMarketLayout = item => {
         province,
         city,
         description,
+        code_phone,
         whatsApp
     } = item
 
@@ -96,32 +98,36 @@ const ShowMarketLayout = item => {
                         >
                             {business_name}
                         </Typography>
-                        <Button
-                            color="info"
-                            sx={{
-                                padding: 0,
-                                margin: 0,
-                                justifyContent: 'start'
-                            }}
-                            component={LinkBehavior}
-                            to={`location`}
-                            state={item}
-                        >
-                            <MapPin size={18} /> {city}, {province}
-                        </Button>
-                        {whatsApp && (
-                            <Typography
-                                variant="subtitle1"
-                                color="info.main"
+                        <Tooltip title="Ver ubicación">
+                            <Button
+                                color="info"
                                 sx={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    cursor: 'pointer'
+                                    padding: 0,
+                                    margin: 0,
+                                    justifyContent: 'start'
                                 }}
-                                onClick={toggleOpenContactDialog}
+                                component={LinkBehavior}
+                                to={`location`}
+                                state={item}
                             >
-                                <Phone size={18} /><Box mr='10px' />  +{whatsApp}
-                            </Typography>
+                                <MapPin size={18} /> {city}, {province}
+                            </Button>
+                        </Tooltip>
+                        {whatsApp && (
+                            <Tooltip title="Contactar">
+                                <Typography
+                                    variant="subtitle1"
+                                    color="info.main"
+                                    sx={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        cursor: 'pointer'
+                                    }}
+                                    onClick={toggleOpenContactDialog}
+                                >
+                                    <Phone size={18} /><Box mr='10px' />  +{code_phone} {whatsApp}
+                                </Typography>
+                            </Tooltip>
                         )}
                         <Typography
                             variant="subtitle1"
