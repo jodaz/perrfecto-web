@@ -5,27 +5,39 @@ import { apiProvider } from '../../../api';
 import { ThumbsUp } from 'lucide-react';
 import IconButton from '@mui/material/IconButton';
 
-const LikePostButton = ({ id, type }) => {
+const LikePostButton = ({ id, type, liked }) => {
+    const [isLiked, setIsLiked] = React.useState(liked)
     const { state: { isAuth } } = useAuth();
     const { dispatch } = useGuest();
 
-    const handleSubmitLike = async (event) => {
+    const handleSubmitLike = async () => {
+        let response = null;
+
         try {
             switch (type) {
                 case 'post': {
-                    return await apiProvider.post('/api/blog/like', {
+                    response = await apiProvider.post('/api/blog/like', {
                         blog_id: id
                     })
+                    break;
                 }
                 case 'comment': {
-                    return await apiProvider.post('/api/blog/like-commentary', {
+                    response = await apiProvider.post('/api/blog/like-commentary', {
                         commentary_id: id
                     })
+                    break;
                 }
                 case 'reply': {
-                    return await apiProvider.post('/api/blog/like-reply-blog', {
+                    response = await apiProvider.post('/api/blog/like-reply-blog', {
                         reply_id: id
                     })
+                    break;
+                }
+            }
+
+            if (response) {
+                if (response.status >= 200 && response.status < 300) {
+                    setIsLiked(true)
                 }
             }
         } catch (error) {
@@ -44,7 +56,7 @@ const LikePostButton = ({ id, type }) => {
 
     return (
         <IconButton onClick={action}>
-            <ThumbsUp color="#5E5E5E" />
+            <ThumbsUp color={isLiked ? '#A167C9' : "#5E5E5E"} />
         </IconButton>
     )
 }

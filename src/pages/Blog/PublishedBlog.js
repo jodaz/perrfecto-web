@@ -37,7 +37,8 @@ const PublishedBlogLayout = ({
     toggleComments,
     toggleFeaturePost,
     openComments,
-    handleDeletePost
+    handleDeletePost,
+    LikesBlog
 }) => (
     <Slide direction="left" in={true} mountOnEnter unmountOnExit>
         <Box sx={{
@@ -152,7 +153,7 @@ const PublishedBlogLayout = ({
                     }}
                 >
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <LikePostButton id={id} type='post' />
+                        <LikePostButton id={id} type='post' liked={LikesBlog.length} />
                         <Typography variant="body2" ml={1} color="#5E5E5E">
                             {LikesCount}
                         </Typography>
