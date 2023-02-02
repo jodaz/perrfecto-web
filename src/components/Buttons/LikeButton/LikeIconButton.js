@@ -4,6 +4,7 @@ import Badge from '@mui/material/Badge';
 import Tooltip from '@mui/material/Tooltip';
 // Icons
 import { ReactComponent as PawIcon } from '../../../assets/icons/Paw.svg'
+import { alpha } from '@mui/material';
 
 const LikeIconButton = ({ likes, ...rest }) => (
     <Tooltip
@@ -30,7 +31,10 @@ const LikeIconButton = ({ likes, ...rest }) => (
         >
             <IconButton sx={{
                 background: '#fff',
-                boxShadow: '0px 2px 5px rgba(51, 51, 51, 0.15)'
+                boxShadow: '0px 2px 5px rgba(51, 51, 51, 0.15)',
+                '&:hover': {
+                    background: `${alpha('#fff', 0.9)}`
+                }
             }} {...rest}>
                 <PawIcon />
             </IconButton>

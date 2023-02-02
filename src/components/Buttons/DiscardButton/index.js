@@ -11,7 +11,10 @@ const DiscardIconButton = props => (
         <IconButton sx={{
             background: 'url(/images/default/pasto_feo.png)',
             padding: '0.6rem',
-            boxShadow: '0px 2px 5px rgba(51, 51, 51, 0.15)'
+            boxShadow: '0px 2px 5px rgba(51, 51, 51, 0.15)',
+            '&:hover': {
+                opacity: 0.95
+            }
         }} {...props}>
             <HuesitoIcon />
         </IconButton>
