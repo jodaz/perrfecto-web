@@ -138,7 +138,8 @@ const EditBusinessStep4 = () => {
                                 color="info.main"
                                 sx={{
                                     display: 'flex',
-                                    alignItems: 'center'
+                                    alignItems: 'center',
+                                    cursor: 'pointer'
                                 }}
                                 onClick={toggleOpenContactDialog}
                             >
