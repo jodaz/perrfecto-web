@@ -110,9 +110,11 @@ function AppRoutes() {
             <Route
                 path='/chat'
                 element={
-                    <AppLayout>
-                        <Chat />
-                    </AppLayout>
+                    <PrivateRoute authorize='user' unauthorized={<NotFound />}>
+                        <AppLayout>
+                            <Chat />
+                        </AppLayout>
+                    </PrivateRoute>
                 }
             />
             <Route
@@ -168,7 +170,7 @@ function AppRoutes() {
             <Route
                 path='/profile/ads/create'
                 element={
-                    <PrivateRoute authorize='user,business' unauthorized={<NotFound />}>
+                    <PrivateRoute authorize='user' unauthorized={<NotFound />}>
                         <AppLayout>
                             <CreateAd location={location} />
                         </AppLayout>
@@ -178,7 +180,7 @@ function AppRoutes() {
             <Route
                 path='/profile/ads/:id/edit'
                 element={
-                    <PrivateRoute authorize='user,business' unauthorized={<NotFound />}>
+                    <PrivateRoute authorize='user' unauthorized={<NotFound />}>
                         <EditAd location={location} />
                     </PrivateRoute>
                 }
@@ -186,26 +188,32 @@ function AppRoutes() {
             <Route
                 path='/profile/ads/show'
                 element={
-                    <OnlyDesktop
-                        aside={<PetProfile />}
-                        principal={<ShowAd location={location} />}
-                    />
+                    <PrivateRoute authorize='user' unauthorized={<NotFound />}>
+                        <OnlyDesktop
+                            aside={<PetProfile />}
+                            principal={<ShowAd location={location} />}
+                        />
+                    </PrivateRoute>
                 }
             />
             <Route
                 path='/profile/settings/owner'
                 element={
                     <AppLayout>
-                        <PersonalInformation location={location} />
+                        <PrivateRoute authorize='user,business' unauthorized={<NotFound />}>
+                            <PersonalInformation location={location} />
+                        </PrivateRoute>
                     </AppLayout>
                 }
             />
             <Route
                 path='/profile/settings/owner/names'
                 element={
-                    <AppLayout>
-                        <EditNames location={location} />
-                    </AppLayout>
+                    <PrivateRoute authorize='user,business' unauthorized={<NotFound />}>
+                        <AppLayout>
+                            <EditNames location={location} />
+                        </AppLayout>
+                    </PrivateRoute>
                 }
             />
             <Route
