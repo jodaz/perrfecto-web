@@ -30,6 +30,7 @@ const PublishedBlogLayout = ({
     description,
     currAuthUser,
     User,
+    LikesCount = 0,
     CommentsCount = 0,
     navigate,
     featured_blog,
@@ -151,7 +152,12 @@ const PublishedBlogLayout = ({
                         alignItems: 'center'
                     }}
                 >
-                    <LikePostButton id={id} type='post' likes={LikesBlog} />
+                    <LikePostButton
+                        id={id}
+                        type="post"
+                        likes={LikesBlog}
+                        LikesCount={LikesCount}
+                    />
                     <Box sx={{ display: 'flex', alignItems: 'center' }} onClick={toggleComments}>
                         <IconButton>
                             <MessageSquare color="#5E5E5E" />

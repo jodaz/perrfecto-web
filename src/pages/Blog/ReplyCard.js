@@ -78,6 +78,7 @@ const ReplyCard = ({
                     id={id}
                     type='reply'
                     likes={LikesReply}
+                    LikesCount={LikesCount}
                 />
             </Stack>
         </Box>

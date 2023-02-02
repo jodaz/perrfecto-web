@@ -82,6 +82,7 @@ const CommentCard = ({
                     id={id}
                     likes={LikesCommentaryBlog}
                     type='comment'
+                    LikesCount={LikesCount}
                 />
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     <IconButton onClick={openReply}>

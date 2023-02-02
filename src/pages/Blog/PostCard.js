@@ -11,11 +11,13 @@ import getUserPhoto from '../../utils/getUserPhoto';
 import LinkBehavior from '../../components/LinkBehavior';
 import Skeleton from "@mui/material/Skeleton";
 import FeaturedMark from './FeaturedMark';
+import LikePostButton from '../../components/Buttons/LikePostButton';
 
 const PostCard = ({
     menu,
     showStatus,
-    item
+    item,
+    LikesBlog
 }) => {
     const loading = item == null;
 
@@ -129,12 +131,12 @@ const PostCard = ({
                                 alignItems: 'center'
                             }}
                         >
-                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                <ThumbsUp color="#5E5E5E" />
-                                <Typography variant="body2" ml={1} color="#5E5E5E">
-                                    {item.LikesCount}
-                                </Typography>
-                            </Box>
+                            <LikePostButton
+                                id={item.id}
+                                type="post"
+                                likes={LikesBlog}
+                                LikesCount={item.LikesCount}
+                            />
                             <Box sx={{ display: 'flex', alignItems: 'center' }}>
                                 <MessageSquare color="#5E5E5E" />
                                 <Typography variant="body2" ml={1} color="#5E5E5E">

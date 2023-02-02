@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-const LikePostButton = ({ id, type, likes = [] }) => {
+const LikePostButton = ({ id, type, likes = [], LikesCount = 0 }) => {
     const [isLiked, setIsLiked] = React.useState(likes.length)
     const { state: { isAuth } } = useAuth();
     const { dispatch } = useGuest();
@@ -62,7 +62,7 @@ const LikePostButton = ({ id, type, likes = [] }) => {
                 <ThumbsUp color={isLiked ? '#A167C9' : "#5E5E5E"} />
             </IconButton>
             <Typography variant="body2" ml={1} color="#5E5E5E">
-                {isLiked ? likes.length + 1 : likes.length}
+                {isLiked ? LikesCount + 1 : LikesCount}
             </Typography>
         </Box>
     )
