@@ -16,6 +16,8 @@ import OverlayLoader from '../../../components/Modals/OverlayLoader';
 import { useNavigate } from 'react-router-dom';
 import { useAuth, renewToken } from '../../../context/AuthContext';
 import PhotoGallery from '../../../components/Modals/ShowCard/PhotoGallery';
+import ContactBusiness from '../../../components/Modals/ContactBusiness';
+import LinkBehavior from '../../../components/LinkBehavior';
 
 const CreateBusinessStep4 = () => {
     const [openWarning, setOpenWarning] = React.useState(false)
@@ -24,22 +26,16 @@ const CreateBusinessStep4 = () => {
     const { state: { user }, dispatch: dispatchAuth } = useAuth();
     const { state, dispatch } = useMultiStepForm();
     const { handleSubmit } = useForm();
+    const [openContactDialog, setOpenContactDialog] = React.useState(false)
+
+    const toggleOpenContactDialog = () => setOpenContactDialog(!openContactDialog)
 
     const onSubmit = async () => {
         setOpenOverlayLoader(true)
-        const {
-            category,
-            province,
-            city,
-            ...restData
-        } = state
 
         const data = {
-            ...restData,
-            email: 'prueba@prueba.com',
-            id_category: category.id,
-            province: province.nombre,
-            city: city.nombre
+            ...state,
+            email: user.email
         }
 
         const formData = await formDataHandler(data, 'files')
@@ -116,10 +112,12 @@ const CreateBusinessStep4 = () => {
                                     justifyContent: 'start',
                                     textAlign: 'left'
                                 }}
-                                // onClick={() => handleOpenShowBusinessLocation(restData)}
+                                component={LinkBehavior}
+                                to={`location`}
+                                state={state}
                                 textAlign='left'
                             >
-                                <MapPin size={18} /> {state.city.nombre}, {state.province.nombre}
+                                <MapPin size={18} /> {state.city}, {state.province}
                             </Button>
                             <Typography
                                 variant="subtitle1"

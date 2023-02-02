@@ -464,6 +464,14 @@ function AppRoutes() {
                         </AppLayout>
                     }
                 />
+                <Route
+                    path='/businesses/create/step-4/location'
+                    element={
+                        <AppLayout>
+                            <ShowBusinessLocation location={location} />
+                        </AppLayout>
+                    }
+                />
             </Route>
             <Route path="/businesses/edit" element={
                 <AppLayout>
@@ -499,6 +507,14 @@ function AppRoutes() {
                     element={
                         <AppLayout>
                             <EditBusinessStep4 />
+                        </AppLayout>
+                    }
+                />
+                <Route
+                    path='/businesses/edit/step-4/location'
+                    element={
+                        <AppLayout>
+                            <ShowBusinessLocation location={location} />
                         </AppLayout>
                     }
                 />

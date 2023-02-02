@@ -37,8 +37,13 @@ const CreateBusinessStep2 = () => {
     const [cities, setCities] = React.useState([])
     const province = watch('province')
 
-    const onSubmit = data => {
-        saveStep(dispatch, data);
+    const onSubmit = ({ province, city, ...restData }) => {
+        saveStep(dispatch, {
+            ...restData,
+            province: province.nombre,
+            city: city.nombre
+        });
+
         navigate('/businesses/create/step-3')
     }
 
