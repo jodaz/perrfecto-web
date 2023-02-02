@@ -10,11 +10,16 @@ import { useNavigate } from 'react-router-dom';
 import Stepper from '../Stepper';
 import Tooltip from '@mui/material/Tooltip';
 import { Info } from 'lucide-react'
+import LinkBehavior from '../../../components/LinkBehavior';
 
 const CreateBusinessStep3 = () => {
     const navigate = useNavigate()
-    const { dispatch } = useMultiStepForm();
-    const { control, handleSubmit } = useForm();
+    const { state, dispatch } = useMultiStepForm();
+    const { control, handleSubmit } = useForm({
+        defaultValues: {
+            files: state.files
+        }
+    });
 
     const onSubmit = data => {
         saveStep(dispatch, data);
@@ -54,12 +59,23 @@ const CreateBusinessStep3 = () => {
                     validations={ADD_PHOTOS.messages}
                 />
             </Box>
-            <Box sx={{ p: 2 }}>
+            <Box sx={{
+                p: 2,
+                display: 'flex',
+                justifyContent: 'space-between'
+            }}>
+                <Button
+                    component={LinkBehavior}
+                    to={-1}
+                    sx={{ color: theme => theme.palette.text.tertiary }}
+                >
+                    Regresar
+                </Button>
                 <Button
                     variant='contained'
                     type='submit'
                 >
-                    Revisa tu publicación
+                    Siguiente
                 </Button>
             </Box>
         </Box>

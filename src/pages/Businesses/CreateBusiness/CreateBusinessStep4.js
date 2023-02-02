@@ -181,7 +181,18 @@ const CreateBusinessStep4 = () => {
                     </CardContent>
                 </Card>
             </Box>
-            <Box sx={{ p: 2 }}>
+            <Box sx={{
+                p: 2,
+                display: 'flex',
+                justifyContent: 'space-between'
+            }}>
+                <Button
+                    component={LinkBehavior}
+                    to={-1}
+                    sx={{ color: theme => theme.palette.text.tertiary }}
+                >
+                    Regresar
+                </Button>
                 <Button
                     variant='contained'
                     type='submit'
