@@ -15,6 +15,7 @@ import { apiProvider } from '../../api';
 import useEffectOnce from '../../utils/useEffectOnce';
 import { useParams } from 'react-router-dom';
 import LinkBehavior from '../../components/LinkBehavior';
+import LoadingIndicator from '../../components/LoadingIndicator';
 
 const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
@@ -203,7 +204,7 @@ const ShowMarket = () => {
 
     useEffectOnce(() => { fetchBusiness() }, [])
 
-    if (!data) return <></>
+    if (!data) return <LoadingIndicator />
 
     return <ShowMarketLayout {...data} />
 }
