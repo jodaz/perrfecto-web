@@ -121,6 +121,9 @@ const CreateAd = () => {
                         rules={ADD_PHOTOS.rules}
                         validations={ADD_PHOTOS.messages}
                         maxFiles={15}
+                        accept={{
+                            'image/*': []
+                        }}
                         message='Tienes un máximo de 15 fotos disponibles'
                     />
                 </Box>

@@ -71,6 +71,9 @@ const BlogCreate = () => {
                         rules={ADD_PHOTOS.rules}
                         validations={ADD_PHOTOS.messages}
                         maxFiles={5}
+                        accept={{
+                            'image/*': []
+                        }}
                         message='Tienes un máximo de 5 fotos disponibles'
                     />
                 </Box>

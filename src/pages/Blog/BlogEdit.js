@@ -19,11 +19,12 @@ import useEffectOnce from '../../utils/useEffectOnce';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import DeletePhotoWarning from '../../components/Modals/DeletePhotoWarning';
 import formDataHandler from '../../utils/formDataHandler';
+import { Info } from 'lucide-react';
+import Tooltip from '@mui/material/Tooltip';
 
 const BlogEditLayout = ({
     id,
     BlogMultimedia,
-    currAuthUser,
     title,
     description
 }) => {
@@ -110,7 +111,18 @@ const BlogEditLayout = ({
     }, [pictures])
 
     return (
-        <SettingsLayout title="Editar publicación">
+        <SettingsLayout
+            title="Editar publicación"
+            rightIconComponent={
+                <Tooltip
+                    title='Recuerda que puedes añadir imágenes de 800px por 800px de mínimo y 1080px por 1080px de máximo'
+                >
+                    <Box p={2} color="text.tertiary">
+                        <Info />
+                    </Box>
+                </Tooltip>
+            }
+        >
             <Box sx={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -123,8 +135,12 @@ const BlogEditLayout = ({
                         name='files'
                         disabled={isSubmitting}
                         rules={ADD_PHOTOS.rules}
+                        accept={{
+                            'image/*': []
+                        }}
                         deletePhotoHandler={handleOpenDeletePhoto}
                         validations={ADD_PHOTOS.messages}
+                        message='Tienes un máximo de 5 fotos disponibles'
                     />
                 </Box>
                 <Box p={2}>

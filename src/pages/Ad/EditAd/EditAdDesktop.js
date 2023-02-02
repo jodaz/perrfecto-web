@@ -156,8 +156,7 @@ const EditAdDesktop = () => {
                         validations={ADD_PHOTOS.messages}
                         deletePhotoHandler={handleOpenDeletePhoto}
                         accept={{
-                            'image/*': [],
-                            'video/mp4': []
+                            'image/*': []
                         }}
                         maxFiles={15}
                         message='Tienes un máximo de 15 fotos'
