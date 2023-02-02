@@ -17,10 +17,18 @@ import useEffectOnce from '../../utils/useEffectOnce';
 import { useParams } from 'react-router-dom';
 import LinkBehavior from '../../components/LinkBehavior';
 import LoadingIndicator from '../../components/LoadingIndicator';
+import ContactBusiness from '../../components/Modals/ContactBusiness';
 
 const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
 const ShowBusinessLayout = item => {
+    const [featureBusiness, setFeatureBusiness] = React.useState(false)
+    const [openContactDialog, setOpenContactDialog] = React.useState(false)
+
+    const toggleOpenContactDialog = () => setOpenContactDialog(!openContactDialog)
+
+    const toggleFeatureBusiness = () => setFeatureBusiness(!featureBusiness)
+
     const {
         facebook,
         instagram,
@@ -42,7 +50,7 @@ const ShowBusinessLayout = item => {
                 alignItems: 'center',
                 color: 'unset',
                 textDecoration: 'none',
-            }}>
+            }} onClick={toggleFeatureBusiness}>
                 <Star />
                 <Box sx={{ paddingLeft: '0.5rem' }}>
                     Destacar negocio
@@ -100,13 +108,11 @@ const ShowBusinessLayout = item => {
                     borderTopRightRadius: '16px',
                     justifyContent: 'space-between'
                 }}>
-                    {/* {(user.featured) && (
-                        <Box sx={{ margin: '10px 10px 0 0', alignSelf: 'end' }}>
-                            <Tooltip title="Debe esperar 24 horas para que su negocio deje de ser destacado.">
-                                <Star color='#F59E0B' />
-                            </Tooltip>
-                        </Box>
-                    )} */}
+                    <Box sx={{ margin: '10px 10px 0 0', alignSelf: 'end' }}>
+                        <Tooltip title="Debe esperar 24 horas para que su negocio deje de ser destacado.">
+                            <Star color='#F59E0B' />
+                        </Tooltip>
+                    </Box>
                     <Stack
                         orientation='vertical'
                         spacing={1}
@@ -138,8 +144,10 @@ const ShowBusinessLayout = item => {
                                 color="info.main"
                                 sx={{
                                     display: 'flex',
-                                    alignItems: 'center'
+                                    alignItems: 'center',
+                                    cursor: 'pointer'
                                 }}
+                                onClick={toggleOpenContactDialog}
                             >
                                 <Phone size={18} /><Box mr='10px' />  {whatsApp}
                             </Typography>
@@ -193,12 +201,18 @@ const ShowBusinessLayout = item => {
                         )}
                     </Stack>
                 </Box>
-                {/* <FeatureBusiness
+                <FeatureBusiness
                     open={featureBusiness}
                     handleClose={toggleFeatureBusiness}
-                    closeBusiness={close}
                     item={item}
-                /> */}
+                />
+                {openContactDialog && (
+                    <ContactBusiness
+                        {...item}
+                        open={openContactDialog}
+                        handleClose={toggleOpenContactDialog}
+                    />
+                )}
             </Box>
         </SettingsLayout>
     )
