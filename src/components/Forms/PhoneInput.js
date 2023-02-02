@@ -19,6 +19,7 @@ const PhoneInput = ({
     rules,
     defaultValue,
     type,
+    name,
     disabled,
     validations
 }) => {
@@ -31,7 +32,7 @@ const PhoneInput = ({
             <InputLabel shrink>Teléfono</InputLabel>
             <Controller
                 control={control}
-                name='phone'
+                name={name}
                 defaultValue={defaultValue}
                 rules={rules}
                 render={({ field: { onChange, ...restField }, fieldState: { error } }) => (
