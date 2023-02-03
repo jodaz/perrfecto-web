@@ -25,6 +25,9 @@ const AnchorTag = styled(Link)(({ theme, dark }) => ({
     color: dark ? theme.palette.primary.main : theme.palette.text.primary,
     cursor: 'pointer',
     transition: '0.3s',
+    [theme.breakpoints.down("md")]: {
+        color: theme.palette.text.primary,
+    },
     '&:hover': {
         color: `${theme.palette.primary.main}`,
     }
@@ -130,7 +133,7 @@ function ResponsiveAppBar({ dark }) {
                                 aria-controls="menu-appbar"
                                 aria-haspopup="true"
                                 onClick={handleOpenNavMenu}
-                                color={dark ? 'black' : 'inherit'}
+                                color={'black'}
                             >
                                 <MenuIcon />
                             </IconButton>
