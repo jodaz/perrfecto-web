@@ -90,7 +90,7 @@ const BusinessProfile = () => {
                     to='settings'
                     sx={{
                         position: 'absolute',
-                        top: '40%',
+                        top: '150px',
                         left: '50px'
                     }}
                 >
