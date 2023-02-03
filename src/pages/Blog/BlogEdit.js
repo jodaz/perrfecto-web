@@ -126,8 +126,7 @@ const BlogEditLayout = ({
             <Box sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                height: '100%',
-                overflowY: 'auto'
+                height: '100%'
             }} component='form' onSubmit={handleSubmit(onSubmit)}>
                 <Box p={2}>
                     <GalleryInput
