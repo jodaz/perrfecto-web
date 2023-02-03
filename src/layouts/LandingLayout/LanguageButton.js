@@ -15,7 +15,12 @@ const LanguageButton = ({ dark }) => {
     )
 
     return (
-        <Button variant="outlined" color="primary">
+        <Button sx={{
+            color: theme => dark
+                ? theme.palette.text.primary
+                : theme.palette.primary.main,
+            backgroundColor: dark ? 'rgba(0, 0, 0, 0.06)' : 'transparent'
+        }}>
             <Globe />
             ESP
         </Button>

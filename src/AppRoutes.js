@@ -65,6 +65,15 @@ import PublishedBlog from './pages/Blog/PublishedBlog';
 import BlogEdit from './pages/Blog/BlogEdit';
 import UpdatePassword from './pages/account/UpdatePassword';
 import UpdateEmailAndPhone from './pages/account/UpdateEmailAndPhone';
+import ShowAd from './pages/Ad/ShowAd';
+import OnlyDesktop from './layouts/App/OnlyDesktop';
+import PrivateRoute from './components/PrivateRoute';
+import EditBusinessName from './pages/PersonalInformation/EditBusinessName';
+import EditBusinessAddress from './pages/PersonalInformation/EditBusinessAddress';
+import GuestProfile from './pages/Profile/GuestProfile';
+import ShowMarket from './pages/Market/ShowMarket';
+import ShowBusinessLocation from './pages/Businesses/ShowBusinessLocation';
+import ShowBusiness from './pages/Businesses/ShowBusiness';
 
 function AppRoutes() {
     let location = useLocation();
@@ -74,15 +83,7 @@ function AppRoutes() {
         <Routes>
             <Route
                 path='*'
-                element=<NotFound />
-            />
-            <Route
-                path='/home'
-                element={
-                    <AppLayout>
-                        <Home />
-                    </AppLayout>
-                }
+                element={<NotFound />}
             />
             <Route
                 path='/market'
@@ -93,11 +94,29 @@ function AppRoutes() {
                 }
             />
             <Route
-                path='/chat'
+                path='/market/:id'
                 element={
                     <AppLayout>
-                        <Chat />
+                        <ShowMarket />
                     </AppLayout>
+                }
+            />
+            <Route
+                path='/market/:id/location'
+                element={
+                    <AppLayout>
+                        <ShowBusinessLocation location={location} />
+                    </AppLayout>
+                }
+            />
+            <Route
+                path='/chat'
+                element={
+                    <PrivateRoute authorize='user' unauthorized={<NotFound />}>
+                        <AppLayout>
+                            <Chat />
+                        </AppLayout>
+                    </PrivateRoute>
                 }
             />
             <Route
@@ -119,25 +138,31 @@ function AppRoutes() {
             <Route
                 path='/blogs/:id/edit'
                 element={
-                    <AppLayout>
-                        <BlogEdit />
-                    </AppLayout>
+                    <PrivateRoute authorize='user,business' unauthorized={<NotFound />}>
+                        <AppLayout>
+                            <BlogEdit />
+                        </AppLayout>
+                    </PrivateRoute>
                 }
             />
             <Route
                 path='/blogs/me'
                 element={
-                    <AppLayout>
-                        <PublishedBlogsListing />
-                    </AppLayout>
+                    <PrivateRoute authorize='user,business' unauthorized={<NotFound />}>
+                        <AppLayout>
+                            <PublishedBlogsListing />
+                        </AppLayout>
+                    </PrivateRoute>
                 }
             />
             <Route
                 path='/blogs/create'
                 element={
-                    <AppLayout>
-                        <BlogCreate />
-                    </AppLayout>
+                    <PrivateRoute authorize='user,business' unauthorized={<NotFound />}>
+                        <AppLayout>
+                            <BlogCreate />
+                        </AppLayout>
+                    </PrivateRoute>
                 }
             />
 
@@ -147,40 +172,69 @@ function AppRoutes() {
             <Route
                 path='/profile/ads/create'
                 element={
-                    <AppLayout>
-                        <CreateAd location={location} />
-                    </AppLayout>
+                    <PrivateRoute authorize='user' unauthorized={<NotFound />}>
+                        <AppLayout>
+                            <CreateAd location={location} />
+                        </AppLayout>
+                    </PrivateRoute>
                 }
             />
             <Route
                 path='/profile/ads/:id/edit'
                 element={
-                    <AppLayout>
+                    <PrivateRoute authorize='user' unauthorized={<NotFound />}>
                         <EditAd location={location} />
-                    </AppLayout>
+                    </PrivateRoute>
                 }
             />
             <Route
                 path='/profile/ads/show'
                 element={
-                    <AppLayout>
-                        <CreateAd location={location} />
-                    </AppLayout>
+                    <PrivateRoute authorize='user' unauthorized={<NotFound />}>
+                        <OnlyDesktop
+                            aside={<PetProfile />}
+                            principal={<ShowAd location={location} />}
+                        />
+                    </PrivateRoute>
                 }
             />
             <Route
                 path='/profile/settings/owner'
                 element={
                     <AppLayout>
-                        <PersonalInformation location={location} />
+                        <PrivateRoute authorize='user,business' unauthorized={<NotFound />}>
+                            <PersonalInformation location={location} />
+                        </PrivateRoute>
                     </AppLayout>
                 }
             />
             <Route
                 path='/profile/settings/owner/names'
                 element={
+                    <PrivateRoute authorize='user,business' unauthorized={<NotFound />}>
+                        <AppLayout>
+                            <EditNames location={location} />
+                        </AppLayout>
+                    </PrivateRoute>
+                }
+            />
+            <Route
+                path='/profile/settings/owner/business-name'
+                element={
                     <AppLayout>
-                        <EditNames location={location} />
+                        <PrivateRoute authorize='business' unauthorized={<NotFound />}>
+                            <EditBusinessName location={location} />
+                        </PrivateRoute>
+                    </AppLayout>
+                }
+            />
+            <Route
+                path='/profile/settings/owner/business-address'
+                element={
+                    <AppLayout>
+                        <PrivateRoute authorize='business' unauthorized={<NotFound />}>
+                            <EditBusinessAddress location={location} />
+                        </PrivateRoute>
                     </AppLayout>
                 }
             />
@@ -274,7 +328,15 @@ function AppRoutes() {
                 element={
                     <AppLayout>
                         <Profile location={location}>
-                            {(user.role == 'user') ? <PetProfile /> : <BusinessProfile />}
+                            <PrivateRoute authorize="user">
+                                <PetProfile />
+                            </PrivateRoute>
+                            <PrivateRoute authorize="business">
+                                <BusinessProfile />
+                            </PrivateRoute>
+                            <PrivateRoute authorize="guest">
+                                <GuestProfile />
+                            </PrivateRoute>
                         </Profile>
                     </AppLayout>
                 }
@@ -379,6 +441,18 @@ function AppRoutes() {
                     <Businesses />
                 </AppLayout>
             } />
+
+            <Route path="/businesses/:id" element={
+                <AppLayout>
+                    <ShowBusiness />
+                </AppLayout>
+            } />
+
+            <Route path="/businesses/:id/location" element={
+                <AppLayout>
+                    <ShowBusinessLocation location={location} />
+                </AppLayout>
+            } />
             <Route path="/businesses/create" element={
                 <AppLayout>
                     <CreateBusiness />
@@ -413,6 +487,14 @@ function AppRoutes() {
                     element={
                         <AppLayout>
                             <CreateBusinessStep4 />
+                        </AppLayout>
+                    }
+                />
+                <Route
+                    path='/businesses/create/step-4/location'
+                    element={
+                        <AppLayout>
+                            <ShowBusinessLocation location={location} />
                         </AppLayout>
                     }
                 />
@@ -451,6 +533,14 @@ function AppRoutes() {
                     element={
                         <AppLayout>
                             <EditBusinessStep4 />
+                        </AppLayout>
+                    }
+                />
+                <Route
+                    path='/businesses/edit/step-4/location'
+                    element={
+                        <AppLayout>
+                            <ShowBusinessLocation location={location} />
                         </AppLayout>
                     }
                 />

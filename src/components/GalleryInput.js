@@ -67,7 +67,7 @@ const Dropzone = ({
                 <Box
                     component='img'
                     src={file.preview ? file.preview : getUserPhoto(file)}
-                    onLoad={() => { URL.revokeObjectURL(file.preview) }}
+                    // onLoad={() => { URL.revokeObjectURL(file.preview) }}
                     sx={{
                         borderRadius: '12px',
                         height: 220,
@@ -97,10 +97,10 @@ const Dropzone = ({
         </SwiperSlide>
     ));
 
-    useEffectOnce(() => {
-        // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
-        return () => files.forEach(file => URL.revokeObjectURL(file.preview));
-    }, []);
+    // useEffectOnce(() => {
+    //     // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
+    //     return () => files.forEach(file => URL.revokeObjectURL(file.preview));
+    // }, [files]);
 
     React.useEffect(() => {
         if (typeof(value) == 'string') {
@@ -108,7 +108,7 @@ const Dropzone = ({
         } else {
             return setFiles(value);
         }
-    }, [value])
+    }, [value.length])
 
     return (
         <Box sx={{ display: 'flex', mt: 1, mb: 2, opacity: disabled ? 0.8 : 1 }}>

@@ -13,7 +13,7 @@ import { openGuestWarning, useGuest } from '../../context/GuestContext';
 import ShowCard from '../../components/Modals/ShowCard'
 
 // Icons
-import { ReactComponent as HuesitoIcon } from '../../assets/icons/Huesito.svg'
+import DiscardIconButton from '../Buttons/DiscardButton';
 import LikeButton from '../Buttons/LikeButton';
 import getUserPhoto from '../../utils/getUserPhoto';
 import PublicationDescription from './PublicationDescription';
@@ -95,7 +95,7 @@ const Card = ({
                 </Typography>
             </Box>
             <MuiCard sx={{
-                height: '60vh',
+                height: '56vh',
                 width: !isSmall ? '300px' : '300px',
                 borderRadius: '20px',
                 position: 'relative',
@@ -124,17 +124,11 @@ const Card = ({
                         display: 'flex',
                         justifyContent: 'space-between'
                     }}>
-                        <IconButton sx={{
-                            background: 'url(/images/default/pasto_feo.png)',
-                            padding: '0.6rem',
-                            boxShadow: '0px 2px 5px rgba(51, 51, 51, 0.15)'
-                        }} onClick={e => {
+                        <DiscardIconButton onClick={e => {
                             action(guestMessages.discard)
                             discardAction()
                             e.stopPropagation();
-                        }}>
-                            <HuesitoIcon />
-                        </IconButton>
+                        }} />
                         <FavouriteButton
                             item={data}
                             handleClick={likeAction}

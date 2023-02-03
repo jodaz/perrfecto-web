@@ -7,14 +7,17 @@ import Navigation from './Navigation';
 import { useAuth } from '../../context/AuthContext'
 import { Camera } from 'lucide-react';
 import Logo from '../../components/Logo';
+import PrivateRoute from '../../components/PrivateRoute';
 // Icons
 import NotificationButton from './NotificationButton';
 import FilterDrawer from '../../components/FilterDrawer';
+import { useBusinesses } from '../../context/BusinessContext';
 
 const drawerWidth = '350px';
 
 const Sidebar = ({ children }) => {
     const { state: { user } } = useAuth();
+    const { state: { openFilter } } = useBusinesses()
 
     return (
         <Drawer
@@ -34,16 +37,22 @@ const Sidebar = ({ children }) => {
             <Toolbar sx={{
                 backgroundColor: theme => theme.palette.primary.main,
                 display: 'flex',
-                justifyContent: 'space-between'
+                justifyContent: (user.role == 'guest') ? 'center' : 'space-between'
             }}>
                 {(user.role == 'user') && <Camera color="#fff" />}
                 <Logo dark />
-                <NotificationButton />
+                <PrivateRoute authorize="user,business">
+                    <NotificationButton />
+                </PrivateRoute>
             </Toolbar>
             <Divider />
             <Navigation />
             <Box
-                sx={{ height: '100%', maxWidth: drawerWidth }}
+                sx={{
+                    height: '100%',
+                    maxWidth: drawerWidth,
+                    overflowY: openFilter ? 'hidden !important' : 'unset'
+                }}
                 id="drawer-container"
             >
                 {children}

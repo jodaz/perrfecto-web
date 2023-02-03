@@ -37,7 +37,7 @@ const RecentPostCard = ({
             width="130"
             height="140"
             alt='blog_post.png'
-            src={getUserPhoto(BlogMultimedia[0].name)}
+            src={BlogMultimedia.length ? getUserPhoto(BlogMultimedia[0].name) : null}
             sx={{
                 borderRadius: 4,
             }}
@@ -66,7 +66,7 @@ const RecentPostCard = ({
                             <Box
                                 component="img"
                                 alt='blog_post.png'
-                                src={getUserPhoto(User.img_profile)}
+                                src={getUserPhoto(JSON.parse(User.img_profile))}
                                 sx={{
                                     maxWidth: 22,
                                     maxHeight: 22,

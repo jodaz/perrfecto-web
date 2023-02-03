@@ -63,7 +63,7 @@ const EditPhoto = ({ isEditing }) => {
                 <PhotoInput
                     name="files"
                     control={control}
-                    defaultValue={dogPhoto ? getUserPhoto(dogPhoto) : '/images/Avatar.svg'}
+                    defaultValue={JSON.parse(user.dog.dogPhotos)[0]}
                     disabled={isSubmitting}
                     handleDelete={deletePhoto}
                 />

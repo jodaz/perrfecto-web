@@ -10,12 +10,14 @@ import { es } from 'date-fns/locale'
 import getUserPhoto from '../../utils/getUserPhoto';
 import LinkBehavior from '../../components/LinkBehavior';
 import Skeleton from "@mui/material/Skeleton";
+import FeaturedMark from './FeaturedMark';
+import LikePostButton from '../../components/Buttons/LikePostButton';
 
 const PostCard = ({
     menu,
-    handleDelete,
     showStatus,
-    item
+    item,
+    LikesBlog
 }) => {
     const loading = item == null;
 
@@ -42,25 +44,28 @@ const PostCard = ({
                 {loading ? (
                     <Skeleton
                         animation="wave"
-                        variant="circular"
+                        variant="rectangular"
                         width={40}
                         height={40}
                     />
                 ) : (
-                    <CardMedia
-                        component="img"
-                        width="130px"
-                        height="140px"
-                        alt="post_cover"
-                        src={item.BlogMultimedia.length ? getUserPhoto(item.BlogMultimedia[0].name) : null}
-                        sx={{
-                            borderRadius: 2,
-                            minWidth: '130px',
-                            minHeight: '130px',
-                            maxWidth: '130px',
-                            maxHeight: '130px'
-                        }}
-                    />
+                    <Box position="relative">
+                        <CardMedia
+                            width="130px"
+                            height="140px"
+                            alt="post_cover"
+                            image={item.BlogMultimedia.length ? getUserPhoto(item.BlogMultimedia[0].name) : null}
+                            sx={{
+                                borderRadius: 2,
+                                minWidth: '130px',
+                                minHeight: '130px',
+                                maxWidth: '130px',
+                                maxHeight: '130px'
+                            }}
+                        >
+                            {item.featured_blog && <FeaturedMark position={{ top: 10, left: 10 }} />}
+                        </CardMedia>
+                    </Box>
                 )}
                 <Box sx={{
                     display: 'flex',
@@ -126,12 +131,12 @@ const PostCard = ({
                                 alignItems: 'center'
                             }}
                         >
-                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                <ThumbsUp color="#5E5E5E" />
-                                <Typography variant="body2" ml={1} color="#5E5E5E">
-                                    {item.LikesCount}
-                                </Typography>
-                            </Box>
+                            <LikePostButton
+                                id={item.id}
+                                type="post"
+                                likes={LikesBlog}
+                                LikesCount={item.LikesCount}
+                            />
                             <Box sx={{ display: 'flex', alignItems: 'center' }}>
                                 <MessageSquare color="#5E5E5E" />
                                 <Typography variant="body2" ml={1} color="#5E5E5E">

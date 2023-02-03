@@ -5,6 +5,7 @@ import {
     LoginSocialGoogle,
     LoginSocialFacebook
 } from 'reactjs-social-login';
+import Alert from '@mui/material/Alert'
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as FacebookIcon } from '../../assets/icons/Facebook.svg'
 import { ReactComponent as GoogleIcon } from '../../assets/icons/Google.svg'
@@ -30,71 +31,89 @@ const SocialIcon = styled(IconButton)(({ color }) => ({
     }
 }))
 
-const SocialAuth = ({ hidePhone }) => {
+const SocialAuth = ({ hidePhone, location }) => {
     const [error, setError] = React.useState(false)
     const navigate = useNavigate();
     const { dispatch } = useAuth();
 
-    const onSubmit = async (data) => {
+    const onSubmit = async data => {
         setError(false);
 
-        const res = await apiProvider.post('/api/auth/social-network', {
-            ...data
-        }).catch(error => {
-            if (error.response.status == 400) {
-                setError(true)
+        try {
+            if (location.pathname == '/register') {
+                data.role = 'user'
             }
-        });
+            if (location.pathname == '/business/register') {
+                data.role = 'business'
+            }
 
-        if (res.status >= 200 && res.status < 300) {
-            const { data } = res;
+            const res = await apiProvider.post('/api/auth/social-network', data)
 
-            loginUser(dispatch, data)
+            if (res.status >= 200 && res.status < 300) {
+                const { data } = res;
 
-            if (data.data.register) {
-                return navigate('/register/welcome')
+                loginUser(dispatch, data)
+
+                if (data.data.register) {
+                    return navigate('/register/welcome')
+                } else {
+                    navigate('/detect-location')
+                }
+            }
+        } catch (error) {
+            const message = error.response.data.msg;
+
+            if (message.includes('deleted')) {
+                setError('Su cuenta ha sido eliminada.')
             } else {
-                navigate('/detect-location')
+                setError('Ha ocurrido un error')
             }
-        }
+        };
     };
 
     return (
-        <Box sx={{
-            display: 'flex',
-            width: 'fit-content',
-            margin: '1rem auto',
-            justifyContent: 'space-between'
-        }}>
-            <LoginSocialFacebook
-                appId={vars.FacebookID}
-                fieldsProfile={facebookFields}
-                onResolve={({ data }) => onSubmit(data)}
-            >
-                <SocialIcon color="#1B77F2">
-                    <FacebookIcon />
-                </SocialIcon>
-            </LoginSocialFacebook>
-            <LoginSocialGoogle
-                client_id={vars.GoogleID}
-                scope="openid profile email"
-                discoveryDocs="claims_supported"
-                access_type="offline"
-                onResolve={({ data }) => onSubmit(data)}
-            >
-                <SocialIcon color="#ffffff">
-                    <GoogleIcon />
-                </SocialIcon>
-            </LoginSocialGoogle>
-            {(!hidePhone) && (
-                <SocialIcon
-                    color="#35414C"
-                    component={LinkBehavior}
-                    to='?withPhone=true'
-                >
-                    <Smartphone color="#fff" />
-                </SocialIcon>
+        <Box>
+            {(error) && (
+                <Alert severity="error" sx={{ margin: '1.5rem 0' }}>
+                    {error}
+                </Alert>
             )}
+            <Box sx={{
+                display: 'flex',
+                width: 'fit-content',
+                margin: '1rem auto',
+                justifyContent: 'space-between'
+            }}>
+                <LoginSocialFacebook
+                    appId={vars.FacebookID}
+                    fieldsProfile={facebookFields}
+                    onResolve={({ data }) => onSubmit(data)}
+                >
+                    <SocialIcon color="#1B77F2">
+                        <FacebookIcon />
+                    </SocialIcon>
+                </LoginSocialFacebook>
+                <LoginSocialGoogle
+                    client_id={vars.GoogleID}
+                    scope="openid profile email"
+                    discoveryDocs="claims_supported"
+                    access_type="offline"
+                    onResolve={({ data }) => onSubmit(data)}
+                >
+                    <SocialIcon color="#ffffff">
+                        <GoogleIcon />
+                    </SocialIcon>
+                </LoginSocialGoogle>
+                {(!hidePhone) && (
+                    <SocialIcon
+                        color="#35414C"
+                        component={LinkBehavior}
+                        to='?withPhone=true'
+                    >
+                        <Smartphone color="#fff" />
+                    </SocialIcon>
+                )}
+            </Box>
         </Box>
     )
 }

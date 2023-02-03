@@ -8,12 +8,14 @@ import { Outlet, useNavigate } from 'react-router-dom'
 import getSearchParams from '../../utils/getSearchParams';
 import DeletedAccount from '../../components/Modals/DeletedAccount';
 import { closeGuestWarning, useGuest } from '../../context/GuestContext';
+import { guestUser, useAuth } from '../../context/AuthContext'
 
 const Landing = ({ location }) => {
     const { dispatch: guestDispatch } = useGuest()
     const navigate = useNavigate();
     const openDeleteModal = getSearchParams(location, 'delete')
     const matches = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+    const { dispatch: authDispatch } = useAuth();
 
     React.useEffect(() => {
         closeGuestWarning(guestDispatch);
@@ -68,6 +70,18 @@ const Landing = ({ location }) => {
                 >
                     Crea un perfil para tu mascota
                 </Button>
+                <Box sx={{ p: 1 }}>
+                    <Button
+                        variant="contained"
+                        fullWidth
+                        color="secondary"
+                        to='/market'
+                        component={LinkBehavior}
+                        onClick={() => guestUser(authDispatch)}
+                    >
+                        Ingresar como invitado
+                    </Button>
+                </Box>
                 <Outlet />
             </Box>
             <DeletedAccount open={openDeleteModal} handleClose={() => navigate('/')} />

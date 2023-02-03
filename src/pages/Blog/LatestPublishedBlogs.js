@@ -1,65 +1,29 @@
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 import PostCard from './PostCard';
-import PublishedBlog from './PublishedBlog';
-import LinkBehavior from '../../components/LinkBehavior'
-
-const posts = [
-    {
-        title: '¿Cómo prevenir el frio en los perros?',
-        image: '/images/samples/sad-pupi.png',
-        published_at: new Date(),
-        img_profile: '/images/samples/sad-pupi.png',
-        name: 'Mason',
-        lastName: 'Eduard',
-        commentsCount: 12,
-        likesCount: 187,
-        description: 'Pelos por el suelo, el sofá, la alfombra,… en aquellos lugares en los que nuestra'
-    },
-    {
-        title: '¿Cómo prevenir el frio en los perros?',
-        image: '/images/samples/sad-pupi.png',
-        published_at: new Date(),
-        img_profile: '/images/samples/sad-pupi.png',
-        name: 'Mason',
-        lastName: 'Eduard',
-        commentsCount: 12,
-        likesCount: 187,
-        description: 'Pelos por el suelo, el sofá, la alfombra,… en aquellos lugares en los que nuestra'
-    }
-]
+import useEffectOnce from '../../utils/useEffectOnce';
+import LinkBehavior from '../../components/LinkBehavior';
+import { useBlogs, fetchBlogs } from '../../context/BlogContext';
 
 const LatestPublishedBlogs = () => {
-    const [selectedItem, setSelectedItem] = React.useState(null);
-    const [showPost, setShowPost] = React.useState(false)
+    const { state: { items }, dispatch } = useBlogs()
+    const [blogs, setBlogs] = React.useState(items)
 
-    const handleSelectPost = async (data) => {
-        setSelectedItem(data);
-        setShowPost(true);
-    }
+    useEffectOnce(() => { fetchBlogs(dispatch) }, []);
 
-    const handleCloseSelectPost = () => {
-        setShowPost(false)
-    }
-
-    if (showPost) {
-        return (
-            <PublishedBlog
-                closePost={handleCloseSelectPost}
-                {...selectedItem}
-            />
-        )
-    }
+    React.useEffect(() => {
+        setBlogs(items.slice(0, 2))
+    }, [items])
 
     return (
         <Box sx={{
             display: 'flex',
             flexDirection: 'column',
-            p: 2,
-            alignItems: 'flex-start'
+            alignItems: 'flex-start',
+            p: 2
         }}>
             <Box sx={{
                 display: 'flex',
@@ -75,28 +39,30 @@ const LatestPublishedBlogs = () => {
                     Mis blogs
                 </Typography>
             </Box>
-            <Stack
-                direction={'column'}
-                spacing={3}
-                sx={{
-                    mt: 2
-                }}
-            >
-                {posts.map(post =>
-                    <PostCard
-                        {...post}
-                        handleClick={handleSelectPost}
-                    />
+            <Box sx={{ display: 'flex', flexDirection: 'column', mt: '10px' }}>
+                {(blogs.length) ? (
+                    <Stack direction='column' spacing={2}>
+                        {blogs.map(blog => (
+                            <PostCard item={blog} />
+                        ))}
+                    </Stack>
+                ) : (
+                    <Typography variant="subtitle1">
+                        Aún no has publicado ningún blog
+                    </Typography>
                 )}
-            </Stack>
-            <Box>
+            </Box>
+            {(items.length > 2) && (
                 <Button
                     component={LinkBehavior}
                     to='/blogs/me'
+                    sx={{
+                        padding: '1rem 0'
+                    }}
                 >
                     Ver todas
                 </Button>
-            </Box>
+            )}
         </Box>
     );
 }

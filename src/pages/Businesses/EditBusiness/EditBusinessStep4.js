@@ -5,7 +5,7 @@ import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Link from '@mui/material/Link';
 import CardContent from '@mui/material/CardContent';
-import { Phone, MapPin, Trash2, Edit, ArrowRight } from 'lucide-react'
+import { Phone, MapPin, ArrowRight } from 'lucide-react'
 import Typography from '@mui/material/Typography';
 import { fileProvider } from '../../../api';
 import formDataHandler from '../../../utils/formDataHandler'
@@ -17,14 +17,19 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth, renewToken } from '../../../context/AuthContext';
 import PhotoGallery from '../../../components/Modals/ShowCard/PhotoGallery';
 import getUserPhoto from '../../../utils/getUserPhoto';
+import ContactBusiness from '../../../components/Modals/ContactBusiness';
+import LinkBehavior from '../../../components/LinkBehavior';
 
 const EditBusinessStep4 = () => {
     const [openWarning, setOpenWarning] = React.useState(false)
     const [openOverlayLoader, setOpenOverlayLoader] = React.useState(false)
     const navigate = useNavigate()
-    const { state: { user }, dispatchAuth } = useAuth();
+    const { state: { user }, dispatch: dispatchAuth } = useAuth();
     const { state, dispatch } = useMultiStepForm();
     const { handleSubmit } = useForm();
+    const [openContactDialog, setOpenContactDialog] = React.useState(false)
+
+    const toggleOpenContactDialog = () => setOpenContactDialog(!openContactDialog)
 
     const onSubmit = async () => {
         let filteredFiles = []
@@ -32,9 +37,6 @@ const EditBusinessStep4 = () => {
 
         try {
             const {
-                category,
-                province,
-                city,
                 files,
                 ...restData
             } = state
@@ -46,10 +48,7 @@ const EditBusinessStep4 = () => {
             const data = {
                 ...restData,
                 files: filteredFiles,
-                email: user.email,
-                id_category: category.id,
-                province: province.nombre,
-                city: city.nombre
+                email: user.email
             }
 
             const formData = await formDataHandler(data, 'files')
@@ -73,6 +72,8 @@ const EditBusinessStep4 = () => {
     const handleCloseWarning = () => {
         setOpenWarning(false);
     }
+
+    if (!Object.keys(state).length) return <></>
 
     return (
         <Box component="form" onSubmit={handleSubmit(onSubmit)}>
@@ -125,20 +126,24 @@ const EditBusinessStep4 = () => {
                                     justifyContent: 'start',
                                     textAlign: 'left'
                                 }}
-                                // onClick={() => handleOpenShowBusinessLocation(restData)}
+                                component={LinkBehavior}
+                                to={`location`}
+                                state={state}
                                 textAlign='left'
                             >
-                                <MapPin size={18} /> {state.city.nombre}, {state.province.nombre}
+                                <MapPin size={18} /> {state.city}, {state.province}
                             </Button>
                             <Typography
                                 variant="subtitle1"
                                 color="info.main"
                                 sx={{
                                     display: 'flex',
-                                    alignItems: 'center'
+                                    alignItems: 'center',
+                                    cursor: 'pointer'
                                 }}
+                                onClick={toggleOpenContactDialog}
                             >
-                                <Phone size={18} /><Box mr='10px' />  + {state.whatsApp}
+                                <Phone size={18} /><Box mr='10px' />  +{state.code_phone} {state.whatsApp}
                             </Typography>
                             <Typography
                                 variant="subtitle1"
@@ -200,6 +205,13 @@ const EditBusinessStep4 = () => {
                     Publicar
                 </Button>
             </Box>
+            {openContactDialog && (
+                <ContactBusiness
+                    {...state}
+                    open={openContactDialog}
+                    handleClose={toggleOpenContactDialog}
+                />
+            )}
             <PublicationWait open={openWarning} handleClose={handleCloseWarning} />
             <OverlayLoader open={openOverlayLoader} />
         </Box>

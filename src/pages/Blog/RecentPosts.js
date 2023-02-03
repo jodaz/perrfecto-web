@@ -55,7 +55,7 @@ const RecentPosts = () =>  {
         <Box sx={{
             display: 'flex',
             flexDirection: 'column',
-            width: { sm: '320px', md: '320px' }
+            width: { sm: '320px', md: '310px' }
         }}>
             {(blogs.length) ? (
                 <SwiperStyled

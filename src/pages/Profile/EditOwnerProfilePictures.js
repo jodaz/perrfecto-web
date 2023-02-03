@@ -10,12 +10,24 @@ import useEffectOnce from '../../utils/useEffectOnce';
 import GalleryInput from '../../components/GalleryInput'
 import DeletePhotoWarning from '../../components/Modals/DeletePhotoWarning';
 import formDataHandler from '../../utils/formDataHandler';
+import PicturesEdited from '../../components/Modals/PicturesEdited';
 
 const EditOwnerProfilePictures = () => {
+    const [openWarning, setOpenWarning] = React.useState(false)
+    const [pictures, setPictures] = React.useState([])
     const [error, setError] = React.useState(null);
     const [selectedPhoto, setSelectedPhoto] = React.useState(null)
     const [openDeletePhoto, setOpenDeletePhoto] = React.useState(false);
-    const { control, handleSubmit, setValue, formState: { isSubmitting } } = useForm();
+    const {
+        control,
+        handleSubmit,
+        setValue,
+        formState: { isSubmitting }
+    } = useForm({
+        defaultValues: {
+            files: pictures
+        }
+    });
 
     const onSubmit = async ({ files }) => {
         try {
@@ -34,7 +46,12 @@ const EditOwnerProfilePictures = () => {
             const res = await fileProvider.put(`/api/user/personal-photos`, formData)
 
             if (res.status >= 200 && res.status < 300) {
-                fetchPictures();
+                const responseData = JSON.parse(await res.data.text())
+
+                const { data: { personalPhotos } } = responseData
+
+                setPictures(prevState => [...personalPhotos, ...prevState])
+                setOpenWarning(true)
             }
         } catch (error) {
             setError('Ha ocurrido un error inesperado.')
@@ -48,7 +65,7 @@ const EditOwnerProfilePictures = () => {
             if (res.status >= 200 && res.status < 300) {
                 const { data: { data } } = res;
 
-                setValue('files', data)
+                if (data) setPictures(data)
             }
         } catch (error) {
             console.log("error ", error)
@@ -66,6 +83,8 @@ const EditOwnerProfilePictures = () => {
     }
 
     useEffectOnce(() => { fetchPictures() }, [])
+
+    React.useEffect(() => { setValue('files', pictures) }, [pictures])
 
     return (
         <SettingsLayout title='Fotos personales'>
@@ -109,6 +128,10 @@ const EditOwnerProfilePictures = () => {
                         Guardar
                     </Button>
                 </Box>
+                <PicturesEdited
+                    open={openWarning}
+                    handleClose={() => setOpenWarning(false)}
+                />
                 <DeletePhotoWarning
                     open={openDeletePhoto}
                     handleClose={handleCloseDeletePhoto}

@@ -10,7 +10,7 @@ import getUserPhoto from '../../utils/getUserPhoto';
 
 const EditPhoto = ({ isEditing }) => {
     const { state: { user }, dispatch } = useAuth();
-    const currProfilePic = user.img_profile ? JSON.parse(user.img_profile)[0] : null;
+    const [currProfilePic, setCurrProfilePic] = React.useState(null);
     const { handleSubmit, control, watch, formState: {
         isSubmitting
     }} = useForm();
@@ -54,6 +54,12 @@ const EditPhoto = ({ isEditing }) => {
         return () => subscription.unsubscribe();
     }, [handleSubmit, watch])
 
+    React.useEffect(() => {
+        if (user.img_profile) {
+            setCurrProfilePic(getUserPhoto(JSON.parse(user.img_profile)[0]))
+        }
+    }, [user.img_profile])
+
     return (
         <Box sx={{ display: 'flex' }}>
             {isEditing ? (
@@ -66,7 +72,7 @@ const EditPhoto = ({ isEditing }) => {
                 />
             ) : (
                 <Avatar
-                    src={currProfilePic}
+                    src={currProfilePic ? currProfilePic : '/images/Avatar.svg'}
                     alt="profile_photo"
                     sx={{ height: '125px', width: '125px' }}
                 />

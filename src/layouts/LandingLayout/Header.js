@@ -25,6 +25,9 @@ const AnchorTag = styled(Link)(({ theme, dark }) => ({
     color: dark ? theme.palette.primary.main : theme.palette.text.primary,
     cursor: 'pointer',
     transition: '0.3s',
+    [theme.breakpoints.down("md")]: {
+        color: theme.palette.text.primary,
+    },
     '&:hover': {
         color: `${theme.palette.primary.main}`,
     }
@@ -65,9 +68,6 @@ function ResponsiveAppBar({ dark }) {
     const generateButtons = () => (
         <>
             <Box sx={{ p: 1 }}>
-                <LanguageButton />
-            </Box>
-            <Box sx={{ p: 1 }}>
                 <Button
                     variant="outlined"
                     color='primary'
@@ -77,6 +77,9 @@ function ResponsiveAppBar({ dark }) {
                     Iniciar sesión
                 </Button>
             </Box>
+            <Box sx={{ p: 1 }}>
+                <LanguageButton dark={dark} />
+            </Box>
         </>
     )
 
@@ -84,7 +87,7 @@ function ResponsiveAppBar({ dark }) {
         <AppBar
             position="fixed"
             sx={{
-                background: dark ? 'transparent' : '#FFFFFF',
+                background: dark ? 'linear-gradient(0deg, rgba(161, 103, 201, 0.1), rgba(161, 103, 201, 0.1)), #FFFFFF;' : '#FFFFFF',
             }}
         >
             <Container maxWidth="xl">
@@ -130,7 +133,7 @@ function ResponsiveAppBar({ dark }) {
                                 aria-controls="menu-appbar"
                                 aria-haspopup="true"
                                 onClick={handleOpenNavMenu}
-                                color={dark ? 'black' : 'inherit'}
+                                color={'black'}
                             >
                                 <MenuIcon />
                             </IconButton>

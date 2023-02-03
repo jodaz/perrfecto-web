@@ -2,13 +2,14 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import PawPrints from '../../../assets/images/pawprints.svg'
 import Stack from './Stack';
-import { CircularProgress, Fab, useMediaQuery } from '@mui/material';
+import { CircularProgress, useMediaQuery } from '@mui/material';
 import ContactDialog from '../../../components/Modals/ContactDialog';
 import DogPublication from '../../../components/FeedCard/DogPublication'
 import OwnerPublication from '../../../components/FeedCard/OwnerPublication';
 import useEffectOnce from '../../../utils/useEffectOnce';
 import { usePublications, fetchPublications } from '../../../context/PublicationContext';
 import FilterButton from '../../../components/Buttons/FilterButton';
+import InviteUserAlert from '../../../components/InviteUserAlert';
 
 const PopularMembers = React.lazy(() => import('../../../components/PopularMembers'));
 
@@ -71,6 +72,7 @@ const UsersHome = () => {
                     <PopularMembers />
                 </Box>
             </React.Suspense>
+            <InviteUserAlert />
             <Box sx={{
                 display: 'flex',
                 position: 'relative',

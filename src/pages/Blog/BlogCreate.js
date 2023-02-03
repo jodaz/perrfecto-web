@@ -6,6 +6,8 @@ import { useForm } from "react-hook-form";
 import GalleryInput from '../../components/GalleryInput'
 import { fileProvider } from '../../api';
 import TextInput from "../../components/Forms/TextInput";
+import Tooltip from '@mui/material/Tooltip';
+import { Info } from 'lucide-react';
 import {
     DESCRIPTION,
     ADD_PHOTOS,
@@ -45,6 +47,15 @@ const BlogCreate = () => {
     return (
         <SettingsLayout
             title="Crear publicación"
+            rightIconComponent={
+                <Tooltip
+                    title='Recuerda que puedes añadir imágenes de 800px por 800px de mínimo y 1080px por 1080px de máximo'
+                >
+                    <Box p={2} color="text.tertiary">
+                        <Info />
+                    </Box>
+                </Tooltip>
+            }
         >
             <Box sx={{
                 display: 'flex',
@@ -58,7 +69,11 @@ const BlogCreate = () => {
                         disabled={isSubmitting}
                         rules={ADD_PHOTOS.rules}
                         validations={ADD_PHOTOS.messages}
-                        maxFiles={1}
+                        maxFiles={5}
+                        accept={{
+                            'image/*': []
+                        }}
+                        message='Tienes un máximo de 5 fotos disponibles'
                     />
                 </Box>
                 <Box p={2}>
@@ -93,7 +108,11 @@ const BlogCreate = () => {
                     </Button>
                 </Box>
             </Box>
-            <PublicationWait open={openWarning} handleClose={handleCloseWarning} />
+            <PublicationWait
+                open={openWarning}
+                handleClose={handleCloseWarning}
+                redirect="/blogs/me"
+            />
             <OverlayLoader open={openOverlayLoader} />
         </SettingsLayout>
     );

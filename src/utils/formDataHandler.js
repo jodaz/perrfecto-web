@@ -4,7 +4,6 @@ const formDataHandler = (data, fieldFileName = 'file') => {
 
     if (files) {
         for (let i = 0; i < files.length; i++) {
-            console.log(files[i])
             if (files[i]) { // ignore undefined or null
                 formData.append(fieldFileName, files[i]);
             }
@@ -12,6 +11,8 @@ const formDataHandler = (data, fieldFileName = 'file') => {
     }
 
     for (let [key, value] of Object.entries(rest)) {
+        if (typeof value == 'undefined') continue; // ignore undefined or null
+
         if (typeof value == 'object') {
             value = JSON.stringify(value)
         }

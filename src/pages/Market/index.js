@@ -65,7 +65,9 @@ const Marketplace = () => {
                     <SlidersHorizontal onClick={() => toggleFilters(dispatch)}/>
                 </IconButton>
             </Box>
-            <SearchBox filter={filterFunction} />
+            <Box p={2}>
+                <SearchBox filter={filterFunction} />
+            </Box>
             {(!isLoaded) ?
             (
                 <>

@@ -5,7 +5,8 @@ import TextInput from '../../../components/Forms/TextInput';
 import {
     DESCRIPTION,
     BUSINESS_NAME,
-    CATEGORY
+    CATEGORY,
+    PHONE
 } from '../../../validations';
 import { apiProvider } from '../../../api';
 import Button from '@mui/material/Button';
@@ -16,18 +17,20 @@ import { useForm } from 'react-hook-form'
 import { saveStep, useMultiStepForm } from '../../../context/MultiStepContext';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
+import PhoneInput from '../../../components/Forms/PhoneInput';
 
 const CreateBusinessStep1 = () => {
     const navigate = useNavigate();
     const { state: { user } } = useAuth();
-    const { state, dispatch } = useMultiStepForm();
+    const { dispatch } = useMultiStepForm();
     const {
         control,
         handleSubmit
     } = useForm({
         defaultValues: {
+            code_phone: user.code_phone,
             business_name: user.business_name,
-            whatsApp: user.tlf
+            whatsApp: user.phone
         }
     });
     const [categories, setCategories] = React.useState([])
@@ -47,7 +50,12 @@ const CreateBusinessStep1 = () => {
     }
 
     const onSubmit = data => {
-        saveStep(dispatch, data);
+        const { category, ...restData } = data;
+
+        saveStep(dispatch, {
+            ...restData,
+            id_category: category.id
+        });
         navigate('/businesses/create/step-2')
     }
 
@@ -87,10 +95,13 @@ const CreateBusinessStep1 = () => {
                 </Box>
             )}
             <Box p={2}>
-                <TextInput
+                <PhoneInput
+                    label="Teléfono"
                     control={control}
-                    name='whatsApp'
-                    label='WhatsApp (negocio)'
+                    name="whatsApp"
+                    rules={PHONE.rules}
+                    validations={PHONE.messages}
+                    placeholder='Ingresar teléfono'
                 />
             </Box>
             <Box p={2}>

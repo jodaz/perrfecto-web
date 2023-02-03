@@ -7,12 +7,12 @@ import InputLabel from '@mui/material/InputLabel';
 import Box from '@mui/material/Box';
 import { Controller } from 'react-hook-form'
 import { Calendar } from 'lucide-react'
-import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
+import { IconButton } from '@mui/material';
 
 const DateInput = ({
     control,
     name,
-    defaultValue = new Date(),
+    defaultValue = '',
     rules,
     validations,
     disabled,
@@ -28,27 +28,44 @@ const DateInput = ({
             rules={rules}
             render={({ field: { onChange, ...restField }, fieldState: { error, value } }) => (
                 <Box mt={2}>
-                    <MobileDatePicker
+                    <DatePicker
+                        disableFuture
                         value={value}
                         label='Seleccione una fecha'
                         disabled={disabled}
                         onChange={value => onChange(value)}
+                        placeholder="Seleccione una fecha"
                         components={{
-                            OpenPickerIcon: Calendar
+                            OpenPickerIcon: () => (
+                                <Box sx={{
+                                    backgroundColor: theme => theme.palette.primary.main,
+                                    color: '#fff',
+                                    padding: '0.8rem',
+                                    borderRadius: '50px 0px 0 50px',
+                                    marginLeft: '-10px'
+                                }}>
+                                    <Calendar />
+                                </Box>
+                            )
                         }}
                         renderInput={({ inputRef, inputProps, InputProps }) => (
                             <InputBase
+                                error={error}
                                 fullWidth
                                 ref={inputRef}
                                 {...inputProps}
                                 {...InputProps}
+                                placeholder="Seleccione una fecha"
                             />
                         )}
                         {...restField}
+                        InputAdornmentProps={{
+                            position: 'start'
+                        }}
                     />
                     {error && (
                         <FormHelperText error>
-                            {validations[name][error.type]}
+                            {validations[error.type]}
                         </FormHelperText>
                     )}
                 </Box>

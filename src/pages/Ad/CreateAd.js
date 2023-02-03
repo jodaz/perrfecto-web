@@ -121,11 +121,14 @@ const CreateAd = () => {
                         rules={ADD_PHOTOS.rules}
                         validations={ADD_PHOTOS.messages}
                         maxFiles={15}
+                        accept={{
+                            'image/*': []
+                        }}
                         message='Tienes un máximo de 15 fotos disponibles'
                     />
                 </Box>
-                <Box sx={{ p: 2 }} id="drawer-container">
-                    <DogInformation />
+                <Box sx={{ p: 2 }} id="interests-drawer-container">
+                    <DogInformation hideInterests />
                     <Box sx={{ pt: 2, pb: 2 }}>
                         <InterestInput
                             control={control}
@@ -182,7 +185,12 @@ const CreateAd = () => {
                         />
                     </Box>
                     <Box sx={{ p: 2 }}>
-                        <Button variant="contained" type="submit" fullWidth>
+                        <Button
+                            variant="contained"
+                            type="submit"
+                            fullWidth
+                            disabled={isSubmitting}
+                        >
                             Guardar
                         </Button>
                     </Box>

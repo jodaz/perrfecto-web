@@ -3,20 +3,32 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
 import Stack from '@mui/material/Stack';
+import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
-import { Phone, MapPin, Trash2, Edit, ArrowRight, Star, Info } from 'lucide-react'
+import { Phone, MapPin, Edit, ArrowRight, Star } from 'lucide-react'
 import getUserPhoto from '../../utils/getUserPhoto';
 import PhotoGallery from '../../components/Modals/ShowCard/PhotoGallery';
 import Menu from '../../components/Menu';
 import SettingsLayout from '../../layouts/SettingsLayout';
 import FeatureBusiness from '../../components/Modals/FeatureBusiness';
-import ShowBusinessLocation from './ShowBusinessLocation';
+import { ReactComponent as RocketIcon } from '../../assets/icons/Rocket.svg'
+import { apiProvider } from '../../api';
+import useEffectOnce from '../../utils/useEffectOnce';
+import { useParams } from 'react-router-dom';
 import LinkBehavior from '../../components/LinkBehavior';
+import LoadingIndicator from '../../components/LoadingIndicator';
+import ContactBusiness from '../../components/Modals/ContactBusiness';
 
 const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
-const ShowBusiness = ({ close, ...item }) => {
+const ShowBusinessLayout = item => {
     const [featureBusiness, setFeatureBusiness] = React.useState(false)
+    const [openContactDialog, setOpenContactDialog] = React.useState(false)
+
+    const toggleOpenContactDialog = () => setOpenContactDialog(!openContactDialog)
+
+    const toggleFeatureBusiness = () => setFeatureBusiness(!featureBusiness)
+
     const {
         facebook,
         instagram,
@@ -26,30 +38,20 @@ const ShowBusiness = ({ close, ...item }) => {
         name,
         province,
         city,
+        code_phone,
         description,
-        business_name
+        business_name,
     } = item
-    const [showBusinessLocation, setShowBusinessLocation] = React.useState(false)
-
-    const handleOpenShowBusinessLocation = async () => {
-        setShowBusinessLocation(true);
-    }
-
-    const handleCloseShowBusinessLocation = () => {
-        setShowBusinessLocation(false)
-    }
-
-   const toggleFeatureBusiness = () => setFeatureBusiness(!featureBusiness)
 
     const renderMenu = () => (
         <Menu>
-            <Box onClick={toggleFeatureBusiness}
+            <Box
                 sx={{
                 display: 'flex',
                 alignItems: 'center',
                 color: 'unset',
                 textDecoration: 'none',
-            }}>
+            }} onClick={toggleFeatureBusiness}>
                 <Star />
                 <Box sx={{ paddingLeft: '0.5rem' }}>
                     Destacar negocio
@@ -70,19 +72,9 @@ const ShowBusiness = ({ close, ...item }) => {
         </Menu>
     )
 
-    if (showBusinessLocation) {
-        return (
-            <ShowBusinessLocation
-                close={handleCloseShowBusinessLocation}
-                {...item}
-            />
-        )
-    }
-
     return (
         <SettingsLayout
             title={business_name}
-            handleGoBack={close}
             rightIconComponent={renderMenu()}
         >
             <Box sx={{
@@ -93,9 +85,21 @@ const ShowBusiness = ({ close, ...item }) => {
                     flex: 1,
                     height: 300,
                     width: '100%',
-                    position: 'relative'
+                    position: 'relative',
+                    justifyContent: 'center',
+                    display: 'flex'
                 }}>
-                    <PhotoGallery images={getImages(AnnMultimedia.map(item => item.name))} />
+                    {AnnMultimedia.length ? (
+                        <Box sx={{
+                            flex: 1,
+                            height: '100%',
+                            width: '100%'
+                        }}>
+                            <PhotoGallery
+                                images={getImages(AnnMultimedia.map(item => item.name))}
+                            />
+                        </Box>
+                    ) : <RocketIcon />}
                 </Box>
                 <Box sx={{
                     borderRadius: '24px 24px 0px 0px',
@@ -122,28 +126,36 @@ const ShowBusiness = ({ close, ...item }) => {
                         >
                             {name}
                         </Typography>
-                        <Button
-                            color="info"
-                            sx={{
-                                padding: 0,
-                                margin: 0,
-                                justifyContent: 'start'
-                            }}
-                            onClick={handleOpenShowBusinessLocation}
-                        >
-                            <MapPin size={18} /> {city}, {province}
-                        </Button>
-                        {whatsApp && (
-                            <Typography
-                                variant="subtitle1"
-                                color="info.main"
+                        <Tooltip title="Ver ubicación">
+                            <Button
+                                color="info"
                                 sx={{
-                                    display: 'flex',
-                                    alignItems: 'center'
+                                    padding: 0,
+                                    margin: 0,
+                                    justifyContent: 'start'
                                 }}
+                                component={LinkBehavior}
+                                to={`location`}
+                                state={item}
                             >
-                                <Phone size={18} /><Box mr='10px' />  {whatsApp}
-                            </Typography>
+                                <MapPin size={18} /> {city}, {province}
+                            </Button>
+                        </Tooltip>
+                        {whatsApp && (
+                            <Tooltip title="Contactar">
+                                <Typography
+                                    variant="subtitle1"
+                                    color="info.main"
+                                    sx={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        cursor: 'pointer'
+                                    }}
+                                    onClick={toggleOpenContactDialog}
+                                >
+                                    <Phone size={18} /><Box mr='10px' />  + {code_phone} {whatsApp}
+                                </Typography>
+                            </Tooltip>
                         )}
                         <Typography
                             variant="subtitle1"
@@ -162,7 +174,8 @@ const ShowBusiness = ({ close, ...item }) => {
                                 color="primary"
                                 variant="contained"
                                 target='_blank'
-                                href={web_site}
+                                href={`//${web_site}`}
+                                component={Link}
                             >
                                 Ir a la página
                                 <ArrowRight />
@@ -173,7 +186,8 @@ const ShowBusiness = ({ close, ...item }) => {
                                 color="info"
                                 variant="contained"
                                 target='_blank'
-                                href={facebook}
+                                href={`//${facebook}`}
+                                component={Link}
                             >
                                 Ir a facebook
                                 <ArrowRight />
@@ -184,7 +198,7 @@ const ShowBusiness = ({ close, ...item }) => {
                                 color="success"
                                 variant="contained"
                                 target='_blank'
-                                href={instagram}
+                                href={`//${instagram}`}
                             >
                                 Ir a instagram
                                 <ArrowRight />
@@ -195,12 +209,43 @@ const ShowBusiness = ({ close, ...item }) => {
                 <FeatureBusiness
                     open={featureBusiness}
                     handleClose={toggleFeatureBusiness}
-                    closeBusiness={close}
                     item={item}
                 />
+                {openContactDialog && (
+                    <ContactBusiness
+                        {...item}
+                        open={openContactDialog}
+                        handleClose={toggleOpenContactDialog}
+                    />
+                )}
             </Box>
         </SettingsLayout>
     )
 };
+
+const ShowBusiness = () => {
+    const [data, setData] = React.useState(null)
+    const { id } = useParams()
+
+    const fetchBusiness = async () => {
+        try {
+            const res = await apiProvider.get(`/api/business-ann/business/${id}`)
+
+            if (res.status >= 200 && res.status < 300) {
+                const { data: { data } } = res;
+
+                setData(data);
+            }
+        } catch (error) {
+            console.log("error ", error)
+        }
+    }
+
+    useEffectOnce(() => { fetchBusiness() }, [])
+
+    if (!data) return <LoadingIndicator />
+
+    return <ShowBusinessLayout {...data} />
+}
 
 export default ShowBusiness
