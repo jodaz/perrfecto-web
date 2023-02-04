@@ -47,10 +47,10 @@ const Settings = () => {
                         <ListTitle>
                             Cuenta
                         </ListTitle>
-                        <ListItemLink
+                        {/* <ListItemLink
                             to="account"
                             title="Cuenta de acceso"
-                        />
+                        /> */}
                         <ListItemLink
                             to="owner"
                             title="Información personal"
