@@ -1,9 +1,10 @@
+import * as React from 'react'
 import {
     Route,
     Routes,
     useLocation
 } from 'react-router-dom'
-import { useAuth } from './context/AuthContext';
+import { useAuth, guestUser } from './context/AuthContext';
 // Layouts
 import AppLayout from './layouts/App';
 import LandingLayout from './layouts/LandingLayout';
@@ -77,7 +78,13 @@ import ShowBusiness from './pages/Businesses/ShowBusiness';
 
 function AppRoutes() {
     let location = useLocation();
-    const { state: { user } } = useAuth();
+    const { state: { isAuth }, dispatch } = useAuth();
+
+    React.useEffect(() => {
+        if (!isAuth) {
+            guestUser(dispatch)
+        }
+    }, [])
 
     return (
         <Routes>
