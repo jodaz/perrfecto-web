@@ -1,7 +1,7 @@
 export const PHONE = {
     rules: {
         required: true,
-        pattern: /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/,
+        pattern: /^\d+$/,
         notfound: true,
         unique: true
     },

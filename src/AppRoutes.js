@@ -1,9 +1,10 @@
+import * as React from 'react'
 import {
     Route,
     Routes,
     useLocation
 } from 'react-router-dom'
-import { useAuth } from './context/AuthContext';
+import { useAuth, guestUser } from './context/AuthContext';
 // Layouts
 import AppLayout from './layouts/App';
 import LandingLayout from './layouts/LandingLayout';
@@ -63,6 +64,8 @@ import BusinessProfile from './pages/Profile/BusinessProfile';
 import PublishedBlogsListing from './pages/Blog/PublishedBlogsListing';
 import PublishedBlog from './pages/Blog/PublishedBlog';
 import BlogEdit from './pages/Blog/BlogEdit';
+import UpdatePassword from './pages/account/UpdatePassword';
+import UpdateEmailAndPhone from './pages/account/UpdateEmailAndPhone';
 import ShowAd from './pages/Ad/ShowAd';
 import OnlyDesktop from './layouts/App/OnlyDesktop';
 import PrivateRoute from './components/PrivateRoute';
@@ -75,7 +78,13 @@ import ShowBusiness from './pages/Businesses/ShowBusiness';
 
 function AppRoutes() {
     let location = useLocation();
-    const { state: { user } } = useAuth();
+    const { state: { isAuth }, dispatch } = useAuth();
+
+    React.useEffect(() => {
+        if (!isAuth) {
+            guestUser(dispatch)
+        }
+    }, [])
 
     return (
         <Routes>
@@ -372,6 +381,22 @@ function AppRoutes() {
                 element={
                     <AppLayout>
                         <Account location={location} />
+                    </AppLayout>
+                }
+            />
+            <Route
+                path='/profile/settings/account/security'
+                element={
+                    <AppLayout>
+                        <UpdatePassword />
+                    </AppLayout>
+                }
+            />
+            <Route
+                path='/profile/settings/account/access'
+                element={
+                    <AppLayout>
+                        <UpdateEmailAndPhone />
                     </AppLayout>
                 }
             />
