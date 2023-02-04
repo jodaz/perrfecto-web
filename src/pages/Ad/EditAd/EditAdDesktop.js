@@ -136,7 +136,7 @@ const EditAdDesktop = () => {
             boxShadow: '0px 2px 20px rgba(133, 133, 133, 0.25)',
             borderRadius: '12px',
             position: 'relative',
-            maxHeight: { md: '500px', lg: '700px' },
+            maxHeight: { md: '500px', lg: '600px' },
             width: 'fit-content',
             overflowY: 'auto',
             position: 'relative'
