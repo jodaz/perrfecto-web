@@ -15,7 +15,7 @@ import Alert from '@mui/material/Alert'
 import { apiProvider } from '../../api'
 import getSearchParams from '../../utils/getSearchParams'
 import PhoneInput from '../Forms/PhoneInput'
-import { useAuth, loginUser, guestUser } from '../../context/AuthContext'
+import { useAuth, loginUser } from '../../context/AuthContext'
 import { PHONE, EMAIL, PASSWORD } from '../../validations'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
