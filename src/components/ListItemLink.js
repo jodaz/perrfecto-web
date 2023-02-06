@@ -8,7 +8,10 @@ import { ChevronRight } from 'lucide-react';
 
 const ListItemLink = ({ to, title, color = 'text.secondary' }) => (
     <ListItem component={LinkBehavior} disablePadding to={to} sx={{
-        borderRadius: '8px'
+        borderRadius: '8px',
+        '.MuiTouchRipple-child': {
+            backgroundColor: theme => theme.palette.text.tertiary
+        }
     }}>
         <ListItemButton sx={{ borderRadius: '8px', margin: '2px 0' }}>
             <ListItemText
