@@ -19,28 +19,6 @@ import DogInformation from './DogInformation';
 import { DESCRIPTION, ADD_PHOTOS } from '../../validations';
 import { Info } from 'lucide-react'
 
-const SwitchInputContainer = ({
-    control,
-    label,
-    name
-}) => (
-    <Box sx={{
-        display: 'flex',
-        width: '100%',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        pb: 1
-    }}>
-        <Typography variant="subtitle1" color="text.secondary">
-            {label}
-        </Typography>
-        <SwitchInput
-            control={control}
-            name={name}
-        />
-    </Box>
-)
-
 const CreateAd = () => {
     const [openWarning, setOpenWarning] = React.useState(false)
     const [openOverlayLoader, setOpenOverlayLoader] = React.useState(false)
@@ -168,17 +146,17 @@ const CreateAd = () => {
                         >
                             Permisos
                         </Typography>
-                        <SwitchInputContainer
-                            label='Visualizar número de teléfono'
+                        <SwitchInput
+                            label="Visualizar número de teléfono"
                             control={control}
                             name='permission_tlf'
                         />
-                        <SwitchInputContainer
+                        <SwitchInput
                             label='Activar geolocalización'
                             control={control}
                             name='permission_geolocation'
                         />
-                        <SwitchInputContainer
+                        <SwitchInput
                             label='Habilitar Whatsapp'
                             control={control}
                             name='permission_whatsapp'
