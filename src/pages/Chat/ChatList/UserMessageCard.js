@@ -7,6 +7,8 @@ import { alpha } from '@mui/material';
 import Badge from '@mui/material/Badge';
 import getUserPhoto from '../../../utils/getUserPhoto';
 import truncateString from '../../../utils/truncateString';
+import formatDistanceToNowStrict from 'date-fns/formatDistanceToNowStrict';
+import { es } from 'date-fns/locale'
 
 const Picture = data => (
     <Avatar
@@ -23,8 +25,25 @@ const UserMessageCard = ({
     data,
     index
 }) => {
+    const [datetime, setDatetime] = React.useState(null)
     const loading = data == null;
     const anchorRef = React.useRef(null)
+
+    React.useEffect(() => {
+        if (!loading) {
+            const interval = setInterval(() => {
+                setDatetime(
+                    formatDistanceToNowStrict(data.created_at, {
+                        locale: es,
+                    }).slice(0, 12)
+                )
+            }, 5000);
+
+            return () => {
+                clearInterval(interval);
+            };
+        }
+    }, [])
 
     return (
         <Box
@@ -90,7 +109,7 @@ const UserMessageCard = ({
                 <Box sx={{
                     display: 'flex',
                     flexDirection: 'column',
-                    width: '75%'
+                    flex: 1
                 }}>
                     {loading ? (
                         <Skeleton
@@ -119,9 +138,18 @@ const UserMessageCard = ({
                 </Box>
                 {!!!loading && (
                     <Box>
-                        {/* <Typography color='text.tertiary'>
-                            {data.created_at}
-                        </Typography> */}
+                        <Typography
+                            color='text.tertiary'
+                            fontWeight={500}
+                            fontSize='14px'
+                            sx={{
+                                '&:first-letter': {
+                                    textTransform: 'capitalize'
+                                }
+                            }}
+                        >
+                            {datetime}
+                        </Typography>
                     </Box>
                 )}
             </Box>
