@@ -20,7 +20,8 @@ import DetectLocation from './components/Modals/DetectLocation';
 import Market from './pages/Market';
 import Blog from './pages/Blog';
 import Profile from './pages/Profile';
-import Chat from './pages/Chat';
+import ChatList from './pages/Chat/ChatList';
+import ChatView from './pages/Chat/ChatView';
 import NewPassword from './components/Modals/NewPassword';
 import AskCode from './components/Modals/AskCode';
 import Notifications from './pages/Notifications'
@@ -121,7 +122,17 @@ function AppRoutes() {
                 element={
                     <PrivateRoute authorize='user' unauthorized={<NotFound />}>
                         <AppLayout>
-                            <Chat />
+                            <ChatList />
+                        </AppLayout>
+                    </PrivateRoute>
+                }
+            />
+            <Route
+                path='/chat/:id'
+                element={
+                    <PrivateRoute authorize='user' unauthorized={<NotFound />}>
+                        <AppLayout>
+                            <ChatView />
                         </AppLayout>
                     </PrivateRoute>
                 }

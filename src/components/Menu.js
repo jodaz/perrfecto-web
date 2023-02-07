@@ -35,13 +35,14 @@ const Menu = ({ children, icon, IconButtonProps, iconColor = '#000' }) => {
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}
-                PaperProps={{
-                    style: {
+                sx={{
+                    '.MuiMenu-paper': {
                         maxHeight: ITEM_HEIGHT * 4.5,
                         boxShadow: '0px 2px 8px rgba(0, 0, 0, 0.24)',
                         borderRadius: '8px',
-                        width: 'fit-content'
-                    },
+                        width: 'fit-content',
+                        padding: '0 !important'
+                    }
                 }}
                 anchorOrigin={{
                     vertical: 'bottom',
