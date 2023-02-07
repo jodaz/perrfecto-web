@@ -1,6 +1,7 @@
 import * as React from 'react'
 import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box';
+import ListItem from '@mui/material/ListItem';
 import Typography from '@mui/material/Typography';
 import Skeleton from "@mui/material/Skeleton";
 import { alpha } from '@mui/material';
@@ -9,6 +10,7 @@ import getUserPhoto from '../../../utils/getUserPhoto';
 import truncateString from '../../../utils/truncateString';
 import formatDistanceToNowStrict from 'date-fns/formatDistanceToNowStrict';
 import { es } from 'date-fns/locale'
+import LinkBehavior from '../../../components/LinkBehavior';
 
 const Picture = data => (
     <Avatar
@@ -23,35 +25,39 @@ const Picture = data => (
 const UserMessageCard = ({
     rootRef,
     data,
-    index
+    index,
 }) => {
     const [datetime, setDatetime] = React.useState(null)
     const loading = data == null;
     const anchorRef = React.useRef(null)
 
+    const getDistanceInWords = () => formatDistanceToNowStrict(data.created_at, {
+        locale: es,
+    }).slice(0, 12)
+
     React.useEffect(() => {
         if (!loading) {
+            setDatetime(getDistanceInWords())
+
             const interval = setInterval(() => {
-                setDatetime(
-                    formatDistanceToNowStrict(data.created_at, {
-                        locale: es,
-                    }).slice(0, 12)
-                )
+                setDatetime(getDistanceInWords())
             }, 5000);
 
             return () => {
                 clearInterval(interval);
             };
         }
-    }, [])
+    }, [loading])
 
     return (
-        <Box
+        <ListItem
             ref={rootRef}
             key={index}
+            component={!loading &&  LinkBehavior}
+            disablePadding
+            to={!loading && `${data.id}`}
             sx={{
-                textDecoration: 'none',
-                color: 'unset'
+                color: 'unset',
             }}
         >
             <Box sx={{
@@ -60,8 +66,11 @@ const UserMessageCard = ({
                 display: 'flex',
                 padding: '0 0.5rem',
                 borderRadius: '6px',
+                width: '100%',
                 alignItems: 'start',
                 transition: '0.1s',
+                textDecoration: 'none',
+                color: 'unset',
                 p: 1,
                 '&:hover': {
                     backgroundColor: theme => `${alpha(theme.palette.divider, 0.7)}`
@@ -136,7 +145,14 @@ const UserMessageCard = ({
                         </Typography>
                     )}
                 </Box>
-                {!!!loading && (
+                {loading ? (
+                    <Skeleton
+                        animation="wave"
+                        height={10}
+                        width="5%"
+                        style={{ marginBottom: 6 }}
+                    />
+                ) : (
                     <Box>
                         <Typography
                             color='text.tertiary'
@@ -153,7 +169,7 @@ const UserMessageCard = ({
                     </Box>
                 )}
             </Box>
-        </Box>
+        </ListItem>
     );
 }
 
