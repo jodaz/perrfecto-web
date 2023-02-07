@@ -7,6 +7,7 @@ import { format } from 'date-fns';
 import { es } from 'date-fns/locale'
 import getUserPhoto from '../../utils/getUserPhoto';
 import LinkBehavior from '../../components/LinkBehavior';
+import truncateString from '../../utils/truncateString';
 
 const RecentPostCard = ({
     id,
@@ -81,8 +82,7 @@ const RecentPostCard = ({
                             color="text.secondary"
                             fontWeight={500}
                         >
-                            {`${User.name} `}
-                            {User.lastName && `${User.lastName}`}
+                            {truncateString(`${User.name} ${User.lastName && User.lastName}`, 12 )}
                         </Typography>
                     </Box>
                     <Typography
