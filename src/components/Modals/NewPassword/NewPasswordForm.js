@@ -8,10 +8,10 @@ import Button from '../../Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 import { CONFIRM_PASSWORD, PASSWORD } from '../../../validations'
+import vars from '../../../vars';
 
 const NewPasswordForm = ({ location }) => {
     const navigate = useNavigate()
-    const { state } = location
     const [error, setError] = React.useState(false);
     const { control, handleSubmit, watch, formState: {
         isSubmitting
@@ -20,20 +20,18 @@ const NewPasswordForm = ({ location }) => {
     });
     const password = watch("password", "");
 
-    const onSubmit = async (data) => {
-        const { email } = state
-        const res = await apiProvider.post('/api/auth/update-password', {
-            ...data,
-            email: email
-        }).catch(error => {
-            console.log(error)
-        });
+    const onSubmit = async data => {
+        setError(false);
+        try {
+            const res = await apiProvider.post('/api/auth/update-password-reset', data)
 
-        if (res.status >= 200 && res.status < 300) {
-            navigate('?success=true')
-        } else {
+            if (res.status >= 200 && res.status < 300) {
+                await localStorage.removeItem(vars.authToken)
+                navigate('?success=true')
+            }
+        } catch(error) {
             setError(true)
-        }
+        };
     };
 
     return (

@@ -11,6 +11,7 @@ import Alert from '@mui/material/Alert';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Fade from '@mui/material/Fade';
 import { alpha } from '@mui/material';
+import vars from '../../../vars';
 
 const endpoints = [
     '/api/auth/reset-password',
@@ -41,6 +42,8 @@ const AskCode = ({ location }) => {
             })
 
             if (res.status >= 200 && res.status < 300) {
+                await localStorage.setItem(vars.authToken, res.data.token)
+
                 return navigate(`/recover-password/new`, {
                     state: state
                 })
