@@ -14,6 +14,7 @@ import BusinessCard from '../Businesses/BusinessCard';
 import { toggleFilters, useBusinesses, selectItem } from '../../context/BusinessContext';
 import ShowMarket from './ShowMarket';
 import SearchBox from '../../components/SearchBox';
+import { alpha } from '@mui/material';
 
 const Marketplace = () => {
     const [loadingCategories, setLoadingCategories] = React.useState(false)
@@ -61,7 +62,16 @@ const Marketplace = () => {
                 >
                     Market
                 </Typography>
-                <IconButton>
+                <IconButton sx={{
+                    backgroundColor: theme => isLoaded ? theme.palette.primary.main : 'unset',
+                    color: isLoaded ? '#fff' : 'unset',
+                    '&:hover': {
+                        backgroundColor: theme => `${alpha(isLoaded
+                            ? theme.palette.primary.main
+                            : theme.palette.divider, 0.9
+                        )}`
+                    }
+                }}>
                     <SlidersHorizontal onClick={() => toggleFilters(dispatch)}/>
                 </IconButton>
             </Box>
