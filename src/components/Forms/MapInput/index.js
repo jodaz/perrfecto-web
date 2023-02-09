@@ -1,15 +1,17 @@
 import * as React from 'react'
 import {
     MapContainer,
-    TileLayer,
-    Popup,
-    Marker
+    TileLayer
 } from 'react-leaflet'
-import TextInput from './TextInput'
-import { getMarkerPosition } from '../../utils/getMarkerPosition';
+import TextInput from '../TextInput'
+import { getMarkerPosition } from '../../../utils/getMarkerPosition';
+import LeafletControlGeocoder from './Geocoder';
 
 const MapInput = ({ control, watch, setValue }) => {
     const markerPosition = getMarkerPosition(watch)
+    const province = watch('province')
+    const city = watch('city')
+
     const markerRef = React.useRef(null)
     const eventHandlers = React.useMemo(
         () => ({
@@ -26,6 +28,8 @@ const MapInput = ({ control, watch, setValue }) => {
         }),
         [],
     )
+
+    console.log(province, city)
 
     return (
         <>
@@ -48,14 +52,10 @@ const MapInput = ({ control, watch, setValue }) => {
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                <Marker
-                    draggable={true}
-                    eventHandlers={eventHandlers}
-                    position={markerPosition}
-                    ref={markerRef}
-                >
-                    <Popup minWidth={90} />
-                </Marker>
+                <LeafletControlGeocoder
+                    province={province.nombre}
+                    city={city.nombre}
+                />
             </MapContainer>
         </>
     )
