@@ -14,6 +14,7 @@ const MapInput = ({ control, watch, setValue }) => {
     const province = watch('province')
     const city = watch('city')
     const markerRef = React.useRef(null)
+    const previousData = React.useRef();
 
     const eventHandlers = React.useMemo(() => ({
         dragend() {
@@ -27,33 +28,33 @@ const MapInput = ({ control, watch, setValue }) => {
         },
     }), [])
 
-    const setMarkerPosition = (coords) => {
+    const setMarkerPosition = coords => {
         setValue('lat', coords.lat)
-        setValue('leng', coords.lng) // HAcer esto me genera un rerender
+        setValue('leng', coords.lng)
     }
 
     return (
         <>
-            <TextInput
-                control={control}
-                name="lat"
-                sx={{
-                    display: 'none'
-                }}
-            />
-            <TextInput
-                control={control}
-                name="leng"
-                sx={{
-                    display: 'none'
-                }}
-            />
             <MapContainer
                 center={markerPosition}
                 zoom={16}
                 scrollWheelZoom={false}
                 key={JSON.stringify(markerPosition)}
             >
+                <TextInput
+                    control={control}
+                    name="lat"
+                    sx={{
+                        display: 'none'
+                    }}
+                />
+                <TextInput
+                    control={control}
+                    name="leng"
+                    sx={{
+                        display: 'none'
+                    }}
+                />
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -62,6 +63,7 @@ const MapInput = ({ control, watch, setValue }) => {
                     province={province && province.nombre}
                     city={city && city.nombre}
                     setMarker={setMarkerPosition}
+                    previousData={previousData}
                 />
                 <Marker
                     draggable={true}
