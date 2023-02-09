@@ -6,6 +6,7 @@ import { Flag, Trash2, UserX } from 'lucide-react';
 import Status from './Status';
 import MessagesList from './MessagesList';
 import DeleteChat from '../../../components/Modals/DeleteChat';
+import BlockedUser from './BlockedUser';
 
 export default function ChatView() {
     const [deleteChat, setDeleteChat] = React.useState(false)
@@ -63,7 +64,7 @@ export default function ChatView() {
                 flexDirection: 'column',
                 height: '100%'
             }}>
-                <MessagesList />
+                <BlockedUser />
                 <DeleteChat
                     open={deleteChat}
                     handleClose={toggleDeleteChat}
