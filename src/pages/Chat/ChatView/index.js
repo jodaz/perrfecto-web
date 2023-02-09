@@ -7,26 +7,35 @@ import Status from './Status';
 import MessagesList from './MessagesList';
 import DeleteChat from '../../../components/Modals/DeleteChat';
 import BlockedUser from './BlockedUser';
+import BlockUser from '../../../components/Modals/BlockUser';
 
 export default function ChatView() {
+    const [isBlockedUser, setIsBlockedUser] = React.useState(false)
     const [deleteChat, setDeleteChat] = React.useState(false)
+    const [blockUser, setBlockUser] = React.useState(false)
 
     const toggleDeleteChat = () => setDeleteChat(!deleteChat);
 
+    const toggleBlockUser = () => setBlockUser(!blockUser);
+
+    const toggleIsBlockedUser = () => setIsBlockedUser(!isBlockedUser)
+
     const renderMenu = () => (
         <Menu>
-            <Box
-                sx={{
-                display: 'flex',
-                alignItems: 'center',
-                color: 'unset',
-                textDecoration: 'none',
-            }}>
-                <UserX />
-                <Box sx={{ paddingLeft: '0.5rem' }}>
-                    Bloquear usuario
+            {(!isBlockedUser) && (
+                <Box
+                    sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    color: 'unset',
+                    textDecoration: 'none',
+                }} onClick={toggleBlockUser}>
+                    <UserX />
+                    <Box sx={{ paddingLeft: '0.5rem' }}>
+                        Bloquear usuario
+                    </Box>
                 </Box>
-            </Box>
+            )}
             <Box
                 sx={{
                 display: 'flex',
@@ -64,10 +73,15 @@ export default function ChatView() {
                 flexDirection: 'column',
                 height: '100%'
             }}>
-                <BlockedUser />
+                {isBlockedUser && <BlockedUser unblockUser={toggleIsBlockedUser} />}
                 <DeleteChat
                     open={deleteChat}
                     handleClose={toggleDeleteChat}
+                />
+                <BlockUser
+                    open={blockUser}
+                    handleClose={toggleBlockUser}
+                    sideAction={toggleIsBlockedUser}
                 />
             </Box>
         </SettingsLayout>

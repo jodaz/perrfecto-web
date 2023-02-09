@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { PhoneOff } from 'lucide-react';
 
-export default function BlockedUser() {
+export default function BlockedUser({ unblockUser }) {
     return (
         <Stack
             spacing={1}
@@ -29,6 +29,7 @@ export default function BlockedUser() {
                     sx={{
                         color: theme => theme.palette.text.secondary
                     }}
+                    onClick={unblockUser}
                 >
                     Desbloquear
                 </Button>
