@@ -25,13 +25,13 @@ const CreateBusinessStep2 = () => {
     const {
         control,
         watch,
-        setValue,
-        handleSubmit
+        handleSubmit,
+        setValue
     } = useForm({
         defaultValues: {
-            business_dir: user.business_dir,
             lat: 37.32485,
-            leng: -5.934162
+            leng: -5.934162,
+            business_dir: user.business_dir
         }
     });
     const [cities, setCities] = React.useState([])
@@ -49,6 +49,7 @@ const CreateBusinessStep2 = () => {
 
     React.useEffect(() => {
         if (province) {
+            setValue('city', undefined)
             const filteredCities = ciudades
                 .filter(({ id_provincia }) => id_provincia == province.id)
 
@@ -116,7 +117,11 @@ const CreateBusinessStep2 = () => {
                 height: 'fit-content',
                 flex: 1
             }} p={2}>
-                <MapInput control={control} watch={watch} setValue={setValue} />
+                <MapInput
+                    control={control}
+                    setValue={setValue}
+                    watch={watch}
+                />
             </Box>
             <Box sx={{ p: 2 }}>
                 <Button

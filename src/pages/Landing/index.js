@@ -15,7 +15,7 @@ const Landing = ({ location }) => {
     const navigate = useNavigate();
     const openDeleteModal = getSearchParams(location, 'delete')
     const matches = useMediaQuery((theme) => theme.breakpoints.down('sm'));
-    const { dispatch: authDispatch } = useAuth();
+    const { state: { isAuth }, dispatch: authDispatch } = useAuth();
 
     React.useEffect(() => {
         closeGuestWarning(guestDispatch);
@@ -70,18 +70,20 @@ const Landing = ({ location }) => {
                 >
                     Crea un perfil para tu mascota
                 </Button>
-                <Box sx={{ p: 1 }}>
-                    <Button
-                        variant="contained"
-                        fullWidth
-                        color="secondary"
-                        to='/market'
-                        component={LinkBehavior}
-                        onClick={() => guestUser(authDispatch)}
-                    >
-                        Ingresar como invitado
-                    </Button>
-                </Box>
+                {(!isAuth) && (
+                    <Box sx={{ p: 1 }}>
+                        <Button
+                            variant="contained"
+                            fullWidth
+                            color="secondary"
+                            to='/market'
+                            component={LinkBehavior}
+                            onClick={() => guestUser(authDispatch)}
+                        >
+                            Ingresar como invitado
+                        </Button>
+                    </Box>
+                )}
                 <Outlet />
             </Box>
             <DeletedAccount open={openDeleteModal} handleClose={() => navigate('/')} />
