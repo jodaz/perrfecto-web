@@ -9,8 +9,12 @@ import { MapPin, ChevronLeft, X } from 'lucide-react';
 import { alpha } from '@mui/material';
 import { useGeolocated } from 'react-geolocated';
 import { useNavigate } from 'react-router-dom';
+import { toggleGeolocation, useAuth } from '../../context/AuthContext';
 
 const GeolocationDrawer = () => {
+    const { state: {
+        openGeolocation
+    }, dispatch } = useAuth();
     const navigate = useNavigate()
     const { coords, isGeolocationAvailable, getPosition, isGeolocationEnabled } =
         useGeolocated({
@@ -24,6 +28,8 @@ const GeolocationDrawer = () => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
         }
+
+        toggleGeolocation(dispatch);
     };
 
     const list = (anchor) => (
@@ -107,7 +113,7 @@ const GeolocationDrawer = () => {
             <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Drawer
                     anchor={'bottom'}
-                    open={true}
+                    open={openGeolocation}
                     onClose={toggleDrawer('bottom', false)}
                     sx={{
                         '& .MuiPaper-root': {

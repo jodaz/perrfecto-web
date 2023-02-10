@@ -20,9 +20,12 @@ const SliderInput = ({
     labelColor,
     max,
     step,
-    disabled
+    disabled,
+    handleClick
 }) => (
-    <FormControl>
+    <FormControl sx={{
+        cursor: 'pointer'
+    }} onClick={handleClick}>
         <Controller
             name={name}
             control={control}
