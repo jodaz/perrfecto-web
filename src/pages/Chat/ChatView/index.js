@@ -74,6 +74,7 @@ export default function ChatView() {
                 height: '100%'
             }}>
                 {isBlockedUser && <BlockedUser unblockUser={toggleIsBlockedUser} />}
+                <MessagesList />
                 <DeleteChat
                     open={deleteChat}
                     handleClose={toggleDeleteChat}

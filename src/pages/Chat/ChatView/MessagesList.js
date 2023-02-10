@@ -1,42 +1,40 @@
 import * as React from 'react';
-import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
-import SearchBox from '../../../components/SearchBox';
 import UserMessageCard from './UserMessageCard';
 
 const messagesArray = [
     {
         id: 1,
+        isReceptor: false,
         message: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.',
         created_at: new Date(),
         User: {
-            name: 'Eminem',
+            name: 'Don',
+            lastName: 'Diablo',
             user_picture: '/images/samples/Pupi.png'
-        },
-        connected: true
+        }
     },
     {
         id: 2,
         message: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.',
         created_at: new Date( Date.now() - 1000 * 60 ), // 45 min
         User: {
-            name: 'J',
-            lastName: 'Balvin',
+            name: 'Don',
+            lastName: 'Diablo',
             user_picture: '/images/samples/Pupi.png'
         },
-        connected: false
+        isReceptor: false
     },
     {
         id: 3,
         message: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.',
         created_at: new Date(2023, 1, 4, 10, 33, 1), // Unos dias
         User: {
-            name: 'Kygo',
+            name: 'Deadmau5',
             user_picture: '/images/samples/Pupi.png'
         },
-        connected: true
+        isReceptor: true
     },
     {
         id: 4,
@@ -46,18 +44,17 @@ const messagesArray = [
             name: 'Deadmau5',
             user_picture: '/images/samples/Pupi.png'
         },
-        connected: false
+        isReceptor: false
     },
     {
         id: 5,
         message: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.',
         created_at: new Date(2023, 0, 4, 20, 33, 1), // 2 sem
         User: {
-            name: 'Don',
-            lastName: 'Diablo',
+            name: 'Deadmau5',
             user_picture: '/images/samples/Pupi.png'
         },
-        connected: true
+        isReceptor: true
     },
 ]
 
@@ -72,9 +69,16 @@ export default function MessagesList() {
 
     return (
         <Box p={2}>
-            <List sx={{ width: '100%' }}>
-                {messages.map((message, index) => <UserMessageCard data={message} index={index} />)}
-            </List>
+            <Box sx={{
+                width: '200px',
+                margin: '0 auto',
+                textAlign: 'center',
+                fontWeight: 500,
+                color: theme => theme.palette.text.tertiary,
+                fontSize: '14px'
+            }}>
+                Pupi ha iniciado una conversación contigo
+            </Box>
         </Box>
     );
 }
