@@ -52,15 +52,19 @@ const Menu = ({ children, icon, IconButtonProps, iconColor = '#000' }) => {
                     horizontal: 'left',
                 }}
             >
-                {React.Children.map(children, child => (
-                    <MenuItem
-                        key={child}
-                        onClick={handleClose}
-                        sx={{ width: '100%' }}
-                    >
-                        {React.cloneElement(child)}
-                    </MenuItem>
-                ))}
+                {React.Children.map(children, child => {
+                    if (React.isValidElement(child)) {
+                        return (
+                            <MenuItem
+                                key={child}
+                                onClick={handleClose}
+                                sx={{ width: '100%' }}
+                            >
+                                {React.cloneElement(child)}
+                            </MenuItem>
+                        )
+                    }
+                })}
             </MuiMenu>
         </div>
     );
