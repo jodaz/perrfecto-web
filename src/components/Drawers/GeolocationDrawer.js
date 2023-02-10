@@ -8,15 +8,13 @@ import DialogTitle from '../DialogTitle';
 import { MapPin, ChevronLeft, X } from 'lucide-react';
 import { alpha } from '@mui/material';
 import { useGeolocated } from 'react-geolocated';
-import { useNavigate } from 'react-router-dom';
 import { toggleGeolocation, useAuth } from '../../context/AuthContext';
 
 const GeolocationDrawer = () => {
     const { state: {
         openGeolocation
     }, dispatch } = useAuth();
-    const navigate = useNavigate()
-    const { coords, isGeolocationAvailable, getPosition, isGeolocationEnabled } =
+    const { isGeolocationAvailable, getPosition, isGeolocationEnabled } =
         useGeolocated({
             positionOptions: {
                 enableHighAccuracy: false,
@@ -85,7 +83,6 @@ const GeolocationDrawer = () => {
                                 color="primary"
                                 fullWidth
                                 type="submit"
-                                disabled={!isGeolocationAvailable || !isGeolocationEnabled}
                                 onClick={getPosition}
                             >
                                 Activar
@@ -98,8 +95,8 @@ const GeolocationDrawer = () => {
                                     color: '#fff',
                                     backgroundColor: alpha(`#000`, 0.3)
                                 }
-                            }} onClick={() => navigate('/market')}>
-                                No por el momento
+                            }} onClick={() => toggleGeolocation(dispatch)}>
+                                Cancelar
                             </Button>
                         </Box>
                     </Box>

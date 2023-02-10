@@ -21,7 +21,7 @@ import { useAuth, toggleGeolocation } from '../context/AuthContext';
 
 const MarketFilterDrawer = () => {
     const [cities, setCities] = React.useState([])
-    const { state: { coords }, dispatch: authDispatch } = useAuth()
+    const { state: { userCoords }, dispatch: authDispatch } = useAuth()
     const { control, handleSubmit, watch, reset, formState: {
         isSubmitting
     }} = useForm({
@@ -61,11 +61,11 @@ const MarketFilterDrawer = () => {
                 parsedData.city = city.nombre;
             }
             if (distance) {
-                // const { latitude, longitude } = coords
+                const { latitude, longitude } = userCoords
 
-                // parsedData.lat = latitude
-                // parsedData.lon = longitude
-                // parsedData.km = distance;
+                parsedData.lat = latitude
+                parsedData.lon = longitude
+                parsedData.km = distance;
             }
 
             await fetchBusinesses(dispatch, parsedData)
@@ -125,8 +125,8 @@ const MarketFilterDrawer = () => {
                     label='Distancia'
                     control={control}
                     name="distance"
-                    disabled={isSubmitting || !coords}
-                    handleClick={(isSubmitting || !coords)
+                    disabled={isSubmitting || !userCoords}
+                    handleClick={(isSubmitting || !userCoords)
                         ? () => toggleGeolocation(authDispatch)
                         : null
                     }

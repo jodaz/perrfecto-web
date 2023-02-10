@@ -15,7 +15,7 @@ const initialState = {
     isAuth: false,
     user: {},
     token: '',
-    coords: null,
+    userCoords: null,
     openGeolocation: false
 }
 
@@ -54,6 +54,12 @@ function authReducer(state, action) {
                 return {
                     ...state,
                     openGeolocation: !state.openGeolocation
+                }
+            }
+            case 'SET_USER_COORDS': {
+                return {
+                    ...state,
+                    userCoords: action.payload
                 }
             }
             case 'RENEW_TOKEN': {
@@ -139,6 +145,17 @@ async function loginUser(dispatch, values) {
     }
 }
 
+async function setUserCoords(dispatch, data) {
+    try {
+        dispatch({
+            type: 'SET_USER_COORDS',
+            payload: data
+        })
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 async function guestUser(dispatch) {
     try {
         const data = {
@@ -184,5 +201,6 @@ export {
     loginUser,
     logout,
     guestUser,
-    renewToken
+    renewToken,
+    setUserCoords
 }
