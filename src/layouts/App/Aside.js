@@ -12,6 +12,7 @@ import PrivateRoute from '../../components/PrivateRoute';
 import NotificationButton from './NotificationButton';
 import FilterDrawer from '../../components/FilterDrawer';
 import { useBusinesses } from '../../context/BusinessContext';
+import GeolocationDrawer from '../../components/Drawers/GeolocationDrawer';
 
 const drawerWidth = '350px';
 
@@ -58,6 +59,7 @@ const Sidebar = ({ children }) => {
                 {children}
             </Box>
             <FilterDrawer />
+            <GeolocationDrawer />
         </Drawer>
     )
 }
