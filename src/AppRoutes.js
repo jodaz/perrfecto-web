@@ -80,7 +80,7 @@ import ShowBusiness from './pages/Businesses/ShowBusiness';
 function AppRoutes() {
     let location = useLocation();
     const { state: { isAuth }, dispatch } = useAuth();
-    const { coords, isGeolocationEnabled } = useGeolocated()
+    const { coords } = useGeolocated()
 
     React.useEffect(() => {
         if (!isAuth) {
@@ -89,7 +89,7 @@ function AppRoutes() {
     }, [])
 
     React.useEffect(() => {
-        if (isGeolocationEnabled) {
+        if (coords) {
             setUserCoords(dispatch, coords)
         } else {
             setUserCoords(dispatch, null);

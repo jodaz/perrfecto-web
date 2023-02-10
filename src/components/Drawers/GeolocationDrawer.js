@@ -8,13 +8,13 @@ import DialogTitle from '../DialogTitle';
 import { MapPin, ChevronLeft, X } from 'lucide-react';
 import { alpha } from '@mui/material';
 import { useGeolocated } from 'react-geolocated';
-import { toggleGeolocation, useAuth } from '../../context/AuthContext';
+import { setUserCoords, toggleGeolocation, useAuth } from '../../context/AuthContext';
 
 const GeolocationDrawer = () => {
     const { state: {
         openGeolocation
     }, dispatch } = useAuth();
-    const { isGeolocationAvailable, getPosition, isGeolocationEnabled } =
+    const { coords, isGeolocationAvailable, getPosition, isGeolocationEnabled } =
         useGeolocated({
             positionOptions: {
                 enableHighAccuracy: false,
@@ -29,6 +29,12 @@ const GeolocationDrawer = () => {
 
         toggleGeolocation(dispatch);
     };
+
+    React.useEffect(() => {
+        if (coords) {
+            setUserCoords(dispatch, coords)
+        }
+    }, [coords])
 
     const list = (anchor) => (
         <Box onKeyDown={toggleDrawer(anchor, false)}>
@@ -65,29 +71,41 @@ const GeolocationDrawer = () => {
                     <Box margin='0 auto' width='75%' textAlign='center'>
                         <MapPin size={100} color={'#626B74'} />
                         <Box m={3}>
-                            {(isGeolocationAvailable && isGeolocationEnabled) ? (
+                            {!isGeolocationAvailable ? (
                                 <Typography variant="body2">
-                                    Hemos detectado tu ubicación. ¿Quieres activarla?
+                                    Tu navegador no soporta la geolocalización
+                                </Typography>
+                            ) : !isGeolocationEnabled ? (
+                                <Typography variant="body2">
+                                    Actualiza los permisos de geolocalización de tu navegador.
+                                </Typography>
+                            ) : coords ? (
+                                <Typography variant="body2">
+                                    La geolocalización está activa.
                                 </Typography>
                             ) : (
                                 <Typography variant="body2">
-                                    Tu navegador no soporta la geolocalización o los permisos para la app no han sido actualizados.
+                                    Hemos detectado la geolocalización. Para activarla,
+                                    actualiza los permisos para la app y presiona activar.
                                 </Typography>
                             )}
                         </Box>
                     </Box>
                     <Box>
-                        <Box sx={{ p: 1 }}>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                fullWidth
-                                type="submit"
-                                onClick={getPosition}
-                            >
-                                Activar
-                            </Button>
-                        </Box>
+                        {!coords && (
+                            <Box sx={{ p: 1 }}>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    fullWidth
+                                    type="submit"
+                                    disabled={!isGeolocationEnabled}
+                                    onClick={getPosition}
+                                >
+                                    Activar
+                                </Button>
+                            </Box>
+                        )}
                         <Box sx={{ p: 1 }}>
                             <Button variant="contained" fullWidth sx={{
                                 backgroundColor: '#ccc',
@@ -96,7 +114,7 @@ const GeolocationDrawer = () => {
                                     backgroundColor: alpha(`#000`, 0.3)
                                 }
                             }} onClick={() => toggleGeolocation(dispatch)}>
-                                Cancelar
+                                Volver
                             </Button>
                         </Box>
                     </Box>
