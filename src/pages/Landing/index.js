@@ -1,5 +1,6 @@
 import * as React from 'react'
 import Box from '@mui/material/Box'
+import Stack from '@mui/material/Stack'
 import Background from '../../assets/images/landing-background.png'
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Button } from '@mui/material';
@@ -9,6 +10,7 @@ import getSearchParams from '../../utils/getSearchParams';
 import DeletedAccount from '../../components/Modals/DeletedAccount';
 import { closeGuestWarning, useGuest } from '../../context/GuestContext';
 import { guestUser, useAuth } from '../../context/AuthContext'
+import { ArrowRight } from 'lucide-react';
 
 const Landing = ({ location }) => {
     const { dispatch: guestDispatch } = useGuest()
@@ -62,16 +64,16 @@ const Landing = ({ location }) => {
                 }}>
                     ¡Haz nuevos amigos y planes con otros amantes de los perros!
                 </Box>
-                <Button
-                    variant="contained"
-                    color="primary"
-                    to='/register'
-                    component={LinkBehavior}
-                >
-                    Crea un perfil para tu mascota
-                </Button>
-                {(!isAuth) && (
-                    <Box sx={{ p: 1 }}>
+                {!isAuth ? (
+                    <Stack spacing={2}>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            to='/register'
+                            component={LinkBehavior}
+                        >
+                            Crea un perfil para tu mascota
+                        </Button>
                         <Button
                             variant="contained"
                             fullWidth
@@ -81,6 +83,18 @@ const Landing = ({ location }) => {
                             onClick={() => guestUser(authDispatch)}
                         >
                             Ingresar como invitado
+                        </Button>
+                    </Stack>
+                ) : (
+                    <Box p={1}>
+                        <Button
+                            variant="contained"
+                            fullWidth
+                            color="secondary"
+                            to='/market'
+                            component={LinkBehavior}
+                        >
+                            Volver al inicio <ArrowRight />
                         </Button>
                     </Box>
                 )}
