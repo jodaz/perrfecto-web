@@ -74,7 +74,7 @@ const FeaturedBusiness = () =>  {
                 </SwiperStyled>
             ) : (
                 <Typography variant="subtitle1">
-                    Aún no tenemos blogs destacados
+                    Aún no tenemos negocios destacados
                 </Typography>
             )}
         </Box>
