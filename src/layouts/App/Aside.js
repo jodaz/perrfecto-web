@@ -13,6 +13,7 @@ import NotificationButton from './NotificationButton';
 import FilterDrawer from '../../components/FilterDrawer';
 import { useBusinesses } from '../../context/BusinessContext';
 import GeolocationDrawer from '../../components/Drawers/GeolocationDrawer';
+import { Link } from 'react-router-dom';
 
 const drawerWidth = '350px';
 
@@ -41,7 +42,9 @@ const Sidebar = ({ children }) => {
                 justifyContent: (user.role == 'guest') ? 'center' : 'space-between'
             }}>
                 {(user.role == 'user') && <Camera color="#fff" />}
-                <Logo dark />
+                <Link to='/'>
+                    <Logo dark />
+                </Link>
                 <PrivateRoute authorize="user,business">
                     <NotificationButton />
                 </PrivateRoute>
