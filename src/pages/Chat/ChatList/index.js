@@ -41,6 +41,13 @@ export default function ChatList() {
             <Box mt={3} />
             <List sx={{ width: '100%' }}>
                 {messages.map((message, index) => <UserMessageCard data={message} index={index} />)}
+                {!(messages.length) && (
+                    <Typography
+                        variant="subtitle1"
+                    >
+                        Actualmente no tienes conversaciones.
+                    </Typography>
+                )}
             </List>
         </Box>
     );
