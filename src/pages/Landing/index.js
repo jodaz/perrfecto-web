@@ -94,7 +94,7 @@ const Landing = ({ location }) => {
                             to='/market'
                             component={LinkBehavior}
                         >
-                            Volver al inicio <ArrowRight />
+                            Volver a la app <ArrowRight />
                         </Button>
                     </Box>
                 )}
