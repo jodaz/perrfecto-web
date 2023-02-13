@@ -40,7 +40,8 @@ const DogInformation = ({ hideTitle, hideInterests, desktop }) => {
                 <Box sx={{ display: 'flex', }}>
                     <Typography
                         variant="body2"
-                        color="text.tertiary"
+                        color="text.primary"
+                        fontWeight={500}
                         textTransform={'uppercase'}
                         gutterBottom
                     >

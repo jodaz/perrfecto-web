@@ -162,7 +162,8 @@ const CreateAd = () => {
                     <Box>
                         <Typography
                             variant="body2"
-                            color="text.tertiary"
+                            color="text.primary"
+                            fontWeight={500}
                             textTransform='uppercase'
                             gutterBottom
                         >

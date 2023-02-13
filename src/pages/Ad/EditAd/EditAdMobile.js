@@ -124,7 +124,6 @@ const EditAdMobile = () => {
     }
 
     React.useEffect(() => {
-        console.log(JSON.parse(user.publication.multimedia))
         setValue("files", JSON.parse(user.publication.multimedia))
     }, [user.publication.multimedia.length])
 
@@ -185,7 +184,8 @@ const EditAdMobile = () => {
                     <Box>
                         <Typography
                             variant="body2"
-                            color="text.tertiary"
+                            color="text.primary"
+                            fontWeight={500}
                             textTransform='uppercase'
                             gutterBottom
                         >
