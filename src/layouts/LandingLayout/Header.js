@@ -92,7 +92,9 @@ function ResponsiveAppBar({ dark }) {
         >
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <Logo />
+                    <Link component={LinkBehavior} to='/'>
+                        <Logo />
+                    </Link>
                     <Box sx={{
                         flexGrow: 1,
                         display: { xs: 'none', md: 'flex' },

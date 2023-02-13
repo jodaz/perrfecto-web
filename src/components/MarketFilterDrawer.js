@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import ciudades from '../utils/ciudades';
 import provincias from '../utils/provincias';
 import SelectInput from './Forms/SelectInput';
+import SliderInput from './Forms/SliderInput'
 import {
     fetchBusinesses,
     useBusinesses,
@@ -16,22 +17,16 @@ import {
 } from '../context/BusinessContext';
 import TextInput from './Forms/TextInput';
 import { alpha } from '@mui/material';
-import { useGeolocated } from 'react-geolocated';
+import { useAuth, toggleGeolocation } from '../context/AuthContext';
 
 const MarketFilterDrawer = () => {
     const [cities, setCities] = React.useState([])
+    const { state: { userCoords }, dispatch: authDispatch } = useAuth()
     const { control, handleSubmit, watch, reset, formState: {
         isSubmitting
     }} = useForm({
         reValidateMode: "onBlur"
     });
-    const { coords, isGeolocationAvailable, getPosition, isGeolocationEnabled } =
-        useGeolocated({
-            positionOptions: {
-                enableHighAccuracy: false,
-            }
-        }
-    );
     const province = watch('province')
     const { state: { openFilter }, dispatch } = useBusinesses();
 
@@ -66,7 +61,7 @@ const MarketFilterDrawer = () => {
                 parsedData.city = city.nombre;
             }
             if (distance) {
-                const { latitude, longitude } = coords
+                const { latitude, longitude } = userCoords
 
                 parsedData.lat = latitude
                 parsedData.lon = longitude
@@ -125,14 +120,18 @@ const MarketFilterDrawer = () => {
                     />
                 </Box>
             )}
-            {/* <Box sx={{ p: 3 }}>
+            <Box sx={{ p: 3 }}>
                 <SliderInput
                     label='Distancia'
                     control={control}
                     name="distance"
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || !userCoords}
+                    handleClick={(isSubmitting || !userCoords)
+                        ? () => toggleGeolocation(authDispatch)
+                        : null
+                    }
                 />
-            </Box> */}
+            </Box>
             <Box sx={{ p: 3 }}>
                 <Button
                     variant="contained"

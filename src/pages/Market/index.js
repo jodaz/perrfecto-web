@@ -11,7 +11,13 @@ import { apiProvider } from '../../api';
 import MarketFilterDrawer from '../../components/MarketFilterDrawer';
 import { SlidersHorizontal } from 'lucide-react';
 import BusinessCard from '../Businesses/BusinessCard';
-import { toggleFilters, useBusinesses, selectItem } from '../../context/BusinessContext';
+import {
+    toggleFilters,
+    useBusinesses,
+    selectItem,
+    resetFilters,
+    fetchBusinesses
+} from '../../context/BusinessContext';
 import ShowMarket from './ShowMarket';
 import SearchBox from '../../components/SearchBox';
 import { alpha } from '@mui/material';
@@ -19,9 +25,19 @@ import { alpha } from '@mui/material';
 const Marketplace = () => {
     const [loadingCategories, setLoadingCategories] = React.useState(false)
     const [categories, setCategories] = React.useState([])
-    const { state: { isLoaded, publications, selectedItem }, dispatch } = useBusinesses();
+    const { state: {
+        isLoaded,
+        publications,
+        selectedItem
+    }, dispatch } = useBusinesses();
 
-    const filterFunction = data => console.log(data)
+    const filterFunction = ({ search }) => {
+        if (search) {
+            fetchBusinesses(dispatch, { filter: search })
+        } else {
+            resetFilters(dispatch)
+        }
+    }
 
     const fetchCategories = async () => {
         setLoadingCategories(true)
@@ -113,6 +129,11 @@ const Marketplace = () => {
                             handleSelect={() => selectItem(dispatch, { item: item, type: 'business' })}
                         />
                     ))}
+                    {!publications.length && (
+                        <Box>
+                            Sin negocios
+                        </Box>
+                    )}
                 </Stack>
             )}
             <MarketFilterDrawer />

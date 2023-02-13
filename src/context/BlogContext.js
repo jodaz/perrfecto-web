@@ -76,9 +76,12 @@ function useBlogs() {
     return context
 }
 
-async function fetchBlogs(dispatch) {
+async function fetchBlogs(dispatch, query) {
     try {
-        const res = await apiProvider.get('/api/blog/blog-by-uid')
+        console.log(query)
+        const res = await apiProvider.get('/api/blog/blog-by-uid', {
+            params: query
+        })
 
         if (res.status >= 200 && res.status < 300) {
             const { data: { data: { data } } } = res;
