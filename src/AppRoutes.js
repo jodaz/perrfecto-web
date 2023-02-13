@@ -138,7 +138,7 @@ function AppRoutes() {
                 }
             />
             <Route
-                path='/chat/:id'
+                path='/chat/:chatID'
                 element={
                     <PrivateRoute authorize='user' unauthorized={<NotFound />}>
                         <AppLayout>
