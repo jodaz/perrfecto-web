@@ -5,7 +5,7 @@ import IconButton from '@mui/material/IconButton';
 import { X } from 'lucide-react'
 
 const DialogTitle = ({ children, onClose, ...other }) => (
-    <MuiDialogTitle sx={{ m: 1, p: 1, border: 'none !important' }} {...other}>
+    <MuiDialogTitle sx={{ m: 1, p: 1, border: 'none !important', display: 'flex' }} {...other}>
         {children}
         {onClose ? (
             <IconButton
