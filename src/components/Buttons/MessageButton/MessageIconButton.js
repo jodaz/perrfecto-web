@@ -4,7 +4,7 @@ import Badge from '@mui/material/Badge';
 import { MessageCircle } from 'lucide-react';
 import { alpha } from '@mui/material';
 
-const IconButton = () => (
+const IconButton = props => (
     <MUIIconButton sx={{
         background: theme => theme.palette.primary.main,
         boxShadow: '0px 2px 5px rgba(51, 51, 51, 0.15)',
@@ -12,12 +12,12 @@ const IconButton = () => (
         '&:hover': {
             background: theme => `${alpha(theme.palette.primary.main, 0.9)}`
         }
-    }}>
+    }} {...props}>
         <MessageCircle size={34} color="#fff" />
     </MUIIconButton>
 )
 
-const MessageIconButton = ({ active }) => (
+const MessageIconButton = ({ active, ...rest }) => (
     active ? (
         <Badge
             badgeContent=''
@@ -37,10 +37,10 @@ const MessageIconButton = ({ active }) => (
             variant="dot"
             overlap="circular"
         >
-            <IconButton />
+            <IconButton {...rest} />
         </Badge>
     ) : (
-        <IconButton />
+        <IconButton {...rest} />
     )
 );
 
