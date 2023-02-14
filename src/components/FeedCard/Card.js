@@ -124,16 +124,16 @@ const Card = ({
                         display: 'flex',
                         justifyContent: 'space-between'
                     }}>
+                        <LikeButton sliderAction={likeAction} item={data} />
+                        <FavouriteButton
+                            item={data}
+                            handleClick={likeAction}
+                        />
                         <DiscardIconButton onClick={e => {
                             action(guestMessages.discard)
                             discardAction()
                             e.stopPropagation();
                         }} />
-                        <FavouriteButton
-                            item={data}
-                            handleClick={likeAction}
-                        />
-                        <LikeButton sliderAction={likeAction} item={data} />
                     </CardActions>
                     <Box sx={{
                         marginTop: '2rem',
