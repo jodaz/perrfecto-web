@@ -8,6 +8,7 @@ import MessagesList from './MessagesList';
 import DeleteChat from '../../../components/Modals/DeleteChat';
 import BlockedUser from './BlockedUser';
 import BlockUser from '../../../components/Modals/BlockUser';
+import ChatForm from './ChatForm';
 
 export default function ChatView() {
     const [isBlockedUser, setIsBlockedUser] = React.useState(false)
@@ -71,10 +72,12 @@ export default function ChatView() {
             <Box sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                height: '100%'
+                height: '100%',
+                justifyContent: 'space-between'
             }}>
                 {isBlockedUser && <BlockedUser unblockUser={toggleIsBlockedUser} />}
                 <MessagesList />
+                <ChatForm />
                 <DeleteChat
                     open={deleteChat}
                     handleClose={toggleDeleteChat}
