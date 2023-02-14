@@ -67,7 +67,7 @@ export default function MessagesList() {
     }, [])
 
     React.useEffect(() => {
-        listenMessages();
+        socket.on('mensajePrivado', res => console.log("Mensajes", res))
 
         return () => {
             socket.off('mensajePrivado')

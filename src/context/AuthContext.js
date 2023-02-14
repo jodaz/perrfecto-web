@@ -142,7 +142,6 @@ async function loginUser(dispatch, values) {
         })
 
         await handleConnect(data);
-        await handleSetUserId(data);
         await setLocalCredentials(token, data)
     } catch (e) {
         console.log(e);
