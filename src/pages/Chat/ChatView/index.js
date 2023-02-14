@@ -9,17 +9,38 @@ import DeleteChat from '../../../components/Modals/DeleteChat';
 import BlockedUser from './BlockedUser';
 import BlockUser from '../../../components/Modals/BlockUser';
 import ChatForm from './ChatForm';
+import { useParams } from 'react-router-dom';
+import useEffectOnce from '../../../utils/useEffectOnce';
+import { apiProvider } from '../../../api';
 
 export default function ChatView() {
     const [isBlockedUser, setIsBlockedUser] = React.useState(false)
     const [deleteChat, setDeleteChat] = React.useState(false)
     const [blockUser, setBlockUser] = React.useState(false)
+    const { chatID } = useParams()
+    const [data, setData] = React.useState(null)
 
     const toggleDeleteChat = () => setDeleteChat(!deleteChat);
 
     const toggleBlockUser = () => setBlockUser(!blockUser);
 
     const toggleIsBlockedUser = () => setIsBlockedUser(!isBlockedUser)
+
+    const fetchMessages = async () => {
+        try {
+            const res = await apiProvider.get(`/api/chat/show-messages/${chatID}`)
+
+            if (res.status >= 200 && res.status < 300) {
+                const { data } = res;
+
+                setData(data);
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffectOnce(() => { fetchMessages() }, [])
 
     const renderMenu = () => (
         <Menu>
@@ -77,7 +98,7 @@ export default function ChatView() {
             }}>
                 {isBlockedUser && <BlockedUser unblockUser={toggleIsBlockedUser} />}
                 <MessagesList />
-                <ChatForm />
+                <ChatForm data={data} />
                 <DeleteChat
                     open={deleteChat}
                     handleClose={toggleDeleteChat}

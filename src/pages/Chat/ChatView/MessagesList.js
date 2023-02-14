@@ -1,8 +1,5 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import { useParams } from 'react-router-dom';
-import useEffectOnce from '../../../utils/useEffectOnce';
-import { apiProvider } from '../../../api';
 
 const messagesArray = [
     {
@@ -61,23 +58,6 @@ const messagesArray = [
 
 export default function MessagesList() {
     const [messages, setMessages] = React.useState([null, null, null, null, null])
-    const { chatID } = useParams()
-
-    const fetchMessages = async () => {
-        try {
-            const res = await apiProvider.get(`/api/chat/show-messages/${chatID}`)
-
-            if (res.status >= 200 && res.status < 300) {
-                const { data: { data } } = res;
-
-                // setMessages(data)
-            }
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    useEffectOnce(() => { fetchMessages() }, [])
 
     React.useEffect(() => {
         setInterval(() => {

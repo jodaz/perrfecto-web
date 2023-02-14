@@ -4,9 +4,13 @@ import IconButton from '@mui/material/IconButton';
 import SendIcon from '@mui/icons-material/Send';
 import { useForm } from "react-hook-form";
 import TextInput from '../../../components/Forms/TextInput';
-import { apiProvider } from '../../../api';
+import { useAuth } from '../../../context/AuthContext';
+import { emitMessage } from '../../../utils/socket';
+import { useParams } from 'react-router-dom';
 
-const ChatForm = () => {
+const ChatForm = ({ data }) => {
+    const { chatID } = useParams()
+    const { state: { user } } = useAuth()
     const { control, handleSubmit, getValues, setValue, formState: {
         isSubmitting
     }} = useForm({
@@ -16,17 +20,19 @@ const ChatForm = () => {
         }
     });
 
-    const onSubmit = async data => {
-        console.log(data)
-        setValue('message', '')
+    const onSubmit = async values => {
         try {
-            // const res = await apiProvider.post('/api/publication/new', data)
+            if (values.message) {
 
-            // if (res.status >= 200 && res.status < 300) {
-            //     renewToken(dispatch, user)
-            //     setOpenWarning(true)
-            //     setOpenOverlayLoader(false)
-            // }
+                setValue('message', '')
+
+                emitMessage({
+                    id_chat: chatID,
+                    message: data.message,
+                    receiver: data.receptor.id,
+                    sender: user.id
+                })
+            }
         } catch (error) {
             console.log(error)
         }
