@@ -85,10 +85,12 @@ export default function ChatView() {
         </Menu>
     )
 
+    if (!data) return <></>;
+
     return (
         <SettingsLayout
             rightIconComponent={renderMenu()}
-            title={<Status />}
+            title={<Status data={data} />}
         >
             <Box sx={{
                 display: 'flex',

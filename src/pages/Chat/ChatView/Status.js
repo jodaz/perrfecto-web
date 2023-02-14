@@ -3,7 +3,7 @@ import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-export default function Status({ active = true }) {
+export default function Status({ data }) {
     return (
         <Stack spacing={0}>
             <Box>
@@ -11,7 +11,7 @@ export default function Status({ active = true }) {
                     variant="subtitle1"
                     color="text.primary"
                 >
-                    Uma
+                    {data.receptor.user.name}
                 </Typography>
             </Box>
             <Box sx={{
@@ -22,7 +22,7 @@ export default function Status({ active = true }) {
                 <Box sx={{
                     width: '6px',
                     height: '6px',
-                    backgroundColor: theme => active
+                    backgroundColor: theme => true
                         ? theme.palette.success.main
                         : theme.palette.text.tertiary,
                     borderRadius: '50%'
