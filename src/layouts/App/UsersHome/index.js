@@ -61,7 +61,7 @@ const UsersHome = () => {
                     backgroundSize: 'cover',
                     position: 'absolute',
                     bottom: 0,
-                    height: '50%',
+                    height: '100%',
                     width: '100%',
                     zIndex: 0
                 }
