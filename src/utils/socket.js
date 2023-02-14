@@ -1,26 +1,33 @@
 import vars from "../vars";
 import socketIO from 'socket.io-client';
 
-const socket = socketIO.connect(vars.source);
+export const socket = socketIO.connect(vars.source);
 
 export const handleConnect = user => {
     socket.emit('conectar', {
         uid: user.id
     })
+    socket.emit('setUserId', user.id)
 }
 
 export const handleDisconnect = () => {
-    socket.emit('disconnect')
+    socket.on('disconnect', res => console.log(res))
+}
+
+export const listenConnection = () => {
+    socket.on('connect', res => console.log(res));
 }
 
 export const emitMessage = ({
     id_chat,
     message,
-    receiver
+    receiver,
+    sender
 }) => {
     socket.emit('mensajePrivado', {
         mensaje: message,
-        para: receiver,
-        id_conversation: id_chat
+        uid: receiver,
+        id_conversation: id_chat,
+        sender: sender
     })
 }

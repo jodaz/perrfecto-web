@@ -7,6 +7,7 @@ import SearchBox from '../../../components/SearchBox';
 import UserMessageCard from './UserMessageCard';
 import { apiProvider } from '../../../api';
 import useEffectOnce from '../../../utils/useEffectOnce';
+import { socket, listenConnection } from '../../../utils/socket';
 
 export default function ChatList() {
     const [messages, setMessages] = React.useState([null, null, null, null, null])
@@ -24,6 +25,14 @@ export default function ChatList() {
             console.log(error)
         }
     }
+
+    React.useEffect(() => {
+        socket.on('connect', res => console.log(res));
+
+        return () => {
+            socket.off("connect");
+        };
+    }, [socket]);
 
     useEffectOnce(() => { fetchMessages() }, [])
 
