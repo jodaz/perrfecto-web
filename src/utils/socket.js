@@ -1,9 +1,7 @@
 import vars from "../vars";
 import socketIO from 'socket.io-client';
 
-const socket = socketIO.connect(vars.source, {
-    withCredentials: true
-});
+const socket = socketIO.connect(vars.source);
 
 export const handleConnect = user => {
     socket.emit('conectar', {
