@@ -1,7 +1,7 @@
 import * as React from 'react'
 import vars from '../vars'
 import { apiProvider } from '../api'
-import { handleConnect, handleDisconnect } from '../utils/socket'
+import { handleConnect, handleLogout } from '../utils/socket'
 
 const setLocalCredentials = async (token, data) => {
     await localStorage.setItem(vars.authToken, token)
@@ -184,7 +184,7 @@ async function logout(dispatch) {
 
         await localStorage.removeItem(vars.authToken)
         await localStorage.removeItem(vars.user);
-        await handleDisconnect()
+        await handleLogout()
     } catch (e) {
         console.log(e);
     }

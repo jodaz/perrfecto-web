@@ -18,6 +18,10 @@ export const listenConnection = () => {
     socket.on('listaPersona', res => console.log("Usuarios conectados ", res))
 }
 
+export const handleLogout = () => {
+    socket.emit('desconectar')
+}
+
 export const emitMessage = ({
     id_chat,
     message,
