@@ -10,10 +10,13 @@ import useEffectOnce from '../../../utils/useEffectOnce';
 import { usePublications, fetchPublications } from '../../../context/PublicationContext';
 import FilterButton from '../../../components/Buttons/FilterButton';
 import InviteUserAlert from '../../../components/InviteUserAlert';
+import { socket, handleDisconnect, listenConnection } from '../../../utils/socket';
+import { useAuth } from '../../../context/AuthContext';
 
 const PopularMembers = React.lazy(() => import('../../../components/PopularMembers'));
 
 const UsersHome = () => {
+    const { state: { isAuth } } = useAuth()
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
     const { state: { publications, isLoaded, isLoading }, dispatch } = usePublications();
     const [selectedCard, setSelectedCard] = React.useState(null);
@@ -42,6 +45,18 @@ const UsersHome = () => {
     }
 
     useEffectOnce(() => { fetchPublications(dispatch) }, []);
+
+    React.useEffect(() => {
+        if (isAuth) {
+            listenConnection()
+            handleDisconnect()
+
+            return () => {
+                socket.off('disconnect')
+                socket.off('listaPersona')
+            }
+        }
+    }, [socket, isAuth])
 
     return (
         <Box
