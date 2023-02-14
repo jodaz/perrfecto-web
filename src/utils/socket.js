@@ -6,7 +6,7 @@ export const socket = socketIO.connect(vars.source);
 export const handleConnect = user => {
     socket.emit('conectar', {
         uid: user.id
-    })
+    }, res => console.log("Respuesta al conectar ", res)) // Con esto obtengo los usuarios conectados
     socket.emit('setUserId', user.id)
 }
 
@@ -15,7 +15,7 @@ export const handleDisconnect = () => {
 }
 
 export const listenConnection = () => {
-    socket.on('connect', res => console.log(res));
+    socket.on('listaPersona', res => console.log(res))
 }
 
 export const emitMessage = ({

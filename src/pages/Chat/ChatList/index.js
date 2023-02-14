@@ -27,11 +27,7 @@ export default function ChatList() {
     }
 
     React.useEffect(() => {
-        socket.on('connect', res => console.log(res));
-
-        return () => {
-            socket.off("connect");
-        };
+        listenConnection()
     }, [socket]);
 
     useEffectOnce(() => { fetchMessages() }, [])
