@@ -13,8 +13,8 @@ import MessageDatetime from './MessageDatetime'
 
 const Picture = data => (
     <Avatar
-        src={data.img_profile
-            ? `${getUserPhoto(JSON.parse(data.img_profile))}`
+        src={data.user.img_profile
+            ? `${getUserPhoto(JSON.parse(data.user.img_profile))}`
             : '/images/Avatar.svg'
         }
         sx={{
@@ -38,7 +38,7 @@ const UserMessageCard = ({
             key={index}
             component={!loading &&  LinkBehavior}
             disablePadding
-            to={!loading && `${data.id}`}
+            to={!loading && `${data.conversation_id}`}
             sx={{
                 color: 'unset',
             }}
@@ -110,7 +110,7 @@ const UserMessageCard = ({
                         />
                     ) : (
                         <Typography variant="subtitle1" fontWeight={500}>
-                            {truncateString(`${data.name} ${data.lastName ? data.lastName : ''}`, 12 )}
+                            {truncateString(`${data.user.name} ${data.user.lastName ? data.user.lastName : ''}`, 12 )}
                         </Typography>
                     )}
                     {loading ? (
