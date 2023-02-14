@@ -7,6 +7,9 @@ export const handleConnect = user => {
     socket.emit('conectar', {
         uid: user.id
     }, res => console.log("Estas conectado ", res)) // Con esto obtengo los usuarios conectados
+}
+
+export const handleSetUserId = user => {
     socket.emit('setUserId', user.id)
 }
 
@@ -16,6 +19,10 @@ export const handleDisconnect = () => {
 
 export const listenConnection = () => {
     socket.on('listaPersona', res => console.log("Usuarios conectados ", res))
+}
+
+export const listenMessages = () => {
+    socket.on('mensajePrivado', res => console.log(res))
 }
 
 export const handleLogout = () => {

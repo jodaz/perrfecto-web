@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
+import { socket, listenMessages } from '../../../utils/socket';
 
 const messagesArray = [
     {
@@ -64,6 +65,14 @@ export default function MessagesList() {
             setMessages(messagesArray)
         }, 5000);
     }, [])
+
+    React.useEffect(() => {
+        listenMessages();
+
+        return () => {
+            socket.off('mensajePrivado')
+        }
+    }, [socket])
 
     return (
         <Box p={2}>

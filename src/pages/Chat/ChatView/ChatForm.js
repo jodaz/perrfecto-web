@@ -28,7 +28,7 @@ const ChatForm = ({ data }) => {
 
                 emitMessage({
                     id_chat: chatID,
-                    message: data.message,
+                    message: values.message,
                     receiver: data.receptor.id,
                     sender: user.id
                 })
