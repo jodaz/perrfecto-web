@@ -12,10 +12,12 @@ import FilterButton from '../../../components/Buttons/FilterButton';
 import InviteUserAlert from '../../../components/InviteUserAlert';
 import { socket, handleDisconnect, listenConnection } from '../../../utils/socket';
 import { useAuth } from '../../../context/AuthContext';
+import { useChat, setUsers } from '../../../context/ChatContext';
 
 const PopularMembers = React.lazy(() => import('../../../components/PopularMembers'));
 
 const UsersHome = () => {
+    const { state, dispatch: chatDispatch } = useChat()
     const { state: { isAuth } } = useAuth()
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
     const { state: { publications, isLoaded, isLoading }, dispatch } = usePublications();
@@ -48,7 +50,7 @@ const UsersHome = () => {
 
     React.useEffect(() => {
         if (isAuth) {
-            listenConnection()
+            listenConnection(data => setUsers(chatDispatch, data))
             handleDisconnect()
 
             return () => {
@@ -57,7 +59,7 @@ const UsersHome = () => {
             }
         }
     }, [socket, isAuth])
-
+    console.log(state)
     return (
         <Box
             component="main"

@@ -23,15 +23,16 @@ const ChatForm = ({ data }) => {
     const onSubmit = async values => {
         try {
             if (values.message) {
-
-                setValue('message', '')
-
-                emitMessage({
+                const data = {
                     id_chat: chatID,
                     message: values.message,
                     receiver: data.receptor.user.id,
                     sender: user.id
-                })
+                }
+
+                emitMessage(data)
+
+                setValue('message', '')
             }
         } catch (error) {
             console.log(error)

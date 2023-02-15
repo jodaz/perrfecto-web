@@ -1,7 +1,7 @@
 import * as React from 'react'
 import vars from '../vars'
 import { apiProvider } from '../api'
-import { handleConnect, handleLogout, handleSetUserId } from '../utils/socket'
+import { handleLogout } from '../utils/socket'
 
 const setLocalCredentials = async (token, data) => {
     await localStorage.setItem(vars.authToken, token)
@@ -140,8 +140,6 @@ async function loginUser(dispatch, values) {
                 token: token
             }
         })
-
-        await handleConnect(data);
         await setLocalCredentials(token, data)
     } catch (e) {
         console.log(e);

@@ -3,10 +3,10 @@ import socketIO from 'socket.io-client';
 
 export const socket = socketIO.connect(vars.source);
 
-export const handleConnect = user => {
+export const handleConnect = (user, callback) => {
     socket.emit('conectar', {
         uid: user.id
-    }, res => console.log("Estas conectado ", res)) // Con esto obtengo los usuarios conectados
+    }, data => callback(data)) // Con esto obtengo los usuarios conectados
 }
 
 export const handleSetUserId = user => {
@@ -17,12 +17,12 @@ export const handleDisconnect = () => {
     socket.on('disconnect', () => console.log("Estas desconectado"))
 }
 
-export const listenConnection = () => {
-    socket.on('listaPersona', res => console.log("Usuarios conectados ", res))
+export const listenConnection = callback => {
+    socket.on('listaPersona', data => callback(data))
 }
 
-export const listenMessages = () => {
-    socket.on('mensajePrivado', res => console.log(res))
+export const listenMessages = callback => {
+    socket.on('mensajePrivado', data => callback(data))
 }
 
 export const handleLogout = () => {
