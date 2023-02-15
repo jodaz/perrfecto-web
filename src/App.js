@@ -13,6 +13,7 @@ import { GuestProvider } from './context/GuestContext'
 import { PublicationProvider } from './context/PublicationContext';
 import { MultiStepProvider } from './context/MultiStepContext';
 import { BlogProvider } from './context/BlogContext';
+import { ChatProvider } from './context/ChatContext';
 
 const App = () => (
     <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={esLocale}>
@@ -23,9 +24,11 @@ const App = () => (
                         <PublicationProvider>
                             <MultiStepProvider>
                                 <BlogProvider>
-                                    <BusinessProvider>
-                                        <AppRoutes />
-                                    </BusinessProvider>
+                                    <ChatProvider>
+                                        <BusinessProvider>
+                                            <AppRoutes />
+                                        </BusinessProvider>
+                                    </ChatProvider>
                                 </BlogProvider>
                             </MultiStepProvider>
                         </PublicationProvider>

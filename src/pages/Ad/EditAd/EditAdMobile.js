@@ -20,28 +20,6 @@ import { DESCRIPTION, ADD_PHOTOS } from '../../../validations';
 
 const selectedItems = labels => labels.map(({ id }) => id)
 
-const SwitchInputContainer = ({
-    control,
-    label,
-    name
-}) => (
-    <Box sx={{
-        display: 'flex',
-        width: '100%',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        pb: 1
-    }}>
-        <Typography variant="subtitle1" color="text.secondary">
-            {label}
-        </Typography>
-        <SwitchInput
-            control={control}
-            name={name}
-        />
-    </Box>
-)
-
 const EditAdMobile = () => {
     const { state: { user }, dispatch } = useAuth();
     const [openWarning, setOpenWarning] = React.useState(false)
@@ -191,17 +169,17 @@ const EditAdMobile = () => {
                         >
                             Permisos
                         </Typography>
-                        <SwitchInputContainer
+                        <SwitchInput
                             label='Visualizar número de teléfono'
                             control={control}
                             name='permission_tlf'
                         />
-                        <SwitchInputContainer
+                        <SwitchInput
                             label='Activar geolocalización'
                             control={control}
                             name='permission_geolocation'
                         />
-                        <SwitchInputContainer
+                        <SwitchInput
                             label='Habilitar Whatsapp'
                             control={control}
                             name='permission_whatsapp'

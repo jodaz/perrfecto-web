@@ -4,41 +4,55 @@ import Button from '@mui/material/Button';
 import SettingsLayout from '../../layouts/SettingsLayout';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import {
-    EMAIL,
-    PHONE
-} from '../../validations'
-import { useAuth } from '../../context/AuthContext';
+import { useAuth, renewToken } from '../../context/AuthContext';
 import TextInput from '../../components/Forms/TextInput';
 import PhoneInput from '../../components/Forms/PhoneInput';
+import formDataHandler from '../../utils/formDataHandler';
+import { fileProvider } from '../../api';
+import {
+    PHONE,
+    EMAIL
+} from '../../validations'
 
 const UpdateEmailAndPhone = () => {
     const { state: { user }, dispatch } = useAuth();
-    const { control, handleSubmit, formState: {
+    const { control, handleSubmit, setError, formState: {
         isSubmitting
     }} = useForm({
         reValidateMode: "onBlur",
-        defaultValues: {
+        defaultValues: React.useMemo(() => ({
             email: user.email,
-            phone: user.tlf
-        }
+            phone: user.phone,
+            code_phone: user.code_phone ? user.code_phone : 34
+        }))
     });
     const navigate = useNavigate();
 
     const onSubmit = async values => {
-        console.log(values)
-        navigate(-1)
-        // try {
-        //     const formData = await formDataHandler(values)
-        //     const res = await fileProvider.put(`/api/auth/user-edit/${user.id}`, formData)
+        try {
+            const formData = await formDataHandler(values)
+            const res = await fileProvider.put(`/api/auth/user-edit/${user.id}`, formData)
 
-        //     if (res.status >= 200 && res.status < 300) {
-        //         renewToken(dispatch, user)
-        //         navigate(-1)
-        //     }
-        // } catch (error) {
-        //     console.log(error)
-        // }
+            if (res.status >= 200 && res.status < 300) {
+                renewToken(dispatch, user)
+                navigate(-1)
+            }
+        } catch (error) {
+            if (error.response.data.msg) {
+                const message = error.response.data.msg;
+
+                if (message.includes('There is a user with the provided email')) {
+                    setError('email', {
+                       type: 'unique'
+                    })
+                }
+                if (message.includes('There is a user with the provided that phone')) {
+                    setError('phone', {
+                        type: 'unique'
+                    })
+                }
+            }
+        }
     }
 
     return (
@@ -53,13 +67,14 @@ const UpdateEmailAndPhone = () => {
                 <Box>
                     <Box sx={{ p: 2 }}>
                         <TextInput
-                            control={control}
-                            name='email'
                             label="Email"
-                            placeholder='Ingrese su email'
+                            control={control}
+                            name="email"
+                            type="email"
                             rules={EMAIL.rules}
                             validations={EMAIL.messages}
                             disabled={isSubmitting}
+                            placeholder='Ingresar correo electrónico'
                         />
                     </Box>
                     <Box sx={{ p: 2 }}>
