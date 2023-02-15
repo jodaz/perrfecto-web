@@ -38,13 +38,15 @@ const ReceivedMessage = styled(GeneralMessage)(() => ({
     backgroundColor: '#35414C',
     alignSelf: 'start',
     borderBottomLeftRadius: 0,
-    color: '#fff'
+    color: '#fff',
+    marginLeft: '0.5rem'
 }))
 
 const SentMessage = styled(GeneralMessage)(() => ({
     backgroundColor: '#ECECEC',
     borderBottomRightRadius: 0,
-    alignSelf: 'end'
+    alignSelf: 'end',
+    marginRight: '0.5rem'
 }))
 
 const UserMessageCard = ({ message, isReceptor }) => {

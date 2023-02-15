@@ -13,6 +13,7 @@ import { useParams } from 'react-router-dom';
 import useEffectOnce from '../../../utils/useEffectOnce';
 import { apiProvider } from '../../../api';
 import LoadingIndicator from '../../../components/LoadingIndicator'
+import { useChat, fetchMessages } from '../../../context/ChatContext';
 
 export default function ChatView() {
     const [isBlockedUser, setIsBlockedUser] = React.useState(false)
@@ -20,6 +21,7 @@ export default function ChatView() {
     const [blockUser, setBlockUser] = React.useState(false)
     const { chatID } = useParams()
     const [data, setData] = React.useState(null)
+    const { dispatch } = useChat()
 
     const toggleDeleteChat = () => setDeleteChat(!deleteChat);
 
@@ -27,7 +29,7 @@ export default function ChatView() {
 
     const toggleIsBlockedUser = () => setIsBlockedUser(!isBlockedUser)
 
-    const fetchMessages = async () => {
+    const fetchData = async () => {
         try {
             const res = await apiProvider.get(`/api/chat/show-messages/${chatID}`)
 
@@ -35,13 +37,14 @@ export default function ChatView() {
                 const { data: { data } } = res;
 
                 setData(data);
+                fetchMessages(dispatch, data.messages)
             }
         } catch (error) {
             console.log(error)
         }
     }
 
-    useEffectOnce(() => { fetchMessages() }, [])
+    useEffectOnce(() => { fetchData() }, [])
 
     const renderMenu = () => (
         <Menu>

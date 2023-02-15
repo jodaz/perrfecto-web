@@ -4,6 +4,7 @@ const ChatContext = React.createContext()
 
 const initialState = {
     users: [],
+    messages: [],
     isConnected: false
 }
 
@@ -15,6 +16,18 @@ function chatReducer(state, action) {
                     ...state,
                     users: action.payload,
                     isConnected: true
+                }
+            }
+            case 'FETCH_MESSAGES': {
+                return {
+                    ...state,
+                    messages: action.payload
+                }
+            }
+            case 'SET_MESSAGE': {
+                return {
+                    ...state,
+                    messages: [...state.messages, action.payload]
                 }
             }
             default: {
@@ -55,9 +68,33 @@ async function updateConnectedStatus(dispatch, payload) {
     }
 }
 
+async function fetchMessages(dispatch, payload) {
+    try {
+        dispatch({
+            type: 'FETCH_MESSAGES',
+            payload: payload
+        })
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+async function setMessage(dispatch, payload) {
+    try {
+        dispatch({
+            type: 'SET_MESSAGE',
+            payload: payload
+        })
+    } catch (e) {
+        console.log(e)
+    }
+}
+
 export {
     useChat,
     ChatProvider,
     ChatContext,
-    updateConnectedStatus
+    updateConnectedStatus,
+    setMessage,
+    fetchMessages
 }

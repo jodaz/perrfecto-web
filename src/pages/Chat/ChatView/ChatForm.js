@@ -7,9 +7,11 @@ import TextInput from '../../../components/Forms/TextInput';
 import { useAuth } from '../../../context/AuthContext';
 import { emitMessage } from '../../../utils/socket';
 import { useParams } from 'react-router-dom';
+import { useChat, setMessage } from '../../../context/ChatContext';
 
 const ChatForm = ({ receptor }) => {
     const { chatID } = useParams()
+    const { dispatch } = useChat()
     const { state: { user } } = useAuth()
     const { control, handleSubmit, getValues, setValue, formState: {
         isSubmitting
@@ -31,6 +33,11 @@ const ChatForm = ({ receptor }) => {
                 }
 
                 emitMessage(emitData)
+
+                setMessage(dispatch, {
+                    uid: receptor.user.id,
+                    message: values.message
+                })
 
                 setValue('message', '')
             }

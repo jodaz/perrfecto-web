@@ -3,22 +3,22 @@ import Box from '@mui/material/Box';
 import { socket, listenMessages } from '../../../utils/socket';
 import UserMessageCard from './UserMessageCard';
 import { useAuth } from '../../../context/AuthContext';
+import { useChat, setMessage } from '../../../context/ChatContext';
 
 export default function MessagesList({ prevMessages }) {
     const { state: { user } } = useAuth()
-    const [messages, setMessages] = React.useState(prevMessages)
+    const { state: { messages }, dispatch } = useChat()
 
     React.useEffect(() => {
-        listenMessages(data => {
-            setMessages(prevState => [...prevState, data])
-        })
+        listenMessages(data => setMessage(dispatch, {
+            message: data.mensaje,
+            uid: data.uid
+        }))
 
         return () => {
             socket.off('mensajePrivado')
         }
     }, [socket])
-
-    console.log(messages)
 
     return (
         <Box sx={{
@@ -37,7 +37,7 @@ export default function MessagesList({ prevMessages }) {
             {messages.map(({ message, uid }) => (
                 <UserMessageCard
                     message={message}
-                    isReceptor={user.id == uid}
+                    isReceptor={uid != user.id}
                 />
             ))}
         </Box>
