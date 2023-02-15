@@ -4,8 +4,11 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useChat } from '../../../context/ChatContext'
 
+const isConnectedUser = (arrUsers, user) => arrUsers.find(({ uid }) => user.id == uid)
+
 const Status = ({ data }) => {
     const { state } = useChat();
+    const connected = isConnectedUser(state.users, data.receptor.user)
 
     return (
         <Stack spacing={0}>
@@ -25,7 +28,7 @@ const Status = ({ data }) => {
                 <Box sx={{
                     width: '6px',
                     height: '6px',
-                    backgroundColor: theme => true
+                    backgroundColor: theme => connected
                         ? theme.palette.success.main
                         : theme.palette.text.tertiary,
                     borderRadius: '50%'
@@ -37,7 +40,7 @@ const Status = ({ data }) => {
                     fontWeight={500}
                     fontSize='12px'
                 >
-                    Activo ahora
+                    {connected ? 'Activo ahora' : 'Desconectado'}
                 </Typography>
             </Box>
         </Stack>
