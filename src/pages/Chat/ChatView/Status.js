@@ -2,8 +2,11 @@ import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import { useChat } from '../../../context/ChatContext'
 
-export default function Status({ data }) {
+const Status = ({ data }) => {
+    const { state } = useChat();
+
     return (
         <Stack spacing={0}>
             <Box>
@@ -40,3 +43,5 @@ export default function Status({ data }) {
         </Stack>
     );
 }
+
+export default Status;

@@ -59,7 +59,7 @@ const UsersHome = () => {
             }
         }
     }, [socket, isAuth])
-    console.log(state)
+
     return (
         <Box
             component="main"
