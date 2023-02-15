@@ -10,6 +10,7 @@ import getUserPhoto from '../../../utils/getUserPhoto';
 import truncateString from '../../../utils/truncateString';
 import LinkBehavior from '../../../components/LinkBehavior';
 import MessageDatetime from './MessageDatetime'
+import isConnectedUser from '../../../utils/isConnectedUser';
 
 const Picture = data => (
     <Avatar
@@ -28,9 +29,11 @@ const UserMessageCard = ({
     rootRef,
     data,
     index,
+    arrUsers
 }) => {
     const loading = data == null;
     const anchorRef = React.useRef(null)
+    const status = !loading && isConnectedUser(arrUsers, data.user);
 
     return (
         <ListItem
@@ -68,7 +71,7 @@ const UserMessageCard = ({
                         />
                     ) : (
                         <Box>
-                            {data.connected
+                            {status
                             ? (
                                 <Badge
                                     badgeContent=''

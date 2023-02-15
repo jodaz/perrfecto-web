@@ -7,8 +7,10 @@ import SearchBox from '../../../components/SearchBox';
 import UserMessageCard from './UserMessageCard';
 import { apiProvider } from '../../../api';
 import useEffectOnce from '../../../utils/useEffectOnce';
+import { useChat } from '../../../context/ChatContext';
 
 export default function ChatList() {
+    const { state: { users } } = useChat()
     const [messages, setMessages] = React.useState([null, null, null, null, null])
 
     const fetchMessages = async () => {
@@ -40,7 +42,13 @@ export default function ChatList() {
             </Stack>
             <Box mt={3} />
             <List sx={{ width: '100%' }}>
-                {messages.map((message, index) => <UserMessageCard data={message} index={index} />)}
+                {messages.map((message, index) => (
+                    <UserMessageCard
+                        data={message}
+                        index={index}
+                        arrUsers={users}
+                    />
+                ))}
                 {!(messages.length) && (
                     <Typography
                         variant="subtitle1"

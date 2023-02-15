@@ -3,8 +3,7 @@ import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useChat } from '../../../context/ChatContext'
-
-const isConnectedUser = (arrUsers, user) => arrUsers.find(({ uid }) => user.id == uid)
+import isConnectedUser from '../../../utils/isConnectedUser';
 
 const Status = ({ data }) => {
     const { state } = useChat();
