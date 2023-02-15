@@ -25,7 +25,7 @@ const Picture = data => (
     />
 )
 
-const UserMessageCard = ({
+const ChatCard = ({
     rootRef,
     data,
     index,
@@ -124,9 +124,17 @@ const UserMessageCard = ({
                             style={{ marginBottom: 6 }}
                         />
                     ) : (
-                        <Typography variant="body2" color="text.tertiary" fontWeight={500}>
-                            {data.message && truncateString(data.message, 20)}
-                        </Typography>
+                        <>
+                            {data.last_message && (
+                                <Typography
+                                    variant="body2"
+                                    color="text.tertiary"
+                                    fontWeight={500}
+                                >
+                                    {truncateString(data.last_message.message, 20)}
+                                </Typography>
+                            )}
+                        </>
                     )}
                 </Box>
                 {loading ? (
@@ -138,7 +146,7 @@ const UserMessageCard = ({
                     />
                 ) : (
                     <Box>
-                        {data.created_at && <MessageDatetime receivedAt={data.created_at} />}
+                        {data.last_message && <MessageDatetime receivedAt={data.last_message.createdAt} />}
                     </Box>
                 )}
             </Box>
@@ -146,4 +154,4 @@ const UserMessageCard = ({
     );
 }
 
-export default UserMessageCard
+export default ChatCard

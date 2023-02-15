@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import SearchBox from '../../../components/SearchBox';
-import UserMessageCard from './UserMessageCard';
+import ChatCard from './ChatCard';
 import { apiProvider } from '../../../api';
 import useEffectOnce from '../../../utils/useEffectOnce';
 import { useChat } from '../../../context/ChatContext';
@@ -43,7 +43,7 @@ export default function ChatList() {
             <Box mt={3} />
             <List sx={{ width: '100%' }}>
                 {messages.map((message, index) => (
-                    <UserMessageCard
+                    <ChatCard
                         data={message}
                         index={index}
                         arrUsers={users}

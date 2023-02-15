@@ -6,7 +6,7 @@ import { es } from 'date-fns/locale'
 const UserMessageCard = ({ receivedAt }) => {
     const [datetime, setDatetime] = React.useState(null)
 
-    const getDistanceInWords = () => formatDistanceToNowStrict(receivedAt, {
+    const getDistanceInWords = () => formatDistanceToNowStrict(new Date(receivedAt), {
         locale: es,
     }).slice(0, 12)
 
