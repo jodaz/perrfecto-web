@@ -12,6 +12,7 @@ import ChatForm from './ChatForm';
 import { useParams } from 'react-router-dom';
 import useEffectOnce from '../../../utils/useEffectOnce';
 import { apiProvider } from '../../../api';
+import LoadingIndicator from '../../../components/LoadingIndicator'
 
 export default function ChatView() {
     const [isBlockedUser, setIsBlockedUser] = React.useState(false)
@@ -85,12 +86,10 @@ export default function ChatView() {
         </Menu>
     )
 
-    if (!data) return <></>;
-
     return (
         <SettingsLayout
-            rightIconComponent={renderMenu()}
-            title={<Status {...data} />}
+            rightIconComponent={data && renderMenu()}
+            title={data && <Status {...data} />}
         >
             <Box sx={{
                 display: 'flex',
@@ -98,22 +97,30 @@ export default function ChatView() {
                 height: '100%',
                 justifyContent: 'space-between'
             }}>
-                {isBlockedUser && <BlockedUser unblockUser={toggleIsBlockedUser} />}
-                <Box flex={1}>
-                    {(data) && (
-                        <MessagesList  data={data.messages} />
-                    )}
-                </Box>
-                <ChatForm data={data} />
-                <DeleteChat
-                    open={deleteChat}
-                    handleClose={toggleDeleteChat}
-                />
-                <BlockUser
-                    open={blockUser}
-                    handleClose={toggleBlockUser}
-                    sideAction={toggleIsBlockedUser}
-                />
+                {data ? (
+                    <>
+                        {isBlockedUser && <BlockedUser unblockUser={toggleIsBlockedUser} />}
+                        <Box flex={1}>
+                            {(data) && (
+                                <MessagesList  data={data.messages} />
+                            )}
+                        </Box>
+                        <ChatForm data={data} />
+                        <DeleteChat
+                            open={deleteChat}
+                            handleClose={toggleDeleteChat}
+                        />
+                        <BlockUser
+                            open={blockUser}
+                            handleClose={toggleBlockUser}
+                            sideAction={toggleIsBlockedUser}
+                        />
+                    </>
+                ): (
+                    <Box alignSelf={'center'}>
+                        <LoadingIndicator />
+                    </Box>
+                )}
             </Box>
         </SettingsLayout>
     );
