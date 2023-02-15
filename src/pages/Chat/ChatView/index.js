@@ -99,7 +99,11 @@ export default function ChatView() {
                 justifyContent: 'space-between'
             }}>
                 {isBlockedUser && <BlockedUser unblockUser={toggleIsBlockedUser} />}
-                <MessagesList />
+                <Box flex={1}>
+                    {(data) && (
+                        <MessagesList  data={data.messages} />
+                    )}
+                </Box>
                 <ChatForm data={data} />
                 <DeleteChat
                     open={deleteChat}
