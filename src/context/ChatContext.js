@@ -1,20 +1,20 @@
 import * as React from 'react'
-import { apiProvider } from '../api'
 
 const ChatContext = React.createContext()
 
 const initialState = {
     users: [],
-    connected: false
+    isConnected: false
 }
 
 function chatReducer(state, action) {
     if (action) {
         switch (action.type) {
-            case 'SET_USERS': {
+            case 'SET_CONNECTED_STATUS': {
                 return {
                     ...state,
-                    users: action.payload
+                    users: action.payload,
+                    isConnected: true
                 }
             }
             default: {
@@ -44,10 +44,10 @@ function useChat() {
     return context
 }
 
-async function setUsers(dispatch, payload) {
+async function updateConnectedStatus(dispatch, payload) {
     try {
         dispatch({
-            type: 'SET_USERS',
+            type: 'SET_CONNECTED_STATUS',
             payload: payload
         })
     } catch (e) {
@@ -59,5 +59,5 @@ export {
     useChat,
     ChatProvider,
     ChatContext,
-    setUsers
+    updateConnectedStatus
 }

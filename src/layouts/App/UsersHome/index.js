@@ -10,15 +10,15 @@ import useEffectOnce from '../../../utils/useEffectOnce';
 import { usePublications, fetchPublications } from '../../../context/PublicationContext';
 import FilterButton from '../../../components/Buttons/FilterButton';
 import InviteUserAlert from '../../../components/InviteUserAlert';
-import { socket, handleDisconnect, listenConnection } from '../../../utils/socket';
+import { socket, handleDisconnect, listenConnection, handleConnect } from '../../../utils/socket';
 import { useAuth } from '../../../context/AuthContext';
-import { useChat, setUsers } from '../../../context/ChatContext';
+import { useChat, updateConnectedStatus } from '../../../context/ChatContext';
 
 const PopularMembers = React.lazy(() => import('../../../components/PopularMembers'));
 
 const UsersHome = () => {
-    const { state, dispatch: chatDispatch } = useChat()
-    const { state: { isAuth } } = useAuth()
+    const { state: { isConnected }, dispatch: chatDispatch } = useChat()
+    const { state: { isAuth, user } } = useAuth()
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
     const { state: { publications, isLoaded, isLoading }, dispatch } = usePublications();
     const [selectedCard, setSelectedCard] = React.useState(null);
@@ -50,15 +50,19 @@ const UsersHome = () => {
 
     React.useEffect(() => {
         if (isAuth) {
-            listenConnection(data => setUsers(chatDispatch, data))
-            handleDisconnect()
-
-            return () => {
-                socket.off('disconnect')
-                socket.off('listaPersona')
+            if (isConnected) {
+                listenConnection(data => updateConnectedStatus(chatDispatch, data))
+                handleDisconnect()
+            } else {
+                handleConnect(user, data => updateConnectedStatus(chatDispatch, data))
             }
         }
-    }, [socket, isAuth])
+
+        return () => {
+            socket.off('disconnect')
+            socket.off('listaPersona')
+        }
+    }, [socket, isAuth, isConnected])
 
     return (
         <Box

@@ -19,7 +19,7 @@ import { useAuth, loginUser } from '../../context/AuthContext'
 import { PHONE, EMAIL, PASSWORD } from '../../validations'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { handleConnect } from '../../utils/socket'
-import { setUsers, useChat } from '../../context/ChatContext'
+import { updateConnectedStatus, useChat } from '../../context/ChatContext'
 
 export default function Login({ location }) {
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('md'))
@@ -49,7 +49,7 @@ export default function Login({ location }) {
             if (res.status >= 200 && res.status < 300) {
                 const { data } = res;
                 loginUser(dispatch, data)
-                handleConnect(data.data, response => setUsers(chatDispatch, response))
+                handleConnect(data.data, response => updateConnectedStatus(chatDispatch, response))
 
                 if (data.data.role == 'user') {
                     navigate('/detect-location')
