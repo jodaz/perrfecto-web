@@ -32,7 +32,7 @@ export default function ChatView() {
             const res = await apiProvider.get(`/api/chat/show-messages/${chatID}`)
 
             if (res.status >= 200 && res.status < 300) {
-                const { data } = res;
+                const { data: { data } } = res;
 
                 setData(data);
             }
@@ -89,7 +89,7 @@ export default function ChatView() {
     return (
         <SettingsLayout
             rightIconComponent={data && renderMenu()}
-            title={data && <Status {...data} />}
+            title={data && <Status receptor={data.receptor} />}
         >
             <Box sx={{
                 display: 'flex',
@@ -100,12 +100,8 @@ export default function ChatView() {
                 {data ? (
                     <>
                         {isBlockedUser && <BlockedUser unblockUser={toggleIsBlockedUser} />}
-                        <Box flex={1}>
-                            {(data) && (
-                                <MessagesList  data={data.messages} />
-                            )}
-                        </Box>
-                        <ChatForm data={data} />
+                        <MessagesList prevMessages={data.messages} />
+                        <ChatForm receptor={data.receptor} />
                         <DeleteChat
                             open={deleteChat}
                             handleClose={toggleDeleteChat}

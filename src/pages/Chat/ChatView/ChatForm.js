@@ -8,7 +8,7 @@ import { useAuth } from '../../../context/AuthContext';
 import { emitMessage } from '../../../utils/socket';
 import { useParams } from 'react-router-dom';
 
-const ChatForm = ({ data }) => {
+const ChatForm = ({ receptor }) => {
     const { chatID } = useParams()
     const { state: { user } } = useAuth()
     const { control, handleSubmit, getValues, setValue, formState: {
@@ -26,7 +26,7 @@ const ChatForm = ({ data }) => {
                 const emitData = {
                     id_chat: chatID,
                     message: values.message,
-                    receiver: data.receptor.user.id,
+                    receiver: receptor.user.id,
                     sender: user.id
                 }
 

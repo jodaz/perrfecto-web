@@ -5,9 +5,9 @@ import Typography from '@mui/material/Typography';
 import { useChat } from '../../../context/ChatContext'
 import isConnectedUser from '../../../utils/isConnectedUser';
 
-const Status = ({ data }) => {
+const Status = ({ receptor }) => {
     const { state } = useChat();
-    const connected = isConnectedUser(state.users, data.receptor.user)
+    const connected = isConnectedUser(state.users, receptor.user)
 
     return (
         <Stack spacing={0}>
@@ -16,7 +16,7 @@ const Status = ({ data }) => {
                     variant="subtitle1"
                     color="text.primary"
                 >
-                    {data.receptor.user.name}
+                    {receptor.user.name}
                 </Typography>
             </Box>
             <Box sx={{
