@@ -38,8 +38,7 @@ export default function ChatView() {
                 const { data: { data } } = res;
 
                 setData(data);
-
-                if (data.is_locked) toggleIsBlockedUser()
+                setIsBlockedUser(data.is_locked)
 
                 fetchMessages(dispatch, data.messages)
             }
@@ -52,7 +51,7 @@ export default function ChatView() {
 
     const renderMenu = () => (
         <Menu>
-            {(!isBlockedUser) && (
+            {!isBlockedUser && (
                 <Box
                     sx={{
                     display: 'flex',
@@ -110,7 +109,7 @@ export default function ChatView() {
                         {isBlockedUser && (
                             <BlockedUser
                                 item={data}
-                                sideAction={toggleIsBlockedUser}
+                                sideAction={fetchData}
                             />
                         )}
                         <ChatForm
@@ -124,7 +123,7 @@ export default function ChatView() {
                         <BlockUser
                             open={blockUser}
                             handleClose={toggleBlockUser}
-                            sideAction={toggleIsBlockedUser}
+                            sideAction={fetchData}
                             item={data}
                         />
                     </>
