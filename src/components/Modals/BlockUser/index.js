@@ -1,17 +1,19 @@
 import * as React from 'react';
 import InstagramModal from '../InstagramModal';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+import Button from '../../Button';
+import MuiButton from '@mui/material/Button'
 import Typography from '@mui/material/Typography';
-import { Trash2 } from 'lucide-react';
 import Stack from '@mui/material/Stack';
 import { alpha } from '@mui/material';
 import { apiProvider } from '../../../api';
+import PersonOffOutlinedIcon from '@mui/icons-material/PersonOffOutlined';
 
 const BlockUser = ({ open, handleClose, sideAction, item }) => {
     const [onSubmit, setOnSubmit] = React.useState(false);
 
     const blockUserAction = async () => {
+        setOnSubmit(true)
         try {
             const res = await apiProvider.post('/api/chat/block-conversation', {
                 "conversation_id": item.receptor.id_conversation,
@@ -24,6 +26,7 @@ const BlockUser = ({ open, handleClose, sideAction, item }) => {
         } catch (error) {
             console.log(error)
         }
+        setOnSubmit(false)
         handleClose();
     }
 
@@ -51,7 +54,7 @@ const BlockUser = ({ open, handleClose, sideAction, item }) => {
                 color: theme => theme.palette.text.secondary,
             }}>
                 <Box sx={{ p: 1, textAlign: 'center' }}>
-                    <Trash2 size={48} />
+                    <PersonOffOutlinedIcon sx={{ fontSize: 60 }} color="text.secondary" />
                 </Box>
                 <Box sx={{ p: 1 }}>
                     <Typography variant="body2" gutterBottom>
@@ -60,19 +63,20 @@ const BlockUser = ({ open, handleClose, sideAction, item }) => {
                     <Stack direction="column">
                         <Button
                             color="error"
+                            variant="contained"
                             disabled={onSubmit}
                             onClick={blockUserAction}
                         >
                             Bloquear usuario
                         </Button>
-                        <Button onClick={handleClose} disabled={onSubmit} sx={{
+                        <MuiButton onClick={handleClose} disabled={onSubmit} sx={{
                             color: '#858585',
                             '&:hover': {
                                 backgroundColor: `${alpha('#858585', 0.1)}`
                             }
                         }}>
                             Cancelar
-                        </Button>
+                        </MuiButton>
                     </Stack>
                 </Box>
             </Box>

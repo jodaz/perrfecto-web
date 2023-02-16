@@ -2,7 +2,8 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import SettingsLayout from '../../../layouts/SettingsLayout';
 import Menu from '../../../components/Menu'
-import { Flag, Trash2, UserX } from 'lucide-react';
+import { Flag, Trash2 } from 'lucide-react';
+import PersonOffOutlinedIcon from '@mui/icons-material/PersonOffOutlined';
 import Status from './Status';
 import MessagesList from './MessagesList';
 import DeleteChat from '../../../components/Modals/DeleteChat';
@@ -59,7 +60,7 @@ export default function ChatView() {
                     color: 'unset',
                     textDecoration: 'none',
                 }} onClick={toggleBlockUser}>
-                    <UserX />
+                    <PersonOffOutlinedIcon />
                     <Box sx={{ paddingLeft: '0.5rem' }}>
                         Bloquear usuario
                     </Box>
