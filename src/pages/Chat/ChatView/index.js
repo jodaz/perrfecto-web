@@ -2,7 +2,8 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import SettingsLayout from '../../../layouts/SettingsLayout';
 import Menu from '../../../components/Menu'
-import { Flag, Trash2, UserX } from 'lucide-react';
+import { Flag, Trash2 } from 'lucide-react';
+import PersonOffOutlinedIcon from '@mui/icons-material/PersonOffOutlined';
 import Status from './Status';
 import MessagesList from './MessagesList';
 import DeleteChat from '../../../components/Modals/DeleteChat';
@@ -37,6 +38,8 @@ export default function ChatView() {
                 const { data: { data } } = res;
 
                 setData(data);
+                setIsBlockedUser(data.is_locked)
+
                 fetchMessages(dispatch, data.messages)
             }
         } catch (error) {
@@ -48,7 +51,7 @@ export default function ChatView() {
 
     const renderMenu = () => (
         <Menu>
-            {(!isBlockedUser) && (
+            {!isBlockedUser && (
                 <Box
                     sx={{
                     display: 'flex',
@@ -56,7 +59,7 @@ export default function ChatView() {
                     color: 'unset',
                     textDecoration: 'none',
                 }} onClick={toggleBlockUser}>
-                    <UserX />
+                    <PersonOffOutlinedIcon />
                     <Box sx={{ paddingLeft: '0.5rem' }}>
                         Bloquear usuario
                     </Box>
@@ -102,9 +105,17 @@ export default function ChatView() {
             }}>
                 {data ? (
                     <>
-                        {isBlockedUser && <BlockedUser unblockUser={toggleIsBlockedUser} />}
                         <MessagesList />
-                        <ChatForm receptor={data.receptor} />
+                        {isBlockedUser && (
+                            <BlockedUser
+                                item={data}
+                                sideAction={fetchData}
+                            />
+                        )}
+                        <ChatForm
+                            receptor={data.receptor}
+                            disabled={isBlockedUser}
+                        />
                         <DeleteChat
                             open={deleteChat}
                             handleClose={toggleDeleteChat}
@@ -112,7 +123,8 @@ export default function ChatView() {
                         <BlockUser
                             open={blockUser}
                             handleClose={toggleBlockUser}
-                            sideAction={toggleIsBlockedUser}
+                            sideAction={fetchData}
+                            item={data}
                         />
                     </>
                 ): (

@@ -9,7 +9,7 @@ import { emitMessage } from '../../../utils/socket';
 import { useParams } from 'react-router-dom';
 import { useChat, setMessage } from '../../../context/ChatContext';
 
-const ChatForm = ({ receptor }) => {
+const ChatForm = ({ receptor, disabled }) => {
     const { chatID } = useParams()
     const { dispatch } = useChat()
     const { state: { user } } = useAuth()
@@ -59,6 +59,7 @@ const ChatForm = ({ receptor }) => {
                     control={control}
                     placeholder='Escribir un mensaje'
                     labelColor="text"
+                    disabled={disabled}
                     endAdornment={
                         <IconButton
                             sx={{

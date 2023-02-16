@@ -2,10 +2,33 @@ import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import { PhoneOff } from 'lucide-react';
+import SpeakerNotesOffIcon from '@mui/icons-material/SpeakerNotesOff';
+import Button from '../../../components/Button';
+import { apiProvider } from '../../../api';
+import { useAuth } from '../../../context/AuthContext';
 
-export default function BlockedUser({ unblockUser }) {
+export default function BlockedUser({ sideAction, item }) {
+    const { is_locked } = item;
+    const { state: { user } } = useAuth()
+    const [onSubmit, setOnSubmit] = React.useState(false);
+    const isCurrentUserLocked = is_locked.user_locked.id == user.id;
+
+    const unblockUserAction = async () => {
+        setOnSubmit(true)
+        try {
+            const res = await apiProvider.post('/api/chat/unlock-conversation', {
+                "uid_locked": item.receptor.user.id
+            });
+
+            if (res.status >= 200 && res.status < 300) {
+                sideAction()
+            }
+        } catch (error) {
+            console.log(error)
+        }
+        setOnSubmit(false)
+    }
+
     return (
         <Stack
             spacing={1}
@@ -13,27 +36,33 @@ export default function BlockedUser({ unblockUser }) {
             margin={2}
         >
             <Box color="text.tertiary">
-                <PhoneOff />
+                <SpeakerNotesOffIcon />
             </Box>
             <Box>
                 <Typography
                     variant="subtitle1"
                     color="text.tertiary"
                 >
-                    El usuario ha sido bloqueado.
-                    Si deseas cambiar de opinión, presiona desbloquear
+                    {!isCurrentUserLocked ? (
+                        'El usuario ha sido bloqueado. Si deseas cambiar de opinión, presiona desbloquear'
+                    ) : (
+                        'Haz sido bloqueado por el usuario. No podrás enviar ni recibir nuevos mensajes.'
+                    )}
                 </Typography>
             </Box>
-            <Box>
-                <Button
-                    sx={{
-                        color: theme => theme.palette.text.secondary
-                    }}
-                    onClick={unblockUser}
-                >
-                    Desbloquear
-                </Button>
-            </Box>
+            {!isCurrentUserLocked && (
+                <Box>
+                    <Button
+                        sx={{
+                            color: theme => theme.palette.text.secondary
+                        }}
+                        onClick={unblockUserAction}
+                        disabled={onSubmit}
+                    >
+                        Desbloquear
+                    </Button>
+                </Box>
+            )}
         </Stack>
     );
 }
