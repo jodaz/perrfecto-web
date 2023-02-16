@@ -52,20 +52,20 @@ const SentMessage = styled(GeneralMessage)(() => ({
 const UserMessageCard = ({ message, isReceptor }) => {
     if (isReceptor) {
         return (
-            <SentMessage>
-                <Typography>
+            <ReceivedMessage>
+                <Typography textAlign='left'>
                     {message}
                 </Typography>
-            </SentMessage>
+            </ReceivedMessage>
         );
     }
 
     return (
-        <ReceivedMessage>
-            <Typography>
+        <SentMessage>
+            <Typography textAlign='right'>
                 {message}
             </Typography>
-        </ReceivedMessage>
+        </SentMessage>
     );
 }
 

@@ -13,7 +13,7 @@ const ChatForm = ({ receptor }) => {
     const { chatID } = useParams()
     const { dispatch } = useChat()
     const { state: { user } } = useAuth()
-    const { control, handleSubmit, getValues, setValue, formState: {
+    const { control, handleSubmit, setValue, formState: {
         isSubmitting
     }} = useForm({
         reValidateMode: "onBlur",
@@ -35,8 +35,8 @@ const ChatForm = ({ receptor }) => {
                 emitMessage(emitData)
 
                 setMessage(dispatch, {
-                    uid: receptor.user.id,
-                    message: values.message
+                    uid: emitData.sender,
+                    message: emitData.message
                 })
 
                 setValue('message', '')
