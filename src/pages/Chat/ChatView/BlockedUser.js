@@ -4,8 +4,23 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { PhoneOff } from 'lucide-react';
+import { apiProvider } from '../../../api';
 
-export default function BlockedUser({ unblockUser }) {
+export default function BlockedUser({ sideAction, item }) {
+    const unblockUserAction = async () => {
+        try {
+            const res = await apiProvider.post('/api/chat/unlock-conversation', {
+                "uid_locked": item.receptor.user.id
+            });
+
+            if (res.status >= 200 && res.status < 300) {
+                sideAction()
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <Stack
             spacing={1}
@@ -29,7 +44,7 @@ export default function BlockedUser({ unblockUser }) {
                     sx={{
                         color: theme => theme.palette.text.secondary
                     }}
-                    onClick={unblockUser}
+                    onClick={unblockUserAction}
                 >
                     Desbloquear
                 </Button>

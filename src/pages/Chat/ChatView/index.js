@@ -106,7 +106,12 @@ export default function ChatView() {
                 {data ? (
                     <>
                         <MessagesList />
-                        {isBlockedUser && <BlockedUser unblockUser={toggleIsBlockedUser} />}
+                        {isBlockedUser && (
+                            <BlockedUser
+                                item={data}
+                                sideAction={toggleIsBlockedUser}
+                            />
+                        )}
                         <ChatForm
                             receptor={data.receptor}
                             disabled={isBlockedUser}
