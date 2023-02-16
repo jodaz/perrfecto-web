@@ -6,12 +6,24 @@ import Typography from '@mui/material/Typography';
 import { Trash2 } from 'lucide-react';
 import Stack from '@mui/material/Stack';
 import { alpha } from '@mui/material';
+import { apiProvider } from '../../../api';
 
 const BlockUser = ({ open, handleClose, sideAction, item }) => {
     const [onSubmit, setOnSubmit] = React.useState(false);
 
-    const blockUserAction = () => {
-        sideAction();
+    const blockUserAction = async () => {
+        try {
+            const res = await apiProvider.post('/api/chat/block-conversation', {
+                "conversation_id": item.receptor.id_conversation,
+                "uid_locked": item.receptor.user.id
+            });
+
+            if (res.status >= 200 && res.status < 300) {
+                sideAction()
+            }
+        } catch (error) {
+            console.log(error)
+        }
         handleClose();
     }
 

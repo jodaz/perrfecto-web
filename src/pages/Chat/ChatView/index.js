@@ -37,6 +37,9 @@ export default function ChatView() {
                 const { data: { data } } = res;
 
                 setData(data);
+
+                if (data.is_locked) toggleIsBlockedUser()
+
                 fetchMessages(dispatch, data.messages)
             }
         } catch (error) {
@@ -102,9 +105,12 @@ export default function ChatView() {
             }}>
                 {data ? (
                     <>
-                        {isBlockedUser && <BlockedUser unblockUser={toggleIsBlockedUser} />}
                         <MessagesList />
-                        <ChatForm receptor={data.receptor} />
+                        {isBlockedUser && <BlockedUser unblockUser={toggleIsBlockedUser} />}
+                        <ChatForm
+                            receptor={data.receptor}
+                            disabled={isBlockedUser}
+                        />
                         <DeleteChat
                             open={deleteChat}
                             handleClose={toggleDeleteChat}
@@ -113,6 +119,7 @@ export default function ChatView() {
                             open={blockUser}
                             handleClose={toggleBlockUser}
                             sideAction={toggleIsBlockedUser}
+                            item={data}
                         />
                     </>
                 ): (
