@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
+import Avatar from '@mui/material/Avatar';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
@@ -14,6 +15,8 @@ import Logo from '../../components/Logo';
 import { styled } from '@mui/material/styles';
 import LinkBehavior from '../../components/LinkBehavior';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { useAuth } from '../../context/AuthContext';
+import getUserPhoto from '../../utils/getUserPhoto'
 
 const AnchorTag = styled(Link)(({ theme, dark }) => ({
     textDecoration: 'none',
@@ -54,6 +57,7 @@ const internalLinks = [
 ]
 
 function ResponsiveAppBar({ dark }) {
+    const { state: { isAuth, user } } = useAuth()
     const matches = useMediaQuery((theme) => theme.breakpoints.down('md'));
     const [anchorElNav, setAnchorElNav] = React.useState(null);
 
@@ -67,17 +71,25 @@ function ResponsiveAppBar({ dark }) {
 
     const generateButtons = () => (
         <>
-            <Box sx={{ p: 1 }}>
-                <Button
-                    variant="outlined"
-                    color='primary'
-                    to='/login'
-                    component={LinkBehavior}
-                >
-                    Iniciar sesión
-                </Button>
+            <Box p={1} />
+            <Box>
+                {isAuth ? (
+                    <Avatar
+                        src={getUserPhoto(JSON.parse(user.img_profile)[0])}
+                    />
+                ) : (
+                    <Button
+                        variant="outlined"
+                        color='primary'
+                        to='/login'
+                        component={LinkBehavior}
+                    >
+                        Iniciar sesión
+                    </Button>
+                )}
             </Box>
-            <Box sx={{ p: 1 }}>
+            <Box p={1} />
+            <Box>
                 <LanguageButton dark={dark} />
             </Box>
         </>
@@ -122,7 +134,8 @@ function ResponsiveAppBar({ dark }) {
                     <Box sx={{
                         display: 'flex',
                         justifyContent: 'flex-end',
-                        flex: matches ? 1 : 'unset'
+                        flex: matches ? 1 : 'unset',
+                        alignItems: 'center'
                     }}>
                         {generateButtons()}
                         <Box sx={{
