@@ -8,6 +8,7 @@ import PhotoGallery from '../Modals/ShowCard/PhotoGallery';
 import FavouriteButton from '../Buttons/FavouriteButton'
 import LikeButton from '../Buttons/LikeButton'
 import { Mail, Phone } from 'lucide-react';
+import formatPhone from '../../utils/formatPhone';
 
 const OwnerPublication = ({ open, data, handleClose, handleOpenContactDialog }) => {
     const { Owner } = data.publi
@@ -74,7 +75,7 @@ const OwnerPublication = ({ open, data, handleClose, handleOpenContactDialog }) 
                                 >
                                     <Phone />
                                     <Box marginRight='1rem' />
-                                    {Owner.code_phone}&nbsp;{Owner.phone}
+                                    {formatPhone(Owner)}
                                 </Typography>
                             )}
                             <Typography variant="subtitle1" color="text.secondary" sx={{ display: 'flex', alignItems: 'center' }}>

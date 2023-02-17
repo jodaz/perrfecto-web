@@ -10,12 +10,7 @@ import getSearchParams from '../../utils/getSearchParams';
 import { useNavigate } from 'react-router-dom';
 import ListItemLink from '../../components/ListItemLink';
 import { useAuth } from '../../context/AuthContext';
-import parsePhoneNumber from 'libphonenumber-js'
-
-const formatPhone = user => (
-    user.phone ? parsePhoneNumber(`+${user.code_phone}${user.phone}`).formatInternational()
-    : 'No tiene'
-)
+import formatPhone from '../../utils/formatPhone'
 
 const Account = ({ location }) => {
     const { state: { user } } = useAuth()
