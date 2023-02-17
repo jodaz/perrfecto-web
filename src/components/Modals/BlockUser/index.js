@@ -57,7 +57,7 @@ const BlockUser = ({ open, handleClose, sideAction, item }) => {
                     <PersonOffOutlinedIcon sx={{ fontSize: 60 }} color="text.secondary" />
                 </Box>
                 <Box sx={{ p: 1 }}>
-                    <Typography variant="body2" gutterBottom>
+                    <Typography variant="subtitle1" gutterBottom>
                         ¿Estás seguro que deseas bloquear a este usuario?
                     </Typography>
                     <Stack direction="column">

@@ -43,7 +43,7 @@ const DeleteChat = ({ open, handleClose, item }) => {
                     <Trash2 size={48} />
                 </Box>
                 <Box sx={{ p: 1 }}>
-                    <Typography variant="body2" gutterBottom>
+                    <Typography variant="subtitle1" gutterBottom>
                         ¿Estás seguro que deseas eliminar esta conversación?
                     </Typography>
                     <Stack direction="column">

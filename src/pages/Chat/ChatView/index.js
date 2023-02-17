@@ -15,11 +15,13 @@ import useEffectOnce from '../../../utils/useEffectOnce';
 import { apiProvider } from '../../../api';
 import LoadingIndicator from '../../../components/LoadingIndicator'
 import { useChat, fetchMessages } from '../../../context/ChatContext';
+import ReportUser from '../../../components/Modals/ReportUser';
 
 export default function ChatView() {
     const [isBlockedUser, setIsBlockedUser] = React.useState(false)
     const [deleteChat, setDeleteChat] = React.useState(false)
     const [blockUser, setBlockUser] = React.useState(false)
+    const [reportUser, setReportUser] = React.useState(false)
     const { chatID } = useParams()
     const [data, setData] = React.useState(null)
     const { dispatch } = useChat()
@@ -27,6 +29,8 @@ export default function ChatView() {
     const toggleDeleteChat = () => setDeleteChat(!deleteChat);
 
     const toggleBlockUser = () => setBlockUser(!blockUser);
+
+    const toggleReportUser = () => setReportUser(!reportUser);
 
     const toggleIsBlockedUser = () => setIsBlockedUser(!isBlockedUser)
 
@@ -71,7 +75,7 @@ export default function ChatView() {
                 alignItems: 'center',
                 color: 'unset',
                 textDecoration: 'none',
-            }}>
+            }} onClick={toggleReportUser}>
                 <Flag />
                 <Box sx={{ paddingLeft: '0.5rem' }}>
                     Reportar usuario
@@ -125,6 +129,11 @@ export default function ChatView() {
                             open={blockUser}
                             handleClose={toggleBlockUser}
                             sideAction={fetchData}
+                            item={data}
+                        />
+                        <ReportUser
+                            open={reportUser}
+                            handleClose={toggleReportUser}
                             item={data}
                         />
                     </>
