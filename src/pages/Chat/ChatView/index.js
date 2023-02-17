@@ -101,7 +101,8 @@ export default function ChatView() {
                 display: 'flex',
                 flexDirection: 'column',
                 height: '100%',
-                justifyContent: 'space-between'
+                justifyContent: 'space-between',
+                backgroundColor: '#fff'
             }}>
                 {data ? (
                     <>

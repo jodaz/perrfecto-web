@@ -62,7 +62,7 @@ const UserMessageCard = ({ message, isReceptor }) => {
 
     return (
         <SentMessage>
-            <Typography textAlign='right'>
+            <Typography textAlign='right' color="text.primary">
                 {message}
             </Typography>
         </SentMessage>
