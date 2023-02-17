@@ -9,16 +9,14 @@ const LanguageButton = ({ dark }) => {
     const matches = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
     if (matches) return (
-        <IconButton>
-            <Globe color={dark ? '#000' : '#fff'} />
+        <IconButton color="primary">
+            <Globe />
         </IconButton>
     )
 
     return (
         <Button sx={{
-            color: theme => dark
-                ? theme.palette.text.primary
-                : theme.palette.primary.main,
+            color: theme => theme.palette.primary.main,
             backgroundColor: dark ? 'rgba(0, 0, 0, 0.06)' : 'transparent'
         }}>
             <Globe />
