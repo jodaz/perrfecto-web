@@ -8,31 +8,32 @@ import {
     CONFIRM_PASSWORD,
     PASSWORD
 } from '../../validations'
-import { useAuth } from '../../context/AuthContext';
 import PasswordInput from '../../components/Forms/PasswordInput';
+import { apiProvider } from '../../api';
 
 const UpdatePassword = () => {
-    const { control, watch, handleSubmit, formState: {
+    const { control, watch, handleSubmit, setError, formState: {
         isSubmitting
     }} = useForm({ reValidateMode: "onBlur" });
-    const { state: { user }, dispatch } = useAuth();
     const navigate = useNavigate();
-    const newPassword = watch("new_password", "");
+    const newPassword = watch("password", "");
 
     const onSubmit = async values => {
-        console.log(values)
-        navigate(-1)
-        // try {
-        //     const formData = await formDataHandler(values)
-        //     const res = await fileProvider.put(`/api/auth/user-edit/${user.id}`, formData)
+        try {
+            const res = await apiProvider.post(`/api/auth/update-password`, values)
 
-        //     if (res.status >= 200 && res.status < 300) {
-        //         renewToken(dispatch, user)
-        //         navigate(-1)
-        //     }
-        // } catch (error) {
-        //     console.log(error)
-        // }
+            if (res.status >= 200 && res.status < 300) {
+                navigate(-1)
+            }
+        } catch (error) {
+            const message = error.response.data.msg;
+
+            if (message.includes('Wrong Password')) {
+                setError('old_password', {
+                    type: 'wrong'
+                })
+            }
+        }
     }
 
     return (
@@ -48,7 +49,7 @@ const UpdatePassword = () => {
                     <Box sx={{ p: 2, display: 'flex' }}>
                         <PasswordInput
                             control={control}
-                            name='password'
+                            name='old_password'
                             label="Contraseña anterior"
                             rules={PASSWORD.rules}
                             validations={PASSWORD.messages}
@@ -59,7 +60,7 @@ const UpdatePassword = () => {
                     <Box sx={{ p: 2, display: 'flex' }}>
                         <PasswordInput
                             control={control}
-                            name='new_password'
+                            name='password'
                             label="Contraseña nueva"
                             placeholder='Ingrese su nueva contraseña'
                             rules={PASSWORD.rules}
@@ -70,7 +71,7 @@ const UpdatePassword = () => {
                     <Box sx={{ p: 2, display: 'flex' }}>
                         <PasswordInput
                             control={control}
-                            name='new_password_confirm'
+                            name='confirm'
                             label="Confirmar contraseña"
                             rules={{
                                 ...CONFIRM_PASSWORD.rules,

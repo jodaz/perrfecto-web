@@ -115,12 +115,14 @@ export const PASSWORD = {
     rules: {
         required: true,
         minLength: 6,
-        invalid: true
+        invalid: true,
+        wrong: true
     },
     messages: {
         required: "Ingrese una contraseña.",
         minLength: "Mínimo 6 caracteres.",
-        invalid: 'Credenciales inválidas.'
+        invalid: 'Credenciales inválidas.',
+        wrong: 'Contraseña incorrecta.'
     }
 }
 
