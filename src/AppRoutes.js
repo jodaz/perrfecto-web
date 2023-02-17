@@ -83,12 +83,14 @@ function AppRoutes() {
     const { state: { isAuth }, dispatch } = useAuth();
     const { coords } = useGeolocated()
 
+    // Set guest user by default
     React.useEffect(() => {
         if (!isAuth) {
             guestUser(dispatch)
         }
     }, [])
 
+    // Set coords by default if exists
     React.useEffect(() => {
         if (coords) {
             setUserCoords(dispatch, coords)

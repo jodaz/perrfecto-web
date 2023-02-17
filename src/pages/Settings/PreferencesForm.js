@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import { useForm } from "react-hook-form";
 import { useAuth, renewToken } from '../../context/AuthContext'
 import SwitchInput from '../../components/Forms/SwitchInput';
-import { apiProvider, fileProvider } from '../../api';
+import { fileProvider } from '../../api';
 import formDataHandler from '../../utils/formDataHandler';
 
 const PreferencesForm = () => {

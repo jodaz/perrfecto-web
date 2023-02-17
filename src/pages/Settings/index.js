@@ -56,7 +56,7 @@ const Settings = () => {
                             to="owner"
                             title="Información personal"
                         />
-                        {(user.role == 'user') && (
+                        {(user.role == 'user' && user.dog) && (
                             <ListItemLink
                                 to="pet"
                                 title="Información de la mascota"
