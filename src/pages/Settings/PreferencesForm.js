@@ -9,36 +9,26 @@ import formDataHandler from '../../utils/formDataHandler';
 const PreferencesForm = () => {
     const [error, setError] = React.useState('')
     const { state: { user }, dispatch } = useAuth();
-    const { control, handleSubmit, watch, formState: {
-        isSubmitting
-    }} = useForm({
+    const { control, handleSubmit, watch } = useForm({
         reValidateMode: "onBlur",
         defaultValues: {
-            notifications: true,
-            alerts_plan: true,
-            alerts: false
+            enable_notifications: user.enable_notifications,
+            three_day_alert: user.three_day_alert,
+            receive_alerts: user.receive_alerts
         }
     });
 
-    const onSubmit = async (data) => {
-        // try {
-        //     const parsedData = {
-        //         files: data.files,
-        //         body: {
-        //             img_delete: user.img_profile ? user.img_profile : null
-        //         }
-        //     }
+    const onSubmit = async values => {
+        try {
+            const formData = await formDataHandler(values)
+            const res = await fileProvider.put(`/api/auth/user-edit/${user.id}`, formData)
 
-        //     const formData = await formDataHandler(parsedData, 'files')
-
-        //     const res = await fileProvider.put(`/api/dog/img-dog/${user.dog.id}`, formData)
-
-        //     if (res.status >= 200 && res.status < 300) {
-        //         renewToken(dispatch, user)
-        //     }
-        // } catch (error) {
-        //     setError('Ha ocurrido un error inesperado.')
-        // }
+            if (res.status >= 200 && res.status < 300) {
+                renewToken(dispatch, user)
+            }
+        } catch (error) {
+            setError('Ha ocurrido un error inesperado.')
+        }
     }
 
     React.useEffect(() => {
@@ -57,17 +47,17 @@ const PreferencesForm = () => {
             <SwitchInput
                 label="Activar todas las notificaciones"
                 control={control}
-                name='notifications'
+                name='enable_notifications'
             />
             <SwitchInput
                 label="Recibir alertas de mensajes"
                 control={control}
-                name='alerts'
+                name='receive_alerts'
             />
             <SwitchInput
                 label="Alerta de 3 días sobre mi plan"
                 control={control}
-                name='alerts_plan'
+                name='three_day_alert'
             />
         </Box>
     );
