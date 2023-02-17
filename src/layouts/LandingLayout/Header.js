@@ -17,6 +17,7 @@ import LinkBehavior from '../../components/LinkBehavior';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useAuth } from '../../context/AuthContext';
 import getUserPhoto from '../../utils/getUserPhoto'
+import LoginButton from './LoginButton';
 
 const AnchorTag = styled(Link)(({ theme, dark }) => ({
     textDecoration: 'none',
@@ -76,17 +77,12 @@ function ResponsiveAppBar({ dark }) {
                 {isAuth ? (
                     <Avatar
                         src={getUserPhoto(JSON.parse(user.img_profile)[0])}
+                        sx={{
+                            height: '30px',
+                            width: '30px'
+                        }}
                     />
-                ) : (
-                    <Button
-                        variant="outlined"
-                        color='primary'
-                        to='/login'
-                        component={LinkBehavior}
-                    >
-                        Iniciar sesión
-                    </Button>
-                )}
+                ) : <LoginButton />}
             </Box>
             <Box p={1} />
             <Box>
