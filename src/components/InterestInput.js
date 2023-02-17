@@ -35,7 +35,7 @@ const InterestInput = ({
     const list = (anchor) => (
         <Box onKeyDown={toggleDrawer(anchor, false)}>
             <DialogTitle onClose={toggleDrawer(anchor, false)}>
-                Busco intereses en...
+                Tengo intereses en...
             </DialogTitle>
             <Divider />
             <Box sx={{ p: 2 }}>
@@ -61,9 +61,18 @@ const InterestInput = ({
 
     return (
         <Box>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Typography variant="subtitle1" color="text.tertiary">
-                    Busco:
+            <Box sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center'
+            }}>
+                <Typography
+                    variant="body2"
+                    color="text.primary"
+                    fontWeight={500}
+                    textTransform='uppercase'
+                >
+                    Busco
                 </Typography>
                 <Typography
                     onClick={toggleDrawer('bottom', true)}
