@@ -9,6 +9,7 @@ import { Controller } from 'react-hook-form'
 import Popover from '@mui/material/Popover';
 import phoneCodes from '../../utils/phonecodes';
 import { Search } from 'lucide-react';
+import TransparentBackdrop from '../TransparentBackdrop';
 
 const StyledAutocompletePopper = styled('div')(({ theme }) => ({
     [`& .${autocompleteClasses.paper}`]: {
@@ -128,6 +129,9 @@ const CodePopover = ({ control, rules, defaultCodePhone }) => {
                 }}
                 onAbort={handleClose}
                 handleClose={handleClose}
+                slots={{
+                    backdrop: TransparentBackdrop
+                }}
             >
                 <Controller
                     control={control}

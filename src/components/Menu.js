@@ -3,6 +3,7 @@ import IconButton from '@mui/material/IconButton';
 import MuiMenu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { MoreHorizontal } from 'lucide-react';
+import TransparentBackdrop from './TransparentBackdrop';
 
 const ITEM_HEIGHT = 48;
 
@@ -31,7 +32,6 @@ const Menu = ({ children, icon, IconButtonProps, iconColor = '#000' }) => {
                 })}
             </IconButton>
             <MuiMenu
-                hideBackdrop
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}
@@ -51,6 +51,9 @@ const Menu = ({ children, icon, IconButtonProps, iconColor = '#000' }) => {
                 transformOrigin={{
                     vertical: 'top',
                     horizontal: 'left',
+                }}
+                slots={{
+                    backdrop: TransparentBackdrop
                 }}
             >
                 {React.Children.map(children, child => {
