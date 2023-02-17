@@ -18,6 +18,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useAuth } from '../../context/AuthContext';
 import getUserPhoto from '../../utils/getUserPhoto'
 import LoginButton from './LoginButton';
+import TransparentBackdrop from '../../components/TransparentBackdrop';
 
 const AnchorTag = styled(Link)(({ theme, dark }) => ({
     textDecoration: 'none',
@@ -144,7 +145,7 @@ function ResponsiveAppBar({ dark }) {
                                 aria-controls="menu-appbar"
                                 aria-haspopup="true"
                                 onClick={handleOpenNavMenu}
-                                color={'black'}
+                                color='primary'
                             >
                                 <MenuIcon />
                             </IconButton>
@@ -164,6 +165,9 @@ function ResponsiveAppBar({ dark }) {
                                 onClose={handleCloseNavMenu}
                                 sx={{
                                     display: { xs: 'block', md: 'none' },
+                                }}
+                                slots={{
+                                    backdrop: TransparentBackdrop
                                 }}
                             >
                                 {internalLinks.map((link) => (
