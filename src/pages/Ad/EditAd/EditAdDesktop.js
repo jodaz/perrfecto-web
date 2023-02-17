@@ -130,7 +130,7 @@ const EditAdDesktop = () => {
                 width: 'fit-content',
                 overflowY: 'auto'
             }} component="form" onSubmit={handleSubmit(onSubmit)}>
-                <Box sx={{ padding: '0 1rem' }}>
+                <Box margin={'0 2rem'}>
                     <GalleryInput
                         control={control}
                         name='files'
@@ -144,53 +144,19 @@ const EditAdDesktop = () => {
                         message='Tienes un máximo de 15 fotos'
                     />
                 </Box>
-                <Box display='flex'>
+                <Box sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    flex: 1,
+                    padding: '0 1rem 1rem 1rem'
+                }}>
                     <Box sx={{
                         display: 'flex',
-                        flexDirection: 'column',
                         flex: 1
                     }}>
                         <Box padding='0 1rem 1rem 1rem'>
                             <DogInformation desktop/>
                         </Box>
-                        <Box p={2}>
-                            <Typography
-                                variant="body2"
-                                color="text.primary"
-                                fontWeight={500}
-                                textTransform='uppercase'
-                                gutterBottom
-                            >
-                                Descripción
-                            </Typography>
-                            <TextInput
-                                name='description'
-                                control={control}
-                                placeholder='Escribir aquí'
-                                multiline
-                                maxRows={3}
-                                rows={3}
-                                rules={DESCRIPTION.rules}
-                                validations={DESCRIPTION.messages}
-                                labelColor="text"
-                                sx={{
-                                    border: 'none !important',
-                                    padding: 0,
-                                    '&.Mui-focused': {
-                                        boxShadow: 'none',
-                                        borderColor: 'none'
-                                    },
-                                }}
-                            />
-                        </Box>
-                    </Box>
-                    <Box sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        flex: 1,
-                        padding: '0 1rem 1rem 1rem',
-                        width: '290px'
-                    }}>
                         <Box sx={{ pt: 2, pb: 2 }}>
                             <InterestInput
                                 control={control}
@@ -199,32 +165,62 @@ const EditAdDesktop = () => {
                                 isSubmitting={isSubmitting}
                             />
                         </Box>
-                        <Box>
-                            <Typography
-                                variant="body2"
-                                color="text.primary"
-                                fontWeight={500}
-                                textTransform='uppercase'
-                                gutterBottom
-                            >
-                                Permisos
-                            </Typography>
-                            <SwitchInput
-                                label='Visualizar número de teléfono'
-                                control={control}
-                                name='permission_tlf'
-                            />
-                            <SwitchInput
-                                label='Activar geolocalización'
-                                control={control}
-                                name='permission_geolocation'
-                            />
-                            <SwitchInput
-                                label='Habilitar Whatsapp'
-                                control={control}
-                                name='permission_whatsapp'
-                            />
-                        </Box>
+                    </Box>
+                    <Box p={2}>
+                        <Typography
+                            variant="body2"
+                            color="text.primary"
+                            fontWeight={500}
+                            textTransform='uppercase'
+                            gutterBottom
+                        >
+                            Descripción
+                        </Typography>
+                        <TextInput
+                            name='description'
+                            control={control}
+                            placeholder='Escribir aquí'
+                            multiline
+                            maxRows={3}
+                            rows={3}
+                            rules={DESCRIPTION.rules}
+                            validations={DESCRIPTION.messages}
+                            labelColor="text"
+                            sx={{
+                                border: 'none !important',
+                                padding: 0,
+                                '&.Mui-focused': {
+                                    boxShadow: 'none',
+                                    borderColor: 'none'
+                                },
+                            }}
+                        />
+                    </Box>
+                    <Box p={2}>
+                        <Typography
+                            variant="body2"
+                            color="text.primary"
+                            fontWeight={500}
+                            textTransform='uppercase'
+                            gutterBottom
+                        >
+                            Permisos
+                        </Typography>
+                        <SwitchInput
+                            label='Visualizar número de teléfono'
+                            control={control}
+                            name='permission_tlf'
+                        />
+                        <SwitchInput
+                            label='Activar geolocalización'
+                            control={control}
+                            name='permission_geolocation'
+                        />
+                        <SwitchInput
+                            label='Habilitar Whatsapp'
+                            control={control}
+                            name='permission_whatsapp'
+                        />
                     </Box>
                 </Box>
                 <Box sx={{ padding: '0 1rem 1rem 1rem', textAlign: 'center' }}>
