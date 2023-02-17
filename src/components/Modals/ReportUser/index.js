@@ -2,6 +2,7 @@ import * as React from 'react';
 import InstagramModal from '../InstagramModal';
 import ListReasons from './ListReasons';
 import ReportForm from './ReportForm';
+import SuccessfulReport from './SuccessfulReport';
 
 const contents = [
     'listReasons',
@@ -41,7 +42,7 @@ const ReportUser = ({ open, handleClose, item }) => {
                     selectedItem={selectedItem}
                     toggleNextStep={nextStep}
                 />
-            ) : <></>}
+            ) : <SuccessfulReport item={item} handleClose={toggleModal} />}
         </InstagramModal>
     );
 }
