@@ -154,10 +154,18 @@ const EditAdDesktop = () => {
                             <DogInformation desktop/>
                         </Box>
                         <Box p={2}>
+                            <Typography
+                                variant="body2"
+                                color="text.primary"
+                                fontWeight={500}
+                                textTransform='uppercase'
+                                gutterBottom
+                            >
+                                Descripción
+                            </Typography>
                             <TextInput
                                 name='description'
                                 control={control}
-                                label='Descripción:'
                                 placeholder='Escribir aquí'
                                 multiline
                                 maxRows={3}
