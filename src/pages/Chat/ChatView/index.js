@@ -2,7 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import SettingsLayout from '../../../layouts/SettingsLayout';
 import Menu from '../../../components/Menu'
-import { Flag, Trash2 } from 'lucide-react';
+import { ChevronLeft, Flag, Trash2 } from 'lucide-react';
 import PersonOffOutlinedIcon from '@mui/icons-material/PersonOffOutlined';
 import Status from './Status';
 import MessagesList from './MessagesList';
@@ -10,7 +10,7 @@ import DeleteChat from '../../../components/Modals/DeleteChat';
 import BlockedUser from './BlockedUser';
 import BlockUser from '../../../components/Modals/BlockUser';
 import ChatForm from './ChatForm';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useEffectOnce from '../../../utils/useEffectOnce';
 import { apiProvider } from '../../../api';
 import LoadingIndicator from '../../../components/LoadingIndicator'
@@ -18,6 +18,7 @@ import { useChat, fetchMessages } from '../../../context/ChatContext';
 import ReportUser from '../../../components/Modals/ReportUser';
 
 export default function ChatView() {
+    const navigate = useNavigate()
     const [isBlockedUser, setIsBlockedUser] = React.useState(false)
     const [deleteChat, setDeleteChat] = React.useState(false)
     const [blockUser, setBlockUser] = React.useState(false)
@@ -100,6 +101,7 @@ export default function ChatView() {
         <SettingsLayout
             rightIconComponent={data && renderMenu()}
             title={data && <Status receptor={data.receptor} />}
+            handleGoBack={() => navigate('/chat')}
         >
             <Box sx={{
                 display: 'flex',

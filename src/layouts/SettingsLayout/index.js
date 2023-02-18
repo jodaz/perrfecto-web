@@ -12,7 +12,11 @@ const SettingsLayout = ({ children, handleGoBack, rightIconComponent, title, ...
             flexDirection: 'column',
             justifyContent: 'space-between'
         }} {...rest}>
-            <ProfileToolbar title={title} handleGoBack={handleGoBack} rightIconComponent={rightIconComponent} />
+            <ProfileToolbar
+                title={title}
+                handleGoBack={handleGoBack}
+                rightIconComponent={rightIconComponent}
+            />
             {children}
         </Box>
     </Slide>
