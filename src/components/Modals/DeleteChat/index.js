@@ -1,11 +1,13 @@
 import * as React from 'react';
 import InstagramModal from '../InstagramModal';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+import MuiButton from '@mui/material/Button';
+import Button from '../../Button';
 import Typography from '@mui/material/Typography';
 import { Trash2 } from 'lucide-react';
 import Stack from '@mui/material/Stack';
 import { alpha } from '@mui/material';
+import { apiProvider } from '../../../api'
 import { useNavigate } from 'react-router-dom';
 
 const DeleteChat = ({ open, handleClose, item }) => {
@@ -13,7 +15,18 @@ const DeleteChat = ({ open, handleClose, item }) => {
     const navigate = useNavigate()
 
     const handleDelete = async () => {
-        return navigate('/chat')
+        setOnSubmit(true)
+        try {
+            const res = await apiProvider.delete(`/api/chat/delete-conversation/${item.receptor.id_conversation}`)
+
+            if (res.status >= 200 && res.status < 300) {
+                setOnSubmit(false)
+                return navigate('/chat')
+            }
+        } catch (error) {
+            setOnSubmit(false)
+            console.log(error)
+        }
     }
 
     if (!open) return null;
@@ -47,17 +60,21 @@ const DeleteChat = ({ open, handleClose, item }) => {
                         ¿Estás seguro que deseas eliminar esta conversación?
                     </Typography>
                     <Stack direction="column">
-                        <Button color="error" disabled={onSubmit} onClick={handleDelete}>
+                        <Button
+                            color="error"
+                            disabled={onSubmit}
+                            onClick={handleDelete}
+                        >
                             Eliminar conversación
                         </Button>
-                        <Button onClick={handleClose} disabled={onSubmit} sx={{
+                        <MuiButton onClick={handleClose} disabled={onSubmit} sx={{
                             color: '#858585',
                             '&:hover': {
                                 backgroundColor: `${alpha('#858585', 0.1)}`
                             }
                         }}>
                             Cancelar
-                        </Button>
+                        </MuiButton>
                     </Stack>
                 </Box>
             </Box>

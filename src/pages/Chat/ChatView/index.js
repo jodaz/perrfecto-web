@@ -120,6 +120,7 @@ export default function ChatView() {
                         <DeleteChat
                             open={deleteChat}
                             handleClose={toggleDeleteChat}
+                            item={data}
                         />
                         <BlockUser
                             open={blockUser}
