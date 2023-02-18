@@ -91,6 +91,7 @@ const DogPublication = ({ open, data, handleClose, handleOpenOwnerCard }) => {
                     <Box sx={{ p: 1 }}>
                         <MessageButton
                             itemID={data.publi.id_user}
+                            handleClose={handleClose}
                             shouldCreate
                         />
                     </Box>

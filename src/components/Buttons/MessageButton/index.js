@@ -5,7 +5,7 @@ import MessageIconButton from './MessageIconButton';
 import { apiProvider } from '../../../api';
 import { useNavigate } from 'react-router-dom';
 
-const MessageButton = ({ itemID, shouldCreate }) => {
+const MessageButton = ({ itemID, shouldCreate, handleClose }) => {
     const { state: { isAuth } } = useAuth();
     const { dispatch } = useGuest();
     const navigate = useNavigate()
@@ -36,6 +36,7 @@ const MessageButton = ({ itemID, shouldCreate }) => {
             } else {
                 navigate(`/chat/${itemID}`)
             }
+            handleClose()
         }
     }
 
