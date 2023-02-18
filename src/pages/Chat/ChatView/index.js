@@ -112,7 +112,7 @@ export default function ChatView() {
             }}>
                 {data ? (
                     <>
-                        <MessagesList />
+                        <MessagesList  />
                         {isBlockedUser && (
                             <BlockedUser
                                 item={data}

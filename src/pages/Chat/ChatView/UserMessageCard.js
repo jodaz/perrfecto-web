@@ -43,7 +43,7 @@ const SentMessage = styled(GeneralMessage)(() => ({
     position: 'relative'
 }))
 
-const UserMessageCard = ({ message, isReceptor }) => {
+const UserMessageCard = ({ message, isReceptor, toggleDeleteMessage }) => {
     const [showDelete, setShowDelete] = React.useState(false);
 
     const toggleShowDelete = () => setShowDelete(!showDelete)
@@ -68,7 +68,7 @@ const UserMessageCard = ({ message, isReceptor }) => {
                     position: 'absolute',
                     top: 0,
                     right: 0
-                }}>
+                }} onClick={toggleDeleteMessage}>
                     <Trash size={16} strokeWidth={3} />
                 </IconButton>
             )}
