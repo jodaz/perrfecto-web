@@ -3,18 +3,24 @@ import MUIIconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
 import { MessageCircle } from 'lucide-react';
 import { alpha } from '@mui/material';
+import Tooltip from '@mui/material/Tooltip';
 
 const IconButton = props => (
-    <MUIIconButton sx={{
-        background: theme => theme.palette.primary.main,
-        boxShadow: '0px 2px 5px rgba(51, 51, 51, 0.15)',
-        padding: '8px',
-        '&:hover': {
-            background: theme => `${alpha(theme.palette.primary.main, 0.9)}`
-        }
-    }} {...props}>
-        <MessageCircle size={34} color="#fff" />
-    </MUIIconButton>
+    <Tooltip
+        title='Abrir chat'
+        placement='top'
+    >
+        <MUIIconButton sx={{
+            background: theme => theme.palette.primary.main,
+            boxShadow: '0px 2px 5px rgba(51, 51, 51, 0.15)',
+            padding: '8px',
+            '&:hover': {
+                background: theme => `${alpha(theme.palette.primary.main, 0.9)}`
+            }
+        }} {...props}>
+            <MessageCircle size={34} color="#fff" />
+        </MUIIconButton>
+    </Tooltip>
 )
 
 const MessageIconButton = ({ active, ...rest }) => (

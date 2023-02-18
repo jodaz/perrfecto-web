@@ -39,7 +39,12 @@ const MessageButton = ({ itemID, shouldCreate }) => {
         }
     }
 
-    return <MessageIconButton active={true} onClick={action} />;
+    return (
+        <MessageIconButton
+            active={true}
+            onClick={action}
+        />
+    );
 }
 
 export default MessageButton
