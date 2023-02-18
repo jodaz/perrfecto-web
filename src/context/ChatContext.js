@@ -24,6 +24,12 @@ function chatReducer(state, action) {
                     messages: action.payload
                 }
             }
+            case 'DELETE_MESSAGE': {
+                return {
+                    ...state,
+                    messages: state.messages.filter(({ id }) => id != action.payload.id)
+                }
+            }
             case 'SET_MESSAGE': {
                 return {
                     ...state,
@@ -90,11 +96,25 @@ async function setMessage(dispatch, payload) {
     }
 }
 
+async function deleteMessage(dispatch, payload){
+    try {
+        dispatch({
+            type: 'DELETE_MESSAGE',
+            payload: {
+                id: payload
+            }
+        })
+    } catch (e) {
+        console.log(e)
+    }
+}
+
 export {
     useChat,
     ChatProvider,
     ChatContext,
     updateConnectedStatus,
     setMessage,
-    fetchMessages
+    fetchMessages,
+    deleteMessage
 }

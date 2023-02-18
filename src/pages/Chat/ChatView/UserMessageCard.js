@@ -1,17 +1,10 @@
 import * as React from 'react'
 import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box';
-import ListItem from '@mui/material/ListItem';
 import Typography from '@mui/material/Typography';
-import Skeleton from "@mui/material/Skeleton";
-import { alpha } from '@mui/material';
-import Badge from '@mui/material/Badge';
-import getUserPhoto from '../../../utils/getUserPhoto';
-import truncateString from '../../../utils/truncateString';
-import formatDistanceToNowStrict from 'date-fns/formatDistanceToNowStrict';
-import { es } from 'date-fns/locale'
-import LinkBehavior from '../../../components/LinkBehavior';
+import { IconButton } from '@mui/material';
 import styled from '@emotion/styled';
+import { Trash } from 'lucide-react';
 
 const Picture = data => (
     <Avatar
@@ -46,24 +39,45 @@ const SentMessage = styled(GeneralMessage)(() => ({
     backgroundColor: '#ECECEC',
     borderBottomRightRadius: 0,
     alignSelf: 'end',
-    marginRight: '0.5rem'
+    marginRight: '0.5rem',
+    position: 'relative'
 }))
 
-const UserMessageCard = ({ message, isReceptor }) => {
+const UserMessageCard = ({ message, isReceptor, toggleDeleteMessage }) => {
+    const [showDelete, setShowDelete] = React.useState(false);
+
+    const toggleShowDelete = () => setShowDelete(!showDelete)
+
     if (isReceptor) {
         return (
             <ReceivedMessage>
                 <Typography textAlign='left'>
-                    {message}
+                    {message.message}
                 </Typography>
             </ReceivedMessage>
         );
     }
 
     return (
-        <SentMessage>
-            <Typography textAlign='right' color="text.primary">
-                {message}
+        <SentMessage
+            onMouseEnter={toggleShowDelete}
+            onMouseLeave={toggleShowDelete}
+        >
+            {showDelete && (
+                <IconButton sx={{
+                    position: 'absolute',
+                    top: 0,
+                    right: 0
+                }} onClick={() => toggleDeleteMessage(message)}>
+                    <Trash size={16} strokeWidth={3} />
+                </IconButton>
+            )}
+            <Typography
+                textAlign='left'
+                color="text.primary"
+                marginRight='20px'
+            >
+                {message.message}
             </Typography>
         </SentMessage>
     );
