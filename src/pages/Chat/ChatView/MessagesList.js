@@ -9,10 +9,10 @@ import DeleteMessage from '../../../components/Modals/DeleteMessage';
 export default function MessagesList() {
     const boxElem = React.useRef(null)
     const { state: { user } } = useAuth()
-    const [deleteMessage, setDeleteMessage] = React.useState(false)
+    const [deleteMessage, setDeleteMessage] = React.useState(null)
     const { state: { messages }, dispatch } = useChat()
 
-    const toggleDeleteMessage = () => setDeleteMessage(!deleteMessage);
+    const toggleDeleteMessage = (item = null) => setDeleteMessage(item);
 
     React.useEffect(() => {
         listenMessages(data => setMessage(dispatch, data))
@@ -45,16 +45,16 @@ export default function MessagesList() {
             flexDirection: 'column',
             paddingBottom: '1rem'
         }} ref={boxElem}>
-            {messages.map(({ message, uid }) => (
+            {messages.map(message => (
                 <UserMessageCard
                     message={message}
-                    isReceptor={uid != user.id}
+                    isReceptor={message.uid != user.id}
                     toggleDeleteMessage={toggleDeleteMessage}
                 />
             ))}
             <DeleteMessage
                 open={deleteMessage}
-                handleClose={toggleDeleteMessage}
+                handleClose={() => toggleDeleteMessage()}
             />
         </Box>
     );

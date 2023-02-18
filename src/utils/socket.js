@@ -42,3 +42,13 @@ export const emitMessage = ({
         sender: sender
     })
 }
+
+export const deleteMessage = ({
+    message,
+    sender
+}) => {
+    socket.emit('deleteMessage', {
+        messageId: message,
+        uid: sender
+    }, res => console.log(res))
+}

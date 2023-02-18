@@ -52,7 +52,7 @@ const UserMessageCard = ({ message, isReceptor, toggleDeleteMessage }) => {
         return (
             <ReceivedMessage>
                 <Typography textAlign='left'>
-                    {message}
+                    {message.message}
                 </Typography>
             </ReceivedMessage>
         );
@@ -68,7 +68,7 @@ const UserMessageCard = ({ message, isReceptor, toggleDeleteMessage }) => {
                     position: 'absolute',
                     top: 0,
                     right: 0
-                }} onClick={toggleDeleteMessage}>
+                }} onClick={() => toggleDeleteMessage(message)}>
                     <Trash size={16} strokeWidth={3} />
                 </IconButton>
             )}
@@ -77,7 +77,7 @@ const UserMessageCard = ({ message, isReceptor, toggleDeleteMessage }) => {
                 color="text.primary"
                 marginRight='20px'
             >
-                {message}
+                {message.message}
             </Typography>
         </SentMessage>
     );

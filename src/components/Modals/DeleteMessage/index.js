@@ -7,24 +7,20 @@ import Typography from '@mui/material/Typography';
 import { Trash2 } from 'lucide-react';
 import Stack from '@mui/material/Stack';
 import { alpha } from '@mui/material';
-import { apiProvider } from '../../../api'
-import { useNavigate } from 'react-router-dom';
+import { deleteMessage as delMessageSocket } from '../../../utils/socket';
+import { useChat, deleteMessage } from '../../../context/ChatContext';
 
-const DeleteMessage = ({ open, handleClose, item }) => {
-    const [onSubmit, setOnSubmit] = React.useState(false);
-    const navigate = useNavigate()
-
+const DeleteMessage = ({ open, handleClose }) => {
     const handleDelete = async () => {
-        setOnSubmit(true)
         try {
-            const res = await apiProvider.delete(`/api/chat/delete-conversation/${item.receptor.id_conversation}`)
+            await delMessageSocket({
+                message: open.id,
+                sender: open.uid
+            })
 
-            if (res.status >= 200 && res.status < 300) {
-                setOnSubmit(false)
-                return navigate('/chat')
-            }
+            deleteMessage(dispatch, open.id);
+            handleClose()
         } catch (error) {
-            setOnSubmit(false)
             console.log(error)
         }
     }
@@ -33,10 +29,7 @@ const DeleteMessage = ({ open, handleClose, item }) => {
 
     return (
         <InstagramModal
-            handleClose={() => {
-                handleClose()
-                setOnSubmit(false)
-            }}
+            handleClose={handleClose}
             open={open}
         >
             <Box sx={{
@@ -62,12 +55,11 @@ const DeleteMessage = ({ open, handleClose, item }) => {
                     <Stack direction="column">
                         <Button
                             color="error"
-                            disabled={onSubmit}
                             onClick={handleDelete}
                         >
                             Eliminar
                         </Button>
-                        <MuiButton onClick={handleClose} disabled={onSubmit} sx={{
+                        <MuiButton onClick={handleClose} sx={{
                             color: '#858585',
                             '&:hover': {
                                 backgroundColor: `${alpha('#858585', 0.1)}`
