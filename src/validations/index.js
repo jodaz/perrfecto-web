@@ -3,13 +3,15 @@ export const PHONE = {
         required: true,
         pattern: /^\d+$/,
         notfound: true,
-        unique: true
+        unique: true,
+        minLength: 3
     },
     messages: {
         required: "Ingrese su teléfono",
         pattern: 'Introduzca un número de teléfono válido',
         notfound: 'El usuario no ha sido encontrado.',
-        unique: 'El teléfono ha sido registrado.'
+        unique: 'El teléfono ha sido registrado.',
+        minLength: 'El teléfono es muy corto.'
     }
 }
 
