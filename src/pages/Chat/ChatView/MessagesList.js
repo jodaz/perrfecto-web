@@ -43,7 +43,7 @@ export default function MessagesList() {
             overflowY: 'scroll',
             height: 'inherit',
             flexDirection: 'column',
-            paddingBottom: '1rem'
+            padding: '1rem 0'
         }} ref={boxElem}>
             {messages.map(message => (
                 <UserMessageCard

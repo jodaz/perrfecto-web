@@ -11,6 +11,8 @@ import { deleteMessage as delMessageSocket } from '../../../utils/socket';
 import { useChat, deleteMessage } from '../../../context/ChatContext';
 
 const DeleteMessage = ({ open, handleClose }) => {
+    const { dispatch } = useChat();
+
     const handleDelete = async () => {
         try {
             await delMessageSocket({
