@@ -7,16 +7,22 @@ import Typography from '@mui/material/Typography';
 import { apiProvider } from '../../../api';
 import { Flag } from 'lucide-react';
 
-const ReportForm = ({ item, selectedItem, toggleNextStep }) => {
+const ReportForm = ({ item, selectedItem, toggleNextStep, otherReason }) => {
     const [isLoading, setIsLoading] = React.useState(false)
 
     const submitReport = async () => {
         setIsLoading(true)
         try {
-            const res = await apiProvider.post('/api/report-user/new', {
+            let data = {
                 "uid_reported": item.receptor.user.id,
                 "id_reason": selectedItem.id,
-            })
+            };
+
+            if (otherReason) {
+                data.description = otherReason
+            }
+
+            const res = await apiProvider.post('/api/report-user/new', data)
 
             if (res.status >= 200 && res.status < 300) {
                 setIsLoading(false)

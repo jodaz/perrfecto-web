@@ -11,10 +11,11 @@ const ListReasons = ({ item, toggleNextStep, setSelectedItem }) => {
     const [reasons, setReasons] = React.useState([])
 
     const handleClick = reason => {
+        setSelectedItem(reason)
+
         if (reason.name == 'Otro Motivo') {
             toggleNextStep('otherReason')
         } else {
-            setSelectedItem(reason)
             toggleNextStep('reportUser')
         }
     }

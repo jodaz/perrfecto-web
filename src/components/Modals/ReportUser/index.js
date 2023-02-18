@@ -1,6 +1,7 @@
 import * as React from 'react';
 import InstagramModal from '../InstagramModal';
 import ListReasons from './ListReasons';
+import OtherReason from './OtherReason';
 import ReportForm from './ReportForm';
 import SuccessfulReport from './SuccessfulReport';
 
@@ -14,6 +15,7 @@ const contents = [
 const ReportUser = ({ open, handleClose, item }) => {
     const [content, setContent] = React.useState(contents[0])
     const [selectedItem, setSelectedItem] = React.useState(null)
+    const [reason, setReason] = React.useState('')
 
     const toggleModal = () => {
         setContent(contents[0])
@@ -40,9 +42,21 @@ const ReportUser = ({ open, handleClose, item }) => {
                     item={item}
                     cancel={toggleModal}
                     selectedItem={selectedItem}
+                    otherReason={reason}
                     toggleNextStep={nextStep}
                 />
-            ) : <SuccessfulReport item={item} handleClose={toggleModal} />}
+            ) : (content == 'successful') ? (
+                <SuccessfulReport
+                    item={item}
+                    handleClose={toggleModal}
+                />
+            ) : (
+                <OtherReason
+                    item={item}
+                    setReason={data => setReason(data)}
+                    toggleNextStep={nextStep}
+                />
+            )}
         </InstagramModal>
     );
 }
