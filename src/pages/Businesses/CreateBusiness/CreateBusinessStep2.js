@@ -25,12 +25,7 @@ const CreateBusinessStep2 = () => {
         watch,
         handleSubmit,
         setValue
-    } = useForm({
-        defaultValues: {
-            lat: 37.32485,
-            leng: -5.934162
-        }
-    });
+    } = useForm();
     const [cities, setCities] = React.useState([])
     const province = watch('province')
 
@@ -92,6 +87,7 @@ const CreateBusinessStep2 = () => {
                     InputProps={{
                         placeholder: 'Seleccione una provincia'
                     }}
+                    defaultValue={state.province}
                     noOptionsText='Sin resultados'
                 />
             </Box>

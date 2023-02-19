@@ -51,7 +51,7 @@ const ShowBusinessLocation = ({ location }) => {
                         fontWeight={400}
                         gutterBottom
                     >
-                        {business_dir}, {province}, {city}
+                        {business_dir}, {province.nombre}, {city.nombre}
                     </Typography>
                 </Box>
                 <Box p={2}>
