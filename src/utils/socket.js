@@ -74,9 +74,15 @@ export const commentBlog = ({
     user,
     msg
 }) => {
-    socket.emit('commentBlog', {
-        blog_id: blog,
-        uid: user,
-        msg: msg
-    }, res => console.log(res))
+    return new Promise((resolve, reject) => {
+        socket.emit('commentBlog', {
+            blog_id: blog,
+            uid: user,
+            msg: msg
+        }, res => console.log(res))
+
+        socket.on("commentBlog", (data) => {
+            resolve(data);
+        })
+    });
 }
