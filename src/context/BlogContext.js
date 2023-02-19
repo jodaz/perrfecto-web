@@ -78,7 +78,6 @@ function useBlogs() {
 
 async function fetchBlogs(dispatch, query) {
     try {
-        console.log(query)
         const res = await apiProvider.get('/api/blog/blog-by-uid', {
             params: query
         })
