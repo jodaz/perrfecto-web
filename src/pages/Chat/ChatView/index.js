@@ -52,7 +52,7 @@ export default function ChatView() {
         }
     }
 
-    useEffectOnce(() => { fetchData() }, [])
+    React.useEffect(() => { fetchData() }, [chatID])
 
     const renderMenu = () => (
         <Menu>
