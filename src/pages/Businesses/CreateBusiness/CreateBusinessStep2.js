@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import TextInput from '../../../components/Forms/TextInput';
 import {
@@ -16,34 +15,22 @@ import MapInput from '../../../components/Forms/MapInput';
 import { saveStep, useMultiStepForm } from '../../../context/MultiStepContext';
 import { useNavigate } from 'react-router-dom';
 import Stepper from '../Stepper';
-import { useAuth } from '../../../context/AuthContext';
+import StepsFormButtons from '../StepsFormButtons';
 
 const CreateBusinessStep2 = () => {
-    const { state: { user } } = useAuth();
     const navigate = useNavigate()
-    const { dispatch } = useMultiStepForm();
+    const { state, dispatch } = useMultiStepForm();
     const {
         control,
         watch,
         handleSubmit,
         setValue
-    } = useForm({
-        defaultValues: {
-            lat: 37.32485,
-            leng: -5.934162,
-            business_dir: user.business_dir
-        }
-    });
+    } = useForm();
     const [cities, setCities] = React.useState([])
     const province = watch('province')
 
-    const onSubmit = ({ province, city, ...restData }) => {
-        saveStep(dispatch, {
-            ...restData,
-            province: province.nombre,
-            city: city.nombre
-        });
-
+    const onSubmit = data => {
+        saveStep(dispatch, data);
         navigate('/businesses/create/step-3')
     }
 
@@ -56,6 +43,13 @@ const CreateBusinessStep2 = () => {
             setCities(filteredCities)
         }
     }, [province])
+
+    React.useEffect(() => {
+        if (Object.keys(state).length) {
+            Object.entries(state)
+                .forEach(([name, value]) => setValue(name, value))
+        }
+    }, [Object.keys(state).length])
 
     return (
         <Box component="form" onSubmit={handleSubmit(onSubmit)}>
@@ -93,6 +87,7 @@ const CreateBusinessStep2 = () => {
                     InputProps={{
                         placeholder: 'Seleccione una provincia'
                     }}
+                    defaultValue={state.province}
                     noOptionsText='Sin resultados'
                 />
             </Box>
@@ -123,14 +118,7 @@ const CreateBusinessStep2 = () => {
                     watch={watch}
                 />
             </Box>
-            <Box sx={{ p: 2 }}>
-                <Button
-                    variant='contained'
-                    type='submit'
-                >
-                    Siguiente
-                </Button>
-            </Box>
+            <StepsFormButtons />
         </Box>
     );
 }

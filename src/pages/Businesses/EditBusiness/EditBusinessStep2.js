@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import TextInput from '../../../components/Forms/TextInput';
 import {
@@ -17,6 +16,7 @@ import { saveStep, useMultiStepForm } from '../../../context/MultiStepContext';
 import { useNavigate } from 'react-router-dom';
 import Stepper from '../Stepper';
 import { useAuth } from '../../../context/AuthContext';
+import StepsFormButtons from '../StepsFormButtons';
 
 const selectedProvince = name => provincias.find(({ nombre }) => nombre === name)
 const selectedCity = name => ciudades.find(({ nombre }) => nombre === name)
@@ -120,14 +120,7 @@ const EditBusinessStep2 = () => {
             }} p={2}>
                 <MapInput control={control} watch={watch} setValue={setValue} />
             </Box>
-            <Box sx={{ p: 2 }}>
-                <Button
-                    variant='contained'
-                    type='submit'
-                >
-                    Siguiente
-                </Button>
-            </Box>
+            <StepsFormButtons />
         </Box>
     );
 }

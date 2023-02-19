@@ -18,6 +18,7 @@ import { useAuth, renewToken } from '../../../context/AuthContext';
 import PhotoGallery from '../../../components/Modals/ShowCard/PhotoGallery';
 import ContactBusiness from '../../../components/Modals/ContactBusiness';
 import LinkBehavior from '../../../components/LinkBehavior';
+import StepsFormButtons from '../StepsFormButtons';
 
 const CreateBusinessStep4 = () => {
     const [openWarning, setOpenWarning] = React.useState(false)
@@ -33,14 +34,25 @@ const CreateBusinessStep4 = () => {
     const onSubmit = async () => {
         setOpenOverlayLoader(true)
 
-        const data = {
-            ...state,
-            email: user.email
-        }
-
-        const formData = await formDataHandler(data, 'files')
-
         try {
+            const {
+                province,
+                city,
+                category,
+                ...restData
+            } = state
+
+            const data = {
+                ...restData,
+                province: province.nombre,
+                city: city.nombre,
+                email: user.email,
+                id_category: category.id
+            }
+
+            console.log(data)
+
+            const formData = await formDataHandler(data, 'files')
             const res = await fileProvider.post('/api/business-ann/new', formData)
 
             if (res.status >= 200 && res.status < 300) {
@@ -117,7 +129,7 @@ const CreateBusinessStep4 = () => {
                                 state={state}
                                 textAlign='left'
                             >
-                                <MapPin size={18} /> {state.city}, {state.province}
+                                <MapPin size={18} /> {state.city.nombre}, {state.province.nombre}
                             </Button>
                             <Typography
                                 variant="subtitle1"
@@ -183,14 +195,7 @@ const CreateBusinessStep4 = () => {
                     </CardContent>
                 </Card>
             </Box>
-            <Box sx={{ p: 2 }}>
-                <Button
-                    variant='contained'
-                    type='submit'
-                >
-                    Publicar
-                </Button>
-            </Box>
+            <StepsFormButtons next='Publicar' />
             <PublicationWait open={openWarning} handleClose={handleCloseWarning} />
             <OverlayLoader open={openOverlayLoader} />
             {openContactDialog && (
