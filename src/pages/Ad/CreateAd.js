@@ -19,28 +19,6 @@ import DogInformation from './DogInformation';
 import { DESCRIPTION, ADD_PHOTOS } from '../../validations';
 import { Info } from 'lucide-react'
 
-const SwitchInputContainer = ({
-    control,
-    label,
-    name
-}) => (
-    <Box sx={{
-        display: 'flex',
-        width: '100%',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        pb: 1
-    }}>
-        <Typography variant="subtitle1" color="text.secondary">
-            {label}
-        </Typography>
-        <SwitchInput
-            control={control}
-            name={name}
-        />
-    </Box>
-)
-
 const CreateAd = () => {
     const [openWarning, setOpenWarning] = React.useState(false)
     const [openOverlayLoader, setOpenOverlayLoader] = React.useState(false)
@@ -121,6 +99,9 @@ const CreateAd = () => {
                         rules={ADD_PHOTOS.rules}
                         validations={ADD_PHOTOS.messages}
                         maxFiles={15}
+                        accept={{
+                            'image/*': []
+                        }}
                         message='Tienes un máximo de 15 fotos disponibles'
                     />
                 </Box>
@@ -135,10 +116,18 @@ const CreateAd = () => {
                         />
                     </Box>
                     <Box sx={{ pt: 2, pb: 2, color: 'black' }}>
+                        <Typography
+                            variant="body2"
+                            color="text.primary"
+                            fontWeight={500}
+                            textTransform='uppercase'
+                            gutterBottom
+                        >
+                            Descripción
+                        </Typography>
                         <TextInput
                             name='description'
                             control={control}
-                            label='Descripción:'
                             placeholder='Escribir aquí'
                             multiline
                             maxRows={4}
@@ -159,23 +148,24 @@ const CreateAd = () => {
                     <Box>
                         <Typography
                             variant="body2"
-                            color="text.tertiary"
+                            color="text.primary"
+                            fontWeight={500}
                             textTransform='uppercase'
                             gutterBottom
                         >
                             Permisos
                         </Typography>
-                        <SwitchInputContainer
-                            label='Visualizar número de teléfono'
+                        <SwitchInput
+                            label="Visualizar número de teléfono"
                             control={control}
                             name='permission_tlf'
                         />
-                        <SwitchInputContainer
+                        <SwitchInput
                             label='Activar geolocalización'
                             control={control}
                             name='permission_geolocation'
                         />
-                        <SwitchInputContainer
+                        <SwitchInput
                             label='Habilitar Whatsapp'
                             control={control}
                             name='permission_whatsapp'

@@ -124,10 +124,12 @@ const CreateBusinessStep4 = () => {
                                 color="info.main"
                                 sx={{
                                     display: 'flex',
-                                    alignItems: 'center'
+                                    alignItems: 'center',
+                                    cursor: 'pointer'
                                 }}
+                                onClick={toggleOpenContactDialog}
                             >
-                                <Phone size={18} /><Box mr='10px' />  + {state.whatsApp}
+                                <Phone size={18} /><Box mr='10px' />  + {state.code_phone} {state.whatsApp}
                             </Typography>
                             <Typography
                                 variant="subtitle1"
@@ -202,6 +204,13 @@ const CreateBusinessStep4 = () => {
             </Box>
             <PublicationWait open={openWarning} handleClose={handleCloseWarning} />
             <OverlayLoader open={openOverlayLoader} />
+            {openContactDialog && (
+                <ContactBusiness
+                    {...state}
+                    open={openContactDialog}
+                    handleClose={toggleOpenContactDialog}
+                />
+            )}
         </Box>
     );
 }

@@ -20,6 +20,7 @@ import LikePostButton from '../../components/Buttons/LikePostButton';
 import PostMenu from './PostMenu';
 import FeaturePost from '../../components/Modals/FeaturePost';
 import FeaturedMark from './FeaturedMark';
+import PhotoGallery from '../../components/Modals/ShowCard/PhotoGallery';
 
 const PublishedBlogLayout = ({
     id,
@@ -29,14 +30,15 @@ const PublishedBlogLayout = ({
     description,
     currAuthUser,
     User,
-    CommentsCount = 0,
     LikesCount = 0,
+    CommentsCount = 0,
     navigate,
     featured_blog,
     toggleComments,
     toggleFeaturePost,
     openComments,
-    handleDeletePost
+    handleDeletePost,
+    LikesBlog
 }) => (
     <Slide direction="left" in={true} mountOnEnter unmountOnExit>
         <Box sx={{
@@ -63,13 +65,7 @@ const PublishedBlogLayout = ({
                     </IconButton>
                 </Box>
                 {featured_blog && <FeaturedMark top={20} right={20} />}
-                <Box
-                    component="img"
-                    width="100%"
-                    height="350px"
-                    alt='blog_post.png'
-                    src={BlogMultimedia.length ? getUserPhoto(BlogMultimedia[0].name) : null}
-                />
+                <PhotoGallery images={BlogMultimedia.map(item => getUserPhoto(item.name))} />
             </Box>
             <Box sx={{
                 borderRadius: '24px 24px 0px 0px',
@@ -156,12 +152,12 @@ const PublishedBlogLayout = ({
                         alignItems: 'center'
                     }}
                 >
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <LikePostButton id={id} type='post' />
-                        <Typography variant="body2" ml={1} color="#5E5E5E">
-                            {LikesCount}
-                        </Typography>
-                    </Box>
+                    <LikePostButton
+                        id={id}
+                        type="post"
+                        likes={LikesBlog}
+                        LikesCount={LikesCount}
+                    />
                     <Box sx={{ display: 'flex', alignItems: 'center' }} onClick={toggleComments}>
                         <IconButton>
                             <MessageSquare color="#5E5E5E" />

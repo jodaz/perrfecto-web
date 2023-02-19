@@ -1,9 +1,11 @@
+import * as React from 'react'
 import {
     Route,
     Routes,
     useLocation
 } from 'react-router-dom'
-import { useAuth } from './context/AuthContext';
+import { useAuth, guestUser, setUserCoords } from './context/AuthContext';
+import { useGeolocated } from 'react-geolocated';
 // Layouts
 import AppLayout from './layouts/App';
 import LandingLayout from './layouts/LandingLayout';
@@ -19,7 +21,8 @@ import DetectLocation from './components/Modals/DetectLocation';
 import Market from './pages/Market';
 import Blog from './pages/Blog';
 import Profile from './pages/Profile';
-import Chat from './pages/Chat';
+import ChatList from './pages/Chat/ChatList';
+import ChatView from './pages/Chat/ChatView';
 import NewPassword from './components/Modals/NewPassword';
 import AskCode from './components/Modals/AskCode';
 import Notifications from './pages/Notifications'
@@ -63,6 +66,8 @@ import BusinessProfile from './pages/Profile/BusinessProfile';
 import PublishedBlogsListing from './pages/Blog/PublishedBlogsListing';
 import PublishedBlog from './pages/Blog/PublishedBlog';
 import BlogEdit from './pages/Blog/BlogEdit';
+import UpdatePassword from './pages/account/UpdatePassword';
+import UpdateEmailAndPhone from './pages/account/UpdateEmailAndPhone';
 import ShowAd from './pages/Ad/ShowAd';
 import OnlyDesktop from './layouts/App/OnlyDesktop';
 import PrivateRoute from './components/PrivateRoute';
@@ -75,7 +80,24 @@ import ShowBusiness from './pages/Businesses/ShowBusiness';
 
 function AppRoutes() {
     let location = useLocation();
-    const { state: { user } } = useAuth();
+    const { state: { isAuth }, dispatch } = useAuth();
+    const { coords } = useGeolocated()
+
+    // Set guest user by default
+    React.useEffect(() => {
+        if (!isAuth) {
+            guestUser(dispatch)
+        }
+    }, [])
+
+    // Set coords by default if exists
+    React.useEffect(() => {
+        if (coords) {
+            setUserCoords(dispatch, coords)
+        } else {
+            setUserCoords(dispatch, null);
+        }
+    }, [coords])
 
     return (
         <Routes>
@@ -110,9 +132,21 @@ function AppRoutes() {
             <Route
                 path='/chat'
                 element={
-                    <AppLayout>
-                        <Chat />
-                    </AppLayout>
+                    <PrivateRoute authorize='user' unauthorized={<NotFound />}>
+                        <AppLayout>
+                            <ChatList />
+                        </AppLayout>
+                    </PrivateRoute>
+                }
+            />
+            <Route
+                path='/chat/:chatID'
+                element={
+                    <PrivateRoute authorize='user' unauthorized={<NotFound />}>
+                        <AppLayout>
+                            <ChatView />
+                        </AppLayout>
+                    </PrivateRoute>
                 }
             />
             <Route
@@ -168,7 +202,7 @@ function AppRoutes() {
             <Route
                 path='/profile/ads/create'
                 element={
-                    <PrivateRoute authorize='user,business' unauthorized={<NotFound />}>
+                    <PrivateRoute authorize='user' unauthorized={<NotFound />}>
                         <AppLayout>
                             <CreateAd location={location} />
                         </AppLayout>
@@ -178,7 +212,7 @@ function AppRoutes() {
             <Route
                 path='/profile/ads/:id/edit'
                 element={
-                    <PrivateRoute authorize='user,business' unauthorized={<NotFound />}>
+                    <PrivateRoute authorize='user' unauthorized={<NotFound />}>
                         <EditAd location={location} />
                     </PrivateRoute>
                 }
@@ -186,26 +220,32 @@ function AppRoutes() {
             <Route
                 path='/profile/ads/show'
                 element={
-                    <OnlyDesktop
-                        aside={<PetProfile />}
-                        principal={<ShowAd location={location} />}
-                    />
+                    <PrivateRoute authorize='user' unauthorized={<NotFound />}>
+                        <OnlyDesktop
+                            aside={<PetProfile />}
+                            principal={<ShowAd location={location} />}
+                        />
+                    </PrivateRoute>
                 }
             />
             <Route
                 path='/profile/settings/owner'
                 element={
                     <AppLayout>
-                        <PersonalInformation location={location} />
+                        <PrivateRoute authorize='user,business' unauthorized={<NotFound />}>
+                            <PersonalInformation location={location} />
+                        </PrivateRoute>
                     </AppLayout>
                 }
             />
             <Route
                 path='/profile/settings/owner/names'
                 element={
-                    <AppLayout>
-                        <EditNames location={location} />
-                    </AppLayout>
+                    <PrivateRoute authorize='user,business' unauthorized={<NotFound />}>
+                        <AppLayout>
+                            <EditNames location={location} />
+                        </AppLayout>
+                    </PrivateRoute>
                 }
             />
             <Route
@@ -364,6 +404,22 @@ function AppRoutes() {
                 element={
                     <AppLayout>
                         <Account location={location} />
+                    </AppLayout>
+                }
+            />
+            <Route
+                path='/profile/settings/account/security'
+                element={
+                    <AppLayout>
+                        <UpdatePassword />
+                    </AppLayout>
+                }
+            />
+            <Route
+                path='/profile/settings/account/access'
+                element={
+                    <AppLayout>
+                        <UpdateEmailAndPhone />
                     </AppLayout>
                 }
             />

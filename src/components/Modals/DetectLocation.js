@@ -4,7 +4,7 @@ import { alpha } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import Box from '@mui/material/Box';
 import { useNavigate } from 'react-router-dom';
-import { ReactComponent as MapPinIcon } from '../../assets/icons/MapPin.svg'
+import { MapPin } from 'lucide-react';
 import { useGeolocated } from "react-geolocated";
 
 export default function DetectLocation({ location }) {
@@ -28,7 +28,7 @@ export default function DetectLocation({ location }) {
             <Box sx={{
                 m: 1,
                 display: 'flex',
-                width: { md: '350px', sm: 'fit-content' },
+                width: { md: '350px', sm: '320px' },
                 height: { md: '350px', sm: 'fit-content' },
                 p: 3,
                 color: theme => theme.palette.text.secondary,
@@ -43,7 +43,7 @@ export default function DetectLocation({ location }) {
                         Detectar ubicación
                     </Box>
                     <Box margin='0 auto' width='75%' textAlign='center'>
-                        <MapPinIcon height='100px' width='100px' />
+                        <MapPin size={100} color={'#626B74'} />
                         {(isGeolocationAvailable && isGeolocationEnabled) ? (
                             <Box>
                                 Hemos detectado tu ubicación. Quieres activarla?

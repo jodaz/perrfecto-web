@@ -14,7 +14,8 @@ const ReplyCard = ({
     User,
     msg,
     createdAt,
-    LikesCount = 0
+    LikesCount = 0,
+    LikesReply
 }) => (
     <Box sx={{
         p: 1,
@@ -73,12 +74,12 @@ const ReplyCard = ({
                     alignItems: 'center'
                 }}
             >
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <LikePostButton id={id} type='reply' />
-                    <Typography variant="body2" ml={1} color="#5E5E5E">
-                        {LikesCount}
-                    </Typography>
-                </Box>
+                <LikePostButton
+                    id={id}
+                    type='reply'
+                    likes={LikesReply}
+                    LikesCount={LikesCount}
+                />
             </Stack>
         </Box>
     </Box>

@@ -11,16 +11,33 @@ import { apiProvider } from '../../api';
 import MarketFilterDrawer from '../../components/MarketFilterDrawer';
 import { SlidersHorizontal } from 'lucide-react';
 import BusinessCard from '../Businesses/BusinessCard';
-import { toggleFilters, useBusinesses, selectItem } from '../../context/BusinessContext';
+import {
+    toggleFilters,
+    useBusinesses,
+    selectItem,
+    resetFilters,
+    fetchBusinesses
+} from '../../context/BusinessContext';
 import ShowMarket from './ShowMarket';
 import SearchBox from '../../components/SearchBox';
+import { alpha } from '@mui/material';
 
 const Marketplace = () => {
     const [loadingCategories, setLoadingCategories] = React.useState(false)
     const [categories, setCategories] = React.useState([])
-    const { state: { isLoaded, publications, selectedItem }, dispatch } = useBusinesses();
+    const { state: {
+        isLoaded,
+        publications,
+        selectedItem
+    }, dispatch } = useBusinesses();
 
-    const filterFunction = data => console.log(data)
+    const filterFunction = ({ search }) => {
+        if (search) {
+            fetchBusinesses(dispatch, { filter: search })
+        } else {
+            resetFilters(dispatch)
+        }
+    }
 
     const fetchCategories = async () => {
         setLoadingCategories(true)
@@ -47,8 +64,7 @@ const Marketplace = () => {
     return (
         <Box sx={{
             display: 'flex',
-            flexDirection: 'column',
-            overflowY: 'auto'
+            flexDirection: 'column'
         }} id='market-drawer-container'>
             <Box sx={{
                 p: 2,
@@ -62,7 +78,16 @@ const Marketplace = () => {
                 >
                     Market
                 </Typography>
-                <IconButton>
+                <IconButton sx={{
+                    backgroundColor: theme => isLoaded ? theme.palette.primary.main : 'unset',
+                    color: isLoaded ? '#fff' : 'unset',
+                    '&:hover': {
+                        backgroundColor: theme => `${alpha(isLoaded
+                            ? theme.palette.primary.main
+                            : theme.palette.divider, 0.9
+                        )}`
+                    }
+                }}>
                     <SlidersHorizontal onClick={() => toggleFilters(dispatch)}/>
                 </IconButton>
             </Box>
@@ -104,6 +129,11 @@ const Marketplace = () => {
                             handleSelect={() => selectItem(dispatch, { item: item, type: 'business' })}
                         />
                     ))}
+                    {!publications.length && (
+                        <Box>
+                            Sin negocios
+                        </Box>
+                    )}
                 </Stack>
             )}
             <MarketFilterDrawer />

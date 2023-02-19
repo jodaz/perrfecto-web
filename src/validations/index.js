@@ -1,15 +1,17 @@
 export const PHONE = {
     rules: {
         required: true,
-        pattern: /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/,
+        pattern: /^\d+$/,
         notfound: true,
-        unique: true
+        unique: true,
+        minLength: 3
     },
     messages: {
         required: "Ingrese su teléfono",
         pattern: 'Introduzca un número de teléfono válido',
         notfound: 'El usuario no ha sido encontrado.',
-        unique: 'El teléfono ha sido registrado.'
+        unique: 'El teléfono ha sido registrado.',
+        minLength: 'El teléfono es muy corto.'
     }
 }
 
@@ -115,12 +117,14 @@ export const PASSWORD = {
     rules: {
         required: true,
         minLength: 6,
-        invalid: true
+        invalid: true,
+        wrong: true
     },
     messages: {
         required: "Ingrese una contraseña.",
         minLength: "Mínimo 6 caracteres.",
-        invalid: 'Credenciales inválidas.'
+        invalid: 'Credenciales inválidas.',
+        wrong: 'Contraseña incorrecta.'
     }
 }
 

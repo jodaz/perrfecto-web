@@ -20,28 +20,6 @@ import { DESCRIPTION, ADD_PHOTOS } from '../../../validations';
 
 const selectedItems = labels => labels.map(({ id }) => id)
 
-const SwitchInputContainer = ({
-    control,
-    label,
-    name
-}) => (
-    <Box sx={{
-        display: 'flex',
-        width: '100%',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        pb: 1
-    }}>
-        <Typography variant="subtitle1" color="text.secondary">
-            {label}
-        </Typography>
-        <SwitchInput
-            control={control}
-            name={name}
-        />
-    </Box>
-)
-
 const EditAdMobile = () => {
     const { state: { user }, dispatch } = useAuth();
     const [openWarning, setOpenWarning] = React.useState(false)
@@ -124,7 +102,6 @@ const EditAdMobile = () => {
     }
 
     React.useEffect(() => {
-        console.log(JSON.parse(user.publication.multimedia))
         setValue("files", JSON.parse(user.publication.multimedia))
     }, [user.publication.multimedia.length])
 
@@ -160,11 +137,19 @@ const EditAdMobile = () => {
                             isSubmitting={isSubmitting}
                         />
                     </Box>
-                    <Box sx={{ pt: 2, pb: 2, color: 'black' }}>
+                    <Box sx={{ pt: 2, pb: 2 }}>
+                        <Typography
+                            variant="body2"
+                            color="text.primary"
+                            fontWeight={500}
+                            textTransform='uppercase'
+                            gutterBottom
+                        >
+                            Descripción
+                        </Typography>
                         <TextInput
                             name='description'
                             control={control}
-                            label='Descripción:'
                             placeholder='Escribir aquí'
                             multiline
                             maxRows={4}
@@ -185,23 +170,24 @@ const EditAdMobile = () => {
                     <Box>
                         <Typography
                             variant="body2"
-                            color="text.tertiary"
+                            color="text.primary"
+                            fontWeight={500}
                             textTransform='uppercase'
                             gutterBottom
                         >
                             Permisos
                         </Typography>
-                        <SwitchInputContainer
+                        <SwitchInput
                             label='Visualizar número de teléfono'
                             control={control}
                             name='permission_tlf'
                         />
-                        <SwitchInputContainer
+                        <SwitchInput
                             label='Activar geolocalización'
                             control={control}
                             name='permission_geolocation'
                         />
-                        <SwitchInputContainer
+                        <SwitchInput
                             label='Habilitar Whatsapp'
                             control={control}
                             name='permission_whatsapp'

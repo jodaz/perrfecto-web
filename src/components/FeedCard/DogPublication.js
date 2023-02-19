@@ -89,7 +89,11 @@ const DogPublication = ({ open, data, handleClose, handleOpenOwnerCard }) => {
                         <LikeButton item={data} />
                     </Box>
                     <Box sx={{ p: 1 }}>
-                        <MessageButton />
+                        <MessageButton
+                            itemID={data.publi.id_user}
+                            handleClose={handleClose}
+                            shouldCreate
+                        />
                     </Box>
                 </Box>
             </Box>

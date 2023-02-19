@@ -1,5 +1,7 @@
 import React from 'react';
 import Switch from '@mui/material/Switch';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import FormControlLabel from '@mui/material/FormControlLabel'
 import { Controller } from "react-hook-form";
 import { styled } from '@mui/material/styles';
@@ -61,26 +63,63 @@ const SwitchInput = ({
     defaultValue,
     label,
     ...rest
-}) => (
-    <Controller
-        control={control}
-        name={name}
-        defaultValue={defaultValue}
-        render={({ field: { value, onChange, ...field } }) => (
-            <FormControlLabel
-                control={
-                    <IOSSwitch
-                        onChange={onChange}
-                        checked={value}
-                        {...field}
-                        {...rest}
-                    />
-                }
-                label={label}
-            />
-        )}
-    />
-);
+}) => {
+
+    const generateSwitchInput = () => (
+        <Controller
+            control={control}
+            name={name}
+            defaultValue={defaultValue}
+            render={({ field: { value, onChange, ...field } }) => (
+                <FormControlLabel
+                    control={
+                        <IOSSwitch
+                            onChange={onChange}
+                            checked={value}
+                            {...field}
+                            {...rest}
+                        />
+                    }
+                />
+            )}
+        />
+    )
+
+    if (label) {
+        return (
+            <Box sx={{
+                display: 'flex',
+                width: '100%',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                pb: 1
+            }}>
+                <Typography variant="subtitle1" color="text.secondary">
+                    {label}
+                </Typography>
+                <Controller
+                    control={control}
+                    name={name}
+                    defaultValue={defaultValue}
+                    render={({ field: { value, onChange, ...field } }) => (
+                        <FormControlLabel
+                            control={
+                                <IOSSwitch
+                                    onChange={onChange}
+                                    checked={value}
+                                    {...field}
+                                    {...rest}
+                                />
+                            }
+                        />
+                    )}
+                />
+            </Box>
+        )
+    }
+
+    return generateSwitchInput();
+};
 
 SwitchInput.defaultProps = {
     defaultValue: false

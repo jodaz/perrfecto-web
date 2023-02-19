@@ -9,6 +9,7 @@ import { Controller } from 'react-hook-form'
 import Popover from '@mui/material/Popover';
 import phoneCodes from '../../utils/phonecodes';
 import { Search } from 'lucide-react';
+import TransparentBackdrop from '../TransparentBackdrop';
 
 const StyledAutocompletePopper = styled('div')(({ theme }) => ({
     [`& .${autocompleteClasses.paper}`]: {
@@ -73,8 +74,8 @@ const StyledInput = styled(TextField)(({ theme }) => ({
     },
 }));
 
-const CodePopover = ({ control, rules }) => {
-    const [value, setValue] = React.useState(phoneCodes[66])
+const CodePopover = ({ control, rules, defaultCodePhone }) => {
+    const [value, setValue] = React.useState(phoneCodes[66]);
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleClick = (event) => {
@@ -86,6 +87,14 @@ const CodePopover = ({ control, rules }) => {
     };
 
     const open = Boolean(anchorEl);
+
+    React.useEffect(() => {
+        if (defaultCodePhone) {
+            const findCode = phoneCodes.find(({ code }) => code == defaultCodePhone);
+
+            setValue(findCode)
+        }
+    }, [defaultCodePhone])
 
     return (
         <>
@@ -120,6 +129,9 @@ const CodePopover = ({ control, rules }) => {
                 }}
                 onAbort={handleClose}
                 handleClose={handleClose}
+                slots={{
+                    backdrop: TransparentBackdrop
+                }}
             >
                 <Controller
                     control={control}

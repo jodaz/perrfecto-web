@@ -6,6 +6,7 @@ import CircleIcon from '@mui/icons-material/FiberManualRecord';
 import { useAuth } from '../../context/AuthContext'
 import getYearsFromYear from '../../utils/getYearsFromYear';
 import LinkBehavior from '../../components/LinkBehavior';
+import formatPhone from '../../utils/formatPhone';
 
 const Location = ({ user }) => (
     <Typography
@@ -40,7 +41,8 @@ const DogInformation = ({ hideTitle, hideInterests, desktop }) => {
                 <Box sx={{ display: 'flex', }}>
                     <Typography
                         variant="body2"
-                        color="text.tertiary"
+                        color="text.primary"
+                        fontWeight={500}
                         textTransform={'uppercase'}
                         gutterBottom
                     >
@@ -106,20 +108,18 @@ const DogInformation = ({ hideTitle, hideInterests, desktop }) => {
                     <Box marginRight='1rem' />
                     {user.email}
                 </Typography>
-                {user.phone && (
-                    <Typography
-                        variant="body1"
-                        color="text.secondary"
-                        gutterBottom
-                        sx={{ display: 'flex', alignItems: 'center' }}
-                    >
-                        <Box>
-                            <Phone size={20} />
-                        </Box>
-                        <Box marginRight='1rem' />
-                        {user.code_phone}&nbsp;{user.phone}
-                    </Typography>
-                )}
+                <Typography
+                    variant="body1"
+                    color="text.secondary"
+                    gutterBottom
+                    sx={{ display: 'flex', alignItems: 'center' }}
+                >
+                    <Box>
+                        <Phone size={20} />
+                    </Box>
+                    <Box marginRight='1rem' />
+                    {formatPhone(user)}
+                </Typography>
             </Box>
         </Box>
     );

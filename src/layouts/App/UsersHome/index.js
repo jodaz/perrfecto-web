@@ -10,10 +10,15 @@ import useEffectOnce from '../../../utils/useEffectOnce';
 import { usePublications, fetchPublications } from '../../../context/PublicationContext';
 import FilterButton from '../../../components/Buttons/FilterButton';
 import InviteUserAlert from '../../../components/InviteUserAlert';
+import { socket, handleDisconnect, listenConnection, handleConnect } from '../../../utils/socket';
+import { useAuth } from '../../../context/AuthContext';
+import { useChat, updateConnectedStatus } from '../../../context/ChatContext';
 
 const PopularMembers = React.lazy(() => import('../../../components/PopularMembers'));
 
 const UsersHome = () => {
+    const { state: { isConnected }, dispatch: chatDispatch } = useChat()
+    const { state: { isAuth, user } } = useAuth()
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
     const { state: { publications, isLoaded, isLoading }, dispatch } = usePublications();
     const [selectedCard, setSelectedCard] = React.useState(null);
@@ -43,6 +48,22 @@ const UsersHome = () => {
 
     useEffectOnce(() => { fetchPublications(dispatch) }, []);
 
+    React.useEffect(() => {
+        if (isAuth) {
+            if (isConnected) {
+                listenConnection(data => updateConnectedStatus(chatDispatch, data))
+                handleDisconnect()
+            } else {
+                handleConnect(user, data => updateConnectedStatus(chatDispatch, data))
+            }
+        }
+
+        return () => {
+            socket.off('disconnect')
+            socket.off('listaPersona')
+        }
+    }, [socket, isAuth, isConnected])
+
     return (
         <Box
             component="main"
@@ -61,7 +82,7 @@ const UsersHome = () => {
                     backgroundSize: 'cover',
                     position: 'absolute',
                     bottom: 0,
-                    height: '50%',
+                    height: '100%',
                     width: '100%',
                     zIndex: 0
                 }

@@ -11,11 +11,9 @@ const CommentsDrawer = ({ openComments, handleClose, item }) => {
     const [isReplying, setIsReplying] = React.useState(false);
 
     const toggleReply = (comment = null) => {
-        console.log(comment)
         if (comment) {
             setCommentItem(comment)
         } else {
-            console.log(item)
             setCommentItem(item)
         }
 
@@ -25,13 +23,10 @@ const CommentsDrawer = ({ openComments, handleClose, item }) => {
     const toggleDrawer = () => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
             return;
-
-            handleClose();
         }
     };
 
     const list = (anchor) => (
-        // <Box onKeyDown={() => handleClose()} component="form" onSubmit={handleSubmit(onSubmit)}>
         <>
             <DialogTitle onClose={() => handleClose()}>
                 Comentarios

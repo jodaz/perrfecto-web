@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
+import Avatar from '@mui/material/Avatar';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
@@ -14,6 +15,10 @@ import Logo from '../../components/Logo';
 import { styled } from '@mui/material/styles';
 import LinkBehavior from '../../components/LinkBehavior';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { useAuth } from '../../context/AuthContext';
+import getUserPhoto from '../../utils/getUserPhoto'
+import LoginButton from './LoginButton';
+import TransparentBackdrop from '../../components/TransparentBackdrop';
 
 const AnchorTag = styled(Link)(({ theme, dark }) => ({
     textDecoration: 'none',
@@ -25,6 +30,9 @@ const AnchorTag = styled(Link)(({ theme, dark }) => ({
     color: dark ? theme.palette.primary.main : theme.palette.text.primary,
     cursor: 'pointer',
     transition: '0.3s',
+    [theme.breakpoints.down("md")]: {
+        color: theme.palette.text.primary,
+    },
     '&:hover': {
         color: `${theme.palette.primary.main}`,
     }
@@ -51,6 +59,7 @@ const internalLinks = [
 ]
 
 function ResponsiveAppBar({ dark }) {
+    const { state: { isAuth, user } } = useAuth()
     const matches = useMediaQuery((theme) => theme.breakpoints.down('md'));
     const [anchorElNav, setAnchorElNav] = React.useState(null);
 
@@ -64,17 +73,20 @@ function ResponsiveAppBar({ dark }) {
 
     const generateButtons = () => (
         <>
-            <Box sx={{ p: 1 }}>
-                <Button
-                    variant="outlined"
-                    color='primary'
-                    to='/login'
-                    component={LinkBehavior}
-                >
-                    Iniciar sesión
-                </Button>
+            <Box p={1} />
+            <Box>
+                {isAuth ? (
+                    <Avatar
+                        src={getUserPhoto(JSON.parse(user.img_profile)[0])}
+                        sx={{
+                            height: '30px',
+                            width: '30px'
+                        }}
+                    />
+                ) : <LoginButton />}
             </Box>
-            <Box sx={{ p: 1 }}>
+            <Box p={1} />
+            <Box>
                 <LanguageButton dark={dark} />
             </Box>
         </>
@@ -89,7 +101,9 @@ function ResponsiveAppBar({ dark }) {
         >
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <Logo />
+                    <Link component={LinkBehavior} to='/'>
+                        <Logo />
+                    </Link>
                     <Box sx={{
                         flexGrow: 1,
                         display: { xs: 'none', md: 'flex' },
@@ -117,7 +131,8 @@ function ResponsiveAppBar({ dark }) {
                     <Box sx={{
                         display: 'flex',
                         justifyContent: 'flex-end',
-                        flex: matches ? 1 : 'unset'
+                        flex: matches ? 1 : 'unset',
+                        alignItems: 'center'
                     }}>
                         {generateButtons()}
                         <Box sx={{
@@ -130,7 +145,7 @@ function ResponsiveAppBar({ dark }) {
                                 aria-controls="menu-appbar"
                                 aria-haspopup="true"
                                 onClick={handleOpenNavMenu}
-                                color={dark ? 'black' : 'inherit'}
+                                color='primary'
                             >
                                 <MenuIcon />
                             </IconButton>
@@ -150,6 +165,9 @@ function ResponsiveAppBar({ dark }) {
                                 onClose={handleCloseNavMenu}
                                 sx={{
                                     display: { xs: 'block', md: 'none' },
+                                }}
+                                slots={{
+                                    backdrop: TransparentBackdrop
                                 }}
                             >
                                 {internalLinks.map((link) => (

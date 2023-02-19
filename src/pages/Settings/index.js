@@ -8,6 +8,7 @@ import LinkBehavior from '../../components/LinkBehavior';
 import SettingsLayout from '../../layouts/SettingsLayout'
 import ListItemLink from '../../components/ListItemLink';
 import List from '../../components/List';
+import PreferencesForm from './PreferencesForm';
 
 const ListTitle = ({ children }) => (
     <ListItem component="div" disablePadding sx={{
@@ -55,12 +56,18 @@ const Settings = () => {
                             to="owner"
                             title="Información personal"
                         />
-                        {(user.role == 'user') && (
+                        {(user.role == 'user' && user.dog) && (
                             <ListItemLink
                                 to="pet"
                                 title="Información de la mascota"
                             />
                         )}
+                    </List>
+                    <List>
+                        <ListTitle>
+                            Preferencias
+                        </ListTitle>
+                        <PreferencesForm />
                     </List>
                     <List>
                         <ListTitle>

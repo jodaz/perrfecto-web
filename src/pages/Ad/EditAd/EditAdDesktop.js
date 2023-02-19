@@ -21,28 +21,6 @@ import { useNavigate } from 'react-router-dom';
 
 const selectedItems = labels => labels.map(({ id }) => id)
 
-const SwitchInputContainer = ({
-    control,
-    label,
-    name
-}) => (
-    <Box sx={{
-        display: 'flex',
-        width: '100%',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        pb: 1
-    }}>
-        <Typography variant="subtitle1" color="text.secondary">
-            {label}
-        </Typography>
-        <SwitchInput
-            control={control}
-            name={name}
-        />
-    </Box>
-)
-
 const EditAdDesktop = () => {
     const { state: { user }, dispatch } = useAuth();
     const navigate = useNavigate();
@@ -126,7 +104,6 @@ const EditAdDesktop = () => {
     }
 
     React.useEffect(() => {
-        console.log(JSON.parse(user.publication.multimedia))
         setValue("files", JSON.parse(user.publication.multimedia))
     }, [user.publication.multimedia.length])
 
@@ -135,6 +112,10 @@ const EditAdDesktop = () => {
             background: '#fff',
             boxShadow: '0px 2px 20px rgba(133, 133, 133, 0.25)',
             borderRadius: '12px',
+            position: 'relative',
+            maxHeight: { md: '500px', lg: '600px' },
+            width: 'fit-content',
+            overflowY: 'auto',
             position: 'relative'
         }} id="interests-drawer-container">
             <DialogTitle onClose={() => navigate(-1)}>
@@ -148,7 +129,7 @@ const EditAdDesktop = () => {
                 width: 'fit-content',
                 overflowY: 'auto'
             }} component="form" onSubmit={handleSubmit(onSubmit)}>
-                <Box sx={{ padding: '0 1rem' }}>
+                <Box margin={'0 2rem'}>
                     <GalleryInput
                         control={control}
                         name='files'
@@ -156,52 +137,25 @@ const EditAdDesktop = () => {
                         validations={ADD_PHOTOS.messages}
                         deletePhotoHandler={handleOpenDeletePhoto}
                         accept={{
-                            'image/*': [],
-                            'video/mp4': []
+                            'image/*': []
                         }}
                         maxFiles={15}
                         message='Tienes un máximo de 15 fotos'
                     />
                 </Box>
-                <Box display='flex'>
+                <Box sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    flex: 1,
+                    padding: '0 1rem 1rem 1rem'
+                }}>
                     <Box sx={{
                         display: 'flex',
-                        flexDirection: 'column',
                         flex: 1
                     }}>
                         <Box padding='0 1rem 1rem 1rem'>
                             <DogInformation desktop/>
                         </Box>
-                        <Box p={2}>
-                            <TextInput
-                                name='description'
-                                control={control}
-                                label='Descripción:'
-                                placeholder='Escribir aquí'
-                                multiline
-                                maxRows={3}
-                                rows={3}
-                                rules={DESCRIPTION.rules}
-                                validations={DESCRIPTION.messages}
-                                labelColor="text"
-                                sx={{
-                                    border: 'none !important',
-                                    padding: 0,
-                                    '&.Mui-focused': {
-                                        boxShadow: 'none',
-                                        borderColor: 'none'
-                                    },
-                                }}
-                            />
-                        </Box>
-                    </Box>
-                    <Box sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        flex: 1,
-                        padding: '0 1rem 1rem 1rem',
-                        width: '290px'
-                    }}>
                         <Box sx={{ pt: 2, pb: 2 }}>
                             <InterestInput
                                 control={control}
@@ -210,31 +164,62 @@ const EditAdDesktop = () => {
                                 isSubmitting={isSubmitting}
                             />
                         </Box>
-                        <Box>
-                            <Typography
-                                variant="body2"
-                                color="text.tertiary"
-                                textTransform='uppercase'
-                                gutterBottom
-                            >
-                                Permisos
-                            </Typography>
-                            <SwitchInputContainer
-                                label='Visualizar número de teléfono'
-                                control={control}
-                                name='permission_tlf'
-                            />
-                            <SwitchInputContainer
-                                label='Activar geolocalización'
-                                control={control}
-                                name='permission_geolocation'
-                            />
-                            <SwitchInputContainer
-                                label='Habilitar Whatsapp'
-                                control={control}
-                                name='permission_whatsapp'
-                            />
-                        </Box>
+                    </Box>
+                    <Box p={2}>
+                        <Typography
+                            variant="body2"
+                            color="text.primary"
+                            fontWeight={500}
+                            textTransform='uppercase'
+                            gutterBottom
+                        >
+                            Descripción
+                        </Typography>
+                        <TextInput
+                            name='description'
+                            control={control}
+                            placeholder='Escribir aquí'
+                            multiline
+                            maxRows={3}
+                            rows={3}
+                            rules={DESCRIPTION.rules}
+                            validations={DESCRIPTION.messages}
+                            labelColor="text"
+                            sx={{
+                                border: 'none !important',
+                                padding: 0,
+                                '&.Mui-focused': {
+                                    boxShadow: 'none',
+                                    borderColor: 'none'
+                                },
+                            }}
+                        />
+                    </Box>
+                    <Box p={2}>
+                        <Typography
+                            variant="body2"
+                            color="text.primary"
+                            fontWeight={500}
+                            textTransform='uppercase'
+                            gutterBottom
+                        >
+                            Permisos
+                        </Typography>
+                        <SwitchInput
+                            label='Visualizar número de teléfono'
+                            control={control}
+                            name='permission_tlf'
+                        />
+                        <SwitchInput
+                            label='Activar geolocalización'
+                            control={control}
+                            name='permission_geolocation'
+                        />
+                        <SwitchInput
+                            label='Habilitar Whatsapp'
+                            control={control}
+                            name='permission_whatsapp'
+                        />
                     </Box>
                 </Box>
                 <Box sx={{ padding: '0 1rem 1rem 1rem', textAlign: 'center' }}>

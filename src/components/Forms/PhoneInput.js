@@ -19,8 +19,10 @@ const PhoneInput = ({
     rules,
     defaultValue,
     type,
+    name,
     disabled,
-    validations
+    validations,
+    defaultCodePhone
 }) => {
     const allowOnlyNumber=(value)=>{
         return value.replace(/[^0-9]/g, '')
@@ -31,7 +33,7 @@ const PhoneInput = ({
             <InputLabel shrink>Teléfono</InputLabel>
             <Controller
                 control={control}
-                name='phone'
+                name={name}
                 defaultValue={defaultValue}
                 rules={rules}
                 render={({ field: { onChange, ...restField }, fieldState: { error } }) => (
@@ -45,7 +47,7 @@ const PhoneInput = ({
                             disabled={disabled}
                             startAdornment={
                                 <InputAdornment position="start">
-                                    <CodePopover control={control} />
+                                    <CodePopover defaultCodePhone={defaultCodePhone} control={control} />
                                 </InputAdornment>
                             }
                             inputProps={{ maxLength: 15 }}

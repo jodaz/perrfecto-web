@@ -41,7 +41,7 @@ const PublishedBlogsListing = () => {
                 flexDirection: 'column',
             }} id="blog-drawer-container">
                 <Box sx={{ margin: '10px 0' }}>
-                    <SearchBox filter={(data) => searchBlogs(dispatch, data)} />
+                    <SearchBox filter={data => fetchBlogs(dispatch, { filter: data.search })} />
                 </Box>
                 <Box sx={{ display: 'flex', flexDirection: 'column', mt: '10px' }}>
                     {(items.length) ? (

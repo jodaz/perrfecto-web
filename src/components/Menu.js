@@ -3,6 +3,7 @@ import IconButton from '@mui/material/IconButton';
 import MuiMenu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { MoreHorizontal } from 'lucide-react';
+import TransparentBackdrop from './TransparentBackdrop';
 
 const ITEM_HEIGHT = 48;
 
@@ -31,17 +32,17 @@ const Menu = ({ children, icon, IconButtonProps, iconColor = '#000' }) => {
                 })}
             </IconButton>
             <MuiMenu
-                hideBackdrop
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}
-                PaperProps={{
-                    style: {
+                sx={{
+                    '.MuiMenu-paper': {
                         maxHeight: ITEM_HEIGHT * 4.5,
                         boxShadow: '0px 2px 8px rgba(0, 0, 0, 0.24)',
                         borderRadius: '8px',
-                        width: 'fit-content'
-                    },
+                        width: 'fit-content',
+                        padding: '0 !important'
+                    }
                 }}
                 anchorOrigin={{
                     vertical: 'bottom',
@@ -51,16 +52,23 @@ const Menu = ({ children, icon, IconButtonProps, iconColor = '#000' }) => {
                     vertical: 'top',
                     horizontal: 'left',
                 }}
+                slots={{
+                    backdrop: TransparentBackdrop
+                }}
             >
-                {React.Children.map(children, child => (
-                    <MenuItem
-                        key={child}
-                        onClick={handleClose}
-                        sx={{ width: '100%' }}
-                    >
-                        {React.cloneElement(child)}
-                    </MenuItem>
-                ))}
+                {React.Children.map(children, child => {
+                    if (React.isValidElement(child)) {
+                        return (
+                            <MenuItem
+                                key={child}
+                                onClick={handleClose}
+                                sx={{ width: '100%' }}
+                            >
+                                {React.cloneElement(child)}
+                            </MenuItem>
+                        )
+                    }
+                })}
             </MuiMenu>
         </div>
     );

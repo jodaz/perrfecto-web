@@ -1,6 +1,7 @@
 import * as React from 'react'
 import vars from '../vars'
 import { apiProvider } from '../api'
+import { handleLogout } from '../utils/socket'
 
 const setLocalCredentials = async (token, data) => {
     await localStorage.setItem(vars.authToken, token)
@@ -14,7 +15,9 @@ const AuthContext = React.createContext()
 const initialState = {
     isAuth: false,
     user: {},
-    token: ''
+    token: '',
+    userCoords: null,
+    openGeolocation: false
 }
 
 const getInitialState = () => {
@@ -46,6 +49,18 @@ function authReducer(state, action) {
                 return {
                     ...state,
                     user: action.payload.user,
+                }
+            }
+            case 'TOGGLE_GEOLOCATION_DRAWER': {
+                return {
+                    ...state,
+                    openGeolocation: !state.openGeolocation
+                }
+            }
+            case 'SET_USER_COORDS': {
+                return {
+                    ...state,
+                    userCoords: action.payload
                 }
             }
             case 'RENEW_TOKEN': {
@@ -131,6 +146,17 @@ async function loginUser(dispatch, values) {
     }
 }
 
+async function setUserCoords(dispatch, data) {
+    try {
+        dispatch({
+            type: 'SET_USER_COORDS',
+            payload: data
+        })
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 async function guestUser(dispatch) {
     try {
         const data = {
@@ -156,9 +182,27 @@ async function logout(dispatch) {
 
         await localStorage.removeItem(vars.authToken)
         await localStorage.removeItem(vars.user);
+        await handleLogout()
     } catch (e) {
         console.log(e);
     }
 }
 
-export { useAuth, AuthProvider, loginUser, logout, guestUser, renewToken }
+async function toggleGeolocation(dispatch) {
+    try {
+        dispatch({ type: 'TOGGLE_GEOLOCATION_DRAWER' })
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+export {
+    useAuth,
+    toggleGeolocation,
+    AuthProvider,
+    loginUser,
+    logout,
+    guestUser,
+    renewToken,
+    setUserCoords
+}
