@@ -6,10 +6,11 @@ import { ThumbsUp } from 'lucide-react';
 import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import { likeBlog } from '../../../utils/socket';
 
 const LikePostButton = ({ id, type, likes = [], LikesCount = 0 }) => {
     const [isLiked, setIsLiked] = React.useState(likes.length)
-    const { state: { isAuth } } = useAuth();
+    const { state: { isAuth, user } } = useAuth();
     const { dispatch } = useGuest();
 
     const handleSubmitLike = async () => {
@@ -18,28 +19,38 @@ const LikePostButton = ({ id, type, likes = [], LikesCount = 0 }) => {
         try {
             switch (type) {
                 case 'post': {
-                    response = await apiProvider.post('/api/blog/like', {
-                        blog_id: id
+                    response = await likeBlog({
+                        blog: id,
+                        user: user.id
                     })
+
+                    if (response) {
+                        setIsLiked(true)
+                    }
+
                     break;
                 }
                 case 'comment': {
                     response = await apiProvider.post('/api/blog/like-commentary', {
                         commentary_id: id
                     })
+
+                    if (response.status >= 200 && response.status < 300) {
+                        setIsLiked(true)
+                    }
+
                     break;
                 }
                 case 'reply': {
                     response = await apiProvider.post('/api/blog/like-reply-blog', {
                         reply_id: id
                     })
-                    break;
-                }
-            }
 
-            if (response) {
-                if (response.status >= 200 && response.status < 300) {
-                    setIsLiked(true)
+                    if (response.status >= 200 && response.status < 300) {
+                        setIsLiked(true)
+                    }
+
+                    break;
                 }
             }
         } catch (error) {

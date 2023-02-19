@@ -52,3 +52,31 @@ export const deleteMessage = ({
         uid: sender
     }, res => console.log(res))
 }
+
+export const likeBlog = ({
+    blog,
+    user
+}) => {
+    return new Promise((resolve, reject) => {
+        socket.emit('likeBlog', {
+            blog_id: blog,
+            uid: user
+        }, res => console.log(res))
+
+        socket.on("likeBlog", (data) => {
+            resolve(data);
+        })
+    });
+}
+
+export const commentBlog = ({
+    blog,
+    user,
+    msg
+}) => {
+    socket.emit('commentBlog', {
+        blog_id: blog,
+        uid: user,
+        msg: msg
+    }, res => console.log(res))
+}
