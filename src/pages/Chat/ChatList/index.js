@@ -13,9 +13,13 @@ export default function ChatList() {
     const { state: { users } } = useChat()
     const [messages, setMessages] = React.useState([null, null, null, null, null])
 
-    const fetchMessages = async () => {
+    const fetchMessages = async ({ search }) => {
         try {
-            const res = await apiProvider.get('/api/chat/conversations')
+            const res = await apiProvider.get('/api/chat/conversations',{
+                params: {
+                    filter: search
+                }
+            })
 
             if (res.status >= 200 && res.status < 300) {
                 const { data: { data } } = res;
@@ -38,7 +42,7 @@ export default function ChatList() {
                 >
                     Mensajes
                 </Typography>
-                <SearchBox filter={data => console.log(data)} />
+                <SearchBox filter={data => fetchMessages(data)} />
             </Stack>
             <Box mt={3} />
             <List sx={{ width: '100%' }}>
