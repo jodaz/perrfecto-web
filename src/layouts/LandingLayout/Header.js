@@ -77,7 +77,7 @@ function ResponsiveAppBar({ dark }) {
             <Box>
                 {isAuth ? (
                     <Avatar
-                        src={getUserPhoto(JSON.parse(user.img_profile)[0])}
+                        src={user.img_profile ? getUserPhoto(JSON.parse(user.img_profile)[0]) : '/images/Avatar.svg'}
                         sx={{
                             height: '30px',
                             width: '30px'
