@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import SettingsLayout from '../../../layouts/SettingsLayout';
 import { Outlet } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
-import { saveStep, useMultiStepForm } from '../../../context/MultiStepContext';
+import { saveStep, useMultiStepForm, clearForm } from '../../../context/MultiStepContext';
 
 const CreateBusiness = () => {
     const { state: { user } } = useAuth();
@@ -20,6 +20,8 @@ const CreateBusiness = () => {
             });
         }
     }, [user])
+
+    React.useEffect(() => { clearForm() }, [])
 
     return (
         <SettingsLayout title="Negocio">

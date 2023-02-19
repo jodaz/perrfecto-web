@@ -35,12 +35,22 @@ const CreateBusinessStep4 = () => {
         setOpenOverlayLoader(true)
 
         try {
-            const { category, ...restData } = state;
+            const {
+                province,
+                city,
+                category,
+                ...restData
+            } = state
 
             const data = {
                 ...restData,
+                province: province.nombre,
+                city: city.nombre,
+                email: user.email,
                 id_category: category.id
             }
+
+            console.log(data)
 
             const formData = await formDataHandler(data, 'files')
             const res = await fileProvider.post('/api/business-ann/new', formData)

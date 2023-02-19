@@ -39,6 +39,8 @@ const EditBusinessStep4 = () => {
         try {
             const {
                 files,
+                province,
+                city,
                 ...restData
             } = state
 
@@ -48,6 +50,8 @@ const EditBusinessStep4 = () => {
 
             const data = {
                 ...restData,
+                province: province.nombre,
+                city: city.nombre,
                 files: filteredFiles,
                 email: user.email
             }
