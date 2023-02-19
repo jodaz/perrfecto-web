@@ -15,13 +15,11 @@ import MapInput from '../../../components/Forms/MapInput';
 import { saveStep, useMultiStepForm } from '../../../context/MultiStepContext';
 import { useNavigate } from 'react-router-dom';
 import Stepper from '../Stepper';
-import { useAuth } from '../../../context/AuthContext';
 import StepsFormButtons from '../StepsFormButtons';
 
 const CreateBusinessStep2 = () => {
-    const { state: { user } } = useAuth();
     const navigate = useNavigate()
-    const { dispatch } = useMultiStepForm();
+    const { state, dispatch } = useMultiStepForm();
     const {
         control,
         watch,
@@ -30,20 +28,14 @@ const CreateBusinessStep2 = () => {
     } = useForm({
         defaultValues: {
             lat: 37.32485,
-            leng: -5.934162,
-            business_dir: user.business_dir
+            leng: -5.934162
         }
     });
     const [cities, setCities] = React.useState([])
     const province = watch('province')
 
-    const onSubmit = ({ province, city, ...restData }) => {
-        saveStep(dispatch, {
-            ...restData,
-            province: province.nombre,
-            city: city.nombre
-        });
-
+    const onSubmit = data => {
+        saveStep(dispatch, data);
         navigate('/businesses/create/step-3')
     }
 
@@ -56,6 +48,13 @@ const CreateBusinessStep2 = () => {
             setCities(filteredCities)
         }
     }, [province])
+
+    React.useEffect(() => {
+        if (Object.keys(state).length) {
+            Object.entries(state)
+                .forEach(([name, value]) => setValue(name, value))
+        }
+    }, [Object.keys(state).length])
 
     return (
         <Box component="form" onSubmit={handleSubmit(onSubmit)}>

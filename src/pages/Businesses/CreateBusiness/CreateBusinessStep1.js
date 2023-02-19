@@ -15,24 +15,17 @@ import useEffectOnce from '../../../utils/useEffectOnce';
 import { useForm } from 'react-hook-form'
 import { saveStep, useMultiStepForm } from '../../../context/MultiStepContext';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../../context/AuthContext';
 import PhoneInput from '../../../components/Forms/PhoneInput';
 import StepsFormButtons from '../StepsFormButtons';
 
 const CreateBusinessStep1 = () => {
     const navigate = useNavigate();
-    const { state: { user } } = useAuth();
-    const { dispatch } = useMultiStepForm();
+    const { state, dispatch } = useMultiStepForm();
     const {
         control,
-        handleSubmit
-    } = useForm({
-        defaultValues: {
-            code_phone: user.code_phone,
-            business_name: user.business_name,
-            whatsApp: user.phone
-        }
-    });
+        handleSubmit,
+        setValue
+    } = useForm();
     const [categories, setCategories] = React.useState([])
 
     const fetchCategories = async () => {
@@ -50,16 +43,18 @@ const CreateBusinessStep1 = () => {
     }
 
     const onSubmit = data => {
-        const { category, ...restData } = data;
-
-        saveStep(dispatch, {
-            ...restData,
-            id_category: category.id
-        });
+        saveStep(dispatch, data);
         navigate('/businesses/create/step-2')
     }
 
     useEffectOnce(() => { fetchCategories() }, [])
+
+    React.useEffect(() => {
+        if (Object.keys(state).length) {
+            Object.entries(state)
+                .forEach(([name, value]) => setValue(name, value))
+        }
+    }, [Object.keys(state).length])
 
     return (
         <Box component="form" onSubmit={handleSubmit(onSubmit)}>
@@ -77,6 +72,7 @@ const CreateBusinessStep1 = () => {
                     control={control}
                     name='business_name'
                     label='Nombre del negocio'
+                    defaultValue={state.business_name}
                     rules={BUSINESS_NAME.rules}
                     validations={BUSINESS_NAME.messages}
                 />

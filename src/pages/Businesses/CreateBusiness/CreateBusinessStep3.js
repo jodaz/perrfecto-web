@@ -14,16 +14,18 @@ import StepsFormButtons from '../StepsFormButtons';
 const CreateBusinessStep3 = () => {
     const navigate = useNavigate()
     const { state, dispatch } = useMultiStepForm();
-    const { control, handleSubmit } = useForm({
-        defaultValues: {
-            files: state.files
-        }
-    });
+    const { control, handleSubmit, setValue } = useForm();
 
     const onSubmit = data => {
         saveStep(dispatch, data);
         navigate('/businesses/create/step-4')
     }
+
+    React.useEffect(() => {
+        if (Object.keys(state).length) {
+            setValue('files', state.files);
+        }
+    }, [Object.keys(state).length])
 
     return (
         <Box component="form" onSubmit={handleSubmit(onSubmit)}>
