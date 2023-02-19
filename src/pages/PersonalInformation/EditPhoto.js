@@ -38,7 +38,7 @@ const EditPhoto = ({ isEditing }) => {
 
     const deletePhoto = async () => {
         try {
-            const res = await apiProvider.delete(`/api/user/img-profile/${user.img_profile}`)
+            const res = await apiProvider.delete(`/api/user/img-profile/${currProfilePic}`)
 
             if (res.status >= 200 && res.status < 300) {
                 renewToken(dispatch, user)
@@ -56,7 +56,7 @@ const EditPhoto = ({ isEditing }) => {
 
     React.useEffect(() => {
         if (user.img_profile) {
-            setCurrProfilePic(getUserPhoto(JSON.parse(user.img_profile)[0]))
+            setCurrProfilePic(JSON.parse(user.img_profile)[0])
         }
     }, [user.img_profile])
 
@@ -72,7 +72,7 @@ const EditPhoto = ({ isEditing }) => {
                 />
             ) : (
                 <Avatar
-                    src={currProfilePic ? currProfilePic : '/images/Avatar.svg'}
+                    src={currProfilePic ? getUserPhoto(currProfilePic) : '/images/Avatar.svg'}
                     alt="profile_photo"
                     sx={{ height: '125px', width: '125px' }}
                 />
