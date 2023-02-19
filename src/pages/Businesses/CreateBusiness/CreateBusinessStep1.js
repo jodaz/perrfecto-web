@@ -9,7 +9,6 @@ import {
     PHONE
 } from '../../../validations';
 import { apiProvider } from '../../../api';
-import Button from '@mui/material/Button';
 import Stepper from '../Stepper';
 import SelectInput from '../../../components/Forms/SelectInput';
 import useEffectOnce from '../../../utils/useEffectOnce';
@@ -18,6 +17,7 @@ import { saveStep, useMultiStepForm } from '../../../context/MultiStepContext';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 import PhoneInput from '../../../components/Forms/PhoneInput';
+import StepsFormButtons from '../StepsFormButtons';
 
 const CreateBusinessStep1 = () => {
     const navigate = useNavigate();
@@ -140,14 +140,7 @@ const CreateBusinessStep1 = () => {
                     }}
                 />
             </Box>
-            <Box sx={{ p: 2 }}>
-                <Button
-                    variant='contained'
-                    type='submit'
-                >
-                    Siguiente
-                </Button>
-            </Box>
+            <StepsFormButtons />
         </Box>
     );
 }

@@ -18,6 +18,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 import PhoneInput from '../../../components/Forms/PhoneInput';
 import Stepper from '../Stepper';
+import StepsFormButtons from '../StepsFormButtons';
 
 const categoryName = 'TIENDAS DE MASCOTAS';
 
@@ -151,14 +152,7 @@ const EditBusinessStep1 = () => {
                     }}
                 />
             </Box>
-            <Box sx={{ p: 2 }}>
-                <Button
-                    variant='contained'
-                    type='submit'
-                >
-                    Siguiente
-                </Button>
-            </Box>
+            <StepsFormButtons />
         </Box>
     );
 }

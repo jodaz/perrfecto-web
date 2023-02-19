@@ -18,6 +18,7 @@ import { useAuth, renewToken } from '../../../context/AuthContext';
 import PhotoGallery from '../../../components/Modals/ShowCard/PhotoGallery';
 import ContactBusiness from '../../../components/Modals/ContactBusiness';
 import LinkBehavior from '../../../components/LinkBehavior';
+import StepsFormButtons from '../StepsFormButtons';
 
 const CreateBusinessStep4 = () => {
     const [openWarning, setOpenWarning] = React.useState(false)
@@ -183,25 +184,7 @@ const CreateBusinessStep4 = () => {
                     </CardContent>
                 </Card>
             </Box>
-            <Box sx={{
-                p: 2,
-                display: 'flex',
-                justifyContent: 'space-between'
-            }}>
-                <Button
-                    component={LinkBehavior}
-                    to={-1}
-                    sx={{ color: theme => theme.palette.text.tertiary }}
-                >
-                    Regresar
-                </Button>
-                <Button
-                    variant='contained'
-                    type='submit'
-                >
-                    Publicar
-                </Button>
-            </Box>
+            <StepsFormButtons next='Publicar' />
             <PublicationWait open={openWarning} handleClose={handleCloseWarning} />
             <OverlayLoader open={openOverlayLoader} />
             {openContactDialog && (

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import GalleryInput from '../../../components/GalleryInput'
 import { ADD_PHOTOS } from '../../../validations';
@@ -12,6 +11,7 @@ import { useAuth } from '../../../context/AuthContext';
 import Tooltip from '@mui/material/Tooltip';
 import { Info } from 'lucide-react'
 import DeletePhotoWarning from '../../../components/Modals/DeletePhotoWarning';
+import StepsFormButtons from '../StepsFormButtons';
 
 const EditBusinessStep3 = () => {
     const [openDeletePhoto, setOpenDeletePhoto] = React.useState(false);
@@ -83,14 +83,7 @@ const EditBusinessStep3 = () => {
                     deletePhotoHandler={handleOpenDeletePhoto}
                 />
             </Box>
-            <Box sx={{ p: 2 }}>
-                <Button
-                    variant='contained'
-                    type='submit'
-                >
-                    Revisa tu publicación
-                </Button>
-            </Box>
+            <StepsFormButtons next='Revisa tu publicación' />
             {(selectedPhoto) && (
                 <DeletePhotoWarning
                     open={openDeletePhoto}

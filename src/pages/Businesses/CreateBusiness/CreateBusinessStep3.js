@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import GalleryInput from '../../../components/GalleryInput'
 import { ADD_PHOTOS } from '../../../validations';
@@ -10,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import Stepper from '../Stepper';
 import Tooltip from '@mui/material/Tooltip';
 import { Info } from 'lucide-react'
-import LinkBehavior from '../../../components/LinkBehavior';
+import StepsFormButtons from '../StepsFormButtons';
 
 const CreateBusinessStep3 = () => {
     const navigate = useNavigate()
@@ -59,25 +58,7 @@ const CreateBusinessStep3 = () => {
                     validations={ADD_PHOTOS.messages}
                 />
             </Box>
-            <Box sx={{
-                p: 2,
-                display: 'flex',
-                justifyContent: 'space-between'
-            }}>
-                <Button
-                    component={LinkBehavior}
-                    to={-1}
-                    sx={{ color: theme => theme.palette.text.tertiary }}
-                >
-                    Regresar
-                </Button>
-                <Button
-                    variant='contained'
-                    type='submit'
-                >
-                    Siguiente
-                </Button>
-            </Box>
+            <StepsFormButtons next='Revisa tu publicación' />
         </Box>
     );
 }

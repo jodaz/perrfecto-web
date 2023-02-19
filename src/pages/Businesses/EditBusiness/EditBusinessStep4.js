@@ -19,6 +19,7 @@ import PhotoGallery from '../../../components/Modals/ShowCard/PhotoGallery';
 import getUserPhoto from '../../../utils/getUserPhoto';
 import ContactBusiness from '../../../components/Modals/ContactBusiness';
 import LinkBehavior from '../../../components/LinkBehavior';
+import StepsFormButtons from '../StepsFormButtons';
 
 const EditBusinessStep4 = () => {
     const [openWarning, setOpenWarning] = React.useState(false)
@@ -197,14 +198,7 @@ const EditBusinessStep4 = () => {
                     </CardContent>
                 </Card>
             </Box>
-            <Box sx={{ p: 2 }}>
-                <Button
-                    variant='contained'
-                    type='submit'
-                >
-                    Publicar
-                </Button>
-            </Box>
+            <StepsFormButtons next='Publicar' />
             {openContactDialog && (
                 <ContactBusiness
                     {...state}

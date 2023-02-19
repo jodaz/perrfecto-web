@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import TextInput from '../../../components/Forms/TextInput';
 import {
@@ -17,6 +16,7 @@ import { saveStep, useMultiStepForm } from '../../../context/MultiStepContext';
 import { useNavigate } from 'react-router-dom';
 import Stepper from '../Stepper';
 import { useAuth } from '../../../context/AuthContext';
+import StepsFormButtons from '../StepsFormButtons';
 
 const CreateBusinessStep2 = () => {
     const { state: { user } } = useAuth();
@@ -123,14 +123,7 @@ const CreateBusinessStep2 = () => {
                     watch={watch}
                 />
             </Box>
-            <Box sx={{ p: 2 }}>
-                <Button
-                    variant='contained'
-                    type='submit'
-                >
-                    Siguiente
-                </Button>
-            </Box>
+            <StepsFormButtons />
         </Box>
     );
 }
