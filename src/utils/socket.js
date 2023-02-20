@@ -118,3 +118,21 @@ export const commentBlog = ({
         })
     });
 }
+
+export const replyComment = ({
+    comment,
+    user,
+    msg
+}) => {
+    return new Promise((resolve, reject) => {
+        socket.emit('replyCommentary', {
+            commentary_id: comment,
+            uid: user,
+            msg: msg
+        }, res => console.log(res))
+
+        socket.on("replyCommentary", (data) => {
+            resolve(data);
+        })
+    });
+}

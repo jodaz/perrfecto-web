@@ -6,7 +6,7 @@ import { ThumbsUp } from 'lucide-react';
 import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { likeBlog, likeReply } from '../../../utils/socket';
+import { likeBlog, likeReply, likeCommentBlog } from '../../../utils/socket';
 
 const LikePostButton = ({ id, type, likes = [], LikesCount = 0 }) => {
     const [isLiked, setIsLiked] = React.useState(likes.length)
