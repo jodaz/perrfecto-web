@@ -6,7 +6,7 @@ import { ThumbsUp } from 'lucide-react';
 import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { likeBlog } from '../../../utils/socket';
+import { likeBlog, likeReply } from '../../../utils/socket';
 
 const LikePostButton = ({ id, type, likes = [], LikesCount = 0 }) => {
     const [isLiked, setIsLiked] = React.useState(likes.length)
@@ -24,34 +24,24 @@ const LikePostButton = ({ id, type, likes = [], LikesCount = 0 }) => {
                         user: user.id
                     })
 
-                    if (response) {
-                        setIsLiked(true)
-                    }
-
-                    break;
-                }
-                case 'comment': {
-                    response = await apiProvider.post('/api/blog/like-commentary', {
-                        commentary_id: id
-                    })
-
-                    if (response.status >= 200 && response.status < 300) {
-                        setIsLiked(true)
-                    }
-
                     break;
                 }
                 case 'reply': {
-                    response = await apiProvider.post('/api/blog/like-reply-blog', {
-                        reply_id: id
+                    response = await likeReply({
+                        reply: id,
+                        user: user.id
                     })
-
-                    if (response.status >= 200 && response.status < 300) {
-                        setIsLiked(true)
-                    }
-
                     break;
                 }
+                case 'comment': {
+                    response = await likeCommentBlog({
+                        comment: id,
+                        user: user.id
+                    })
+                    break;
+                }
+
+                if (response) return setIsLiked(true)
             }
         } catch (error) {
             console.log(error)

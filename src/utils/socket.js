@@ -69,6 +69,38 @@ export const likeBlog = ({
     });
 }
 
+export const likeCommentBlog = ({
+    comment,
+    user
+}) => {
+    return new Promise((resolve, reject) => {
+        socket.emit('likeCommentaryBlog', {
+            commentary_id: comment,
+            uid: user
+        }, res => console.log(res))
+
+        socket.on("likeCommentaryBlog", (data) => {
+            resolve(data);
+        })
+    });
+}
+
+export const likeReply = ({
+    reply,
+    user
+}) => {
+    return new Promise((resolve, reject) => {
+        socket.emit('likeReplyBlog', {
+            reply_id: reply,
+            uid: user
+        }, res => console.log(res))
+
+        socket.on("likeReplyBlog", (data) => {
+            resolve(data);
+        })
+    });
+}
+
 export const commentBlog = ({
     blog,
     user,
