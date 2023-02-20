@@ -42,10 +42,9 @@ const PublishedBlogLayout = ({
 }) => (
     <Slide direction="left" in={true} mountOnEnter unmountOnExit>
         <Box sx={{
-            height: '100%',
-            width: '100%',
-            overflowY: openComments ? 'hidden' : 'auto'
-        }} id='comments-drawer-container'>
+            height: 'inherit',
+            width: 'inherit'
+        }}>
             <Box sx={{
                 flex: 1,
                 height: 'fit-content',
@@ -215,32 +214,41 @@ const PublishedBlog = () => {
     if (loading) return <LoadingIndicator />
 
     return (
-        <>
-            <PublishedBlogLayout
-                {...blog}
-                handleDeletePost={handleDeletePost}
-                currAuthUser={user}
-                navigate={navigate}
-                toggleComments={toggleComments}
-                toggleFeaturePost={toggleFeaturePost}
-            />
-            <DeletePublication
-                open={deletePost}
-                handleClose={handleDeletePost}
-                item={blog}
-            />
-            <CommentsDrawer
-                openComments={openComments}
-                handleClose={toggleComments}
-                item={blog}
-            />
-            <FeaturePost
-                open={featurePost}
-                handleClose={toggleFeaturePost}
-                item={blog}
-                redirect={`/blogs/${blog.id}`}
-            />
-        </>
+        <Box id='comments-drawer-container' sx={{
+            overflowY: openComments ? 'hidden' : 'auto'
+        }}>
+            {(loading) ? (
+                <LoadingIndicator />
+            ) : (
+                <>
+                    <PublishedBlogLayout
+                        {...blog}
+                        handleDeletePost={handleDeletePost}
+                        currAuthUser={user}
+                        navigate={navigate}
+                        toggleComments={toggleComments}
+                        toggleFeaturePost={toggleFeaturePost}
+                    />
+                    <DeletePublication
+                        open={deletePost}
+                        handleClose={handleDeletePost}
+                        item={blog}
+                    />
+                    <CommentsDrawer
+                        openComments={openComments}
+                        handleClose={toggleComments}
+                        item={blog}
+                        fetchBlog={fetchBlog}
+                    />
+                    <FeaturePost
+                        open={featurePost}
+                        handleClose={toggleFeaturePost}
+                        item={blog}
+                        redirect={`/blogs/${blog.id}`}
+                    />
+                </>
+            )}
+        </Box>
     )
 }
 

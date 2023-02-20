@@ -40,12 +40,12 @@ const LikePostButton = ({ id, type, likes = [], LikesCount = 0 }) => {
                     })
                     break;
                 }
-
-                if (response) return setIsLiked(true)
             }
         } catch (error) {
             console.log(error)
         }
+
+        if (response) return setIsLiked(true)
     }
 
     const action = e => {

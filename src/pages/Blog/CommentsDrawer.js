@@ -6,7 +6,7 @@ import DialogTitle from '../../components/DialogTitle';
 import CommentCard from './CommentCard';
 import CommentBox from './CommentBox';
 
-const CommentsDrawer = ({ openComments, handleClose, item }) => {
+const CommentsDrawer = ({ openComments, handleClose, item, fetchBlog }) => {
     const [commentItem, setCommentItem] = React.useState(item) // Blog by default
     const [isReplying, setIsReplying] = React.useState(false);
 
@@ -62,6 +62,7 @@ const CommentsDrawer = ({ openComments, handleClose, item }) => {
                     item={commentItem}
                     isReplying={isReplying}
                     closeReply={() => toggleReply()}
+                    fetchBlog={fetchBlog}
                 />
             </Box>
         </>
