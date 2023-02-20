@@ -4,10 +4,12 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import TextInput from '../../components/Forms/TextInput';
 import { useForm } from "react-hook-form";
-import { apiProvider } from '../../api';
 import { X } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext'
+import { commentBlog, replyComment } from '../../utils/socket';
 
-const CommentBox = ({ item, isReplying, closeReply }) => {
+const CommentBox = ({ item, isReplying, closeReply, fetchBlog }) => {
+    const { state: { user } } = useAuth()
     const { control, handleSubmit, setValue, formState: {
         isSubmitting
     }} = useForm({
@@ -15,17 +17,33 @@ const CommentBox = ({ item, isReplying, closeReply }) => {
     });
 
     const onSubmit = async values => {
-        const endpoint = isReplying
-            ? `/api/blog/add-reply-blog/${item.id}`
-            : `/api/blog/add-commentary/${item.id}`
+        if (!values.msg) return;
+        let response;
 
         try {
-            if (!values.msg) return;
+            if (isReplying) {
+                response = await replyComment({
+                    comment: item.id,
+                    user: user.id,
+                    msg: values.msg
+                })
 
-            const res = await apiProvider.post(endpoint, values)
+                if (response) {
+                    console.log("hola")
+                    setValue('msg', '');
+                    fetchBlog();
+                }
+            } else {
+                const response = await commentBlog({
+                    blog: item.id,
+                    user: user.id,
+                    msg: values.msg
+                })
 
-            if (res.status >= 200 || res.status < 300) {
-                setValue('msg', '');
+                if (response) {
+                    setValue('msg', '');
+                    fetchBlog();
+                }
             }
         } catch (error) {
             console.log(error)

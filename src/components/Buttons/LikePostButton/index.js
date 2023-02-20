@@ -6,10 +6,11 @@ import { ThumbsUp } from 'lucide-react';
 import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import { likeBlog, likeReply, likeCommentBlog } from '../../../utils/socket';
 
 const LikePostButton = ({ id, type, likes = [], LikesCount = 0 }) => {
     const [isLiked, setIsLiked] = React.useState(likes.length)
-    const { state: { isAuth } } = useAuth();
+    const { state: { isAuth, user } } = useAuth();
     const { dispatch } = useGuest();
 
     const handleSubmitLike = async () => {
@@ -18,33 +19,33 @@ const LikePostButton = ({ id, type, likes = [], LikesCount = 0 }) => {
         try {
             switch (type) {
                 case 'post': {
-                    response = await apiProvider.post('/api/blog/like', {
-                        blog_id: id
+                    response = await likeBlog({
+                        blog: id,
+                        user: user.id
+                    })
+
+                    break;
+                }
+                case 'reply': {
+                    response = await likeReply({
+                        reply: id,
+                        user: user.id
                     })
                     break;
                 }
                 case 'comment': {
-                    response = await apiProvider.post('/api/blog/like-commentary', {
-                        commentary_id: id
+                    response = await likeCommentBlog({
+                        comment: id,
+                        user: user.id
                     })
                     break;
-                }
-                case 'reply': {
-                    response = await apiProvider.post('/api/blog/like-reply-blog', {
-                        reply_id: id
-                    })
-                    break;
-                }
-            }
-
-            if (response) {
-                if (response.status >= 200 && response.status < 300) {
-                    setIsLiked(true)
                 }
             }
         } catch (error) {
             console.log(error)
         }
+
+        if (response) return setIsLiked(true)
     }
 
     const action = e => {
