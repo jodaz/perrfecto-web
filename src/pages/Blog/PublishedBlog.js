@@ -43,7 +43,8 @@ const PublishedBlogLayout = ({
     <Slide direction="left" in={true} mountOnEnter unmountOnExit>
         <Box sx={{
             height: 'inherit',
-            width: 'inherit'
+            width: 'inherit',
+            overflowY: openComments ? 'hidden' : 'auto'
         }}>
             <Box sx={{
                 flex: 1,
@@ -214,9 +215,7 @@ const PublishedBlog = () => {
     if (loading) return <LoadingIndicator />
 
     return (
-        <Box id='comments-drawer-container' sx={{
-            overflowY: openComments ? 'hidden' : 'auto'
-        }}>
+        <Box id='comments-drawer-container'>
             {(loading) ? (
                 <LoadingIndicator />
             ) : (
