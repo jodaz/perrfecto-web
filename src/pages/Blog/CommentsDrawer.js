@@ -5,10 +5,32 @@ import Divider from '@mui/material/Divider';
 import DialogTitle from '../../components/DialogTitle';
 import CommentCard from './CommentCard';
 import CommentBox from './CommentBox';
+import { apiProvider } from '../../api';
+import useEffectOnce from '../../utils/useEffectOnce';
 
-const CommentsDrawer = ({ openComments, handleClose, item, fetchBlog }) => {
+const CommentsDrawer = ({ openComments, handleClose, item }) => {
+    const [loading, setLoading] = React.useState(true)
+    const [comments, setComments] = React.useState([])
     const [commentItem, setCommentItem] = React.useState(item) // Blog by default
     const [isReplying, setIsReplying] = React.useState(false);
+
+    const fetchComments = async () => {
+        setLoading(true)
+
+        try {
+            const res = await apiProvider.get(`/api/blog/comments/${item.id}`)
+
+            if (res.status >= 200 && res.status < 300) {
+                const { data: { data } } = res;
+
+                setComments(data)
+                setLoading(false)
+            }
+        } catch (e) {
+            console.log(e);
+            setLoading(false)
+        }
+    }
 
     const toggleReply = (comment = null) => {
         if (comment) {
@@ -25,6 +47,8 @@ const CommentsDrawer = ({ openComments, handleClose, item, fetchBlog }) => {
             return;
         }
     };
+
+    useEffectOnce(() => { fetchComments() }, []);
 
     const list = (anchor) => (
         <>
@@ -44,8 +68,8 @@ const CommentsDrawer = ({ openComments, handleClose, item, fetchBlog }) => {
                     overflowY: 'auto',
                     height: '100%'
                 }}>
-                    {item.Comments.length
-                    ? item.Comments.map(comment => (
+                    {comments.length
+                    ? comments.map(comment => (
                         <CommentCard
                             {...comment}
                             openReply={() => toggleReply(comment)}
@@ -62,7 +86,7 @@ const CommentsDrawer = ({ openComments, handleClose, item, fetchBlog }) => {
                     item={commentItem}
                     isReplying={isReplying}
                     closeReply={() => toggleReply()}
-                    fetchBlog={fetchBlog}
+                    fetchComments={fetchComments}
                 />
             </Box>
         </>

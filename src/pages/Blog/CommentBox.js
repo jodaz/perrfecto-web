@@ -8,7 +8,7 @@ import { X } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext'
 import { commentBlog, replyComment } from '../../utils/socket';
 
-const CommentBox = ({ item, isReplying, closeReply, fetchBlog }) => {
+const CommentBox = ({ item, isReplying, closeReply, fetchComments }) => {
     const { state: { user } } = useAuth()
     const { control, handleSubmit, setValue, formState: {
         isSubmitting
@@ -31,7 +31,7 @@ const CommentBox = ({ item, isReplying, closeReply, fetchBlog }) => {
                 if (response) {
                     console.log("hola")
                     setValue('msg', '');
-                    fetchBlog();
+                    fetchComments();
                 }
             } else {
                 const response = await commentBlog({
@@ -42,7 +42,7 @@ const CommentBox = ({ item, isReplying, closeReply, fetchBlog }) => {
 
                 if (response) {
                     setValue('msg', '');
-                    fetchBlog();
+                    fetchComments();
                 }
             }
         } catch (error) {
