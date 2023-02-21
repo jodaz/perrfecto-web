@@ -42,12 +42,13 @@ const Card = ({
     drag
 }) => {
     const { publi } = data;
-    const userPhoto = getUserPhoto(JSON.parse(publi.Owner.img_profile)[0]);
+    const userPhoto = publi.Owner.img_profile.length
+        ? getUserPhoto(JSON.parse(publi.Owner.img_profile)[0])
+        : '/images/Avatar.svg';
     const { state: { isAuth } } = useAuth();
     const { dispatch } = useGuest();
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
     const photoSrc = getUserPhoto(JSON.parse(publi.dogPhotos)[0])
-
     const action = (message) => {
         if (!isAuth && message != 'descartar') {
             openGuestWarning(dispatch, message);
