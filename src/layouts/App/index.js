@@ -9,40 +9,56 @@ import { useMediaQuery } from '@mui/material';
 import Navigation from './Navigation';
 import GuestWarningModal from '../../components/Modals/GuestWarningModal';
 
+const DesktopLayout = ({ user, isAuth, children }) => (
+    <Box sx={{
+        position: 'relative',
+        display: 'flex',
+        flexDirection: 'row',
+        height: '100%'
+    }}>
+        <Aside>
+            {children}
+        </Aside>
+        {(user.role == 'user' || !isAuth) ? <UsersHome /> : <BusinessHome />}
+        <GuestWarningModal />
+    </Box>
+)
+
 export default function AppLayout({ children }) {
     const { state: { user, isAuth } } = useAuth();
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
+
+    if (!isSmall) {
+        return (
+            <DesktopLayout user={user} isAuth={isAuth}>
+                {children}
+            </DesktopLayout>
+        )
+    }
 
     return (
         <Box sx={{
             position: 'relative',
             display: 'flex',
-            flexDirection: isSmall ? 'column' : 'row',
+            flexDirection: 'column',
             height: '100%'
         }}>
-            {(!isSmall) ? (
-                <>
-                    <Aside>
-                        {children}
-                    </Aside>
-                    {(user.role == 'user' || !isAuth) ? <UsersHome /> : <BusinessHome />}
-                </>
-            ) : (
-                <Box sx={{
-                    height: '90vh',
-                    overflowY: 'scroll'
-                }}>
-                    {children}
-                </Box>
-            )}
-            {(isSmall) && (
-                <Box sx={{
-                    width: '100%',
-                    height: '10vh'
-                }}>
-                    <Navigation isSmall={isSmall} />
-                </Box>
-            )}
+            <Box sx={{
+                height: '90vh',
+                overflowY: 'scroll'
+            }}>
+                {children}
+            </Box>
+            <Box sx={{
+                width: '100%',
+                height: '10vh',
+                position: 'fixed',
+                bottom: 0,
+                left: 0,
+                zIndex: 1000
+            }}>
+                <Navigation isSmall={isSmall} />
+            </Box>
             <GuestWarningModal />
         </Box>
     );
