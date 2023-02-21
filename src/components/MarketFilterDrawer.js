@@ -154,7 +154,7 @@ const MarketFilterDrawer = () => {
                         }
                     }}
                 >
-                    Reestablecer
+                    Limpiar
                 </Button>
             </Box>
         </Box>
