@@ -9,8 +9,10 @@ import FavouriteButton from '../Buttons/FavouriteButton'
 import LikeButton from '../Buttons/LikeButton'
 import { Mail, Phone } from 'lucide-react';
 import formatPhone from '../../utils/formatPhone';
+import { useMediaQuery } from '@mui/material';
 
 const OwnerPublication = ({ open, data, handleClose, handleOpenContactDialog }) => {
+    const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
     const { Owner } = data.publi
     const years = 26
     const multimedia = [getUserPhoto(data.publi.Owner.img_profile)]
@@ -25,7 +27,11 @@ const OwnerPublication = ({ open, data, handleClose, handleOpenContactDialog }) 
             photo={dogPhoto}
             name={data.publi.name}
         >
-            <Box sx={{ flex: 1, height: 400, width: 400 }}>
+            <Box sx={{
+                flex: 1,
+                height: isSmall ? 280 : 400,
+                width: isSmall ? 280 : 400
+            }}>
                 <PhotoGallery images={multimedia} />
             </Box>
             <Box sx={{

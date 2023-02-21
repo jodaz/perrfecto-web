@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useMediaQuery } from '@mui/material';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import ShowCard from '../../components/Modals/ShowCard';
@@ -14,6 +15,7 @@ import MessageButton from '../Buttons/MessageButton';
 const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
 const DogPublication = ({ open, data, handleClose, handleOpenOwnerCard }) => {
+    const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
     const multimedia = getImages(JSON.parse(data.multimedia))
     const userPhoto = data.publi.Owner.img_profile ? getUserPhoto(JSON.parse(data.publi.Owner.img_profile)[0]) : '/images/Avatar.svg'
 
@@ -29,8 +31,8 @@ const DogPublication = ({ open, data, handleClose, handleOpenOwnerCard }) => {
         >
             <Box sx={{
                 flex: 1,
-                height: 400,
-                width: 400,
+                height: isSmall ? 280 : 400,
+                width: isSmall ? 280 : 400,
                 borderTopLeftRadius: '16px',
                 borderBottomLeftRadius: '16px'
             }}>

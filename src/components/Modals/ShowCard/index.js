@@ -46,7 +46,8 @@ const ShowCard = ({
                 alignItems: 'center',
                 background: '#fff',
                 borderRadius: 4,
-                marginRight: '1rem'
+                marginRight: '1rem',
+                flexDirection: isSmall ? 'column' : 'row'
             }}>
                 {children}
             </Box>

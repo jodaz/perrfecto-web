@@ -7,6 +7,7 @@ import styled from '@emotion/styled';
 const SwiperStyled = styled(Swiper)(() => ({
     height: 'inherit',
     borderRadius: 'inherit',
+    width: '100%',
     '& .swiper-pagination-bullet': {
         backgroundColor: '#fff',
         width: '8px',
