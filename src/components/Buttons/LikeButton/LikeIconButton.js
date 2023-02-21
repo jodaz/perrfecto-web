@@ -8,7 +8,7 @@ import { alpha } from '@mui/material';
 
 const LikeIconButton = ({ likes, ...rest }) => (
     <Tooltip
-        title='Dar like'
+        title='Like'
         placement='top'
     >
         <Badge
