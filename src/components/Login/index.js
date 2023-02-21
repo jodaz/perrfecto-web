@@ -213,24 +213,26 @@ export default function Login({ location }) {
             {isSmall &&  (
                 <Box marginTop='1rem' sx={{
                     display: 'flex',
-                    flexDirection: 'column'
+                    flexDirection: 'column',
+                    textAlign: 'center',
+                    paddingBottom: 2
                 }}>
                     <Box pl={2} pr={2}>
                         <Divider orientation="horizontal" flexItem>o iniciar sesión con</Divider>
                     </Box>
                     <SocialAuth location={location} />
-                    <Box sx={{ margin: '0 auto 2rem auto' }}>
+                    <Box>
                         ¿Aún no tienes una cuenta?
-                        <Link
-                            href="/register"
-                            underline="none"
-                            component={LinkBehavior}
-                            to='/register'
-                            sx={{ marginLeft: '0.5rem' }}
-                        >
-                            Crear cuenta
-                        </Link>
                     </Box>
+                    <Link
+                        href="/register"
+                        underline="none"
+                        component={LinkBehavior}
+                        to='/register'
+                        sx={{ marginLeft: '0.5rem' }}
+                    >
+                        Crear cuenta
+                    </Link>
                 </Box>
             )}
         </Dialog>

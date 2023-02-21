@@ -230,24 +230,26 @@ export default function SignUp({ location }) {
             {isSmall &&  (
                 <Box marginTop='1rem' sx={{
                     display: 'flex',
-                    flexDirection: 'column'
+                    flexDirection: 'column',
+                    textAlign: 'center',
+                    paddingBottom: 2
                 }}>
                     <Box pl={2} pr={2}>
-                        <Divider orientation="horizontal" flexItem>o crear cuenta con</Divider>
+                        <Divider orientation="horizontal" flexItem>o iniciar sesión con</Divider>
                     </Box>
                     <SocialAuth location={location} />
-                    <Box sx={{ margin: '0 auto 2rem auto' }}>
-                        ¿Ya tienes una cuenta?
-                        <Link
-                            href="/login"
-                            underline="none"
-                            component={LinkBehavior}
-                            to='/login'
-                            sx={{ marginLeft: '0.5rem' }}
-                        >
-                            Inicia sesión
-                        </Link>
+                    <Box>
+                        ¿Aún no tienes una cuenta?
                     </Box>
+                    <Link
+                        href="/register"
+                        underline="none"
+                        component={LinkBehavior}
+                        to='/register'
+                        sx={{ marginLeft: '0.5rem' }}
+                    >
+                        Crear cuenta
+                    </Link>
                 </Box>
             )}
         </Dialog>
