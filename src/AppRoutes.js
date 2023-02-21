@@ -102,6 +102,14 @@ function AppRoutes() {
     return (
         <Routes>
             <Route
+                path='/home'
+                element={
+                    <AppLayout>
+                        <Home />
+                    </AppLayout>
+                }
+            />
+            <Route
                 path='*'
                 element={<NotFound />}
             />

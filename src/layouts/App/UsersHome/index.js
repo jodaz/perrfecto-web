@@ -71,7 +71,7 @@ const UsersHome = () => {
                 position: 'relative',
                 flexGrow: 1,
                 bgcolor: 'background.default',
-                heigth: '100%',
+                height: '100% !important',
                 width: isSmall ? '100%' : 'calc(100vw - 350px)',
                 display: 'flex',
                 alignItems: 'center',

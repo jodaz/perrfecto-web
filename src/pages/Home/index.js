@@ -1,21 +1,18 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import { useAuth } from '../../context/AuthContext'
-import InviteGuest from './InviteGuest';
+import UsersHome from '../../layouts/App/UsersHome';
+import BusinessHome from '../../layouts/App/BusinessHome';
 
-const Home = ({ children }) => {
-    const { state: { isAuth } } = useAuth();
+const Home = () => {
+    const { state: { isAuth, user } } = useAuth();
+
+    if (isAuth && (user.role == 'business')) {
+        return <BusinessHome />
+    }
 
     return (
-        <Box sx={{
-            display: 'flex',
-            width: '100%',
-            flexDirection: 'column',
-            alignItems: 'center',
-            height: '100%'
-        }}>
-            {isAuth ? <>{children}</> : <InviteGuest />}
-        </Box>
+        <UsersHome />
     );
 }
 
