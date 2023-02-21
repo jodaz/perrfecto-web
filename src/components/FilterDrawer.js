@@ -18,7 +18,7 @@ import razas from '../utils/breeds';
 import ChipArrayInput from './Forms/ChipArrayInput';
 import SliderInput from './Forms/SliderInput';
 import { alpha } from '@mui/material';
-import { useGeolocated } from 'react-geolocated';
+import { useAuth, toggleGeolocation } from '../context/AuthContext';
 
 const genders = [
     { label: 'Macho', value: 'male' },
@@ -33,13 +33,7 @@ const FilterDrawer = () => {
     }} = useForm({
         reValidateMode: "onBlur"
     });
-    const { coords, isGeolocationAvailable, getPosition, isGeolocationEnabled } =
-        useGeolocated({
-            positionOptions: {
-                enableHighAccuracy: false,
-            }
-        }
-    );
+    const { state: { userCoords }, dispatch: authDispatch } = useAuth()
     const province = watch('province')
     const { state: { openFilter }, dispatch } = usePublications();
 
@@ -83,7 +77,7 @@ const FilterDrawer = () => {
                 parsedData.city = city.nombre;
             }
             if (distance) {
-                const { latitude, longitude } = coords
+                const { latitude, longitude } = userCoords
 
                 parsedData.lat = latitude
                 parsedData.lon = longitude
@@ -161,7 +155,11 @@ const FilterDrawer = () => {
                     label='Distancia'
                     control={control}
                     name="distance"
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || !userCoords}
+                    handleClick={(isSubmitting || !userCoords)
+                        ? () => toggleGeolocation(authDispatch)
+                        : null
+                    }
                 />
             </Box>
             <Divider />

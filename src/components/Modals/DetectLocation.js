@@ -3,12 +3,15 @@ import Button from '@mui/material/Button';
 import { alpha } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
 import { MapPin } from 'lucide-react';
-import { useGeolocated } from "react-geolocated";
+import { useAuth, setUserCoords } from '../../context/AuthContext';
+import { useGeolocated } from 'react-geolocated';
 
 export default function DetectLocation({ location }) {
     const navigate = useNavigate()
+    const { dispatch } = useAuth()
     const { coords, isGeolocationAvailable, getPosition, isGeolocationEnabled } =
         useGeolocated({
             positionOptions: {
@@ -19,6 +22,7 @@ export default function DetectLocation({ location }) {
 
     React.useEffect(() => {
         if (coords) {
+            setUserCoords(dispatch, coords)
             navigate('/market')
         }
     }, [coords])
@@ -44,15 +48,26 @@ export default function DetectLocation({ location }) {
                     </Box>
                     <Box margin='0 auto' width='75%' textAlign='center'>
                         <MapPin size={100} color={'#626B74'} />
-                        {(isGeolocationAvailable && isGeolocationEnabled) ? (
-                            <Box>
-                                Hemos detectado tu ubicación. Quieres activarla?
-                            </Box>
-                        ) : (
-                            <Box>
-                                Tu navegador no soporta la geolocalización o los permisos para la app no han sido actualizados.
-                            </Box>
-                        )}
+                        <Box m={3}>
+                            {!isGeolocationAvailable ? (
+                                <Typography variant="body2">
+                                    Tu navegador no soporta la geolocalización
+                                </Typography>
+                            ) : !isGeolocationEnabled ? (
+                                <Typography variant="body2">
+                                    Actualiza los permisos de geolocalización de tu navegador.
+                                </Typography>
+                            ) : coords ? (
+                                <Typography variant="body2">
+                                    La geolocalización está activa.
+                                </Typography>
+                            ) : (
+                                <Typography variant="body2">
+                                    Hemos detectado la geolocalización. Para activarla,
+                                    actualiza los permisos para la app y presiona activar.
+                                </Typography>
+                            )}
+                        </Box>
                     </Box>
                     <Box>
                         <Box sx={{ p: 1 }}>
@@ -61,7 +76,7 @@ export default function DetectLocation({ location }) {
                                 color="primary"
                                 fullWidth
                                 type="submit"
-                                disabled={!isGeolocationAvailable || !isGeolocationEnabled}
+                                disabled={!isGeolocationEnabled}
                                 onClick={getPosition}
                             >
                                 Activar

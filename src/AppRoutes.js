@@ -4,8 +4,7 @@ import {
     Routes,
     useLocation
 } from 'react-router-dom'
-import { useAuth, guestUser, setUserCoords } from './context/AuthContext';
-import { useGeolocated } from 'react-geolocated';
+import { useAuth, guestUser } from './context/AuthContext';
 // Layouts
 import AppLayout from './layouts/App';
 import LandingLayout from './layouts/LandingLayout';
@@ -81,7 +80,6 @@ import ShowBusiness from './pages/Businesses/ShowBusiness';
 function AppRoutes() {
     let location = useLocation();
     const { state: { isAuth }, dispatch } = useAuth();
-    const { coords } = useGeolocated()
 
     // Set guest user by default
     React.useEffect(() => {
@@ -89,15 +87,6 @@ function AppRoutes() {
             guestUser(dispatch)
         }
     }, [])
-
-    // Set coords by default if exists
-    React.useEffect(() => {
-        if (coords) {
-            setUserCoords(dispatch, coords)
-        } else {
-            setUserCoords(dispatch, null);
-        }
-    }, [coords])
 
     return (
         <Routes>
