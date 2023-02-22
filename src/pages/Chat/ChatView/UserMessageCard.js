@@ -60,8 +60,8 @@ const UserMessageCard = ({ message, isReceptor, toggleDeleteMessage }) => {
 
     return (
         <SentMessage
-            onMouseEnter={toggleShowDelete}
-            onMouseLeave={toggleShowDelete}
+            // onMouseEnter={toggleShowDelete}
+            // onMouseLeave={toggleShowDelete}
         >
             {showDelete && (
                 <IconButton sx={{
@@ -75,7 +75,7 @@ const UserMessageCard = ({ message, isReceptor, toggleDeleteMessage }) => {
             <Typography
                 textAlign='left'
                 color="text.primary"
-                marginRight='20px'
+                // marginRight='20px'
             >
                 {message.message}
             </Typography>
