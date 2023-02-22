@@ -75,6 +75,7 @@ const Card = ({
             flexDirection: 'column',
             marginTop: !drag ? '1rem' : 0,
             transition: '0.3s',
+            visibility: !drag ? 'hidden' : 'none',
             zIndex: 10
         }}>
             <Box sx={{
@@ -82,7 +83,7 @@ const Card = ({
                 alignItems: 'center',
                 zIndex: 1,
                 marginBottom: '-1rem',
-                visibility: !drag ? 'hidden' : 'none',
+                // visibility: !drag ? 'hidden' : 'none',
                 transition: '0.3s'
             }}>
                 <Avatar sx={{
@@ -99,8 +100,7 @@ const Card = ({
                 height: '56vh',
                 width: !isSmall ? '300px' : '300px',
                 borderRadius: '20px',
-                position: 'relative',
-                filter: 'drop-shadow(0px 2px 12px rgba(0, 0, 0, 0.24));'
+                position: 'relative'
             }}>
                 <CardMedia
                     component="img"
