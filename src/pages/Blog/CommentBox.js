@@ -29,7 +29,6 @@ const CommentBox = ({ item, isReplying, closeReply, fetchComments }) => {
                 })
 
                 if (response) {
-                    console.log("hola")
                     setValue('msg', '');
                     fetchComments();
                 }

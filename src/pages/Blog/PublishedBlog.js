@@ -181,6 +181,7 @@ const PublishedBlog = () => {
     const [deletePost, setDeletePost] = React.useState(false)
     const { state: { user } } = useAuth()
     const [openComments, setOpenComments] = React.useState(false)
+    const [commentsCount, setCommentsCount] = React.useState(0)
 
     const fetchBlog = async () => {
         setLoading(true)
@@ -192,6 +193,7 @@ const PublishedBlog = () => {
                 const { data: { data } } = res;
 
                 setBlog(data)
+                setCommentsCount(data.commentsCount)
                 setLoading(false)
             }
         } catch (e) {
@@ -222,6 +224,7 @@ const PublishedBlog = () => {
                 <>
                     <PublishedBlogLayout
                         {...blog}
+                        CommentsCount={commentsCount}
                         handleDeletePost={handleDeletePost}
                         currAuthUser={user}
                         navigate={navigate}
@@ -238,6 +241,7 @@ const PublishedBlog = () => {
                         handleClose={toggleComments}
                         item={blog}
                         fetchBlog={fetchBlog}
+                        setCommentCount={setCommentsCount}
                     />
                     <FeaturePost
                         open={featurePost}

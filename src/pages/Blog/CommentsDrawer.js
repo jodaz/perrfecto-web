@@ -8,7 +8,7 @@ import CommentBox from './CommentBox';
 import { apiProvider } from '../../api';
 import useEffectOnce from '../../utils/useEffectOnce';
 
-const CommentsDrawer = ({ openComments, handleClose, item }) => {
+const CommentsDrawer = ({ openComments, handleClose, item, setCommentCount }) => {
     const [loading, setLoading] = React.useState(true)
     const [comments, setComments] = React.useState([])
     const [commentItem, setCommentItem] = React.useState(item) // Blog by default
@@ -24,6 +24,7 @@ const CommentsDrawer = ({ openComments, handleClose, item }) => {
                 const { data: { data } } = res;
 
                 setComments(data)
+                setCommentCount(data.length)
                 setLoading(false)
             }
         } catch (e) {
