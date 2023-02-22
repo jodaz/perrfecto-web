@@ -7,7 +7,7 @@ const getYearsSince = year => new Date().getUTCFullYear() - year
 
 const PublicationDescription = ({
     breed,
-    age,
+    dogAge,
     province,
     city,
     color,
@@ -26,13 +26,13 @@ const PublicationDescription = ({
             {breed}
             </Typography>
         )}
-        {(age) && (
+        {(dogAge) && (
             <>
-                <Box sx={{ fontSize: '8px', padding: '0 8px' }}>
-                    <CircleIcon fontSize='inherit' color={dotColor} />
+                <Box sx={{ fontSize: '8px', padding: '0 8px', color: dotColor }}>
+                    <CircleIcon fontSize='inherit' />
                 </Box>
                 <Typography color={color}>
-                    {getYearsSince(age)} años
+                    {getYearsSince(dogAge)} años
                 </Typography>
             </>
         )}

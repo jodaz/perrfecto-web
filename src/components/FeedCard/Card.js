@@ -71,7 +71,7 @@ const Card = ({
         <Box sx={{
             userSelect: 'none',
             display: 'flex',
-            height: 'fit-content',
+            height: '500px',
             flexDirection: 'column',
             marginTop: !drag ? '1rem' : 0,
             transition: '0.3s',
@@ -107,12 +107,11 @@ const Card = ({
                     width='100%'
                     src={photoSrc}
                     sx={{
-                        height: '60%'
+                        height: '70%'
                     }}
                 />
                 <CardContent sx={{
                     position: 'relative',
-                    height: '40%'
                 }}>
                     <CardActions sx={{
                         position: 'absolute',
@@ -151,8 +150,8 @@ const Card = ({
                         }}>
                             <PublicationDescription
                                 color="text.secondary"
-                                dotColor="text"
-                                dogAge={data.dogAge}
+                                dotColor="text.secondary"
+                                dogAge={data.publi.dogAge}
                                 breed={data.publi.breed}
                                 province={data.publi.Owner.provice}
                                 city={data.publi.Owner.city}
