@@ -4,7 +4,7 @@ import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
 import CardMedia from '@mui/material/CardMedia';
 import Stack from '@mui/material/Stack';
-import { ThumbsUp, MessageSquare } from 'lucide-react';
+import { MessageSquare } from 'lucide-react';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale'
 import getUserPhoto from '../../utils/getUserPhoto';
@@ -36,11 +36,10 @@ const PostCard = ({
                 color: 'unset',
                 flex: 1,
                 transition: '0.3s',
-                cursor: 'pointer',
                 '&: hover': {
                     opacity: 0.75
                 }
-            }} to={!loading ? `/blogs/${item.id}` : null} component={LinkBehavior}>
+            }}>
                 {loading ? (
                     <Skeleton
                         animation="wave"
@@ -59,9 +58,11 @@ const PostCard = ({
                                 borderRadius: 2,
                                 minWidth: '130px',
                                 minHeight: '130px',
+                                cursor: 'pointer',
                                 maxWidth: '130px',
                                 maxHeight: '130px'
                             }}
+                            to={`/blogs/${item.id}`} component={LinkBehavior}
                         >
                             {item.featured_blog && <FeaturedMark position={{ top: 10, left: 10 }} />}
                         </CardMedia>
@@ -82,7 +83,10 @@ const PostCard = ({
                             style={{ marginBottom: 6 }}
                         />
                     ) : (
-                        <Box>
+                        <Box to={`/blogs/${item.id}`} component={LinkBehavior} sx={{
+                            textDecoration: 'none',
+                            color: 'unset'
+                        }}>
                             <Typography
                                 variant="body1"
                                 color="text.secondary"
