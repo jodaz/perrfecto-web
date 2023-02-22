@@ -45,6 +45,7 @@ const SelectInput = ({
             render={({ field: { ref, onChange, value, ...fieldRest }, fieldState: { error } }) => (
                 <>
                     <Select
+                        value={value || null}
                         multiple={multiple}
                         options={options}
                         defaultValue={value}

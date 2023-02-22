@@ -22,7 +22,7 @@ import { useAuth, toggleGeolocation } from '../context/AuthContext';
 const MarketFilterDrawer = () => {
     const [cities, setCities] = React.useState([])
     const { state: { userCoords }, dispatch: authDispatch } = useAuth()
-    const { control, handleSubmit, watch, reset, formState: {
+    const { control, handleSubmit, watch, reset, setValue, formState: {
         isSubmitting
     }} = useForm({
         reValidateMode: "onBlur"
@@ -40,8 +40,7 @@ const MarketFilterDrawer = () => {
     };
 
     const resetFilter = () => {
-        reset();
-        resetFilters(dispatch)
+        reset()
     }
 
     const onSubmit = async values => {
