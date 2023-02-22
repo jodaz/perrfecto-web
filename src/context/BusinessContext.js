@@ -94,6 +94,8 @@ async function fetchBusinesses(dispatch, query) {
                 type: 'FETCH_PUBLICATIONS',
                 payload: data
             })
+
+            return res;
         }
     } catch (e) {
         console.log(e);

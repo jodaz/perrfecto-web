@@ -67,7 +67,12 @@ const MarketFilterDrawer = () => {
                 parsedData.km = distance;
             }
 
-            await fetchBusinesses(dispatch, parsedData)
+            const res = await fetchBusinesses(dispatch, parsedData)
+
+            if (res) {
+                toggleFilters(dispatch)
+            }
+
         } catch (error) {
             console.log(error)
         }
