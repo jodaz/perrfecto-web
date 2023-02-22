@@ -8,8 +8,9 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { likeBlog, likeReply, likeCommentBlog } from '../../../utils/socket';
 
-const LikePostButton = ({ id, type, likes = [], LikesCount = 0 }) => {
-    const [isLiked, setIsLiked] = React.useState(likes.length)
+const LikePostButton = ({ id, type, LikesBlog = [], LikesCount = 0 }) => {
+    const [likes, setLikes] = React.useState(LikesCount)
+    const [isLiked, setIsLiked] = React.useState(LikesBlog.length)
     const { state: { isAuth, user } } = useAuth();
     const { dispatch } = useGuest();
 
@@ -45,7 +46,10 @@ const LikePostButton = ({ id, type, likes = [], LikesCount = 0 }) => {
             console.log(error)
         }
 
-        if (response) return setIsLiked(true)
+        if (response) {
+            setIsLiked(true)
+            setLikes(count => count + 1)
+        }
     }
 
     const action = e => {
@@ -63,7 +67,7 @@ const LikePostButton = ({ id, type, likes = [], LikesCount = 0 }) => {
                 <ThumbsUp color={isLiked ? '#A167C9' : "#5E5E5E"} />
             </IconButton>
             <Typography variant="body2" ml={1} color="#5E5E5E">
-                {isLiked ? LikesCount + 1 : LikesCount}
+                {likes}
             </Typography>
         </Box>
     )

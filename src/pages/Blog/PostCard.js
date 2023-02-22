@@ -16,8 +16,7 @@ import LikePostButton from '../../components/Buttons/LikePostButton';
 const PostCard = ({
     menu,
     showStatus,
-    item,
-    LikesBlog
+    item
 }) => {
     const loading = item == null;
 
@@ -138,7 +137,7 @@ const PostCard = ({
                             <LikePostButton
                                 id={item.id}
                                 type="post"
-                                likes={LikesBlog}
+                                LikesBlog={item.LikesBlog}
                                 LikesCount={item.LikesCount}
                             />
                             <Box sx={{ display: 'flex', alignItems: 'center' }}>

@@ -77,7 +77,7 @@ const ReplyCard = ({
                 <LikePostButton
                     id={id}
                     type='reply'
-                    likes={LikesReply}
+                    LikesBlog={LikesReply}
                     LikesCount={LikesCount}
                 />
             </Stack>

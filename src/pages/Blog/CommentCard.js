@@ -80,7 +80,7 @@ const CommentCard = ({
             >
                 <LikePostButton
                     id={id}
-                    likes={LikesCommentaryBlog}
+                    LikesBlog={LikesCommentaryBlog}
                     type='comment'
                     LikesCount={LikesCount}
                 />

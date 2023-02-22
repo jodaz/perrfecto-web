@@ -155,7 +155,7 @@ const PublishedBlogLayout = ({
                     <LikePostButton
                         id={id}
                         type="post"
-                        likes={LikesBlog}
+                        LikesBlog={LikesBlog}
                         LikesCount={LikesCount}
                     />
                     <Box sx={{ display: 'flex', alignItems: 'center' }} onClick={toggleComments}>
