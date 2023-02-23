@@ -18,7 +18,8 @@ const PublicationDescription = ({
         justifyContent: 'space-between',
         alignItems: 'center',
         height: 'fit-content',
-        width: 'fit-content'
+        width: 'fit-content',
+        paddingBottom: 1
     }}>
         {/** Raza */}
         {(breed) && (
