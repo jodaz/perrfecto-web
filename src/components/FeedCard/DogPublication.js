@@ -80,22 +80,18 @@ const DogPublication = ({ open, data, handleClose, handleOpenOwnerCard }) => {
                         </Typography>
                     </Box>
                     <Box sx={{ display: 'flex', p: 1 }}>
-                        {!!data.publi.Certificates.length && (
-                            <Box sx={{ p: 1 }}>
-                                <ShowVaccines
-                                    {...data.publi.Owner}
-                                    dog={{...data.publi}}
-                                />
-                            </Box>
-                        )}
-                        {!!data.publi.Vaccines.length && (
-                            <Box sx={{ p: 1 }}>
-                                <ListCertificates
-                                    {...data.publi.Owner}
-                                    dog={{...data.publi}}
-                                />
-                            </Box>
-                        )}
+                        <Box sx={{ p: 1 }}>
+                            <ShowVaccines
+                                {...data.publi.Owner}
+                                dog={{...data.publi}}
+                            />
+                        </Box>
+                        <Box sx={{ p: 1 }}>
+                            <ListCertificates
+                                {...data.publi.Owner}
+                                dog={{...data.publi}}
+                            />
+                        </Box>
                     </Box>
                 </Box>
                 <Box sx={{ display: 'flex', width: '100%', mb: 2, ml: 2 }}>

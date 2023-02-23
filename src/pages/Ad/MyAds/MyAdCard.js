@@ -85,12 +85,8 @@ const MyAdCard = ({ fullWidth, ...data  }) => {
                         mb: 1
                     }
                 }}>
-                    {!!data.dog.Certificates.length && (
-                        <ListCertificates {...data} />
-                    )}
-                    {!!data.dog.Vaccines.length && (
-                        <ShowVaccines {...data} />
-                    )}
+                    <ListCertificates {...data} />
+                    <ShowVaccines {...data} />
                 </Box>
                 <DeleteAd
                     open={openDeleteModal}
