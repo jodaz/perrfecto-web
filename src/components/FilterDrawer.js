@@ -69,7 +69,7 @@ const FilterDrawer = () => {
             console.log("error ", error)
         }
     }
-
+    console.log(userCoords)
     const onSubmit = async values => {
         const parsedData = {};
 

@@ -7,18 +7,12 @@ import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
 import { MapPin } from 'lucide-react';
 import { useAuth, setUserCoords } from '../../context/AuthContext';
-import { useGeolocated } from 'react-geolocated';
+import { useGeolocation } from '../../utils/useGeolocation';
 
 export default function DetectLocation({ location }) {
     const navigate = useNavigate()
+    const { coords, isGeolocationAvailable, isGeolocationEnabled, getPosition } = useGeolocation()
     const { dispatch } = useAuth()
-    const { coords, isGeolocationAvailable, getPosition, isGeolocationEnabled } =
-        useGeolocated({
-            positionOptions: {
-                enableHighAccuracy: false,
-            }
-        }
-    );
 
     React.useEffect(() => {
         if (coords) {

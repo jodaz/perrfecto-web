@@ -7,20 +7,14 @@ import IconButton from '@mui/material/IconButton';
 import DialogTitle from '../DialogTitle';
 import { MapPin, ChevronLeft, X } from 'lucide-react';
 import { alpha } from '@mui/material';
-import { useGeolocated } from 'react-geolocated';
+import { useGeolocation } from '../../utils/useGeolocation';
 import { setUserCoords, toggleGeolocation, useAuth } from '../../context/AuthContext';
 
 const GeolocationDrawer = () => {
     const { state: {
         openGeolocation
     }, dispatch } = useAuth();
-    const { coords, isGeolocationAvailable, getPosition, isGeolocationEnabled } =
-        useGeolocated({
-            positionOptions: {
-                enableHighAccuracy: false,
-            }
-        }
-    );
+    const { coords, isGeolocationAvailable, getPosition, isGeolocationEnabled } = useGeolocation();
 
     const toggleDrawer = () => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
