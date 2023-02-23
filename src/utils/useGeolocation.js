@@ -19,8 +19,8 @@ export function useGeolocation() {
 
             const { coords } = position;
                 setCoords({
-                    lat: coords.latitude,
-                    leng: coords.longitude
+                    latitude: coords.latitude,
+                    longitude: coords.longitude
                 })
             }, (error) => {
                 setError('error')
