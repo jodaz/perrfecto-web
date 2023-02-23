@@ -44,7 +44,7 @@ export default function AppLayout({ children }) {
             display: 'flex',
             flexDirection: 'column',
             height: '100%'
-        }}>
+        }} id="drawer-container">
             <Box sx={{
                 height: '90vh',
                 overflowY: 'scroll'
