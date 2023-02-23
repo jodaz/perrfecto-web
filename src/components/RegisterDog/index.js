@@ -29,10 +29,11 @@ import ChipArrayInput from '../Forms/ChipArrayInput';
 import AddVaccines from '../../pages/Vaccines/AddVaccines';
 import AddCertificates from '../../pages/certificates/AddCertificates';
 import useEffectOnce from '../../utils/useEffectOnce'
-import razas from '../../utils/breeds';
+// import razas from '../../utils/breeds';
 import generos from '../../utils/generos';
 import InputAdornment from '@mui/material/InputAdornment';
 import { Calendar } from 'lucide-react';
+import axios from 'axios'
 
 const types = [
     { value: "breed", label: "Raza" },
@@ -50,6 +51,7 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
     }} = useForm({
         reValidateMode: "onBlur"
     });
+    const [breeds, setBreeds] = React.useState([]);
     const type = watch('type') ? watch('type').label : undefined;
     const { state: { user }, dispatch } = useAuth();
     const navigate = useNavigate();
@@ -115,6 +117,21 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
         }
     }
 
+    const fetchBreeds = async () => {
+        try {
+            const res = await axios.get('https://dog.ceo/api/breeds/list/all')
+
+            if (res.status >= 200 && res.status < 300) {
+                const { data: { message } } = res;
+                const breedsArr = Object.keys(message).map((name, i) => ({ value: i, label: name }))
+
+                setBreeds(breedsArr)
+            }
+        } catch (error) {
+            console.log("error ", error)
+        }
+    }
+
     const fetchFeatures = async () => {
         try {
             const res = await apiProvider.get('api/characteristic/characteristics')
@@ -129,7 +146,10 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
         }
     }
 
-    useEffectOnce(() => { fetchFeatures() }, []);
+    useEffectOnce(() => {
+        fetchFeatures()
+        fetchBreeds()
+    }, []);
 
     const generatePhotoProfile = (isSubmitting) => (
         <Box sx={{
@@ -224,19 +244,21 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
                     </Box>
                     {(type == 'Raza') && (
                         <Box sx={{ p: 2 }}>
-                            <SelectInput
-                                label="Raza"
-                                control={control}
-                                options={razas}
-                                validations={BREED.messages}
-                                disabled={isSubmitting}
-                                rules={BREED.rules}
-                                name="breed"
-                                InputProps={{
-                                    placeholder: 'Seleccione la raza'
-                                }}
-                                noOptionsText='Sin resultados'
-                            />
+                            {!!(breeds.length) && (
+                                <SelectInput
+                                    label="Raza"
+                                    control={control}
+                                    options={breeds}
+                                    validations={BREED.messages}
+                                    disabled={isSubmitting}
+                                    rules={BREED.rules}
+                                    name="breed"
+                                    InputProps={{
+                                        placeholder: 'Seleccione la raza'
+                                    }}
+                                    noOptionsText='Sin resultados'
+                                />
+                            )}
                         </Box>
                     )}
                     {(type == 'Otro') && (

@@ -14,11 +14,13 @@ import {
     toggleFilters
 } from '../context/PublicationContext';
 import TextInput from './Forms/TextInput';
-import razas from '../utils/breeds';
+// import razas from '../utils/breeds';
 import ChipArrayInput from './Forms/ChipArrayInput';
 import SliderInput from './Forms/SliderInput';
 import { alpha } from '@mui/material';
 import { useAuth, toggleGeolocation } from '../context/AuthContext';
+import useEffectOnce from '../utils/useEffectOnce';
+import axios from 'axios'
 
 const genders = [
     { label: 'Macho', value: 'male' },
@@ -35,6 +37,7 @@ const FilterDrawer = () => {
     });
     const { state: { userCoords }, dispatch: authDispatch } = useAuth()
     const province = watch('province')
+    const [breeds, setBreeds] = React.useState([]);
     const { state: { openFilter }, dispatch } = usePublications();
 
     const toggleDrawer = () => (event) => {
@@ -50,6 +53,21 @@ const FilterDrawer = () => {
         reset();
         toggleFilters(dispatch)
         fetchPublications(dispatch)
+    }
+
+    const fetchBreeds = async () => {
+        try {
+            const res = await axios.get('https://dog.ceo/api/breeds/list/all')
+
+            if (res.status >= 200 && res.status < 300) {
+                const { data: { message } } = res;
+                const breedsArr = Object.keys(message).map((name, i) => ({ value: i, label: name }))
+
+                setBreeds(breedsArr)
+            }
+        } catch (error) {
+            console.log("error ", error)
+        }
     }
 
     const onSubmit = async values => {
@@ -89,6 +107,8 @@ const FilterDrawer = () => {
             console.log(error)
         }
     };
+
+    useEffectOnce(() => { fetchBreeds() }, [])
 
     const list = (anchor) => (
         <Box onKeyDown={toggleDrawer(anchor, false)} component="form" onSubmit={handleSubmit(onSubmit)}>
@@ -164,17 +184,19 @@ const FilterDrawer = () => {
             </Box>
             <Divider />
             <Box sx={{ p: 3 }}>
-                <SelectInput
-                    label="Raza"
-                    control={control}
-                    options={razas}
-                    disabled={isSubmitting}
-                    name="breed"
-                    InputProps={{
-                        placeholder: 'Seleccione la raza'
-                    }}
-                    noOptionsText='Sin resultados'
-                />
+                {!!breeds.length && (
+                    <SelectInput
+                        label="Raza"
+                        control={control}
+                        options={breeds}
+                        disabled={isSubmitting}
+                        name="breed"
+                        InputProps={{
+                            placeholder: 'Seleccione la raza'
+                        }}
+                        noOptionsText='Sin resultados'
+                    />
+                )}
             </Box>
             <Box sx={{ p: 3 }}>
                 <Button

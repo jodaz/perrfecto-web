@@ -10,11 +10,14 @@ import { useAuth, renewToken } from '../../context/AuthContext';
 import formDataHandler from '../../utils/formDataHandler';
 import Button from '../../components/Button';
 import razas from '../../utils/breeds';
+import axios from 'axios'
+import useEffectOnce from '../../utils/useEffectOnce';
 
 const selectedBreed = name => razas.find(({ label }) => label === name)
 
 const EditBreed = () => {
     const { state: { user }, dispatch } = useAuth();
+    const [breeds, setBreeds] = React.useState([]);
     const { control, handleSubmit, formState: {
         isSubmitting
     }} = useForm({
@@ -43,6 +46,23 @@ const EditBreed = () => {
         }
     }
 
+    const fetchBreeds = async () => {
+        try {
+            const res = await axios.get('https://dog.ceo/api/breeds/list/all')
+
+            if (res.status >= 200 && res.status < 300) {
+                const { data: { message } } = res;
+                const breedsArr = Object.keys(message).map((name, i) => ({ value: i, label: name }))
+
+                setBreeds(breedsArr)
+            }
+        } catch (error) {
+            console.log("error ", error)
+        }
+    }
+
+    useEffectOnce(() => { fetchBreeds() }, [])
+
     return (
         <SettingsLayout title='Raza'>
             <Box sx={{
@@ -53,21 +73,23 @@ const EditBreed = () => {
                 justifyContent: 'space-between'
             }} component="form" onSubmit={handleSubmit(onSubmit)}>
                 <Box>
-                    <Box sx={{ p: 2 }}>
-                        <SelectInput
-                            label="Raza"
-                            control={control}
-                            options={razas}
-                            validations={BREED.messages}
-                            disabled={isSubmitting}
-                            rules={BREED.rules}
-                            name="breed"
-                            InputProps={{
-                                placeholder: 'Seleccione la raza'
-                            }}
-                            noOptionsText='Sin resultados'
-                        />
-                    </Box>
+                    {!!breeds.length && (
+                        <Box sx={{ p: 2 }}>
+                            <SelectInput
+                                label="Raza"
+                                control={control}
+                                options={breeds}
+                                validations={BREED.messages}
+                                disabled={isSubmitting}
+                                rules={BREED.rules}
+                                name="breed"
+                                InputProps={{
+                                    placeholder: 'Seleccione la raza'
+                                }}
+                                noOptionsText='Sin resultados'
+                            />
+                        </Box>
+                    )}
                 </Box>
                 <Box sx={{ p: 2 }}>
                     <Button
