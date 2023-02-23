@@ -59,18 +59,20 @@ const DogPublication = ({ open, data, handleClose, handleOpenOwnerCard }) => {
                             province={data.publi.Owner.province}
                             city={data.publi.Owner.city}
                         />
-                        <Typography
-                            variant="body2"
-                            sx={{ display: 'flex', alignItems: 'start' }}
-                            color="text.secondary"
-                        >
-                            <Box marginRight={'5px'}>
-                                <Compass />
-                            </Box>
+                        {!!data.interests.length && (
+                            <Typography
+                                variant="body2"
+                                sx={{ display: 'flex', alignItems: 'start' }}
+                                color="text.secondary"
+                            >
+                                <Box marginRight={'5px'}>
+                                    <Compass />
+                                </Box>
 
-                            Busco: {' '}
-                            {data.interests.map(interest => `${interest.name}. `)}
-                        </Typography>
+                                Busco: {' '}
+                                {data.interests.map(interest => `${interest.name}. `)}
+                            </Typography>
+                        )}
                     </Box>
                     <Box sx={{ p: 2 }}>
                         <Typography variant="subtitle1" color="text.secondary">
