@@ -11,7 +11,12 @@ import { useGeolocation } from '../../utils/useGeolocation';
 
 export default function DetectLocation({ location }) {
     const navigate = useNavigate()
-    const { coords, isGeolocationAvailable, isGeolocationEnabled, getPosition } = useGeolocation()
+    const {
+        coords,
+        isGeolocationAvailable,
+        isGeolocationEnabled,
+        getPosition
+    } = useGeolocation()
     const { dispatch } = useAuth()
 
     React.useEffect(() => {
@@ -47,18 +52,13 @@ export default function DetectLocation({ location }) {
                                 <Typography variant="body2">
                                     Tu navegador no soporta la geolocalización
                                 </Typography>
-                            ) : !isGeolocationEnabled ? (
+                            ) : isGeolocationEnabled ? (
                                 <Typography variant="body2">
                                     Actualiza los permisos de geolocalización de tu navegador.
                                 </Typography>
-                            ) : coords ? (
+                            ) : coords && (
                                 <Typography variant="body2">
                                     La geolocalización está activa.
-                                </Typography>
-                            ) : (
-                                <Typography variant="body2">
-                                    Hemos detectado la geolocalización. Para activarla,
-                                    actualiza los permisos para la app y presiona activar.
                                 </Typography>
                             )}
                         </Box>
@@ -70,7 +70,7 @@ export default function DetectLocation({ location }) {
                                 color="primary"
                                 fullWidth
                                 type="submit"
-                                disabled={!isGeolocationEnabled}
+                                disabled={isGeolocationEnabled}
                                 onClick={getPosition}
                             >
                                 Activar

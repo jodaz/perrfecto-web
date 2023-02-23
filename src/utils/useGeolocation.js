@@ -11,24 +11,27 @@ export function useGeolocation() {
     const getPosition = () => {
         if (!geolocationAPI) {
             setIsGeolocationAvailable(false)
-            setIsGeolocationEnabed(false)
+            setIsGeolocationEnabed(true)
         } else {
-            setIsGeolocationAvailable(true)
-
             geolocationAPI.getCurrentPosition((position) => {
+                const { coords } = position;
 
-            const { coords } = position;
                 setCoords({
                     latitude: coords.latitude,
                     longitude: coords.longitude
                 })
+
+                setIsGeolocationEnabed(true)
+                setIsGeolocationAvailable(false)
             }, (error) => {
-                setError('error')
+                setError(error)
+                setIsGeolocationAvailable(false)
+                setIsGeolocationEnabed(false)
             })
         }
     }
 
-    React.useEffect(() => { getPosition() }, []);
+    // React.useEffect(() => { getPosition() }, []);
 
     return ({ coords, error, isGeolocationAvailable, isGeolocationEnabed, getPosition });
 }

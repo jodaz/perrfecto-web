@@ -30,6 +30,8 @@ const GeolocationDrawer = () => {
         }
     }, [coords])
 
+    console.log("in drawer ", !isGeolocationEnabled, !isGeolocationAvailable)
+
     const list = (anchor) => (
         <Box onKeyDown={toggleDrawer(anchor, false)}>
             <DialogTitle>
@@ -65,22 +67,17 @@ const GeolocationDrawer = () => {
                     <Box margin='0 auto' width='75%' textAlign='center'>
                         <MapPin size={100} color={'#626B74'} />
                         <Box m={3}>
-                            {!isGeolocationAvailable ? (
+                            {(!isGeolocationAvailable && !coords) ? (
                                 <Typography variant="body2">
                                     Tu navegador no soporta la geolocalización
                                 </Typography>
-                            ) : !isGeolocationEnabled ? (
+                            ) : (!isGeolocationEnabled && !coords) ? (
                                 <Typography variant="body2">
                                     Actualiza los permisos de geolocalización de tu navegador.
                                 </Typography>
-                            ) : coords ? (
+                            ) : coords && (
                                 <Typography variant="body2">
                                     La geolocalización está activa.
-                                </Typography>
-                            ) : (
-                                <Typography variant="body2">
-                                    Hemos detectado la geolocalización. Para activarla,
-                                    actualiza los permisos para la app y presiona activar.
                                 </Typography>
                             )}
                         </Box>
@@ -93,7 +90,7 @@ const GeolocationDrawer = () => {
                                     color="primary"
                                     fullWidth
                                     type="submit"
-                                    disabled={!isGeolocationEnabled}
+                                    disabled={isGeolocationEnabled}
                                     onClick={getPosition}
                                 >
                                     Activar
