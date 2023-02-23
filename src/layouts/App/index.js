@@ -8,6 +8,8 @@ import UsersHome from './UsersHome';
 import { useMediaQuery } from '@mui/material';
 import Navigation from './Navigation';
 import GuestWarningModal from '../../components/Modals/GuestWarningModal';
+import GeolocationDrawer from '../../components/Drawers/GeolocationDrawer';
+import FilterDrawer from '../../components/FilterDrawer';
 
 const DesktopLayout = ({ user, isAuth, children }) => (
     <Box sx={{
@@ -58,6 +60,8 @@ export default function AppLayout({ children }) {
                 zIndex: 1000
             }}>
                 <Navigation isSmall={isSmall} />
+                <GeolocationDrawer />
+                <FilterDrawer />
             </Box>
             <GuestWarningModal />
         </Box>
