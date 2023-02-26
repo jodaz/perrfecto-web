@@ -13,29 +13,42 @@ import {
     PHONE,
     EMAIL
 } from '../../validations'
+import VerifyPhone from '../../components/Modals/VerifyPhone';
 
 const UpdateEmailAndPhone = () => {
     const { state: { user }, dispatch } = useAuth();
-    const { control, handleSubmit, setError, formState: {
+    const [phoneValues, setPhoneValues] = React.useState(null)
+    const [openVerifyPhone, setOpenVerifyPhone] = React.useState(false)
+    const [isVerified, setIsVerified] = React.useState(false);
+    const navigate = useNavigate()
+    const { control, handleSubmit, setError, setValue, formState: {
         isSubmitting
     }} = useForm({
         reValidateMode: "onBlur",
         defaultValues: React.useMemo(() => ({
-            email: user.email,
             phone: user.phone,
             code_phone: user.code_phone ? user.code_phone : 34
         }))
     });
-    const navigate = useNavigate();
+
+    const toggleVerifyPhone = () => setOpenVerifyPhone(!openVerifyPhone);
 
     const onSubmit = async values => {
         try {
-            const formData = await formDataHandler(values)
-            const res = await fileProvider.put(`/api/auth/user-edit/${user.id}`, formData)
+            if ((values.phone != user.phone) || (values.code_phone != user.code_phone) && !isVerified) {
+                setPhoneValues({
+                    phone: values.phone,
+                    code_phone: values.code_phone
+                })
+                toggleVerifyPhone()
+            } else {
+                const formData = await formDataHandler(values)
+                const res = await fileProvider.put(`/api/auth/user-edit/${user.id}`, formData)
 
-            if (res.status >= 200 && res.status < 300) {
-                renewToken(dispatch, user)
-                navigate(-1)
+                if (res.status >= 200 && res.status < 300) {
+                    renewToken(dispatch, user)
+                    navigate(-1)
+                }
             }
         } catch (error) {
             if (error.response.data.msg) {
@@ -54,6 +67,13 @@ const UpdateEmailAndPhone = () => {
             }
         }
     }
+
+    React.useEffect(() => {
+        if (Object.keys(user).length) {
+            setValue('phone', user.phone)
+            setValue('code_phone', user.code_phone)
+        }
+    }, [user])
 
     return (
         <SettingsLayout title='Cuenta de acceso'>
@@ -74,6 +94,7 @@ const UpdateEmailAndPhone = () => {
                             rules={EMAIL.rules}
                             validations={EMAIL.messages}
                             disabled={isSubmitting}
+                            defaultValue={user.email}
                             placeholder='Ingresar correo electrónico'
                         />
                     </Box>
@@ -98,6 +119,17 @@ const UpdateEmailAndPhone = () => {
                         Guardar cambios
                     </Button>
                 </Box>
+                {(openVerifyPhone) && (
+                    <VerifyPhone
+                        open={openVerifyPhone}
+                        data={phoneValues}
+                        handleClose={toggleVerifyPhone}
+                        updateStatus={() => {
+                            setIsVerified(true)
+                            renewToken(dispatch, user)
+                        }}
+                    />
+                )}
             </Box>
         </SettingsLayout>
     );

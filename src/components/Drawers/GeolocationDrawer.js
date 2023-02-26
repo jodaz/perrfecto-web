@@ -30,8 +30,6 @@ const GeolocationDrawer = () => {
         }
     }, [coords])
 
-    console.log("in drawer ", !isGeolocationEnabled, !isGeolocationAvailable)
-
     const list = (anchor) => (
         <Box onKeyDown={toggleDrawer(anchor, false)}>
             <DialogTitle>
