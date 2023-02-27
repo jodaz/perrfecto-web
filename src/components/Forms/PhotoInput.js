@@ -28,7 +28,10 @@ const Dropzone = ({
             })
 
             setFile(fileObject);
-            onChange(acceptedFiles)
+            onChange({
+                previous: file,
+                new: acceptedFiles
+            })
         },
         disabled: disabled
     })
@@ -63,7 +66,10 @@ const Dropzone = ({
 
     React.useEffect(() => {
         if (defaultValue) {
-            return setFile({ preview: getUserPhoto(defaultValue) })
+            return setFile({
+                path: defaultValue,
+                preview: getUserPhoto(defaultValue)
+            })
         }
         return  setFile({ preview: '/images/Avatar.svg' })
     }, [defaultValue])

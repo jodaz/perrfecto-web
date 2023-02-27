@@ -8,20 +8,21 @@ import formDataHandler from '../../utils/formDataHandler';
 import Avatar from '@mui/material/Avatar';
 import getUserPhoto from '../../utils/getUserPhoto';
 
-const EditPhoto = ({ isEditing }) => {
+const EditPhoto = ({ isEditing, toggleEdit }) => {
     const { state: { user }, dispatch } = useAuth();
     const [currProfilePic, setCurrProfilePic] = React.useState(null);
     const { handleSubmit, control, watch, formState: {
-        isSubmitting
+        isSubmitting, isSubmitSuccessful
     }} = useForm();
 
-    const onSubmit = async (data) => {
+    const onSubmit = async (values) => {
         try {
             const parsedData = {
-                files: data.files,
-                body: {
-                    img_delete: user.img_profile ? user.img_profile : null
-                }
+                files: values.files.new
+            }
+
+            if (values.files.previous.path) {
+                parsedData.img_delete = values.files.previous.path
             }
 
             const formData = await formDataHandler(parsedData, 'files')
@@ -59,6 +60,12 @@ const EditPhoto = ({ isEditing }) => {
             setCurrProfilePic(JSON.parse(user.img_profile)[0])
         }
     }, [user.img_profile])
+
+    React.useEffect(() => {
+        if (isSubmitSuccessful) {
+            toggleEdit()
+        }
+     }, [isSubmitSuccessful])
 
     return (
         <Box sx={{ display: 'flex' }}>
