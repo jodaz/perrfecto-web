@@ -56,24 +56,6 @@ const VerifyPhone = ({ open, data, handleClose, updateStatus }) => {
         };
     };
 
-    /**
-     * Cuando pida un nuevo codigo, el boton submit debe quedar cargando
-     * y el campo deshabilitado
-     */
-    const onSubmitNewCode = async () => {
-        setError(false)
-        setDisabledLink(true)
-
-        await apiProvider.put('/api/user/phone', data)
-            .then(() => {
-                setSuccess('Su código de recuperación ha sido enviado.')
-            })
-            .catch(error => {
-                setSuccess(false)
-                setError('Ha ocurrido un error')
-            });
-    };
-
     React.useEffect(() => {
         if (success) {
             setTimeout(() => setSuccess(''), 3000)
@@ -85,12 +67,6 @@ const VerifyPhone = ({ open, data, handleClose, updateStatus }) => {
             setTimeout(() => setDisabledLink(false), 30000)
         }
     }, [disabledLink])
-
-    useEffectOnce(() => {
-        if (open) {
-            onSubmitNewCode()
-        }
-    }, [])
 
     return (
         <Dialog
@@ -158,23 +134,6 @@ const VerifyPhone = ({ open, data, handleClose, updateStatus }) => {
                                     />
                                 )}
                             />
-                        </Box>
-                        <Box sx={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            flexDirection: isSmall ? 'column' : 'row'
-                        }}>
-                            <Typography color="text.secondary" variant="body2">
-                                No has recibido el código?
-                            </Typography>
-                            <Box sx={{
-                                transition: '0.3s',
-                                color: theme => (!disabledLink) ? theme.palette.info.main : `${alpha(theme.palette.info.main, 0.5)}`,
-                                textDecoration: 'underline',
-                                cursor: disabledLink ? 'not-allowed' : 'pointer',
-                            }} onClick={onSubmitNewCode}>
-                                Reenviar código
-                            </Box>
                         </Box>
                         <Box sx={{ p: 4 }}>
                             <Button
