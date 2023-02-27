@@ -43,7 +43,7 @@ const VerifyPhone = ({ open, data, handleClose, updateStatus }) => {
             const data = error.response.data;
 
             if (data) {
-                if (data.msg == 'invalid') {
+                if (data.msg == 'Incorrect') {
                     setError('Código inválido.')
                 }
                 if (data.msg == 'expired') {

@@ -38,12 +38,13 @@ const UpdateEmailAndPhone = () => {
      * Cuando pida un nuevo codigo, el boton submit debe quedar cargando
      * y el campo deshabilitado
      */
-    const verifyPhone = async () => {
+    const verifyPhone = async (values) => {
         try {
-            const response = await apiProvider.put('/api/user/phone', phoneValues)
+            const response = await apiProvider.put('/api/user/phone', values)
 
             if (response.status >= 200 && response.status < 300) {
-                toggleVerifyPhone() // Abre modal de verificación
+                setPhoneValues(values)
+                return toggleVerifyPhone() // Abre modal de verificación
             }
         } catch (error) {
             if (error.response.data.msg) {
@@ -60,7 +61,9 @@ const UpdateEmailAndPhone = () => {
 
     const updateAccountAccess = async (values) => {
         try {
-            const formData = await formDataHandler(values)
+            const formData = await formDataHandler({
+                email: values.email
+            })
             const res = await fileProvider.put(`/api/auth/user-edit/${user.id}`, formData)
 
             if (res.status >= 200 && res.status < 300) {
@@ -81,19 +84,17 @@ const UpdateEmailAndPhone = () => {
         }
     }
 
-    const onSubmit = async values => {
+    const onSubmit = React.useCallback(values => {
         // Valida el numero de telefono solo si no ha sido validado antes
         if ((values.phone != user.phone) || (values.code_phone != user.code_phone) && !isVerified) {
-            await setPhoneValues({
+            return verifyPhone({
                 phone: values.phone,
                 code_phone: values.code_phone
             })
-
-            await verifyPhone()
         } else {
-            await updateAccountAccess(values)
+            return updateAccountAccess(values)
         }
-    }
+    }, [user.code_phone, user.phone, user.email, isVerified]);
 
     return (
         <SettingsLayout title='Cuenta de acceso'>
@@ -127,6 +128,7 @@ const UpdateEmailAndPhone = () => {
                             validations={PHONE.messages}
                             placeholder='Ingresar teléfono'
                             defaultCodePhone={user.code_phone}
+                            disabled={isSubmitting}
                         />
                     </Box>
                 </Box>
@@ -140,18 +142,20 @@ const UpdateEmailAndPhone = () => {
                         Guardar cambios
                     </Button>
                 </Box>
-                {(openVerifyPhone) && (
-                    <VerifyPhone
-                        open={openVerifyPhone}
-                        data={phoneValues}
-                        handleClose={toggleVerifyPhone}
-                        updateStatus={() => {
-                            setIsVerified(true)
-                            renewToken(dispatch, user)
-                        }}
-                    />
-                )}
             </Box>
+            {(openVerifyPhone) && (
+                <VerifyPhone
+                    open={openVerifyPhone}
+                    data={phoneValues}
+                    handleClose={toggleVerifyPhone}
+                    updateStatus={() => {
+                        setIsVerified(true)
+                        renewToken(dispatch, user)
+                        setPhoneValues(null)
+                        navigate(-1)
+                    }}
+                />
+            )}
         </SettingsLayout>
     );
 }
