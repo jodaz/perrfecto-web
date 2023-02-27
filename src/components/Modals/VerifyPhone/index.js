@@ -2,16 +2,13 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import PinInput from 'react-pin-input';
-import { Typography } from '@mui/material';
 import { useForm, Controller } from "react-hook-form";
 import { apiProvider } from '../../../api'
 import Alert from '@mui/material/Alert';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Fade from '@mui/material/Fade';
-import { alpha } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '../../DialogTitle';
-import useEffectOnce from '../../../utils/useEffectOnce'
 
 const VerifyPhone = ({ open, data, handleClose, updateStatus }) => {
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));

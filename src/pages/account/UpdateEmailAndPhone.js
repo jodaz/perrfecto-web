@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+import Button from '../../components/Button';
 import SettingsLayout from '../../layouts/SettingsLayout';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -58,7 +58,7 @@ const UpdateEmailAndPhone = () => {
         }
     };
 
-    const updateAccountAccess = async () => {
+    const updateAccountAccess = async (values) => {
         try {
             const formData = await formDataHandler(values)
             const res = await fileProvider.put(`/api/auth/user-edit/${user.id}`, formData)
@@ -91,7 +91,7 @@ const UpdateEmailAndPhone = () => {
 
             await verifyPhone()
         } else {
-            await updateAccountAccess()
+            await updateAccountAccess(values)
         }
     }
 
