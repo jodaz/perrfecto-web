@@ -2,16 +2,13 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import PinInput from 'react-pin-input';
-import { Typography } from '@mui/material';
 import { useForm, Controller } from "react-hook-form";
 import { apiProvider } from '../../../api'
 import Alert from '@mui/material/Alert';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Fade from '@mui/material/Fade';
-import { alpha } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '../../DialogTitle';
-import useEffectOnce from '../../../utils/useEffectOnce'
 
 const VerifyPhone = ({ open, data, handleClose, updateStatus }) => {
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
@@ -46,7 +43,7 @@ const VerifyPhone = ({ open, data, handleClose, updateStatus }) => {
             const data = error.response.data;
 
             if (data) {
-                if (data.msg == 'invalid') {
+                if (data.msg == 'Incorrect') {
                     setError('Código inválido.')
                 }
                 if (data.msg == 'expired') {
@@ -54,24 +51,6 @@ const VerifyPhone = ({ open, data, handleClose, updateStatus }) => {
                 }
             }
         };
-    };
-
-    /**
-     * Cuando pida un nuevo codigo, el boton submit debe quedar cargando
-     * y el campo deshabilitado
-     */
-    const onSubmitNewCode = async () => {
-        setError(false)
-        setDisabledLink(true)
-
-        await apiProvider.put('/api/user/phone', data)
-            .then(() => {
-                setSuccess('Su código de recuperación ha sido enviado.')
-            })
-            .catch(error => {
-                setSuccess(false)
-                setError('Ha ocurrido un error')
-            });
     };
 
     React.useEffect(() => {
@@ -85,12 +64,6 @@ const VerifyPhone = ({ open, data, handleClose, updateStatus }) => {
             setTimeout(() => setDisabledLink(false), 30000)
         }
     }, [disabledLink])
-
-    useEffectOnce(() => {
-        if (open) {
-            onSubmitNewCode()
-        }
-    }, [])
 
     return (
         <Dialog
@@ -158,23 +131,6 @@ const VerifyPhone = ({ open, data, handleClose, updateStatus }) => {
                                     />
                                 )}
                             />
-                        </Box>
-                        <Box sx={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            flexDirection: isSmall ? 'column' : 'row'
-                        }}>
-                            <Typography color="text.secondary" variant="body2">
-                                No has recibido el código?
-                            </Typography>
-                            <Box sx={{
-                                transition: '0.3s',
-                                color: theme => (!disabledLink) ? theme.palette.info.main : `${alpha(theme.palette.info.main, 0.5)}`,
-                                textDecoration: 'underline',
-                                cursor: disabledLink ? 'not-allowed' : 'pointer',
-                            }} onClick={onSubmitNewCode}>
-                                Reenviar código
-                            </Box>
                         </Box>
                         <Box sx={{ p: 4 }}>
                             <Button

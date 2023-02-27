@@ -74,7 +74,7 @@ const StyledInput = styled(TextField)(({ theme }) => ({
     },
 }));
 
-const CodePopover = ({ control, rules, defaultCodePhone }) => {
+const CodePopover = ({ control, rules, defaultCodePhone, disabled }) => {
     const [value, setValue] = React.useState(phoneCodes[66]);
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -100,10 +100,11 @@ const CodePopover = ({ control, rules, defaultCodePhone }) => {
         <>
             <Box sx={{
                 color: value ? 'rgba(31, 44, 56, 1)' : '#A6A6A6',
-                cursor: 'pointer',
+                cursor: !disabled ? 'pointer' : 'unset',
                 pointerEvents: 'all !important',
-                marginRight: '2rem'
-            }} onClick={handleClick}>
+                marginRight: '2rem',
+                opacity: !disabled ? 1 : 0.5
+            }} onClick={!disabled && handleClick}>
                 {(value) ? `(${value.code})` : <>Cód.</>}
             </Box>
             <Box component="hr"

@@ -36,9 +36,10 @@ const PetOwner = () => {
         try {
             const parsedData = {
                 files: data.files,
-                body: {
-                    img_delete: user.img_profile ? user.img_profile : null
-                }
+            }
+
+            if (JSON.parse(user.img_profile).length) {
+                parsedData.img_delete = (JSON.parse(user.img_profile)[0])
             }
 
             const formData = await formDataHandler(parsedData, 'files')
