@@ -47,7 +47,11 @@ const PhoneInput = ({
                             disabled={disabled}
                             startAdornment={
                                 <InputAdornment position="start">
-                                    <CodePopover defaultCodePhone={defaultCodePhone} control={control} />
+                                    <CodePopover
+                                        defaultCodePhone={defaultCodePhone}
+                                        control={control}
+                                        disabled={disabled}
+                                    />
                                 </InputAdornment>
                             }
                             inputProps={{ maxLength: 15 }}

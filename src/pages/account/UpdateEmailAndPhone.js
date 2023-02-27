@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+import Button from '../../components/Button';
 import SettingsLayout from '../../layouts/SettingsLayout';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -8,7 +8,7 @@ import { useAuth, renewToken } from '../../context/AuthContext';
 import TextInput from '../../components/Forms/TextInput';
 import PhoneInput from '../../components/Forms/PhoneInput';
 import formDataHandler from '../../utils/formDataHandler';
-import { fileProvider } from '../../api';
+import { apiProvider, fileProvider } from '../../api';
 import {
     PHONE,
     EMAIL
@@ -21,34 +21,55 @@ const UpdateEmailAndPhone = () => {
     const [openVerifyPhone, setOpenVerifyPhone] = React.useState(false)
     const [isVerified, setIsVerified] = React.useState(false);
     const navigate = useNavigate()
-    const { control, handleSubmit, setError, setValue, formState: {
+    const { control, handleSubmit, setError, formState: {
         isSubmitting
     }} = useForm({
         reValidateMode: "onBlur",
         defaultValues: React.useMemo(() => ({
+            email: user.email,
             phone: user.phone,
-            code_phone: user.code_phone ? user.code_phone : 34
+            code_phone: user.code_phone
         }))
     });
 
     const toggleVerifyPhone = () => setOpenVerifyPhone(!openVerifyPhone);
 
-    const onSubmit = async values => {
+    /**
+     * Cuando pida un nuevo codigo, el boton submit debe quedar cargando
+     * y el campo deshabilitado
+     */
+    const verifyPhone = async (values) => {
         try {
-            if ((values.phone != user.phone) || (values.code_phone != user.code_phone) && !isVerified) {
-                setPhoneValues({
-                    phone: values.phone,
-                    code_phone: values.code_phone
-                })
-                toggleVerifyPhone()
-            } else {
-                const formData = await formDataHandler(values)
-                const res = await fileProvider.put(`/api/auth/user-edit/${user.id}`, formData)
+            const response = await apiProvider.put('/api/user/phone', values)
 
-                if (res.status >= 200 && res.status < 300) {
-                    renewToken(dispatch, user)
-                    navigate(-1)
+            if (response.status >= 200 && response.status < 300) {
+                setPhoneValues(values)
+                return toggleVerifyPhone() // Abre modal de verificación
+            }
+        } catch (error) {
+            if (error.response.data.msg) {
+                const message = error.response.data.msg;
+
+                if (message.includes(' There was a problem')) {
+                    setError('phone', {
+                        type: 'unique'
+                    })
                 }
+            }
+        }
+    };
+
+    const updateAccountAccess = async (values) => {
+        try {
+            const formData = await formDataHandler({
+                email: values.email
+            })
+            const res = await fileProvider.put(`/api/auth/user-edit/${user.id}`, formData)
+
+            if (res.status >= 200 && res.status < 300) {
+                renewToken(dispatch, user)
+                setPhoneValues(null)
+                navigate(-1)
             }
         } catch (error) {
             if (error.response.data.msg) {
@@ -59,21 +80,21 @@ const UpdateEmailAndPhone = () => {
                        type: 'unique'
                     })
                 }
-                if (message.includes('There is a user with the provided that phone')) {
-                    setError('phone', {
-                        type: 'unique'
-                    })
-                }
             }
         }
     }
 
-    React.useEffect(() => {
-        if (Object.keys(user).length) {
-            setValue('phone', user.phone)
-            setValue('code_phone', user.code_phone)
+    const onSubmit = React.useCallback(values => {
+        // Valida el numero de telefono solo si no ha sido validado antes
+        if ((values.phone != user.phone) || (values.code_phone != user.code_phone) && !isVerified) {
+            return verifyPhone({
+                phone: values.phone,
+                code_phone: values.code_phone
+            })
+        } else {
+            return updateAccountAccess(values)
         }
-    }, [user])
+    }, [user.code_phone, user.phone, user.email, isVerified]);
 
     return (
         <SettingsLayout title='Cuenta de acceso'>
@@ -106,6 +127,8 @@ const UpdateEmailAndPhone = () => {
                             rules={PHONE.rules}
                             validations={PHONE.messages}
                             placeholder='Ingresar teléfono'
+                            defaultCodePhone={user.code_phone}
+                            disabled={isSubmitting}
                         />
                     </Box>
                 </Box>
@@ -119,18 +142,20 @@ const UpdateEmailAndPhone = () => {
                         Guardar cambios
                     </Button>
                 </Box>
-                {(openVerifyPhone) && (
-                    <VerifyPhone
-                        open={openVerifyPhone}
-                        data={phoneValues}
-                        handleClose={toggleVerifyPhone}
-                        updateStatus={() => {
-                            setIsVerified(true)
-                            renewToken(dispatch, user)
-                        }}
-                    />
-                )}
             </Box>
+            {(openVerifyPhone) && (
+                <VerifyPhone
+                    open={openVerifyPhone}
+                    data={phoneValues}
+                    handleClose={toggleVerifyPhone}
+                    updateStatus={() => {
+                        setIsVerified(true)
+                        renewToken(dispatch, user)
+                        setPhoneValues(null)
+                        navigate(-1)
+                    }}
+                />
+            )}
         </SettingsLayout>
     );
 }
