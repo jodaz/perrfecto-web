@@ -31,13 +31,14 @@ const PetProfile = () => {
     const registerDog = getSearchParams(location, 'dog');
     const { handleSubmit, control, watch } = useForm();
 
-    const onSubmit = async (data) => {
+    const onSubmit = async (values) => {
         try {
             const parsedData = {
-                files: data.files,
-                body: {
-                    img_delete: user.img_profile ? user.img_profile : null
-                }
+                files: values.files.new
+            }
+
+            if (values.files.previous.path) {
+                parsedData.img_delete = values.files.previous.path
             }
 
             const formData = await formDataHandler(parsedData, 'files')

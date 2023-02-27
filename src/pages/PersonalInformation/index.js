@@ -30,7 +30,10 @@ const PersonalInformation = () => {
                         <Typography variant="subtitle1" gutterBottom color="text.tertiary" fontWeight={500}>
                             Foto de perfil
                         </Typography>
-                        <EditPhoto isEditing={editPhoto} />
+                        <EditPhoto
+                            isEditing={editPhoto}
+                            toggleEdit={toggleEditPhoto}
+                        />
                     </Box>
                     <Typography
                         variant="subtitle1"

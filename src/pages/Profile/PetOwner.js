@@ -32,14 +32,14 @@ const PetOwner = () => {
         isSubmitting
     }} = useForm();
 
-    const onSubmit = async (data) => {
+    const onSubmit = async (values) => {
         try {
             const parsedData = {
-                files: data.files,
+                files: values.files.new
             }
 
-            if (JSON.parse(user.img_profile).length) {
-                parsedData.img_delete = (JSON.parse(user.img_profile)[0])
+            if (values.files.previous.path) {
+                parsedData.img_delete = values.files.previous.path
             }
 
             const formData = await formDataHandler(parsedData, 'files')
@@ -73,7 +73,11 @@ const PetOwner = () => {
     }, [handleSubmit, watch])
 
     return (
-        <Box sx={{ p: 1, textAlign: 'center', width: '100%' }}>
+        <Box sx={{
+            padding: '8px 0 0 0',
+            textAlign: 'center',
+            width: '100%'
+        }}>
             <BasicTabs />
             <Box sx={{
                 marginTop: '1rem',
