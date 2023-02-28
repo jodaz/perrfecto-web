@@ -114,7 +114,7 @@ const EditAdDesktop = () => {
             borderRadius: '12px',
             position: 'relative',
             maxHeight: { md: '500px', lg: '600px' },
-            width: 'fit-content',
+            width: '800px',
             overflowY: 'auto',
             position: 'relative'
         }} id="interests-drawer-container">
@@ -127,7 +127,6 @@ const EditAdDesktop = () => {
                 flexDirection: 'column',
                 position: 'relative',
                 width: 'fit-content',
-                overflowY: 'auto'
             }} component="form" onSubmit={handleSubmit(onSubmit)}>
                 <Box margin={'0 2rem'}>
                     <GalleryInput

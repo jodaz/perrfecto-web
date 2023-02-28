@@ -68,7 +68,12 @@ input.pincode-input-text:focus {
     border: 1px solid #3B82F6 !important;
     box-shadow: 0px 1px 12px #3B82F6 !important;
 }
-
+.swiper {
+    margin: 0 !important;
+}
+.mySwiper {
+    width: 100%
+}
 
 .App {
     font-family: sans-serif;

@@ -8,12 +8,14 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import { PlusCircle, Trash2 } from 'lucide-react';
-import useEffectOnce from '../utils/useEffectOnce';
 import getUserPhoto from '../utils/getUserPhoto'
 import { alpha } from '@mui/material';
 import styled from '@emotion/styled';
 
 const SwiperStyled = styled(Swiper)(() => ({
+    '& .swiper': {
+        width: '100% !important'
+    },
     '& .swiper-wrapper': {
         width: '200px',
         marginBottom: '0.5rem'
@@ -113,7 +115,7 @@ const Dropzone = ({
     return (
         <Box sx={{ display: 'flex', mt: 1, mb: 2, opacity: disabled ? 0.8 : 1 }}>
             {!!(files.length) && (
-                <Box sx={{ display: 'flex' }}>
+                <Box sx={{ display: 'flex', width: '100%', justifyContent: 'start' }}>
                     <SwiperStyled
                         slidesPerView={1}
                         scrollbar={{
@@ -121,6 +123,7 @@ const Dropzone = ({
                         }}
                         grabCursor={true}
                         modules={[Scrollbar]}
+                        className='mySwiper'
                     >
                         {thumbs}
                     </SwiperStyled>
@@ -129,7 +132,6 @@ const Dropzone = ({
             <Box sx={{
                 display: 'flex',
                 justifyContent: 'space-between',
-                width: '100%'
             }} {...getRootProps({className: 'dropzone'})}>
                 <input {...getInputProps()} />
                 {(!files.length) &&
@@ -149,7 +151,7 @@ const Dropzone = ({
                 <Box sx={{
                     display: 'flex',
                     p: 1,
-                    width: '100px',
+                    width: '80px',
                     textAlign: 'center',
                     alignItems: 'center',
                     justifyContent: 'center',
