@@ -5,12 +5,14 @@ import { useNavigate } from 'react-router-dom';
 import { apiProvider } from '../../api'
 import SettingsLayout from '../../layouts/SettingsLayout';
 import useEffectOnce from '../../utils/useEffectOnce';
+import LoadingIndicator from '../../components/LoadingIndicator'
 
 const Plans = () => {
+    const [isLoading, setIsLoading] = React.useState(false);
     const [plans, setPlans] = React.useState([]);
-    const navigate = useNavigate();
 
     const fetchBreeds = async () => {
+        setIsLoading(true)
         try {
             const res = await apiProvider.get('/api/pack/get-packs')
 
@@ -18,26 +20,29 @@ const Plans = () => {
                 const { data: { data } } = res;
 
                 setPlans(data)
+                setIsLoading(false)
             }
         } catch (error) {
+            setIsLoading(false)
             console.log("error ", error)
         }
     }
-
-    console.log(plans)
 
     useEffectOnce(() => { fetchBreeds() }, [])
 
     return (
         <SettingsLayout title='Pack de anuncios'>
-            <Box sx={{
-                display: 'flex',
-                p: 1,
-                height: '100%',
-
-            }}>
-                {plans.map(plan => <PlanCard {...plan} />)}
-            </Box>
+            {isLoading ? (
+                <LoadingIndicator height='100%' />
+            ) : (
+                <Box sx={{
+                    display: 'flex',
+                    p: 1,
+                    height: '100%',
+                }}>
+                    {plans.map(plan => <PlanCard {...plan} />)}
+                </Box>
+            )}
         </SettingsLayout>
     );
 }
