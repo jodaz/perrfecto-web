@@ -77,6 +77,7 @@ import ShowMarket from './pages/Market/ShowMarket';
 import ShowBusinessLocation from './pages/Businesses/ShowBusinessLocation';
 import ShowBusiness from './pages/Businesses/ShowBusiness';
 import Plans from './pages/plans';
+import PlanShow from './pages/plans/PlanShow';
 
 function AppRoutes() {
     let location = useLocation();
@@ -108,6 +109,14 @@ function AppRoutes() {
                 element={
                     <AppLayout>
                         <Plans />
+                    </AppLayout>
+                }
+            />
+            <Route
+                path='/profile/settings/plans/:id'
+                element={
+                    <AppLayout>
+                        <PlanShow location={location} />
                     </AppLayout>
                 }
             />

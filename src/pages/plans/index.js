@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import PlanCard from './PlanCard';
-import { useNavigate } from 'react-router-dom';
 import { apiProvider } from '../../api'
 import SettingsLayout from '../../layouts/SettingsLayout';
 import useEffectOnce from '../../utils/useEffectOnce';
@@ -11,7 +10,7 @@ const Plans = () => {
     const [isLoading, setIsLoading] = React.useState(false);
     const [plans, setPlans] = React.useState([]);
 
-    const fetchBreeds = async () => {
+    const fetchPlans = async () => {
         setIsLoading(true)
         try {
             const res = await apiProvider.get('/api/pack/get-packs')
@@ -28,7 +27,7 @@ const Plans = () => {
         }
     }
 
-    useEffectOnce(() => { fetchBreeds() }, [])
+    useEffectOnce(() => { fetchPlans() }, [])
 
     return (
         <SettingsLayout title='Pack de anuncios'>

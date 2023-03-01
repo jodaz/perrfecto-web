@@ -19,10 +19,11 @@ const PlanCard = ({
         width: '100%',
         p: 1,
         height: 'fit-content',
-        background: `url(${getUserPhoto(Banner.img)})`,
+        background: `url(${Banner && getUserPhoto(Banner.img)})`,
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        backgroundColor: 'gray'
     }}>
         <Box sx={{
             display: 'flex',
