@@ -49,6 +49,10 @@ const Settings = () => {
                             Cuenta
                         </ListTitle>
                         <ListItemLink
+                            to="plans"
+                            title="Pack de anuncios"
+                        />
+                        <ListItemLink
                             to="account"
                             title="Cuenta de acceso"
                         />
