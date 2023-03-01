@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import LinkBehavior from '../../LinkBehavior'
 import Typography from '@mui/material/Typography';
 import { ReactComponent as CheckCircle } from '../../../assets/icons/CheckCircle.svg'
 
