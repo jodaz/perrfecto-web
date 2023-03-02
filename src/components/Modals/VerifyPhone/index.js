@@ -39,7 +39,7 @@ const VerifyPhone = ({
             })
 
             if (res.status >= 200 && res.status < 300) {
-                updateStatus()
+                updateStatus(res)
                 handleClose()
             } else {
                 setError(true)
