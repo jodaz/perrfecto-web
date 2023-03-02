@@ -29,7 +29,6 @@ import {
 
 export default function SignUp({ location }) {
     const [verifyValues, setVerifyValues] = React.useState(null)
-    const [isVerified, setIsVerified] = React.useState(false);
     const [openVerifyPhone, setOpenVerifyPhone] = React.useState(false)
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('md'));
     const navigate = useNavigate()
@@ -59,10 +58,11 @@ export default function SignUp({ location }) {
      */
     const verifyPhone = async values => {
         try {
+            const { email, ...restValues } = values
             // const response = await apiProvider.put('/api/user/phone', values)
 
             // if (response.status >= 200 && response.status < 300) {
-                setVerifyValues(values)
+                setVerifyValues(restValues)
                 return toggleVerifyPhone() // Abre modal de verificación
             // }
         } catch (error) {
@@ -78,8 +78,12 @@ export default function SignUp({ location }) {
         }
     };
 
+    /**
+     * Sideaction used after user is registered successfully
+     * @param {AxiosResponse} response
+     * @returns null
+     */
     const verifyPhoneModalSideaction = response => () => {
-        setIsVerified(true)
         authenticateAndRedirect(response)
         setVerifyValues(null)
     }
@@ -88,9 +92,13 @@ export default function SignUp({ location }) {
      * Register user with email only
      * @param {*} data
      */
-    const registerUserWithEmail = async (data) => {
+    const registerUserWithEmail = async data => {
         try {
-            const { code_phone, ...restData } = data;
+            const {
+                code_phone,
+                phone,
+                ...restData
+            } = data;
 
             // if (isPhoneRegister) {
             //     restData.code_phone = data.code_phone
@@ -116,12 +124,12 @@ export default function SignUp({ location }) {
 
     const onSubmit = React.useCallback(values => {
         // Valida el numero de telefono solo si no ha sido validado antes
-        if ((isPhoneRegister) && !isVerified) {
+        if (isPhoneRegister) {
             return verifyPhone(values)
         } else {
             return registerUserWithEmail(values)
         }
-    }, [isPhoneRegister, isVerified]);
+    }, [isPhoneRegister]);
 
     return (
         <Dialog
