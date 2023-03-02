@@ -1,6 +1,6 @@
 import Stack from '@mui/material/Stack';
 import PaypalIcon from '../../assets/icons/Paypal.png'
-// import StripeIcon from '../../assets/icons/StripeIcon.png'
+import StripeIcon from '../../assets/icons/Stripe.png'
 import DebitCardIcon from '../../assets/icons/DebitCard.png'
 import PaymentMethodButton from './PaymentMethodButton';
 
@@ -15,7 +15,7 @@ const PaymentMethods = () => (
             title='Paypal'
         />
         <PaymentMethodButton
-            icon={PaypalIcon}
+            icon={StripeIcon}
             title='Stripe'
         />
         <PaymentMethodButton
