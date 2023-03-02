@@ -4,14 +4,16 @@ export const PHONE = {
         pattern: /^\d+$/,
         notfound: true,
         unique: true,
-        minLength: 3
+        minLength: 3,
+        deleted: true
     },
     messages: {
         required: "Ingrese su teléfono",
         pattern: 'Introduzca un número de teléfono válido',
         notfound: 'El usuario no ha sido encontrado.',
         unique: 'El teléfono ha sido registrado.',
-        minLength: 'El teléfono es muy corto.'
+        minLength: 'El teléfono es muy corto.',
+        deleted: 'La cuenta asociada ha sido eliminada por el usuario.'
     }
 }
 

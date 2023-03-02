@@ -16,6 +16,7 @@ import { Divider } from '@mui/material';
 import { useAuth, loginUser } from '../../context/AuthContext'
 import getSearchParams from '../../utils/getSearchParams';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import VerifyPhone from '../Modals/VerifyPhone';
 // Other components
 import {
     NAME,
@@ -27,6 +28,8 @@ import {
 } from '../../validations'
 
 export default function SignUp({ location }) {
+    const [verifyValues, setVerifyValues] = React.useState(null)
+    const [openVerifyPhone, setOpenVerifyPhone] = React.useState(false)
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('md'));
     const navigate = useNavigate()
     const { dispatch } = useAuth();
@@ -39,21 +42,68 @@ export default function SignUp({ location }) {
     const password = watch("password", "");
     const isPhoneRegister = getSearchParams(location, 'withPhone');
 
-    const onSubmit = async (data) => {
-        try {
-            const { code_phone, ...restData } = data;
+    const handleClose = () => navigate(-1)
 
-            if (isPhoneRegister) {
-                restData.code_phone = data.code_phone
+    const toggleVerifyPhone = () => setOpenVerifyPhone(!openVerifyPhone);
+
+    const authenticateAndRedirect = response => {
+        const { data } = response;
+
+        loginUser(dispatch, data)
+        navigate('/register/welcome')
+    }
+
+    /**
+     * Send register data and get code at phone user
+     */
+    const verifyPhone = async values => {
+        try {
+            const { email, ...restValues } = values
+            const response = await apiProvider.post('/api/user/send-code-register-phone', values)
+
+            if (response.status >= 200 && response.status < 300) {
+                setVerifyValues(restValues)
+                return toggleVerifyPhone() // Abre modal de verificación
             }
+        } catch (error) {
+            if (error.response.data.msg) {
+                const message = error.response.data.msg;
+
+                if (message.includes(' There was a problem')) {
+                    setError('phone', {
+                        type: 'unique'
+                    })
+                }
+            }
+        }
+    };
+
+    /**
+     * Sideaction used after user is registered successfully
+     * @param {AxiosResponse} response
+     * @returns null
+     */
+    const verifyPhoneModalSideaction = response => {
+        authenticateAndRedirect(response)
+        setVerifyValues(null)
+    }
+
+    /**
+     * Register user with email only
+     * @param {*} data
+     */
+    const registerUserWithEmail = async data => {
+        try {
+            const {
+                code_phone,
+                phone,
+                ...restData
+            } = data;
 
             const res = await apiProvider.post('/api/auth/new', restData)
 
             if (res.status >= 200 || res.status < 300) {
-                const { data } = res;
-
-                loginUser(dispatch, data)
-                navigate('/register/welcome')
+                authenticateAndRedirect(res);
             }
         } catch (error) {
             if (error.response.data.msg) {
@@ -64,16 +114,18 @@ export default function SignUp({ location }) {
                        type: 'unique'
                     })
                 }
-                if (message.includes('There is a user with the provided that phone')) {
-                    setError('phone', {
-                        type: 'unique'
-                    })
-                }
             }
         }
     };
 
-    const handleClose = () => navigate(-1)
+    const onSubmit = React.useCallback(values => {
+        // Valida el numero de telefono solo si no ha sido validado antes
+        if (isPhoneRegister) {
+            return verifyPhone(values)
+        } else {
+            return registerUserWithEmail(values)
+        }
+    }, [isPhoneRegister]);
 
     return (
         <Dialog
@@ -169,6 +221,7 @@ export default function SignUp({ location }) {
                                     name="phone"
                                     rules={PHONE.rules}
                                     validations={PHONE.messages}
+                                    disabled={isSubmitting}
                                     placeholder='Ingresar teléfono'
                                 />
                             </Box>
@@ -251,6 +304,17 @@ export default function SignUp({ location }) {
                         Crear cuenta
                     </Link>
                 </Box>
+            )}
+
+            {openVerifyPhone && (
+                <VerifyPhone
+                    open={openVerifyPhone}
+                    data={verifyValues}
+                    handleClose={toggleVerifyPhone}
+                    updateStatus={verifyPhoneModalSideaction}
+                    endpoint='/api/auth/new'
+                    method='post'
+                />
             )}
         </Dialog>
     );

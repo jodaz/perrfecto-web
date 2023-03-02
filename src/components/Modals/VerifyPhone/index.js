@@ -10,7 +10,14 @@ import Fade from '@mui/material/Fade';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '../../DialogTitle';
 
-const VerifyPhone = ({ open, data, handleClose, updateStatus }) => {
+const VerifyPhone = ({
+    open,
+    data,
+    handleClose,
+    updateStatus,
+    method = 'PUT',
+    endpoint
+}) => {
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const [success, setSuccess] = React.useState('')
     const [disabledLink, setDisabledLink] = React.useState(true)
@@ -27,13 +34,17 @@ const VerifyPhone = ({ open, data, handleClose, updateStatus }) => {
         setError(false);
 
         try {
-            const res = await apiProvider.put('/api/user/confirm-change-phone', {
-                ...data,
-                ...values
+            const res = await apiProvider({
+                method: method,
+                url: endpoint,
+                data: {
+                    ...data,
+                    ...values
+                }
             })
 
             if (res.status >= 200 && res.status < 300) {
-                updateStatus()
+                updateStatus(res)
                 handleClose()
             } else {
                 setError(true)
@@ -43,10 +54,10 @@ const VerifyPhone = ({ open, data, handleClose, updateStatus }) => {
             const data = error.response.data;
 
             if (data) {
-                if (data.msg == 'Incorrect') {
+                if (data.msg.includes('Incorrect')) {
                     setError('Código inválido.')
                 }
-                if (data.msg == 'expired') {
+                if (data.msg.includes('expirsed')) {
                     setError('Código expirado.')
                 }
             }
