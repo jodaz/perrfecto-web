@@ -83,7 +83,7 @@ export default function SignUp({ location }) {
      * @param {AxiosResponse} response
      * @returns null
      */
-    const verifyPhoneModalSideaction = response => () => {
+    const verifyPhoneModalSideaction = response => {
         authenticateAndRedirect(response)
         setVerifyValues(null)
     }
@@ -99,10 +99,6 @@ export default function SignUp({ location }) {
                 phone,
                 ...restData
             } = data;
-
-            // if (isPhoneRegister) {
-            //     restData.code_phone = data.code_phone
-            // }
 
             const res = await apiProvider.post('/api/auth/new', restData)
 
@@ -225,6 +221,7 @@ export default function SignUp({ location }) {
                                     name="phone"
                                     rules={PHONE.rules}
                                     validations={PHONE.messages}
+                                    disabled={isSubmitting}
                                     placeholder='Ingresar teléfono'
                                 />
                             </Box>
