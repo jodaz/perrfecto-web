@@ -59,12 +59,12 @@ export default function SignUp({ location }) {
     const verifyPhone = async values => {
         try {
             const { email, ...restValues } = values
-            // const response = await apiProvider.put('/api/user/phone', values)
+            const response = await apiProvider.post('/api/user/send-code-register-phone', values)
 
-            // if (response.status >= 200 && response.status < 300) {
+            if (response.status >= 200 && response.status < 300) {
                 setVerifyValues(restValues)
                 return toggleVerifyPhone() // Abre modal de verificación
-            // }
+            }
         } catch (error) {
             if (error.response.data.msg) {
                 const message = error.response.data.msg;
@@ -315,7 +315,7 @@ export default function SignUp({ location }) {
                     data={verifyValues}
                     handleClose={toggleVerifyPhone}
                     updateStatus={verifyPhoneModalSideaction}
-                    endpoint='/api/'
+                    endpoint='/api/auth/new'
                 />
             )}
         </Dialog>
