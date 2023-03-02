@@ -10,7 +10,13 @@ import Fade from '@mui/material/Fade';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '../../DialogTitle';
 
-const VerifyPhone = ({ open, data, handleClose, updateStatus }) => {
+const VerifyPhone = ({
+    open,
+    data,
+    handleClose,
+    updateStatus,
+    endpoint
+}) => {
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const [success, setSuccess] = React.useState('')
     const [disabledLink, setDisabledLink] = React.useState(true)
@@ -27,7 +33,7 @@ const VerifyPhone = ({ open, data, handleClose, updateStatus }) => {
         setError(false);
 
         try {
-            const res = await apiProvider.put('/api/user/confirm-change-phone', {
+            const res = await apiProvider.put(endpoint, {
                 ...data,
                 ...values
             })

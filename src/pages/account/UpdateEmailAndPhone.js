@@ -148,6 +148,7 @@ const UpdateEmailAndPhone = () => {
                     open={openVerifyPhone}
                     data={phoneValues}
                     handleClose={toggleVerifyPhone}
+                    endpoint='/api/user/confirm-change-phone'
                     updateStatus={() => {
                         setIsVerified(true)
                         renewToken(dispatch, user)
