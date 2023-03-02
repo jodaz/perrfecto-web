@@ -15,6 +15,7 @@ const VerifyPhone = ({
     data,
     handleClose,
     updateStatus,
+    method = 'PUT',
     endpoint
 }) => {
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
@@ -33,9 +34,13 @@ const VerifyPhone = ({
         setError(false);
 
         try {
-            const res = await apiProvider.put(endpoint, {
-                ...data,
-                ...values
+            const res = await apiProvider({
+                method: method,
+                url: endpoint,
+                data: {
+                    ...data,
+                    ...values
+                }
             })
 
             if (res.status >= 200 && res.status < 300) {

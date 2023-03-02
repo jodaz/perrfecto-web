@@ -65,6 +65,9 @@ export default function Login({ location }) {
                     setError('email', {
                         type: 'deleted'
                     })
+                    setError('phone', {
+                        type: 'deleted'
+                    })
                 }
                 if (message.includes('without password')) {
                     setError('email', {

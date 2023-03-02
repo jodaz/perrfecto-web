@@ -316,6 +316,7 @@ export default function SignUp({ location }) {
                     handleClose={toggleVerifyPhone}
                     updateStatus={verifyPhoneModalSideaction}
                     endpoint='/api/auth/new'
+                    method='post'
                 />
             )}
         </Dialog>
