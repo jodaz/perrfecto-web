@@ -1,14 +1,9 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography'
 import getUserPhoto from '../../utils/getUserPhoto';
+import LinkBehavior from '../../components/LinkBehavior'
 
-const PlanCard = ({
-    Banner,
-    name,
-    number_photos,
-    number_videos,
-    price
- }) => (
+const PlanCard = props => (
     <Box sx={{
         display: 'flex',
         alignItems: 'start',
@@ -19,12 +14,13 @@ const PlanCard = ({
         width: '100%',
         p: 1,
         height: 'fit-content',
-        background: `url(${Banner && getUserPhoto(Banner.img)})`,
+        background: `url(${props.Banner && getUserPhoto(props.Banner.img)})`,
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
         flexDirection: 'column',
-        backgroundColor: 'gray'
-    }}>
+        backgroundColor: 'gray',
+        textDecoration: 'none',
+    }} component={LinkBehavior}  to={`/profile/settings/plans/${props.id}`} state={props}>
         <Box sx={{
             display: 'flex',
             alignSelf: 'end',
@@ -46,7 +42,7 @@ const PlanCard = ({
                 fontSize='24px'
                 mr='3px'
             >
-                {price}
+                {props.price}
             </Typography>
             <Typography
                 variant="subtitle1"
@@ -62,7 +58,7 @@ const PlanCard = ({
             fontWeight={700}
             fontSize='24px'
         >
-            Plan {name}
+            Plan {props.name}
         </Typography>
         <Box sx={{
             display: 'flex',
@@ -73,13 +69,13 @@ const PlanCard = ({
                 fontWeight={500}
                 mr={'10px'}
             >
-                +{number_photos} fotos
+                +{props.number_photos} fotos
             </Typography>
             <Typography
                 variant="subtitle1"
                 fontWeight={500}
             >
-                +{number_videos} videos
+                +{props.number_videos} videos
             </Typography>
         </Box>
     </Box>

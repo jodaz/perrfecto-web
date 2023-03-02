@@ -6,11 +6,15 @@ import { apiProvider } from '../../api'
 import SettingsLayout from '../../layouts/SettingsLayout';
 import useEffectOnce from '../../utils/useEffectOnce';
 import LoadingIndicator from '../../components/LoadingIndicator'
+import { useForm } from 'react-hook-form';
+import Checkbox from '../../components/Forms/Checkbox';
+import PaymentMethods from './PaymentMethods'
 
 const PlanShow = ({ location }) => {
+    const { control } = useForm()
     const { id } = useParams()
     const [item, setItem] = React.useState(null)
-    const [isLoading, setIsLoading] = React.useState(false);
+    const [isLoading, setIsLoading] = React.useState(true);
 
     const fetchPlan = async () => {
         try {
@@ -20,6 +24,7 @@ const PlanShow = ({ location }) => {
                 const { data: { data } } = res;
 
                 setItem(data)
+                setIsLoading(false)
             }
         } catch (error) {
             setIsLoading(false)
@@ -33,6 +38,7 @@ const PlanShow = ({ location }) => {
 
     React.useEffect(() => {
         if (location.state) {
+            setIsLoading(false)
             setItem(location.state)
         } else {
             // Fetch plan
@@ -40,21 +46,25 @@ const PlanShow = ({ location }) => {
     }, [location.state])
 
     return (
-        <SettingsLayout title={item ? item.title : ''}>
-            {item ? (
+        <SettingsLayout title={item ? item.name : ''}>
+            {isLoading ? (
                 <LoadingIndicator height='100%' />
             ) : (
                 <Box sx={{
                     display: 'flex',
-                    justifyContent: 'center'
+                    justifyContent: 'start',
+                    height: '100%',
+                    p: 2,
+                    flexDirection: 'column'
                 }}>
-                    <PlanCard
-                        price={10}
-                        name={'Carousel'}
-                        number_photos={10}
-                        number_videos={10}
+                    <PlanCard {...item} />
+                    <Checkbox
+                        name="autorenovation"
+                        defaultValue={true}
+                        label='Renovación automática'
+                        control={control}
                     />
-
+                    <PaymentMethods />
                 </Box>
             )}
         </SettingsLayout>

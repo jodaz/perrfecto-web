@@ -16,7 +16,7 @@ const PaymentMethodButton = ({
             <IconButton>
                 <img src={icon} />
             </IconButton>
-            <Typography variant="body2">
+            <Typography variant="body2" fontWeight={500} color="text.secondary">
                 {title}
             </Typography>
         </Box>
