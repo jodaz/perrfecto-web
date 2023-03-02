@@ -54,10 +54,10 @@ const VerifyPhone = ({
             const data = error.response.data;
 
             if (data) {
-                if (data.msg == 'Incorrect') {
+                if (data.msg.includes('Incorrect')) {
                     setError('Código inválido.')
                 }
-                if (data.msg == 'expired') {
+                if (data.msg.includes('expirsed')) {
                     setError('Código expirado.')
                 }
             }
