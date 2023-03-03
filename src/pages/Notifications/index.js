@@ -1,32 +1,16 @@
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
+import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import NotificationCard from './NotificationCard';
-import { apiProvider } from '../../api';
 import useEffectOnce from '../../utils/useEffectOnce'
+import LoadingIndicator from '../../components/LoadingIndicator';
+import { useNotifications, fetchNotifications } from '../../context/NotificationContext'
 
 export default function Notifications() {
-    const [isLoading, setIsLoading] = React.useState(false);
-    const [notifications, setNotifications] = React.useState([])
+    const { state: { items, isLoading }, dispatch } = useNotifications()
 
-    const fetchNotifications = async () => {
-        setIsLoading(true)
-        try {
-            const response = await apiProvider.get('/api/notification/get-notifications')
-
-            if (response.status >= 200 || response.status < 300) {
-                const { data: { data } } = response;
-                setIsLoading(false)
-
-                setNotifications(data)
-            }
-        } catch (error) {
-            setIsLoading(false)
-            console.log(error)
-        }
-    }
-
-    useEffectOnce(() => fetchNotifications(), [])
+    useEffectOnce(() => fetchNotifications(dispatch), [])
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', p: 3 }}>
@@ -34,9 +18,19 @@ export default function Notifications() {
                 Notificaciones
             </Typography>
             <Box>
-                {notifications.map((item, i) => (
-                    <NotificationCard {...item} />
-                ))}
+                {!isLoading ? (
+                    <Stack
+                        direction={'column'}
+                        spacing={3}
+                        sx={{
+                            mt: 2
+                        }}
+                    >
+                        {items.map((item) => (
+                            <NotificationCard {...item} />
+                        ))}
+                    </Stack>
+                ) : <LoadingIndicator />}
             </Box>
         </Box>
     );

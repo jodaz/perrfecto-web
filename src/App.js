@@ -14,6 +14,7 @@ import { PublicationProvider } from './context/PublicationContext';
 import { MultiStepProvider } from './context/MultiStepContext';
 import { BlogProvider } from './context/BlogContext';
 import { ChatProvider } from './context/ChatContext';
+import { NotificationProvider } from './context/NotificationContext';
 
 const App = () => (
     <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={esLocale}>
@@ -25,9 +26,11 @@ const App = () => (
                             <MultiStepProvider>
                                 <BlogProvider>
                                     <ChatProvider>
-                                        <BusinessProvider>
-                                            <AppRoutes />
-                                        </BusinessProvider>
+                                        <NotificationProvider>
+                                            <BusinessProvider>
+                                                <AppRoutes />
+                                            </BusinessProvider>
+                                        </NotificationProvider>
                                     </ChatProvider>
                                 </BlogProvider>
                             </MultiStepProvider>
