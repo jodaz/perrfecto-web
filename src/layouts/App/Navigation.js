@@ -42,8 +42,8 @@ const guestLinks = handleClick => ([
     ...generalLinks,
     {
         label: 'Salir',
-        icon: <LogOut color='red' onClick={handleClick} />,
-        active: <LogOut color='red' onClick={handleClick} />,
+        icon: <LogOut color='#A167C9' onClick={handleClick} />,
+        active: <LogOut color='#A167C9' onClick={handleClick} />,
         route: '/'
     }
 ])
