@@ -31,7 +31,9 @@ export default function ChatList() {
         }
     }
 
-    useEffectOnce(() => { fetchMessages() }, [])
+    useEffectOnce(() => {
+        fetchMessages()
+    })
 
     return (
         <Box p={2}>

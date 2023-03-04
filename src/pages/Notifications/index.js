@@ -10,7 +10,7 @@ import { useNotifications, fetchNotifications } from '../../context/Notification
 export default function Notifications() {
     const { state: { items, isLoading }, dispatch } = useNotifications()
 
-    useEffectOnce(() => fetchNotifications(dispatch), [])
+    useEffectOnce(() => { fetchNotifications(dispatch) })
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', p: 3 }}>

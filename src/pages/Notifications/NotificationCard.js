@@ -1,14 +1,17 @@
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button'
+import Avatar from '@mui/material/Avatar';
+import getUserPhoto from '../../utils/getUserPhoto'
+import Typography from '@mui/material/Typography';
+import LinkBehavior from '../../components/LinkBehavior'
 
 const newMessage = ({ name_sender }) => `Has recibido un nuevo mensaje de ${name_sender}.`
 
 const NotificationCard = props => {
-    console.log(props)
     const {
         id,
         img,
-        key,
+        type,
         link,
         name_sender,
         status,
@@ -18,25 +21,33 @@ const NotificationCard = props => {
     return (
         <Box sx={{
             display: 'flex',
-            alignItems: 'center',
+            alignItems: 'start',
             margin: '1rem 0'
         }} key={id}>
-            <Box>
+            <Box sx={{ mr: 1 }}>
+                <Avatar src={getUserPhoto(img)} />
             </Box>
             <Box sx={{
                 color: theme => theme.palette.text.secondary,
-                fontSize: '14px'
+                fontSize: '14px',
+                maxWidth: '150px'
             }}>
-                {(key == 'new_message') && newMessage(props)}
+                <Typography
+                    variant="subtitle1"
+                    fontSize='14px'
+                >
+                    {(type == 'new_message') && newMessage(props)}
+                </Typography>
             </Box>
-            <Box marginLeft='0.5rem'>
-                <Button variant="outlined" sx={{
-                    fontSize: '14px',
-                    padding: '0.3rem 0.4rem',
-                }}>
-                    Renovar
-                </Button>
-            </Box>
+            <Button variant="outlined" sx={{
+                fontSize: '14px',
+                padding: '0.3rem 0.4rem',
+                width: 'fit-content',
+                display: 'inline-flex',
+                whitespace: 'nowrap'
+            }} component={LinkBehavior} to={`/chat/${link}`}>
+                Ver mensaje
+            </Button>
         </Box>
     )
 }

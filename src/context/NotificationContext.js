@@ -17,6 +17,13 @@ function notificationReducer(state, action) {
                     items: action.payload
                 }
             }
+            case 'NEW_NOTIFICATION': {
+                console.log([action.payload, ...state.items])
+                return {
+                    ...state,
+                    items: [action.payload, ...state.items]
+                }
+            }
             case 'TOGGLE_LOADING': {
                 return {
                     ...state,
@@ -59,6 +66,14 @@ function useNotifications() {
     return context
 }
 
+function newNotification(dispatch, payload) {
+    console.log("Dispatch notification ")
+    return dispatch({
+        type: 'NEW_NOTIFICATION',
+        payload: payload
+    })
+}
+
 async function fetchNotifications(dispatch, query) {
     toggleLoading(dispatch) // update to true
 
@@ -85,5 +100,6 @@ export {
     useNotifications,
     NotificationProvider,
     NotificationContext,
-    fetchNotifications
+    fetchNotifications,
+    newNotification
 }
