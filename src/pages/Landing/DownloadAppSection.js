@@ -53,7 +53,8 @@ const DownloadAppSection = () => {
                     height: isSmall ? '280px' : '420px',
                     marginTop: '2rem',
                     marginLeft: isSmall ? 0 : '4rem',
-                    boxShadow: '0px 1.74828px 8.74138px rgba(0, 0, 0, 0.15)'
+                    boxShadow: '-15px -15px 3px rgba(0, 0, 0, 0.15)',
+                    borderRadius: '10%'
                 }}
             />
         </Box>
