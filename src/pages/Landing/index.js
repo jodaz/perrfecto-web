@@ -9,6 +9,7 @@ import Intro from './Intro';
 import DownloadAppSection from './DownloadAppSection';
 import RegisterBusinessCalling from './RegisterBusinessCalling';
 import HowItWorks from './HowItWorks';
+import Footer from './Footer';
 
 const Landing = ({ location }) => {
     const { dispatch: guestDispatch } = useGuest()
@@ -28,6 +29,7 @@ const Landing = ({ location }) => {
             <RegisterBusinessCalling />
             <DownloadAppSection />
             <HowItWorks />
+            <Footer />
             <DeletedAccount open={openDeleteModal} handleClose={() => navigate('/')} />
         </Box>
     );
