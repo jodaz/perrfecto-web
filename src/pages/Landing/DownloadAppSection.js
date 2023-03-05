@@ -2,9 +2,7 @@ import * as React from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Image from '../../assets/images/DownloadAppSection.png'
-import Stack from '@mui/material/Stack'
 import useMediaQuery from '@mui/material/useMediaQuery';
-import LinkBehavior from '../../components/LinkBehavior';
 
 const DownloadAppSection = () => {
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
@@ -12,12 +10,12 @@ const DownloadAppSection = () => {
     return (
         <Box sx={{
             backgroundColor: theme => theme.palette.primary.main,
-            height: isSmall ? 'fit-content' : '600px',
+            height: 'fit-content',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
             flexDirection: { xs: 'column-reverse', sm: 'column-reverse', md: 'row' },
-            padding: 2
+            padding: '2rem 2rem 4rem 2rem'
         }}>
             <Box sx={{
                 textAlign: 'left',

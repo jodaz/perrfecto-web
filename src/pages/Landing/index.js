@@ -8,6 +8,7 @@ import Box from '@mui/material/Box'
 import Intro from './Intro';
 import DownloadAppSection from './DownloadAppSection';
 import RegisterBusinessCalling from './RegisterBusinessCalling';
+import HowItWorks from './HowItWorks';
 
 const Landing = ({ location }) => {
     const { dispatch: guestDispatch } = useGuest()
@@ -26,6 +27,7 @@ const Landing = ({ location }) => {
             <Intro />
             <RegisterBusinessCalling />
             <DownloadAppSection />
+            <HowItWorks />
             <DeletedAccount open={openDeleteModal} handleClose={() => navigate('/')} />
         </Box>
     );
