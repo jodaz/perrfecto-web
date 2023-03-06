@@ -107,7 +107,9 @@ const Navigation = ({ isSmall }) => {
             justifyContent: 'center',
             boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.08)',
             backgroundColor: '#fff',
-            height: isSmall ? '100%' : 'unset'
+            height: isSmall ? '100%' : 'unset',
+            overflowX: isSmall ? 'scroll' : 'unset',
+            paddingLeft: isSmall ? '14px' : 'unset'
         }}>
             {isSmall && renderLinks(smallScreenOnly)}
             <PrivateRoute authorize='guest,user' unauthorized={null}>
