@@ -2,7 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import { useAuth } from '../../context/AuthContext'
 import GuestMessage from '../../components/Alerts/GuestMessage';
-import GuestDog from '../../assets/images/GuestDog1.png'
+import GuestDog from '../../assets/images/GuestDog2.png'
 
 const Profile = ({ children }) => {
     const { state: { isAuth } } = useAuth()
