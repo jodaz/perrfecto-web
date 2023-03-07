@@ -3,6 +3,7 @@ import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import { alpha } from '@mui/material';
 import { CheckCircle2 } from 'lucide-react';
+import LinkBehavior from '../../components/LinkBehavior';
 
 const SuscriptionCard = props => (
     <Box sx={{
@@ -90,7 +91,7 @@ const SuscriptionCard = props => (
                 '&:hover': {
                     backgroundColor: theme => `${alpha(theme.palette.secondary.main, 0.9)}`,
                 }
-            }}>
+            }} component={LinkBehavior} to='/business/register'>
                 Adquirir subscripción
             </Button>
         </Box>
