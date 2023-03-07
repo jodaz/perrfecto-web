@@ -5,11 +5,14 @@ import { useLocation } from 'react-router-dom';
 // Icons
 import { ReactComponent as StoreIcon } from '../../assets/icons/Store.svg'
 import { ReactComponent as StoreActiveIcon } from '../../assets/icons/StoreActive.svg'
-import { LogOut, Newspaper } from 'lucide-react';
-import { MessageCircle } from 'lucide-react';
-import { Home } from 'lucide-react';
-import { User } from 'lucide-react';
-import { Dog } from 'lucide-react';
+import {
+    Dog,
+    Home,
+    User,
+    LogOut,
+    Newspaper,
+    MessageCircle
+} from 'lucide-react';
 import PrivateRoute from '../../components/PrivateRoute';
 import { logout, useAuth } from '../../context/AuthContext';
 
@@ -38,17 +41,7 @@ const generalLinks = [
     }
 ];
 
-const guestLinks = handleClick => ([
-    ...generalLinks,
-    {
-        label: 'Salir',
-        icon: <LogOut color='#A167C9' onClick={handleClick} />,
-        active: <LogOut color='#A167C9' onClick={handleClick} />,
-        route: '/'
-    }
-])
-
-const onlyUserLinks = [
+const onlyUserLinks = handleClick => ([
     ...generalLinks,
     {
         label: 'Chat',
@@ -61,8 +54,14 @@ const onlyUserLinks = [
         icon: <Dog color='#ccc' />,
         active: <Dog color='#A167C9' />,
         route: '/profile'
+    },
+    {
+        label: 'Salir',
+        icon: <LogOut color='#A167C9' onClick={handleClick} />,
+        active: <LogOut color='#A167C9' onClick={handleClick} />,
+        route: '/'
     }
-]
+])
 
 const onlyBusiness = [
     {
@@ -108,14 +107,13 @@ const Navigation = ({ isSmall }) => {
             justifyContent: 'center',
             boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.08)',
             backgroundColor: '#fff',
-            height: isSmall ? '100%' : 'unset'
+            height: isSmall ? '100%' : 'unset',
+            overflowX: isSmall ? 'scroll' : 'unset',
+            paddingLeft: isSmall ? '14px' : 'unset'
         }}>
             {isSmall && renderLinks(smallScreenOnly)}
-            <PrivateRoute authorize='guest' unauthorized={null}>
-                {renderLinks(guestLinks(() => logout(dispatch)))}
-            </PrivateRoute>
-            <PrivateRoute authorize='user' unauthorized={null}>
-                {renderLinks(onlyUserLinks)}
+            <PrivateRoute authorize='guest,user' unauthorized={null}>
+                {renderLinks(onlyUserLinks(() => logout(dispatch)))}
             </PrivateRoute>
             <PrivateRoute authorize='business' unauthorized={null}>
                 {renderLinks(onlyBusiness)}

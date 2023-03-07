@@ -8,8 +8,11 @@ import ChatCard from './ChatCard';
 import { apiProvider } from '../../../api';
 import useEffectOnce from '../../../utils/useEffectOnce';
 import { useChat } from '../../../context/ChatContext';
+import { useAuth } from '../../../context/AuthContext';
+import GuestDog from '../../../assets/images/GuestDog1.png'
+import GuestMessage from '../../../components/Alerts/GuestMessage';
 
-export default function ChatList() {
+const ChatList = () => {
     const { state: { users } } = useChat()
     const [messages, setMessages] = React.useState([null, null, null, null, null])
 
@@ -66,3 +69,21 @@ export default function ChatList() {
         </Box>
     );
 }
+
+const ChatListView = () => {
+    const { state: { isAuth } } = useAuth()
+
+    if (!isAuth) {
+        return (
+            <GuestMessage
+                Image={GuestDog}
+                title='¿Nada por aquí?'
+                subtitle='Intercambia mensajes, fotos y videos con personas cerca de ti.'
+            />
+        )
+    }
+
+    return <ChatList />
+}
+
+export default ChatListView
