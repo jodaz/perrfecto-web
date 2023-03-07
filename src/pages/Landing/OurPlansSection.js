@@ -6,6 +6,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import useEffectOnce from '../../utils/useEffectOnce';
 import { apiProvider } from '../../api';
 import SuscriptionCard from './SuscriptionCard'
+import SubscriptionsCarousel from './SubscriptionsCarousel'
 
 const initialState = [null, null, null];
 
@@ -88,14 +89,18 @@ const OurPlansSection = () => {
             >
                 Suscríbete a nuestros planes para acceder a diferentes promociones, funcionalidades y accesos para tu empresa.
             </Typography>
-            <Stack
-                direction="row"
-                spacing={3}
-                justifyContent='center'
-                marginTop={4}
-            >
-                {plans.map(plan => <SuscriptionCard {...plan} />)}
-            </Stack>
+            {!isSmall ? (
+                <Stack
+                    direction="row"
+                    spacing={3}
+                    justifyContent='center'
+                    marginTop={4}
+                >
+                    {plans.map(plan => <SuscriptionCard {...plan} />)}
+                </Stack>
+            ) : (
+                <SubscriptionsCarousel plans={plans} />
+            )}
         </Box>
     )
 }
