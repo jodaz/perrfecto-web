@@ -2,34 +2,34 @@ import * as React from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import useMediaQuery from '@mui/material/useMediaQuery';
-import EllipseImage from '../../components/EllipseImage';
 
-const BlogsSection = () => {
+const MeetDogsSection = () => {
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
     return (
         <Box sx={{
-            backgroundColor: theme => theme.palette.secondary.main,
-            height: 'fit-content',
+            width: { sm: '80%', xs: '80%', md: '30%', lg: '30%' },
+            margin: 'auto 0',
+            backgroundColor: '#FFF',
+            width: '100%',
             display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            padding: 4
+            justifyContent: 'center',
+            padding: '4rem 0'
         }}>
             <Typography
                 variant="subtitle1"
+                textAlign='center'
                 fontWeight={700}
                 color="primary.main"
                 fontSize='1.5rem'
-                lineHeight={isSmall ? '28px' : '40px'}
-                textAlign='left'
-                maxWidth='800px'
+                lineHeight={isSmall ? '28px' : '36px'}
+                maxWidth='600px'
                 gutterBottom
             >
-                Mantente informado sobre los cuidados de tu mascota y descubre consejos valiosos.
+                Conoce las mascotas que obtuvieron más likes de la semana, día y mes
             </Typography>
         </Box>
     )
 }
 
-export default BlogsSection
+export default MeetDogsSection

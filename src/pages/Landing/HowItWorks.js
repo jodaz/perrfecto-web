@@ -66,7 +66,7 @@ const HowItWorks = () => {
                     </Typography>
                     <Typography
                         variant="body2"
-                        color="text.secondary"
+                        color="text.tertiary"
                         gutterBottom
                     >
                         Crea un perfil para tu adorable mascota. Utiliza diferentes filtros para encontrar perros cercanos, por ubicación o razas que estes buscando.
