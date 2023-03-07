@@ -8,11 +8,9 @@ const SuscriptionCard = props => (
     <Box sx={{
         display: 'flex',
         alignItems: 'center',
-        margin: '1rem 0',
-        cursor: 'pointer',
         borderRadius: '16px',
         color: '#fff',
-        height: '360px',
+        height: '450px',
         justifyContent: 'space-between',
         p: 2,
         width: '280px',
@@ -21,19 +19,19 @@ const SuscriptionCard = props => (
         flexDirection: 'column',
         backgroundColor: 'gray',
         textDecoration: 'none',
-        background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), linear-gradient(180deg, #A770EF 0%, #CF8BF3 48.96%, #FDB99B 100%);'
+        background: props.background
     }}>
         <Box sx={{
             size: '16px',
-            fontWeight: 700
         }}>
             <Typography
                 variant="subtitle1"
                 textAlign='center'
                 fontSize='24px'
+                fontWeight={700}
                 gutterBottom
             >
-                {props.name}
+                Subscripción <br/> {props.name}
             </Typography>
             {props.description.map(item => (
                 <Box sx={{
