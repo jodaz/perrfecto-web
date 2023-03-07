@@ -53,8 +53,8 @@ const BlogsSection = () => {
             backgroundColor: theme => theme.palette.secondary.main,
             height: 'fit-content',
             display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
+            flexDirection: 'column',
+            justifyContent: 'center',
             padding: 6
         }}>
             <Typography
