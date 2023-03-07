@@ -2,9 +2,40 @@ import * as React from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import useMediaQuery from '@mui/material/useMediaQuery';
+import useEffectOnce from '../../utils/useEffectOnce';
+import { apiProvider } from '../../api';
+import SuscriptionCard from './SuscriptionCard'
+
+const initialState = [null, null, null];
+
+const plan = {
+    name: 'Suscripción básica',
+    price: 6.99,
+    description: [
+        'Acceso a todos los contenidos disponibles en los anuncios.',
+        'Acceso ilimitado a todos los perfiles'
+    ]
+}
 
 const OurPlansSection = () => {
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+    const [suscriptions, setSubscriptions] = React.useState(initialState)
+
+    const fetchSubscriptions = async () => {
+        try {
+            const res = await apiProvider.get('/api/subscription/get-subscriptions')
+
+            if (res.status >= 200 && res.status < 300) {
+                const { data: { data } } = res;
+
+                setSubscriptions(data)
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    useEffectOnce(() => { fetchSubscriptions() }, []);
 
     return (
         <Box sx={{
@@ -32,6 +63,13 @@ const OurPlansSection = () => {
             >
                 Suscríbete a nuestros planes para acceder a diferentes promociones, funcionalidades y accesos para tu empresa.
             </Typography>
+            <Box sx={{
+                display: 'flex',
+                width: '100%',
+                justifyContent: 'center'
+            }}>
+                <SuscriptionCard {...plan} />
+            </Box>
         </Box>
     )
 }
