@@ -126,7 +126,7 @@ const EditAdDesktop = () => {
                 maxHeight: '660px',
                 flexDirection: 'column',
                 position: 'relative',
-                width: 'fit-content',
+                width: '100%',
             }} component="form" onSubmit={handleSubmit(onSubmit)}>
                 <Box margin={'0 2rem'}>
                     <GalleryInput
