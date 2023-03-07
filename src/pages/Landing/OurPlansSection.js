@@ -43,7 +43,7 @@ const plans = [
 ]
 
 const OurPlansSection = () => {
-    const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+    const isSmall = useMediaQuery((theme) => theme.breakpoints.down('md'));
     const [suscriptions, setSubscriptions] = React.useState(initialState)
 
     const fetchSubscriptions = async () => {
@@ -85,7 +85,7 @@ const OurPlansSection = () => {
             <Typography
                 variant="body2"
                 color="text.secondary"
-                gutterBottom
+                marginBottom='2rem'
             >
                 Suscríbete a nuestros planes para acceder a diferentes promociones, funcionalidades y accesos para tu empresa.
             </Typography>
@@ -94,7 +94,6 @@ const OurPlansSection = () => {
                     direction="row"
                     spacing={3}
                     justifyContent='center'
-                    marginTop={4}
                 >
                     {plans.map(plan => <SuscriptionCard {...plan} />)}
                 </Stack>

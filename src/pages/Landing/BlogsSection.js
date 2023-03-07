@@ -4,27 +4,28 @@ import Typography from '@mui/material/Typography'
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { apiProvider } from '../../api';
 import useEffectOnce from '../../utils/useEffectOnce';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Scrollbar, Navigation } from 'swiper';
 import BlogCard from './BlogCard';
-import styled from '@emotion/styled';
+import Stack from '@mui/material/Stack'
+import BlogsCarousel from './BlogsCarousel';
 
-const SwiperStyled = styled(Swiper)(() => ({
-    height: 'inherit',
-    borderTopLeftRadius: 'inherit',
-    borderBottomLeftRadius: 'inherit',
-    width: '100%',
-    '& .swiper-wrapper': {
-        marginBottom: '1rem'
+const items = [
+    {
+        title: 'Adopción masiva en la ciudad de Madrid.',
+        description: 'Mas de 1.500 personas decidieron adoptar en la ciudad de Madrid. Un record a nivel mundial.'
     },
-}))
-
-const SwiperSlideStyled = styled(SwiperSlide)(() => ({
-    height: '100%',
-    width: '100% !important',
-    textAlign: 'center',
-    width: 'auto'
-}))
+    {
+        title: 'Adopción masiva en la ciudad de Madrid.',
+        description: 'Mas de 1.500 personas decidieron adoptar en la ciudad de Madrid. Un record a nivel mundial.'
+    },
+    {
+        title: 'Adopción masiva en la ciudad de Madrid.',
+        description: 'Mas de 1.500 personas decidieron adoptar en la ciudad de Madrid. Un record a nivel mundial.'
+    },
+    {
+        title: 'Adopción masiva en la ciudad de Madrid.',
+        description: 'Mas de 1.500 personas decidieron adoptar en la ciudad de Madrid. Un record a nivel mundial.'
+    }
+]
 
 const initialState = [null, null, null, null];
 
@@ -33,17 +34,18 @@ const BlogsSection = () => {
     const [blogs, setBlogs] = React.useState(initialState)
 
     const fetchBlogs = async () => {
-        try {
-            const res = await apiProvider.get('api/blog/blogs')
+        setBlogs(items)
+        // try {
+        //     const res = await apiProvider.get('api/blog/blogs')
 
-            if (res.status >= 200 && res.status < 300) {
-                const { data: { data: { data } } } = res;
+        //     if (res.status >= 200 && res.status < 300) {
+        //         const { data: { data: { data } } } = res;
 
-                setBlogs(data)
-            }
-        } catch (e) {
-            console.log(e);
-        }
+        //         setBlogs(data)
+        //     }
+        // } catch (e) {
+        //     console.log(e);
+        // }
     }
 
     useEffectOnce(() => { fetchBlogs() }, []);
@@ -65,38 +67,21 @@ const BlogsSection = () => {
                 lineHeight={isSmall ? '28px' : '40px'}
                 textAlign='left'
                 maxWidth='800px'
-                gutterBottom
+                marginBottom='2rem'
             >
                 Mantente informado sobre los cuidados de tu mascota y descubre consejos valiosos.
             </Typography>
-            <Box sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                width: { sm: '320px', md: '310px' }
-            }}>
-                {(blogs.length) ? (
-                    <SwiperStyled
-                        slidesPerView={1}
-                        scrollbar={{
-                            draggable: true
-                        }}
-                        grabCursor={true}
-                        modules={[Scrollbar, Navigation]}
-                        spaceBetween={5}
-                        navigation
-                    >
-                        {blogs.map((post, i) => (
-                            <SwiperSlideStyled key={i}>
-                                <BlogCard {...post} />
-                            </SwiperSlideStyled>
-                        ))}
-                    </SwiperStyled>
-                ) : (
-                    <Typography variant="subtitle1">
-                        Aún no tenemos blogs destacados
-                    </Typography>
-                )}
-            </Box>
+            {!isSmall ? (
+                <Stack
+                    direction="row"
+                    spacing={3}
+                    justifyContent='center'
+                >
+                    {blogs.slice(0, 3).map(blog => <BlogCard {...blog} />)}
+                </Stack>
+            ) : (
+                <BlogsCarousel blogs={blogs.slice(0, 3)} />
+            )}
         </Box>
     )
 }

@@ -65,14 +65,42 @@ const BlogCard = data => {
                     ) : (
                         <Typography
                             variant="body1"
-                            color="text.secondary"
+                            color="text.primary"
                             fontWeight={700}
+                            textAlign='left'
                             sx={{
-                                textAlign: { xs: 'center', sm: 'start' },
                                 mt: { xs: 1.5, sm: 0 },
                             }}
                         >
                             {data.title}
+                        </Typography>
+                    )}
+                </Box>
+            </Box>
+            <Box sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                mt: 1
+            }}>
+                <Box>
+                    {loading ? (
+                        <Skeleton
+                            animation="wave"
+                            height={10}
+                            width="80%"
+                            style={{ marginBottom: 6 }}
+                        />
+                    ) : (
+                        <Typography
+                            variant="body2"
+                            color="text.secondary"
+                            textAlign='left'
+                            sx={{
+                                mt: { xs: 1.5, sm: 0 },
+                            }}
+                        >
+                            {truncateString(data.description, 90)}
                         </Typography>
                     )}
                 </Box>

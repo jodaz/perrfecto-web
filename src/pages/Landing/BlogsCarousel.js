@@ -1,8 +1,8 @@
-import * as React from 'react';
+import * as React from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
+import BlogCard from './BlogCard';
 import styled from '@emotion/styled';
-import SuscriptionCard from './SuscriptionCard'
 
 const SwiperStyled = styled(Swiper)(() => ({
     height: 'inherit',
@@ -21,19 +21,19 @@ const SwiperSlideStyled = styled(SwiperSlide)(() => ({
     width: 'auto'
 }))
 
-const SubscriptionsCarousel = ({ plans }) =>  (
+const BlogsCarousel = ({ blogs }) => (
     <SwiperStyled
         slidesPerView={1}
         grabCursor={true}
         modules={[Navigation]}
         spaceBetween={5}
     >
-        {plans.map((plan, i) => (
+        {blogs.map((post, i) => (
             <SwiperSlideStyled key={i}>
-                <SuscriptionCard {...plan} />
+                <BlogCard {...post} />
             </SwiperSlideStyled>
         ))}
     </SwiperStyled>
-);
+)
 
-export default SubscriptionsCarousel
+export default BlogsCarousel
