@@ -8,10 +8,10 @@ import LinkBehavior from '../../components/LinkBehavior';
 import Skeleton from "@mui/material/Skeleton";
 import truncateString from '../../utils/truncateString';
 
-const BlogCard = data => {
+const BlogCard = ({ data }) => {
     const loading = data == null;
 
-    console.log(data)
+    console.log(loading)
 
     return (
         <Card

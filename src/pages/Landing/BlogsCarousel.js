@@ -30,7 +30,7 @@ const BlogsCarousel = ({ blogs }) => (
     >
         {blogs.map((post, i) => (
             <SwiperSlideStyled key={i}>
-                <BlogCard {...post} />
+                <BlogCard data={post} />
             </SwiperSlideStyled>
         ))}
     </SwiperStyled>

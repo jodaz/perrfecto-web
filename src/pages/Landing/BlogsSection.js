@@ -15,6 +15,7 @@ const BlogsSection = () => {
     const [blogs, setBlogs] = React.useState(initialState)
 
     const fetchBlogs = async () => {
+        setBlogs(initialState)
         try {
             const res = await apiProvider.get('api/blog/blogs')
 
@@ -57,7 +58,7 @@ const BlogsSection = () => {
                     spacing={4}
                     justifyContent='center'
                 >
-                    {blogs.slice(0, 4).map(blog => <BlogCard {...blog} />)}
+                    {blogs.slice(0, 4).map(blog => <BlogCard data={blog} />)}
                 </Stack>
             ) : (
                 <BlogsCarousel blogs={blogs.slice(0, 4)} />
