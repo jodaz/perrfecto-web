@@ -88,6 +88,15 @@ const ShowVaccines = ({ dog, name, lastName = '', img_profile }) => {
                             {item.name}
                         </VaccineContainer>
                     ))}
+                    {!dog.Vaccines.length && (
+                        <Typography
+                            variant="subtitle1"
+                            color="text.primary"
+                            gutterBottom
+                        >
+                            Sin vacunas
+                        </Typography>
+                    )}
                 </Box>
             </ShowCard>
         </>

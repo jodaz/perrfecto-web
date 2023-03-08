@@ -104,6 +104,15 @@ const ListCertificates = ({ dog, ...userProps }) => {
                             {item.name}
                         </CertificateItem>
                     ))}
+                    {!dog.Certificates.length && (
+                        <Typography
+                            variant="subtitle1"
+                            color="text.primary"
+                            gutterBottom
+                        >
+                            Sin vacunas
+                        </Typography>
+                    )}
                 </Box>
             </ShowCard>
         </>
