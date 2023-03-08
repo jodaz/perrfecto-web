@@ -11,6 +11,8 @@ import truncateString from '../../utils/truncateString';
 const BlogCard = data => {
     const loading = data == null;
 
+    console.log(data)
+
     return (
         <Card
             variant="outlined"
@@ -22,6 +24,8 @@ const BlogCard = data => {
                 flexDirection: 'column',
                 transition: '0.3s',
                 cursor: 'pointer',
+                minWidth: '200px',
+                maxWidth: '300px',
                 '&: hover': {
                     opacity: 0.75
                 }
@@ -32,9 +36,9 @@ const BlogCard = data => {
             {loading ? (
                 <Skeleton
                     animation="wave"
-                    variant="circular"
-                    width={40}
-                    height={40}
+                    variant="rectangular"
+                    width={200}
+                    height={100}
                 />
             ) : (
                 <CardMedia
@@ -42,7 +46,7 @@ const BlogCard = data => {
                     width="130"
                     height="140"
                     alt='blog_post.png'
-                    // src={data.BlogMultimedia.length ? getUserPhoto(data.BlogMultimedia[0].name) : null}
+                    src={data.BlogMultimedia.length ? getUserPhoto(data.BlogMultimedia[0].name) : null}
                     sx={{
                         borderRadius: 4,
                     }}
@@ -59,7 +63,7 @@ const BlogCard = data => {
                         <Skeleton
                             animation="wave"
                             height={10}
-                            width="80%"
+                            width="100%"
                             style={{ marginBottom: 6 }}
                         />
                     ) : (
@@ -85,12 +89,20 @@ const BlogCard = data => {
             }}>
                 <Box>
                     {loading ? (
-                        <Skeleton
-                            animation="wave"
-                            height={10}
-                            width="80%"
-                            style={{ marginBottom: 6 }}
-                        />
+                        <>
+                            <Skeleton
+                                animation="wave"
+                                height={10}
+                                width="100%"
+                                style={{ marginBottom: 6 }}
+                            />
+                            <Skeleton
+                                animation="wave"
+                                height={10}
+                                width="100%"
+                                style={{ marginBottom: 6 }}
+                            />
+                        </>
                     ) : (
                         <Typography
                             variant="body2"
