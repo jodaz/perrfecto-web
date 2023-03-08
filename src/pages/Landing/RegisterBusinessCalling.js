@@ -12,7 +12,7 @@ const RegisterBusinessCalling = () => {
 
     return (
         <Box sx={{
-            backgroundColor: theme => theme.palette.secondary.main,
+            backgroundColor: '#F3F3F3',
             height: 'fit-content',
             display: 'flex',
             justifyContent: 'center',
