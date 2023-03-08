@@ -110,7 +110,7 @@ const ListCertificates = ({ dog, ...userProps }) => {
                             color="text.primary"
                             gutterBottom
                         >
-                            Sin vacunas
+                            Sin certificados
                         </Typography>
                     )}
                 </Box>
