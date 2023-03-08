@@ -30,7 +30,7 @@ const NotificationCard = props => {
             <Box sx={{
                 color: theme => theme.palette.text.secondary,
                 fontSize: '14px',
-                maxWidth: '150px'
+                width: '100%'
             }}>
                 <Typography
                     variant="subtitle1"
@@ -46,7 +46,7 @@ const NotificationCard = props => {
                 display: 'inline-flex',
                 whitespace: 'nowrap'
             }} component={LinkBehavior} to={`/chat/${link}`}>
-                Ver mensaje
+                Ver
             </Button>
         </Box>
     )
