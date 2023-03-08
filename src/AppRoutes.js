@@ -78,6 +78,8 @@ import ShowBusinessLocation from './pages/Businesses/ShowBusinessLocation';
 import ShowBusiness from './pages/Businesses/ShowBusiness';
 import Plans from './pages/plans';
 import PlanShow from './pages/plans/PlanShow';
+import Privacy from './pages/Settings/Privacy';
+import Conditions from './pages/Settings/Conditions';
 
 function AppRoutes() {
     let location = useLocation();
@@ -103,6 +105,22 @@ function AppRoutes() {
             <Route
                 path='*'
                 element={<NotFound />}
+            />
+            <Route
+                path='/profile/settings/privacy'
+                element={
+                    <AppLayout>
+                        <Privacy />
+                    </AppLayout>
+                }
+            />
+            <Route
+                path='/profile/settings/terms'
+                element={
+                    <AppLayout>
+                        <Conditions />
+                    </AppLayout>
+                }
             />
             <Route
                 path='/profile/settings/plans'
