@@ -14,7 +14,8 @@ const MeetDogsSection = () => {
             width: '100%',
             display: 'flex',
             justifyContent: 'center',
-            padding: '4rem 0'
+            padding: '4rem 0',
+            height: isSmall ? '400px' : '500px'
         }}>
             <Typography
                 variant="subtitle1"

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
 import PlanCard from './PlanCard';
 import { apiProvider } from '../../api'
 import SettingsLayout from '../../layouts/SettingsLayout';
@@ -34,13 +34,9 @@ const Plans = () => {
             {isLoading ? (
                 <LoadingIndicator height='100%' />
             ) : (
-                <Box sx={{
-                    display: 'flex',
-                    p: 1,
-                    height: '100%',
-                }}>
+                <Stack spacing={2} height='100%' minWidth='280px' padding={2} m='0 auto'>
                     {plans.map(plan => <PlanCard {...plan} />)}
-                </Box>
+                </Stack>
             )}
         </SettingsLayout>
     );
