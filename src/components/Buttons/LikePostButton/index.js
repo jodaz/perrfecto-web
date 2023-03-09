@@ -25,6 +25,8 @@ const LikePostButton = ({ id, type, LikesBlog = [], LikesCount = 0 }) => {
                         user: user.id
                     })
 
+                    console.log(response)
+
                     break;
                 }
                 case 'reply': {

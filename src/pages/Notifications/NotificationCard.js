@@ -5,17 +5,46 @@ import getUserPhoto from '../../utils/getUserPhoto'
 import Typography from '@mui/material/Typography';
 import LinkBehavior from '../../components/LinkBehavior'
 
-const newMessage = ({ name_sender }) => `Has recibido un nuevo mensaje de ${name_sender}.`
+const getLinkByType = ({ type, link }) => {
+    switch(type) {
+        case 'like_blog': {
+            return `/blogs/${link}`;
+        }
+        case 'new_message': {
+            return `/chat/${link}`;
+        }
+        case 'comment_blog': {
+            return `/blogs/${link}`;
+        }
+        default: {
+            console.log("Unhandled type ", type)
+            return `/${type}/${link}`
+        }
+    }
+}
+
+const getMessageByType = ({ name_sender, type }) => {
+    switch(type) {
+        case 'like_blog': {
+            return `Tu publicación ha recibido un like.`;
+        }
+        case 'new_message': {
+            return `Has recibido un nuevo mensaje de ${name_sender}.`;
+        }
+        case 'comment_blog': {
+            return `Tu publicación ha recibido un comentario.`;
+        }
+        default: {
+            console.log("Unhandled type ", type)
+            return ''
+        }
+    }
+}
 
 const NotificationCard = props => {
     const {
         id,
-        img,
-        type,
-        link,
-        name_sender,
-        status,
-        createdAt
+        img
     } = props
 
     return (
@@ -36,7 +65,7 @@ const NotificationCard = props => {
                     variant="subtitle1"
                     fontSize='14px'
                 >
-                    {(type == 'new_message') && newMessage(props)}
+                    {getMessageByType(props)}
                 </Typography>
             </Box>
             <Button variant="outlined" sx={{
@@ -45,7 +74,7 @@ const NotificationCard = props => {
                 width: 'fit-content',
                 display: 'inline-flex',
                 whitespace: 'nowrap'
-            }} component={LinkBehavior} to={`/chat/${link}`}>
+            }} component={LinkBehavior} to={getLinkByType(props)}>
                 Ver
             </Button>
         </Box>

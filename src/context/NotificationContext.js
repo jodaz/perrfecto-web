@@ -18,7 +18,6 @@ function notificationReducer(state, action) {
                 }
             }
             case 'NEW_NOTIFICATION': {
-                console.log([action.payload, ...state.items])
                 return {
                     ...state,
                     items: [action.payload, ...state.items]
@@ -67,7 +66,6 @@ function useNotifications() {
 }
 
 function newNotification(dispatch, payload) {
-    console.log("Dispatch notification ")
     return dispatch({
         type: 'NEW_NOTIFICATION',
         payload: payload
