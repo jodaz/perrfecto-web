@@ -13,7 +13,6 @@ const NotificationButton = () => {
 
     React.useEffect(() => {
         socket.on('notification', ({ count_notification, notification }) => {
-            console.log(notification)
             newNotification(dispatch, notification);
             setCounter(count_notification)
         })
