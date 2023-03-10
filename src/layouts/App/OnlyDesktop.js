@@ -37,7 +37,7 @@ export default function OnlyDesktop({ aside, principal }) {
                         backgroundSize: 'cover',
                         position: 'absolute',
                         bottom: 0,
-                        height: '50%',
+                        height: '100%',
                         width: '100%',
                         zIndex: 0
                     }
