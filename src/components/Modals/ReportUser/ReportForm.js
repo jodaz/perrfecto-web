@@ -70,7 +70,11 @@ const ReportForm = ({ item, selectedItem, toggleNextStep, otherReason }) => {
                 >
                     Reportar usuario
                 </Button>
-                <MuiButton disabled={isLoading} sx={{ color: '#858585' }}>
+                <MuiButton
+                    disabled={isLoading}
+                    sx={{ color: '#858585' }}
+                    onClick={cancel}
+                >
                     Cancelar
                 </MuiButton>
             </Stack>
