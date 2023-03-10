@@ -28,6 +28,9 @@ const getMessageByType = ({ name_sender, type }) => {
         case 'like_blog': {
             return `Tu publicación ha recibido un like.`;
         }
+        case 'user_report': {
+            return `Haz recibido un reporte de usuario.`;
+        }
         case 'new_message': {
             return `Has recibido un nuevo mensaje de ${name_sender}.`;
         }
@@ -41,11 +44,29 @@ const getMessageByType = ({ name_sender, type }) => {
     }
 }
 
+const createNotificationPhoto = ({ img, type }) => {
+    switch(type) {
+        case 'like_blog': {
+            return null ? getUserPhoto(img) : '/images/Avatar.svg' ;
+        }
+        case 'user_report': {
+            return '/images/default/Standard.png';
+        }
+        case 'new_message': {
+            return null ? getUserPhoto(img) : '/images/Avatar.svg' ;
+        }
+        case 'comment_blog': {
+            return null ? getUserPhoto(img) : '/images/Avatar.svg' ;
+        }
+        default: {
+            console.log("Unhandled type ", type)
+            return ''
+        }
+    }
+}
+
 const NotificationCard = props => {
-    const {
-        id,
-        img
-    } = props
+    const { id } = props
 
     return (
         <Box sx={{
@@ -54,7 +75,7 @@ const NotificationCard = props => {
             margin: '1rem 0'
         }} key={id}>
             <Box sx={{ mr: 1 }}>
-                <Avatar src={getUserPhoto(img)} />
+                <Avatar src={createNotificationPhoto(props)} />
             </Box>
             <Box sx={{
                 color: theme => theme.palette.text.secondary,
@@ -68,15 +89,17 @@ const NotificationCard = props => {
                     {getMessageByType(props)}
                 </Typography>
             </Box>
-            <Button variant="outlined" sx={{
-                fontSize: '14px',
-                padding: '0.3rem 0.4rem',
-                width: 'fit-content',
-                display: 'inline-flex',
-                whitespace: 'nowrap'
-            }} component={LinkBehavior} to={getLinkByType(props)}>
-                Ver
-            </Button>
+            {(props.type != 'user_report') && (
+                <Button variant="outlined" sx={{
+                    fontSize: '14px',
+                    padding: '0.3rem 0.4rem',
+                    width: 'fit-content',
+                    display: 'inline-flex',
+                    whitespace: 'nowrap'
+                }} component={LinkBehavior} to={getLinkByType(props)}>
+                    Ver
+                </Button>
+            )}
         </Box>
     )
 }

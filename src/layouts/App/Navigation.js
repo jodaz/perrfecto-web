@@ -41,7 +41,7 @@ const generalLinks = [
     }
 ];
 
-const onlyUserLinks = handleClick => ([
+const onlyUserLinks = () => [
     ...generalLinks,
     {
         label: 'Chat',
@@ -54,14 +54,8 @@ const onlyUserLinks = handleClick => ([
         icon: <Dog color='#ccc' />,
         active: <Dog color='#A167C9' />,
         route: '/profile'
-    },
-    {
-        label: 'Salir',
-        icon: <LogOut color='#A167C9' onClick={handleClick} />,
-        active: <LogOut color='#A167C9' onClick={handleClick} />,
-        route: '/'
     }
-])
+]
 
 const onlyBusiness = [
     {

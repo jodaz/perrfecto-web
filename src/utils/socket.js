@@ -119,6 +119,16 @@ export const commentBlog = ({
     });
 }
 
+export const reportUser = reportData => {
+    return new Promise((resolve, reject) => {
+        socket.emit('reportUser', reportData, res => console.log(res))
+
+        socket.on("reportUser", (data) => {
+            resolve(data);
+        })
+    });
+}
+
 export const replyComment = ({
     comment,
     user,

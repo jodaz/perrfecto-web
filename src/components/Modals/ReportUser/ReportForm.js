@@ -4,11 +4,13 @@ import Box from '@mui/material/Box';
 import MuiButton from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { apiProvider } from '../../../api';
 import { Flag } from 'lucide-react';
+import { useAuth } from '../../../context/AuthContext'
+import { reportUser } from '../../../utils/socket';
 
-const ReportForm = ({ item, selectedItem, toggleNextStep, otherReason }) => {
+const ReportForm = ({ cancel, item, selectedItem, toggleNextStep, otherReason }) => {
     const [isLoading, setIsLoading] = React.useState(false)
+    const { state: { user } } = useAuth()
 
     const submitReport = async () => {
         setIsLoading(true)
@@ -16,15 +18,16 @@ const ReportForm = ({ item, selectedItem, toggleNextStep, otherReason }) => {
             let data = {
                 "uid_reported": item.receptor.user.id,
                 "id_reason": selectedItem.id,
+                'uid': user.id
             };
 
             if (otherReason) {
                 data.description = otherReason
             }
 
-            const res = await apiProvider.post('/api/report-user/new', data)
+            const response = await reportUser(data)
 
-            if (res.status >= 200 && res.status < 300) {
+            if (response) {
                 setIsLoading(false)
                 toggleNextStep('successful')
             }
@@ -70,7 +73,11 @@ const ReportForm = ({ item, selectedItem, toggleNextStep, otherReason }) => {
                 >
                     Reportar usuario
                 </Button>
-                <MuiButton disabled={isLoading} sx={{ color: '#858585' }}>
+                <MuiButton
+                    disabled={isLoading}
+                    sx={{ color: '#858585' }}
+                    onClick={cancel}
+                >
                     Cancelar
                 </MuiButton>
             </Stack>
