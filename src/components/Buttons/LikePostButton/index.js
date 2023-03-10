@@ -24,9 +24,6 @@ const LikePostButton = ({ id, type, LikesBlog = [], LikesCount = 0 }) => {
                         blog: id,
                         user: user.id
                     })
-
-                    console.log(response)
-
                     break;
                 }
                 case 'reply': {
@@ -49,8 +46,10 @@ const LikePostButton = ({ id, type, LikesBlog = [], LikesCount = 0 }) => {
         }
 
         if (response) {
-            setIsLiked(true)
-            setLikes(count => count + 1)
+            const { msg, likeCount } = response;
+
+            setIsLiked(!msg ? true : false)
+            setLikes(likeCount)
         }
     }
 
