@@ -220,7 +220,7 @@ const FilterDrawer = () => {
                         }
                     }}
                 >
-                    Reestablecer
+                    Restablecer
                 </Button>
             </Box>
         </Box>
