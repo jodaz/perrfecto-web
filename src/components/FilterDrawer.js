@@ -17,7 +17,7 @@ import TextInput from './Forms/TextInput';
 // import razas from '../utils/breeds';
 import ChipArrayInput from './Forms/ChipArrayInput';
 import SliderInput from './Forms/SliderInput';
-import { alpha } from '@mui/material';
+import { alpha, useMediaQuery } from '@mui/material';
 import { useAuth, toggleGeolocation } from '../context/AuthContext';
 import useEffectOnce from '../utils/useEffectOnce';
 import axios from 'axios'
@@ -29,6 +29,7 @@ const genders = [
 ]
 
 const FilterDrawer = () => {
+    const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
     const [cities, setCities] = React.useState([])
     const { control, handleSubmit, watch, reset, formState: {
         isSubmitting
@@ -108,6 +109,10 @@ const FilterDrawer = () => {
             }
 
             await fetchPublications(dispatch, parsedData)
+
+            if (isSmall) {
+                toggleFilters(dispatch)
+            }
         } catch (error) {
             console.log(error)
         }
