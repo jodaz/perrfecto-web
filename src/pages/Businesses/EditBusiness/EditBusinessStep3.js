@@ -81,6 +81,8 @@ const EditBusinessStep3 = () => {
                     rules={ADD_PHOTOS.rules}
                     validations={ADD_PHOTOS.messages}
                     deletePhotoHandler={handleOpenDeletePhoto}
+                    message='Tienes un máximo de 5 fotos'
+                    maxFiles={5}
                 />
             </Box>
             <StepsFormButtons next='Revisa tu publicación' />
