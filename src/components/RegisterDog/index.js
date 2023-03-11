@@ -82,7 +82,7 @@ const RegisterDog = ({ open, handleClose, redirect = '?profile=true' }) => {
                 type: type.value,
                 breed: parsedBreed,
                 dogAge: dogAge.label,
-                gender: gender.label,
+                gender: gender.value,
                 id_user: user.id,
                 characteristics: mappedCharacteristics,
                 files: files

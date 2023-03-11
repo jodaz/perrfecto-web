@@ -28,7 +28,7 @@ const EditGender = () => {
     const onSubmit = async values => {
         try {
             const data = {
-                gender: values.gender.label,
+                gender: values.gender.value,
             };
 
             const formData = await formDataHandler(data)
