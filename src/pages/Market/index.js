@@ -131,7 +131,7 @@ const Marketplace = () => {
                     ))}
                     {!publications.length && (
                         <Box>
-                            Sin negocios
+                            No hay negocios disponibles
                         </Box>
                     )}
                 </Stack>
