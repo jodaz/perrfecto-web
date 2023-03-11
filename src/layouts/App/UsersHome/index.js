@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import PawPrints from '../../../assets/images/pawprints.svg'
 import Stack from './Stack';
@@ -13,13 +14,15 @@ import InviteUserAlert from '../../../components/InviteUserAlert';
 import { socket, handleDisconnect, listenConnection, handleConnect } from '../../../utils/socket';
 import { useAuth } from '../../../context/AuthContext';
 import { useChat, updateConnectedStatus } from '../../../context/ChatContext';
+import { LogOut } from 'lucide-react';
 
 const PopularMembers = React.lazy(() => import('../../../components/PopularMembers'));
 
 const UsersHome = () => {
     const { state: { isConnected }, dispatch: chatDispatch } = useChat()
     const { state: { isAuth, user } } = useAuth()
-    const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
+    const isSmall = useMediaQuery(theme => theme.breakpoints.down('md'));
+    const isLarge = useMediaQuery(theme => theme.breakpoints.up('md'));
     const { state: { publications, isLoaded, isLoading }, dispatch } = usePublications();
     const [selectedCard, setSelectedCard] = React.useState(null);
     const [openDogCard, setOpenDogCard] = React.useState(false)
@@ -88,6 +91,19 @@ const UsersHome = () => {
                 }
             }}
         >
+            {isLarge && (
+                <Box sx={{
+                    position: 'absolute',
+                    top: '60px',
+                    right: '30px'
+                }}>
+                    <Button color="primary" sx={{
+                        backgroundColor: '#ECECEC'
+                    }}>
+                        <LogOut /> Salir
+                    </Button>
+                </Box>
+            )}
             <React.Suspense>
                 <Box width={isSmall ? '300px' : '450px'} marginTop='2rem'>
                     <PopularMembers />
