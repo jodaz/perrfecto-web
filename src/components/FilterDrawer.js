@@ -40,13 +40,19 @@ const FilterDrawer = () => {
     const [breeds, setBreeds] = React.useState([]);
     const { state: { openFilter }, dispatch } = usePublications();
 
-    const toggleDrawer = () => (event) => {
-        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-            return;
-        }
-
+    const resetAndToggleDrawer = () => {
         toggleFilters(dispatch)
         reset();
+    }
+
+    const toggleDrawer = () => (event) => {
+        if (event.type === 'keydown' && (event.key !== 'Tab' || event.key !== 'Shift')) {
+            if (event.keyCode == 27) {
+                resetAndToggleDrawer()
+            }
+            return;
+        }
+        resetAndToggleDrawer()
     };
 
     const resetFilter = () => {

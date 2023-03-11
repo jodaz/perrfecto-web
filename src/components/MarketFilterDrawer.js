@@ -22,7 +22,7 @@ import { useAuth, toggleGeolocation } from '../context/AuthContext';
 const MarketFilterDrawer = () => {
     const [cities, setCities] = React.useState([])
     const { state: { userCoords }, dispatch: authDispatch } = useAuth()
-    const { control, handleSubmit, watch, reset, setValue, formState: {
+    const { control, handleSubmit, watch, reset, formState: {
         isSubmitting
     }} = useForm({
         reValidateMode: "onBlur"
@@ -30,13 +30,19 @@ const MarketFilterDrawer = () => {
     const province = watch('province')
     const { state: { openFilter }, dispatch } = useBusinesses();
 
-    const toggleDrawer = () => (event) => {
-        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-            return;
-        }
-
+    const resetAndToggleDrawer = () => {
         toggleFilters(dispatch)
         reset();
+    }
+
+    const toggleDrawer = () => (event) => {
+        if (event.type === 'keydown' && (event.key !== 'Tab' || event.key !== 'Shift')) {
+            if (event.keyCode == 27) {
+                resetAndToggleDrawer()
+            }
+            return;
+        }
+        resetAndToggleDrawer()
     };
 
     const resetFilter = () => {
