@@ -75,10 +75,7 @@ const MarketFilterDrawer = () => {
 
             const res = await fetchBusinesses(dispatch, parsedData)
 
-            if (res) {
-                toggleFilters(dispatch)
-            }
-
+            toggleFilters(dispatch)
         } catch (error) {
             console.log(error)
         }
