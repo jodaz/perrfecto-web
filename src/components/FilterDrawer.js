@@ -57,7 +57,6 @@ const FilterDrawer = () => {
 
     const resetFilter = () => {
         reset();
-        toggleFilters(dispatch)
         fetchPublications(dispatch)
     }
 
