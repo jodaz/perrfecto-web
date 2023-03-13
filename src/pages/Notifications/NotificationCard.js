@@ -28,6 +28,12 @@ const getMessageByType = ({ name_sender, type }) => {
         case 'like_blog': {
             return `Tu publicación ha recibido un like.`;
         }
+        case 'like_reply_comment': {
+            return `Tu respuesta ha recibido un like.`;
+        }
+        case 'like_comment_blog': {
+            return `Tu comentario ha recibido un like.`;
+        }
         case 'user_report': {
             return `Haz recibido un reporte de usuario.`;
         }
@@ -67,6 +73,7 @@ const createNotificationPhoto = ({ img, type }) => {
 
 const NotificationCard = props => {
     const { id } = props
+    const typesWithoutButton = ['like_comment_blog', 'user_report', 'like_reply_comment'];
 
     return (
         <Box sx={{
@@ -89,7 +96,7 @@ const NotificationCard = props => {
                     {getMessageByType(props)}
                 </Typography>
             </Box>
-            {(props.type != 'user_report') && (
+            {!typesWithoutButton.includes(props.type) && (
                 <Button variant="outlined" sx={{
                     fontSize: '14px',
                     padding: '0.3rem 0.4rem',
