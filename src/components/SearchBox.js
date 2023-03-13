@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { IconButton, InputAdornment, InputBase } from '@mui/material';
-import { Search, X, XCircle } from 'lucide-react';
+import { Search, XCircle } from 'lucide-react';
 
 const SearchBox = ({ filter }) => {
     const [value, setValue] = React.useState('');

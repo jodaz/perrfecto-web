@@ -4,31 +4,35 @@ import Stack from '@mui/material/Stack';
 import BusinessCard from '../Businesses/BusinessCard';
 import SettingsLayout from '../../layouts/SettingsLayout';
 import useEffectOnce from '../../utils/useEffectOnce';
-import { apiProvider } from '../../api';
-import { useBusinesses, resetItem, selectItem } from '../../context/BusinessContext';
+import {
+    useBusinesses,
+    resetItem,
+    selectItem,
+    fetchByCategory,
+    resetFilters
+} from '../../context/BusinessContext';
 import SearchBox from '../../components/SearchBox';
 
 const ShowCategory = () => {
-    const { state: { selectedItem }, dispatch } = useBusinesses();
-    const [data, setData] = React.useState([])
+    const { state: {
+        publications,
+        selectedItem
+    }, dispatch } = useBusinesses();
 
-    const filterFunction = data => console.log(data)
-
-    const fetchBusinesses = async () => {
-        try {
-            const res = await apiProvider.get(`/api/business-ann/anns?id_category=${selectedItem.item.id}`)
-
-            if (res.status >= 200 && res.status < 300) {
-                const { data: { data } } = res;
-
-                setData(data);
-            }
-        } catch (error) {
-            console.log("error ", error)
+    const filterFunction = ({ search }) => {
+        if (search) {
+            fetchByCategory(dispatch, {
+                filter: search,
+                category_id: selectedItem.item.id
+            })
+        } else {
+            resetFilters(dispatch)
         }
     }
 
-    useEffectOnce(() => { fetchBusinesses() }, [])
+    useEffectOnce(() => { fetchByCategory(dispatch, {
+        category_id: selectedItem.item.id
+    }) }, [])
 
     return (
         <SettingsLayout
@@ -43,13 +47,13 @@ const ShowCategory = () => {
                 <Box p={2}>
                     <SearchBox filter={filterFunction} />
                 </Box>
-                {data.length ? (
+                {publications.length ? (
                     <Stack
                         p={2}
                         orientation='vertical'
                         spacing={2}
                     >
-                        {data.map(item => (
+                        {publications.map(item => (
                             <BusinessCard
                                 {...item}
                                 handleSelect={() => selectItem(dispatch, { item: item, type: 'business' })}

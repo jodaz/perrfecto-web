@@ -102,6 +102,31 @@ async function fetchBusinesses(dispatch, query) {
     }
 }
 
+async function fetchByCategory(dispatch, query) {
+    try {
+        dispatch({
+            type: 'LOADING'
+        })
+
+        const { category_id, ...restQuery } = query
+
+        const res = await apiProvider.get(`/api/business-ann/anns/${category_id}`, {
+            params: restQuery
+        })
+
+        if (res.status >= 200 && res.status < 300) {
+            dispatch({
+                type: 'FETCH_PUBLICATIONS',
+                payload: res.data.data
+            })
+
+            return res;
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 async function toggleFilters(dispatch) {
     try {
         dispatch({
@@ -151,5 +176,6 @@ export {
     fetchBusinesses,
     resetFilters,
     selectItem,
-    resetItem
+    resetItem,
+    fetchByCategory
 }
