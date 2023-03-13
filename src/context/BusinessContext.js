@@ -117,7 +117,7 @@ async function fetchByCategory(dispatch, query) {
         if (res.status >= 200 && res.status < 300) {
             dispatch({
                 type: 'FETCH_PUBLICATIONS',
-                payload: res.data.data
+                payload: res.data.data.data
             })
 
             return res;
