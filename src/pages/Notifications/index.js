@@ -31,6 +31,11 @@ export default function Notifications() {
                         ))}
                     </Stack>
                 ) : <LoadingIndicator />}
+                {!(items.length) && (
+                    <Typography variant="subtitle1">
+                        Sin nuevas notificaciones.
+                   </Typography>
+                )}
             </Box>
         </Box>
     );
