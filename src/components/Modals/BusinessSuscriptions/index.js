@@ -43,7 +43,7 @@ const plans = [
 ]
 
 const BusinessSuscriptions = ({ location }) => {
-    const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+    const isSmall = useMediaQuery((theme) => theme.breakpoints.down('md'));
     const navigate = useNavigate()
     const handleClose = () => navigate('/business')
 
@@ -56,7 +56,8 @@ const BusinessSuscriptions = ({ location }) => {
                 display: 'flex',
                 flexDirection: 'column',
                 width: isSmall ? 'fit-content' : '1000px',
-                height: 'fit-content'
+                height: 'fit-content',
+                overflowX: 'hidden'
             }}>
                 <Box sx={{
                     width: '100%',
@@ -98,6 +99,9 @@ const BusinessSuscriptions = ({ location }) => {
                     fontWeight: 400,
                     position: 'relative',
                     height: '525px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
                 }}>
                     {!isSmall ? (
                         <Stack
