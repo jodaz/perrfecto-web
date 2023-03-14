@@ -1,14 +1,46 @@
 import * as React from 'react';
 import Dialog from '@mui/material/Dialog';
-import DialogTitle from '../../DialogTitle';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { useNavigate } from 'react-router-dom';
-import RegisterBusinessForm from './RegisterBusinessForm';
-import { Typography } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import EllipseImage from '../../EllipseImage';
-import SocialAuth from '../../SocialAuth';
 import { ArrowLeft } from 'lucide-react'
+import SubscriptionsCarousel from '../../../pages/Landing/SubscriptionsCarousel'
+import SuscriptionCard from '../../../pages/Landing/SuscriptionCard'
+
+const plans = [
+    {
+        name: 'Básica',
+        price: 6.99,
+        description: [
+            'Acceso a todos los contenidos disponibles en los anuncios.',
+            'Acceso ilimitado a todos los perfiles'
+        ],
+        background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), linear-gradient(180deg, #A770EF 0%, #CF8BF3 48.96%, #FDB99B 100%)'
+    },
+    {
+        name: 'Premium',
+        price: 6.99,
+        description: [
+            'Acceso a  todos los contenidos disponibles de los anuncios',
+            'Acceso ilimitado a todos los perfiles.',
+            'Acceso a distintos packs de anuncios.'
+        ],
+        background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), linear-gradient(180deg, #EF629F 0%, #EECDA3 100%);'
+    },
+    {
+        name: 'PawLover',
+        price: 8.99,
+        description: [
+            'Acceso a  todos los contenidos disponibles de los anuncios.',
+            'Acceso ilimitado a todos los perfiles.',
+            'Acceso a distintos packs de anuncios.'
+        ],
+        background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), linear-gradient(90deg, #9D50BB 0%, #6E48AA 100%)'
+    },
+]
 
 const BusinessSuscriptions = ({ location }) => {
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
@@ -67,6 +99,17 @@ const BusinessSuscriptions = ({ location }) => {
                     position: 'relative',
                     height: '525px',
                 }}>
+                    {!isSmall ? (
+                        <Stack
+                            direction="row"
+                            spacing={3}
+                            justifyContent='center'
+                        >
+                            {plans.map(plan => <SuscriptionCard {...plan} />)}
+                        </Stack>
+                    ) : (
+                        <SubscriptionsCarousel plans={plans} />
+                    )}
                 </Box>
             </Box>
         </Dialog>
