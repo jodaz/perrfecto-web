@@ -80,6 +80,7 @@ import Plans from './pages/plans';
 import PlanShow from './pages/plans/PlanShow';
 import Privacy from './pages/Settings/Privacy';
 import Conditions from './pages/Settings/Conditions';
+import BusinessSuscriptions from './components/Modals/BusinessSuscriptions';
 
 function AppRoutes() {
     let location = useLocation();
@@ -495,6 +496,10 @@ function AppRoutes() {
                 </LandingLayout>
             }>
                 <Route path="/business/register" element={<RegisterBusiness location={location} />} />
+                <Route
+                    path="/business/suscriptions"
+                    element={<BusinessSuscriptions location={location} />}
+                />
             </Route>
 
             <Route path="/businesses" element={

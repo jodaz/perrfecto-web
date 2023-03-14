@@ -5,7 +5,7 @@ import styled from '@emotion/styled';
 import SuscriptionCard from './SuscriptionCard'
 
 const SwiperStyled = styled(Swiper)(() => ({
-    height: 'inherit',
+    height: 'unset',
     borderTopLeftRadius: 'inherit',
     borderBottomLeftRadius: 'inherit',
     width: '100%',
