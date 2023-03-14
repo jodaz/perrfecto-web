@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import PublicationDescription from '../../components/FeedCard/PublicationDescription';
-import { Mail, Phone, ChevronLeft, Trash2 } from 'lucide-react'
+import { Mail, Phone, ChevronLeft, Trash2, Compass } from 'lucide-react'
 import LikeButton from '../../components/Buttons/LikeButton';
 import MessageIconButton from '../../components/Buttons/MessageButton/MessageIconButton';
 import ListCertificates from '../certificates/ListCertificates'
@@ -29,7 +29,7 @@ const ShowFavourite = ({ item, deleteFav, close }) => {
         }
     } = item
     const adPictures = getImages(JSON.parse(multimedia))
-
+    console.log(item)
     return (
         <Slide direction="left" in={true} mountOnEnter unmountOnExit>
             <Box sx={{
@@ -113,6 +113,20 @@ const ShowFavourite = ({ item, deleteFav, close }) => {
                                     </Box>
                                     <Box marginRight='1rem' />
                                     {formatPhone(publi.Owner)}
+                                </Typography>
+                            )}
+                            {!!publi.characteristic.length && (
+                                <Typography
+                                    variant="body2"
+                                    sx={{ display: 'flex', alignItems: 'start' }}
+                                    color="text.secondary"
+                                >
+                                    <Box marginRight={'1rem'}>
+                                        <Compass />
+                                    </Box>
+
+                                    Busco: {' '}
+                                    {publi.characteristic.map(interest => `${interest.name}. `)}
                                 </Typography>
                             )}
                         </Box>
