@@ -5,6 +5,7 @@ import { apiProvider } from '../../../api';
 import LikeIconButton from './LikeIconButton';
 
 const LikeButton = ({ item, sliderAction }) => {
+    const [likesCount, setLikesCount] = React.useState(item.LikesCount);
     const { state: { isAuth } } = useAuth();
     const { dispatch } = useGuest();
 
@@ -13,6 +14,16 @@ const LikeButton = ({ item, sliderAction }) => {
             const res = await apiProvider.post('/api/publication/like', {
                 ad_id: item.id
             })
+
+            if (res.status >= 200 && res.status < 300) {
+                const { data } = res;
+                setLikesCount(prevState => {
+                    if (data.msg == 'successfully') {
+                        return prevState + 1
+                    }
+                    return prevState - 1
+                });
+            }
         } catch (error) {
             console.log(error)
         }
@@ -30,7 +41,7 @@ const LikeButton = ({ item, sliderAction }) => {
         }
     }
 
-    return <LikeIconButton likes={item.LikesCount} onClick={action} />;
+    return <LikeIconButton likes={likesCount} onClick={action} />;
 }
 
 export default LikeButton
