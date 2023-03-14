@@ -25,7 +25,11 @@ export default function ChatView() {
     const [reportUser, setReportUser] = React.useState(false)
     const { chatID } = useParams()
     const [data, setData] = React.useState(null)
-    const { dispatch } = useChat()
+    const { state: {
+        isLoading,
+        isChatOpen,
+        receptor
+    }, dispatch } = useChat()
 
     const toggleDeleteChat = () => setDeleteChat(!deleteChat);
 
@@ -45,14 +49,14 @@ export default function ChatView() {
                 setData(data);
                 setIsBlockedUser(data.is_locked)
 
-                fetchMessages(dispatch, data.messages)
+                // fetchMessages(dispatch, data.messages)
             }
         } catch (error) {
             console.log(error)
         }
     }
 
-    React.useEffect(() => { fetchData() }, [chatID])
+    // React.useEffect(() => { fetchData() }, [chatID])
 
     const renderMenu = () => (
         <Menu>
@@ -99,8 +103,8 @@ export default function ChatView() {
 
     return (
         <SettingsLayout
-            rightIconComponent={data && renderMenu()}
-            title={data && <Status receptor={data.receptor} />}
+            rightIconComponent={isChatOpen && renderMenu()}
+            title={isChatOpen && <Status receptor={receptor} />}
             handleGoBack={() => navigate('/chat')}
         >
             <Box sx={{

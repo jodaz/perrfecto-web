@@ -3,9 +3,12 @@ import * as React from 'react'
 const ChatContext = React.createContext()
 
 const initialState = {
-    users: [],
+    users: [], // Connected users
     messages: [],
-    isConnected: false
+    receptor: null,
+    isConnected: false,
+    isLoading: false,
+    isChatOpen: false
 }
 
 function chatReducer(state, action) {
@@ -16,6 +19,28 @@ function chatReducer(state, action) {
                     ...state,
                     users: action.payload,
                     isConnected: true
+                }
+            }
+            case 'TOGGLE_LOADING': {
+                return {
+                    ...state,
+                    isLoading: true
+                }
+            }
+            case 'OPEN_CHAT': {
+                return {
+                    ...state,
+                    receptor: action.payload.receptor,
+                    messages: action.payload.messages,
+                    isChatOpen: true
+                }
+            }
+            case 'CLOSE_CHAT': {
+                return {
+                    ...state,
+                    receptor: null,
+                    messages: [],
+                    isChatOpen: false
                 }
             }
             case 'FETCH_MESSAGES': {
@@ -75,11 +100,14 @@ async function updateConnectedStatus(dispatch, payload) {
 }
 
 async function fetchMessages(dispatch, payload) {
+    dispatch({ type: 'TOGGLE_LOADING' })
+
     try {
         dispatch({
             type: 'FETCH_MESSAGES',
             payload: payload
         })
+        dispatch({ type: 'TOGGLE_LOADING' })
     } catch (e) {
         console.log(e)
     }
@@ -91,6 +119,23 @@ async function setMessage(dispatch, payload) {
             type: 'SET_MESSAGE',
             payload: payload
         })
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+async function openChat(dispatch, data) {
+    dispatch({ type: 'TOGGLE_LOADING' })
+
+    try {
+        dispatch({
+            type: 'OPEN_CHAT',
+            payload: {
+                receptor: data.user_1,
+                messages: data.Messages
+            }
+        })
+        dispatch({ type: 'TOGGLE_LOADING' })
     } catch (e) {
         console.log(e)
     }
@@ -110,6 +155,7 @@ async function deleteMessage(dispatch, payload){
 }
 
 export {
+    openChat,
     useChat,
     ChatProvider,
     ChatContext,

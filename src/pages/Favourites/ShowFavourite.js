@@ -13,6 +13,7 @@ import ShowVaccines from '../Vaccines/ShowVaccines';
 import getUserPhoto from '../../utils/getUserPhoto';
 import PhotoGallery from '../../components/Modals/ShowCard/PhotoGallery';
 import Menu from '../../components/Menu';
+import MessageButton from '../../components/Buttons/MessageButton';
 
 const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
@@ -141,7 +142,7 @@ const ShowFavourite = ({ item, deleteFav, close }) => {
                     <Box sx={{ p: 2 }}>
                         <Stack spacing={2} direction="row" mt={2}>
                             <LikeButton likes={LikesCount} item={item.Ad} />
-                            <MessageIconButton active={true} />
+                            <MessageButton itemID={publi.id_user} shouldCreate />
                         </Stack>
                     </Box>
                 </Box>
