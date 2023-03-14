@@ -14,6 +14,7 @@ import getUserPhoto from '../../utils/getUserPhoto';
 import PhotoGallery from '../../components/Modals/ShowCard/PhotoGallery';
 import Menu from '../../components/Menu';
 import MessageButton from '../../components/Buttons/MessageButton';
+import formatPhone from '../../utils/formatPhone';
 
 const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
@@ -100,7 +101,7 @@ const ShowFavourite = ({ item, deleteFav, close }) => {
                                 <Box marginRight='1rem' />
                                 {publi.Owner.email}
                             </Typography>
-                            {(publi.Owner.phone && permission_tlf) && (
+                            {permission_tlf && (
                                 <Typography
                                     variant="body1"
                                     color="text.secondary"
@@ -111,7 +112,7 @@ const ShowFavourite = ({ item, deleteFav, close }) => {
                                         <Phone size={20} />
                                     </Box>
                                     <Box marginRight='1rem' />
-                                    +{publi.Owner.code_phone} {publi.Owner.phone}
+                                    {formatPhone(publi.Owner)}
                                 </Typography>
                             )}
                         </Box>
