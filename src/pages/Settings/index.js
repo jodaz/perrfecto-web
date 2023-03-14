@@ -54,6 +54,12 @@ const Settings = () => {
                                 title="Pack de anuncios"
                             />
                         )}
+                        {(user.role == 'business') && (
+                            <ListItemLink
+                                to="/business/suscriptions"
+                                title="Suscripciones"
+                            />
+                        )}
                         <ListItemLink
                             to="account"
                             title="Cuenta de acceso"
