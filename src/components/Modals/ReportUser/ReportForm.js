@@ -8,7 +8,7 @@ import { Flag } from 'lucide-react';
 import { useAuth } from '../../../context/AuthContext'
 import { reportUser } from '../../../utils/socket';
 
-const ReportForm = ({ cancel, item, selectedItem, toggleNextStep, otherReason }) => {
+const ReportForm = ({ cancel, receptor, selectedItem, toggleNextStep, otherReason }) => {
     const [isLoading, setIsLoading] = React.useState(false)
     const { state: { user } } = useAuth()
 
@@ -16,7 +16,7 @@ const ReportForm = ({ cancel, item, selectedItem, toggleNextStep, otherReason })
         setIsLoading(true)
         try {
             let data = {
-                "uid_reported": item.receptor.user.id,
+                "uid_reported": receptor.id,
                 "id_reason": selectedItem.id,
                 'uid': user.id
             };
@@ -59,7 +59,7 @@ const ReportForm = ({ cancel, item, selectedItem, toggleNextStep, otherReason })
                     ¿Estás seguro que deseas reportar a este usuario?
                 </Typography>
                 <Typography variant="body2" gutterBottom>
-                    Tranquil@, "{item.receptor.user.name}" no lo sabrá
+                    Tranquil@, "{receptor.name}" no lo sabrá
                 </Typography>
             </Box>
             <Stack

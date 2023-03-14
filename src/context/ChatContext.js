@@ -3,9 +3,12 @@ import * as React from 'react'
 const ChatContext = React.createContext()
 
 const initialState = {
-    users: [],
+    users: [], // Connected users
     messages: [],
-    isConnected: false
+    receptor: null,
+    isConnected: false,
+    isLoading: false,
+    isChatOpen: false
 }
 
 function chatReducer(state, action) {
@@ -18,10 +21,34 @@ function chatReducer(state, action) {
                     isConnected: true
                 }
             }
+            case 'TOGGLE_LOADING': {
+                return {
+                    ...state,
+                    isLoading: true
+                }
+            }
+            case 'OPEN_CHAT': {
+                return {
+                    ...state,
+                    receptor: action.payload.receptor,
+                    messages: action.payload.messages,
+                    isChatOpen: true
+                }
+            }
+            case 'CLEAN_CHAT': {
+                return {
+                    ...state,
+                    receptor: null,
+                    messages: [],
+                    isChatOpen: false
+                }
+            }
             case 'FETCH_MESSAGES': {
                 return {
                     ...state,
-                    messages: action.payload
+                    messages: action.payload.messages,
+                    receptor: action.payload.receptor,
+                    isChatOpen: true
                 }
             }
             case 'DELETE_MESSAGE': {
@@ -75,11 +102,17 @@ async function updateConnectedStatus(dispatch, payload) {
 }
 
 async function fetchMessages(dispatch, payload) {
+    dispatch({ type: 'TOGGLE_LOADING' })
+
     try {
         dispatch({
             type: 'FETCH_MESSAGES',
-            payload: payload
+            payload: {
+                receptor: payload.receptor.user,
+                messages: payload.messages
+            }
         })
+        dispatch({ type: 'TOGGLE_LOADING' })
     } catch (e) {
         console.log(e)
     }
@@ -96,6 +129,31 @@ async function setMessage(dispatch, payload) {
     }
 }
 
+async function openChat(dispatch, data, currentAuthUser) {
+    dispatch({ type: 'TOGGLE_LOADING' })
+
+    try {
+        const receptor = data.user_1.id != currentAuthUser.id
+            ? data.user_1
+            : data.user_2;
+
+        dispatch({
+            type: 'OPEN_CHAT',
+            payload: {
+                receptor: receptor,
+                messages: data.Messages
+            }
+        })
+        dispatch({ type: 'TOGGLE_LOADING' })
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+async function cleanChat(dispatch) {
+    dispatch({ type: 'CLEAN_CHAT' })
+}
+
 async function deleteMessage(dispatch, payload){
     try {
         dispatch({
@@ -110,11 +168,13 @@ async function deleteMessage(dispatch, payload){
 }
 
 export {
+    openChat,
     useChat,
     ChatProvider,
     ChatContext,
     updateConnectedStatus,
     setMessage,
     fetchMessages,
-    deleteMessage
+    deleteMessage,
+    cleanChat
 }

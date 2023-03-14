@@ -8,16 +8,17 @@ import { Trash2 } from 'lucide-react';
 import Stack from '@mui/material/Stack';
 import { alpha } from '@mui/material';
 import { apiProvider } from '../../../api'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-const DeleteChat = ({ open, handleClose, item }) => {
+const DeleteChat = ({ open, handleClose }) => {
+    const { chatID } = useParams()
     const [onSubmit, setOnSubmit] = React.useState(false);
     const navigate = useNavigate()
 
     const handleDelete = async () => {
         setOnSubmit(true)
         try {
-            const res = await apiProvider.delete(`/api/chat/delete-conversation/${item.receptor.id_conversation}`)
+            const res = await apiProvider.delete(`/api/chat/delete-conversation/${chatID}`)
 
             if (res.status >= 200 && res.status < 300) {
                 setOnSubmit(false)

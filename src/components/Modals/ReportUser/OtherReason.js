@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 import TextInput from '../../Forms/TextInput';
 import { DESCRIPTION } from '../../../validations';
 
-const OtherReason = ({ item, toggleNextStep, setReason }) => {
+const OtherReason = ({ receptor, toggleNextStep, setReason }) => {
     const { control, handleSubmit } = useForm()
 
     const onSubmit = values => {
@@ -40,7 +40,7 @@ const OtherReason = ({ item, toggleNextStep, setReason }) => {
                     ¿Estás seguro que deseas reportar a este usuario?
                 </Typography>
                 <Typography variant="body2" gutterBottom>
-                    Tranquil@, "{item.receptor.user.name}" no lo sabrá
+                    Tranquil@, "{receptor.name}" no lo sabrá
                 </Typography>
                 <Box component="form" onSubmit={handleSubmit(onSubmit)}>
                     <TextInput

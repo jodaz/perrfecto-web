@@ -8,16 +8,18 @@ import Stack from '@mui/material/Stack';
 import { alpha } from '@mui/material';
 import { apiProvider } from '../../../api';
 import PersonOffOutlinedIcon from '@mui/icons-material/PersonOffOutlined';
+import { useParams } from 'react-router-dom';
 
-const BlockUser = ({ open, handleClose, sideAction, item }) => {
+const BlockUser = ({ open, handleClose, sideAction, receptor }) => {
+    const { chatID } = useParams()
     const [onSubmit, setOnSubmit] = React.useState(false);
 
     const blockUserAction = async () => {
         setOnSubmit(true)
         try {
             const res = await apiProvider.post('/api/chat/block-conversation', {
-                "conversation_id": item.receptor.id_conversation,
-                "uid_locked": item.receptor.user.id
+                "conversation_id": chatID,
+                "uid_locked": receptor.id
             });
 
             if (res.status >= 200 && res.status < 300) {

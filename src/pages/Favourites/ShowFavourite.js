@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import PublicationDescription from '../../components/FeedCard/PublicationDescription';
-import { Mail, Phone, ChevronLeft, Trash2 } from 'lucide-react'
+import { Mail, Phone, ChevronLeft, Trash2, Compass } from 'lucide-react'
 import LikeButton from '../../components/Buttons/LikeButton';
 import MessageIconButton from '../../components/Buttons/MessageButton/MessageIconButton';
 import ListCertificates from '../certificates/ListCertificates'
@@ -13,6 +13,8 @@ import ShowVaccines from '../Vaccines/ShowVaccines';
 import getUserPhoto from '../../utils/getUserPhoto';
 import PhotoGallery from '../../components/Modals/ShowCard/PhotoGallery';
 import Menu from '../../components/Menu';
+import MessageButton from '../../components/Buttons/MessageButton';
+import formatPhone from '../../utils/formatPhone';
 
 const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
@@ -27,7 +29,7 @@ const ShowFavourite = ({ item, deleteFav, close }) => {
         }
     } = item
     const adPictures = getImages(JSON.parse(multimedia))
-
+    console.log(item)
     return (
         <Slide direction="left" in={true} mountOnEnter unmountOnExit>
             <Box sx={{
@@ -64,9 +66,7 @@ const ShowFavourite = ({ item, deleteFav, close }) => {
                             <Box sx={{
                                 display: 'flex',
                                 alignItems: 'center'
-                            }} onClick={() => {
-                                deleteFav(item)
-                            }}>
+                            }} onClick={() => deleteFav(item)}>
                                 <Trash2 />
                                 <Box sx={{ paddingLeft: '0.5rem' }}>
                                     Eliminar favorito
@@ -101,7 +101,7 @@ const ShowFavourite = ({ item, deleteFav, close }) => {
                                 <Box marginRight='1rem' />
                                 {publi.Owner.email}
                             </Typography>
-                            {(publi.Owner.phone && permission_tlf) && (
+                            {permission_tlf && (
                                 <Typography
                                     variant="body1"
                                     color="text.secondary"
@@ -112,7 +112,21 @@ const ShowFavourite = ({ item, deleteFav, close }) => {
                                         <Phone size={20} />
                                     </Box>
                                     <Box marginRight='1rem' />
-                                    +{publi.Owner.code_phone} {publi.Owner.phone}
+                                    {formatPhone(publi.Owner)}
+                                </Typography>
+                            )}
+                            {!!publi.characteristic.length && (
+                                <Typography
+                                    variant="body2"
+                                    sx={{ display: 'flex', alignItems: 'start' }}
+                                    color="text.secondary"
+                                >
+                                    <Box marginRight={'1rem'}>
+                                        <Compass />
+                                    </Box>
+
+                                    Busco: {' '}
+                                    {publi.characteristic.map(interest => `${interest.name}. `)}
                                 </Typography>
                             )}
                         </Box>
@@ -123,31 +137,27 @@ const ShowFavourite = ({ item, deleteFav, close }) => {
                         </Typography>
                     </Box>
                     <Stack direction="row">
-                        {!!publi.Vaccines.length && (
-                            <Box sx={{ p: 1 }}>
-                                <ShowVaccines
-                                    name={publi.Owner.name}
-                                    lastName={publi.Owner.lastName}
-                                    img_profile={publi.Owner.img_profile}
-                                    dog={publi}
-                                />
-                            </Box>
-                        )}
-                        {!!publi.Certificates.length && (
-                            <Box sx={{ p: 1 }}>
-                                <ListCertificates
-                                    name={publi.Owner.name}
-                                    lastName={publi.Owner.lastName}
-                                    img_profile={publi.Owner.img_profile}
-                                    dog={publi}
-                                />
-                            </Box>
-                        )}
+                        <Box sx={{ p: 1 }}>
+                            <ShowVaccines
+                                name={publi.Owner.name}
+                                lastName={publi.Owner.lastName}
+                                img_profile={publi.Owner.img_profile}
+                                dog={publi}
+                            />
+                        </Box>
+                        <Box sx={{ p: 1 }}>
+                            <ListCertificates
+                                name={publi.Owner.name}
+                                lastName={publi.Owner.lastName}
+                                img_profile={publi.Owner.img_profile}
+                                dog={publi}
+                            />
+                        </Box>
                     </Stack>
                     <Box sx={{ p: 2 }}>
                         <Stack spacing={2} direction="row" mt={2}>
                             <LikeButton likes={LikesCount} item={item.Ad} />
-                            <MessageIconButton active={true} />
+                            <MessageButton itemID={publi.id_user} shouldCreate />
                         </Stack>
                     </Box>
                 </Box>

@@ -7,17 +7,16 @@ import Button from '../../../components/Button';
 import { apiProvider } from '../../../api';
 import { useAuth } from '../../../context/AuthContext';
 
-export default function BlockedUser({ sideAction, item }) {
-    const { is_locked } = item;
+export default function BlockedUser({ sideAction, locked, receptor }) {
     const { state: { user } } = useAuth()
     const [onSubmit, setOnSubmit] = React.useState(false);
-    const isCurrentUserLocked = is_locked.user_locked.id == user.id;
+    const isCurrentUserLocked = locked.user_locked.id == user.id;
 
     const unblockUserAction = async () => {
         setOnSubmit(true)
         try {
             const res = await apiProvider.post('/api/chat/unlock-conversation', {
-                "uid_locked": item.receptor.user.id
+                "uid_locked": receptor.id
             });
 
             if (res.status >= 200 && res.status < 300) {

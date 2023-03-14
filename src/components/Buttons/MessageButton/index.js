@@ -4,9 +4,12 @@ import { openGuestWarning, useGuest } from '../../../context/GuestContext';
 import MessageIconButton from './MessageIconButton';
 import { apiProvider } from '../../../api';
 import { useNavigate } from 'react-router-dom';
+import { useChat, openChat } from '../../../context/ChatContext';
+import isConnectedUser from '../../../utils/isConnectedUser';
 
 const MessageButton = ({ itemID, shouldCreate, handleClose }) => {
-    const { state: { isAuth } } = useAuth();
+    const { state: { users }, dispatch: chatDispatch } = useChat()
+    const { state: { isAuth, user } } = useAuth();
     const { dispatch } = useGuest();
     const navigate = useNavigate()
 
@@ -19,6 +22,7 @@ const MessageButton = ({ itemID, shouldCreate, handleClose }) => {
             if (res.status >= 200 || res.status < 300) {
                 const { data: { data } } = res;
 
+                openChat(chatDispatch, data, user)
                 navigate(`/chat/${data.id}`)
             }
         } catch (error) {
@@ -42,7 +46,7 @@ const MessageButton = ({ itemID, shouldCreate, handleClose }) => {
 
     return (
         <MessageIconButton
-            active={true}
+            active={isConnectedUser(users, { id: itemID })}
             onClick={action}
         />
     );

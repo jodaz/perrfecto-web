@@ -7,7 +7,7 @@ import useEffectOne from '../../../utils/useEffectOnce'
 import { alpha } from '@mui/material';
 import { List, ListItemButton, ListItemText } from '@mui/material';
 
-const ListReasons = ({ item, toggleNextStep, setSelectedItem }) => {
+const ListReasons = ({ receptor, toggleNextStep, setSelectedItem }) => {
     const [reasons, setReasons] = React.useState([])
 
     const handleClick = reason => {
@@ -58,7 +58,7 @@ const ListReasons = ({ item, toggleNextStep, setSelectedItem }) => {
                     ¿Estás seguro que deseas reportar a este usuario?
                 </Typography>
                 <Typography variant="body2" gutterBottom>
-                    Tranquil@, "{item.receptor.user.name}" no lo sabrá
+                    Tranquil@, "{receptor.name}" no lo sabrá
                 </Typography>
                 <List>
                     {reasons.map(item => (

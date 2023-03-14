@@ -2,7 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import SettingsLayout from '../../../layouts/SettingsLayout';
 import Menu from '../../../components/Menu'
-import { ChevronLeft, Flag, Trash2 } from 'lucide-react';
+import { Flag, Trash2 } from 'lucide-react';
 import PersonOffOutlinedIcon from '@mui/icons-material/PersonOffOutlined';
 import Status from './Status';
 import MessagesList from './MessagesList';
@@ -11,7 +11,6 @@ import BlockedUser from './BlockedUser';
 import BlockUser from '../../../components/Modals/BlockUser';
 import ChatForm from './ChatForm';
 import { useNavigate, useParams } from 'react-router-dom';
-import useEffectOnce from '../../../utils/useEffectOnce';
 import { apiProvider } from '../../../api';
 import LoadingIndicator from '../../../components/LoadingIndicator'
 import { useChat, fetchMessages } from '../../../context/ChatContext';
@@ -24,8 +23,11 @@ export default function ChatView() {
     const [blockUser, setBlockUser] = React.useState(false)
     const [reportUser, setReportUser] = React.useState(false)
     const { chatID } = useParams()
-    const [data, setData] = React.useState(null)
-    const { dispatch } = useChat()
+    const { state: {
+        isLoading,
+        isChatOpen,
+        receptor
+    }, dispatch } = useChat()
 
     const toggleDeleteChat = () => setDeleteChat(!deleteChat);
 
@@ -42,17 +44,25 @@ export default function ChatView() {
             if (res.status >= 200 && res.status < 300) {
                 const { data: { data } } = res;
 
-                setData(data);
-                setIsBlockedUser(data.is_locked)
+                // GET CHAT
+                if (Object.keys(data).length) {
+                    const { is_locked, ...restData } = data;
 
-                fetchMessages(dispatch, data.messages)
+                    setIsBlockedUser(is_locked)
+
+                    fetchMessages(dispatch, restData)
+                }
             }
         } catch (error) {
             console.log(error)
         }
     }
 
-    React.useEffect(() => { fetchData() }, [chatID])
+    React.useEffect(() => {
+        if (chatID && !isChatOpen) {
+            fetchData()
+        }
+    }, [chatID, isChatOpen])
 
     const renderMenu = () => (
         <Menu>
@@ -99,8 +109,8 @@ export default function ChatView() {
 
     return (
         <SettingsLayout
-            rightIconComponent={data && renderMenu()}
-            title={data && <Status receptor={data.receptor} />}
+            rightIconComponent={isChatOpen && renderMenu()}
+            title={isChatOpen && <Status receptor={receptor} />}
             handleGoBack={() => navigate('/chat')}
         >
             <Box sx={{
@@ -110,34 +120,31 @@ export default function ChatView() {
                 justifyContent: 'space-between',
                 backgroundColor: '#fff'
             }}>
-                {data ? (
+                {isChatOpen ? (
                     <>
                         <MessagesList  />
+
                         {isBlockedUser && (
                             <BlockedUser
-                                item={data}
+                                locked={isBlockedUser}
+                                receptor={receptor}
                                 sideAction={fetchData}
                             />
                         )}
-                        <ChatForm
-                            receptor={data.receptor}
-                            disabled={isBlockedUser}
-                        />
+                        <ChatForm disabled={isBlockedUser} />
                         <DeleteChat
                             open={deleteChat}
                             handleClose={toggleDeleteChat}
-                            item={data}
+                        />
+                        <ReportUser
+                            open={reportUser}
+                            handleClose={toggleReportUser}
                         />
                         <BlockUser
                             open={blockUser}
                             handleClose={toggleBlockUser}
                             sideAction={fetchData}
-                            item={data}
-                        />
-                        <ReportUser
-                            open={reportUser}
-                            handleClose={toggleReportUser}
-                            item={data}
+                            receptor={receptor}
                         />
                     </>
                 ): (
