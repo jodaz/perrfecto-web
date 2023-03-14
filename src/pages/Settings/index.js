@@ -33,7 +33,7 @@ const ListTitle = ({ children }) => (
 
 const Settings = () => {
     const { dispatch, state: { user } } = useAuth();
-
+    console.log(user.role)
     return (
         <SettingsLayout title="Configuraciones">
             <Box sx={{
@@ -48,10 +48,12 @@ const Settings = () => {
                         <ListTitle>
                             Cuenta
                         </ListTitle>
-                        <ListItemLink
-                            to="plans"
-                            title="Pack de anuncios"
-                        />
+                        {(user.role == 'user') && (
+                            <ListItemLink
+                                to="plans"
+                                title="Pack de anuncios"
+                            />
+                        )}
                         <ListItemLink
                             to="account"
                             title="Cuenta de acceso"
