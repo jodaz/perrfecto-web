@@ -129,14 +129,18 @@ async function setMessage(dispatch, payload) {
     }
 }
 
-async function openChat(dispatch, data) {
+async function openChat(dispatch, data, currentAuthUser) {
     dispatch({ type: 'TOGGLE_LOADING' })
 
     try {
+        const receptor = data.user_1.id != currentAuthUser.id
+            ? data.user_1
+            : data.user_2;
+
         dispatch({
             type: 'OPEN_CHAT',
             payload: {
-                receptor: data.user_1,
+                receptor: receptor,
                 messages: data.Messages
             }
         })

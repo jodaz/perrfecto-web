@@ -8,7 +8,7 @@ import { useChat, openChat } from '../../../context/ChatContext';
 
 const MessageButton = ({ itemID, shouldCreate, handleClose }) => {
     const { dispatch: chatDispatch } = useChat()
-    const { state: { isAuth } } = useAuth();
+    const { state: { isAuth, user } } = useAuth();
     const { dispatch } = useGuest();
     const navigate = useNavigate()
 
@@ -21,7 +21,7 @@ const MessageButton = ({ itemID, shouldCreate, handleClose }) => {
             if (res.status >= 200 || res.status < 300) {
                 const { data: { data } } = res;
 
-                openChat(chatDispatch, data)
+                openChat(chatDispatch, data, user)
                 navigate(`/chat/${data.id}`)
             }
         } catch (error) {

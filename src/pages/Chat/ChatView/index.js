@@ -2,7 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import SettingsLayout from '../../../layouts/SettingsLayout';
 import Menu from '../../../components/Menu'
-import { ChevronLeft, Flag, Trash2 } from 'lucide-react';
+import { Flag, Trash2 } from 'lucide-react';
 import PersonOffOutlinedIcon from '@mui/icons-material/PersonOffOutlined';
 import Status from './Status';
 import MessagesList from './MessagesList';
@@ -11,7 +11,6 @@ import BlockedUser from './BlockedUser';
 import BlockUser from '../../../components/Modals/BlockUser';
 import ChatForm from './ChatForm';
 import { useNavigate, useParams } from 'react-router-dom';
-import useEffectOnce from '../../../utils/useEffectOnce';
 import { apiProvider } from '../../../api';
 import LoadingIndicator from '../../../components/LoadingIndicator'
 import { useChat, fetchMessages } from '../../../context/ChatContext';
