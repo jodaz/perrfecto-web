@@ -64,9 +64,7 @@ const ShowFavourite = ({ item, deleteFav, close }) => {
                             <Box sx={{
                                 display: 'flex',
                                 alignItems: 'center'
-                            }} onClick={() => {
-                                deleteFav(item)
-                            }}>
+                            }} onClick={() => deleteFav(item)}>
                                 <Trash2 />
                                 <Box sx={{ paddingLeft: '0.5rem' }}>
                                     Eliminar favorito
@@ -123,26 +121,22 @@ const ShowFavourite = ({ item, deleteFav, close }) => {
                         </Typography>
                     </Box>
                     <Stack direction="row">
-                        {!!publi.Vaccines.length && (
-                            <Box sx={{ p: 1 }}>
-                                <ShowVaccines
-                                    name={publi.Owner.name}
-                                    lastName={publi.Owner.lastName}
-                                    img_profile={publi.Owner.img_profile}
-                                    dog={publi}
-                                />
-                            </Box>
-                        )}
-                        {!!publi.Certificates.length && (
-                            <Box sx={{ p: 1 }}>
-                                <ListCertificates
-                                    name={publi.Owner.name}
-                                    lastName={publi.Owner.lastName}
-                                    img_profile={publi.Owner.img_profile}
-                                    dog={publi}
-                                />
-                            </Box>
-                        )}
+                        <Box sx={{ p: 1 }}>
+                            <ShowVaccines
+                                name={publi.Owner.name}
+                                lastName={publi.Owner.lastName}
+                                img_profile={publi.Owner.img_profile}
+                                dog={publi}
+                            />
+                        </Box>
+                        <Box sx={{ p: 1 }}>
+                            <ListCertificates
+                                name={publi.Owner.name}
+                                lastName={publi.Owner.lastName}
+                                img_profile={publi.Owner.img_profile}
+                                dog={publi}
+                            />
+                        </Box>
                     </Stack>
                     <Box sx={{ p: 2 }}>
                         <Stack spacing={2} direction="row" mt={2}>
