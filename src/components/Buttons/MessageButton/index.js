@@ -5,9 +5,10 @@ import MessageIconButton from './MessageIconButton';
 import { apiProvider } from '../../../api';
 import { useNavigate } from 'react-router-dom';
 import { useChat, openChat } from '../../../context/ChatContext';
+import isConnectedUser from '../../../utils/isConnectedUser';
 
 const MessageButton = ({ itemID, shouldCreate, handleClose }) => {
-    const { dispatch: chatDispatch } = useChat()
+    const { state: { users }, dispatch: chatDispatch } = useChat()
     const { state: { isAuth, user } } = useAuth();
     const { dispatch } = useGuest();
     const navigate = useNavigate()
@@ -45,7 +46,7 @@ const MessageButton = ({ itemID, shouldCreate, handleClose }) => {
 
     return (
         <MessageIconButton
-            active={true}
+            active={isConnectedUser(users, { id: itemID })}
             onClick={action}
         />
     );
