@@ -9,6 +9,8 @@ import EllipseImage from '../../EllipseImage';
 import { ArrowLeft } from 'lucide-react'
 import SubscriptionsCarousel from '../../../pages/Landing/SubscriptionsCarousel'
 import SuscriptionCard from '../../../pages/Landing/SuscriptionCard'
+import { IconButton } from '@mui/material';
+import LinkBehavior from '../../LinkBehavior';
 
 const plans = [
     {
@@ -89,7 +91,11 @@ const BusinessSuscriptions = ({ location }) => {
                             color="secondary.main"
                             sx={{ mb: 4, fontWeight: 500, display: 'inline-flex', alignItems: 'center' }}
                         >
-                            <ArrowLeft /> <Box mr={2} /> Suscripciones
+                            <IconButton component={LinkBehavior} to={-1}>
+                                <ArrowLeft color="#fff"/>
+                            </IconButton>
+                            <Box mr={2} />
+                            Suscripciones
                         </Typography>
                     </Box>
                 </Box>
