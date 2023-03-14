@@ -35,7 +35,7 @@ function chatReducer(state, action) {
                     isChatOpen: true
                 }
             }
-            case 'CLOSE_CHAT': {
+            case 'CLEAN_CHAT': {
                 return {
                     ...state,
                     receptor: null,
@@ -150,6 +150,10 @@ async function openChat(dispatch, data, currentAuthUser) {
     }
 }
 
+async function cleanChat(dispatch) {
+    dispatch({ type: 'CLEAN_CHAT' })
+}
+
 async function deleteMessage(dispatch, payload){
     try {
         dispatch({
@@ -171,5 +175,6 @@ export {
     updateConnectedStatus,
     setMessage,
     fetchMessages,
-    deleteMessage
+    deleteMessage,
+    cleanChat
 }

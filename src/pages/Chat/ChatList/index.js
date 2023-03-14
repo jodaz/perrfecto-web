@@ -7,13 +7,13 @@ import SearchBox from '../../../components/SearchBox';
 import ChatCard from './ChatCard';
 import { apiProvider } from '../../../api';
 import useEffectOnce from '../../../utils/useEffectOnce';
-import { useChat } from '../../../context/ChatContext';
+import { cleanChat, useChat } from '../../../context/ChatContext';
 import { useAuth } from '../../../context/AuthContext';
 import GuestDog from '../../../assets/images/GuestDog1.png'
 import GuestMessage from '../../../components/Alerts/GuestMessage';
 
 const ChatList = () => {
-    const { state: { users } } = useChat()
+    const { state: { users, isChatOpen }, dispatch } = useChat()
     const [messages, setMessages] = React.useState([null, null, null, null, null])
 
     const fetchMessages = async ({ search }) => {
@@ -37,6 +37,12 @@ const ChatList = () => {
     useEffectOnce(() => {
         fetchMessages()
     })
+
+    React.useEffect(() => {
+        if (isChatOpen) {
+            cleanChat(dispatch)
+        }
+    }, [isChatOpen])
 
     return (
         <Box p={2}>
