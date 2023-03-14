@@ -9,9 +9,9 @@ import { emitMessage } from '../../../utils/socket';
 import { useParams } from 'react-router-dom';
 import { useChat, setMessage } from '../../../context/ChatContext';
 
-const ChatForm = ({ receptor, disabled }) => {
+const ChatForm = ({ disabled }) => {
     const { chatID } = useParams()
-    const { dispatch } = useChat()
+    const { state: { receptor }, dispatch } = useChat()
     const { state: { user } } = useAuth()
     const { control, handleSubmit, setValue, formState: {
         isSubmitting
@@ -28,7 +28,7 @@ const ChatForm = ({ receptor, disabled }) => {
                 const emitData = {
                     id_chat: chatID,
                     message: values.message,
-                    receiver: receptor.user.id,
+                    receiver: receptor.id,
                     sender: user.id
                 }
 

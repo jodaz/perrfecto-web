@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useChat } from '../../../context/ChatContext';
 import InstagramModal from '../InstagramModal';
 import ListReasons from './ListReasons';
 import OtherReason from './OtherReason';
@@ -12,7 +13,8 @@ const contents = [
     'successful'
 ]
 
-const ReportUser = ({ open, handleClose, item }) => {
+const ReportUser = ({ open, handleClose }) => {
+    const { state: { receptor } } = useChat()
     const [content, setContent] = React.useState(contents[0])
     const [selectedItem, setSelectedItem] = React.useState(null)
     const [reason, setReason] = React.useState('')
@@ -33,13 +35,13 @@ const ReportUser = ({ open, handleClose, item }) => {
         >
             {content == 'listReasons' ? (
                 <ListReasons
-                    item={item}
+                    receptor={receptor}
                     toggleNextStep={nextStep}
                     setSelectedItem={item => setSelectedItem(item)}
                 />
             ) : (content == 'reportUser') ? (
                 <ReportForm
-                    item={item}
+                    receptor={receptor}
                     cancel={toggleModal}
                     selectedItem={selectedItem}
                     otherReason={reason}
@@ -47,12 +49,12 @@ const ReportUser = ({ open, handleClose, item }) => {
                 />
             ) : (content == 'successful') ? (
                 <SuccessfulReport
-                    item={item}
+                    receptor={receptor}
                     handleClose={toggleModal}
                 />
             ) : (
                 <OtherReason
-                    item={item}
+                    receptor={receptor}
                     setReason={data => setReason(data)}
                     toggleNextStep={nextStep}
                 />

@@ -24,7 +24,6 @@ export default function ChatView() {
     const [blockUser, setBlockUser] = React.useState(false)
     const [reportUser, setReportUser] = React.useState(false)
     const { chatID } = useParams()
-    const [data, setData] = React.useState(null)
     const { state: {
         isLoading,
         isChatOpen,
@@ -46,17 +45,25 @@ export default function ChatView() {
             if (res.status >= 200 && res.status < 300) {
                 const { data: { data } } = res;
 
-                setData(data);
-                setIsBlockedUser(data.is_locked)
+                // GET CHAT
+                if (Object.keys(data).length) {
+                    const { is_locked, ...restData } = data;
 
-                // fetchMessages(dispatch, data.messages)
+                    setIsBlockedUser(is_locked)
+
+                    fetchMessages(dispatch, restData)
+                }
             }
         } catch (error) {
             console.log(error)
         }
     }
 
-    // React.useEffect(() => { fetchData() }, [chatID])
+    React.useEffect(() => {
+        if (chatID && !isChatOpen) {
+            fetchData()
+        }
+    }, [chatID, isChatOpen])
 
     const renderMenu = () => (
         <Menu>
@@ -114,34 +121,31 @@ export default function ChatView() {
                 justifyContent: 'space-between',
                 backgroundColor: '#fff'
             }}>
-                {data ? (
+                {isChatOpen ? (
                     <>
                         <MessagesList  />
+
                         {isBlockedUser && (
                             <BlockedUser
-                                item={data}
+                                locked={isBlockedUser}
+                                receptor={receptor}
                                 sideAction={fetchData}
                             />
                         )}
-                        <ChatForm
-                            receptor={data.receptor}
-                            disabled={isBlockedUser}
-                        />
+                        <ChatForm disabled={isBlockedUser} />
                         <DeleteChat
                             open={deleteChat}
                             handleClose={toggleDeleteChat}
-                            item={data}
+                        />
+                        <ReportUser
+                            open={reportUser}
+                            handleClose={toggleReportUser}
                         />
                         <BlockUser
                             open={blockUser}
                             handleClose={toggleBlockUser}
                             sideAction={fetchData}
-                            item={data}
-                        />
-                        <ReportUser
-                            open={reportUser}
-                            handleClose={toggleReportUser}
-                            item={data}
+                            receptor={receptor}
                         />
                     </>
                 ): (

@@ -46,7 +46,9 @@ function chatReducer(state, action) {
             case 'FETCH_MESSAGES': {
                 return {
                     ...state,
-                    messages: action.payload
+                    messages: action.payload.messages,
+                    receptor: action.payload.receptor,
+                    isChatOpen: true
                 }
             }
             case 'DELETE_MESSAGE': {
@@ -105,7 +107,10 @@ async function fetchMessages(dispatch, payload) {
     try {
         dispatch({
             type: 'FETCH_MESSAGES',
-            payload: payload
+            payload: {
+                receptor: payload.receptor.user,
+                messages: payload.messages
+            }
         })
         dispatch({ type: 'TOGGLE_LOADING' })
     } catch (e) {

@@ -5,7 +5,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { ReactComponent as CheckCircle } from '../../../assets/icons/CheckCircle.svg'
 
-const SuccessfulReport = ({ item, handleClose }) => (
+const SuccessfulReport = ({ receptor, handleClose }) => (
     <Box sx={{
         display: 'flex',
         justifyContent: 'space-between',
@@ -29,7 +29,7 @@ const SuccessfulReport = ({ item, handleClose }) => (
                 Reporte enviado
             </Typography>
             <Typography variant="subtitle1" gutterBottom>
-                El reporte de "{item.receptor.user.name}" se ha enviado con éxito
+                El reporte de "{receptor.name}" se ha enviado con éxito
             </Typography>
             <MuiButton onClick={handleClose}>
                 Ok
