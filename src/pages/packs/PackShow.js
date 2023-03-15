@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import PlanCard from './PlanCard';
+import PlanCard from './PackCard';
 import { useParams } from 'react-router-dom';
 import { apiProvider } from '../../api'
 import SettingsLayout from '../../layouts/SettingsLayout';
@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form';
 import Checkbox from '../../components/Forms/Checkbox';
 import PaymentMethods from './PaymentMethods'
 
-const PlanShow = ({ location }) => {
+const PackShow = ({ location }) => {
     const { control } = useForm()
     const { id } = useParams()
     const [item, setItem] = React.useState(null)
@@ -30,10 +30,6 @@ const PlanShow = ({ location }) => {
             console.log("error ", error)
         }
     }
-
-    // useEffectOnce(() => {
-    //     if (item) { fetchPlan() }
-    // }, [])
 
     React.useEffect(() => {
         if (location.state) {
@@ -70,4 +66,4 @@ const PlanShow = ({ location }) => {
     );
 }
 
-export default PlanShow
+export default PackShow

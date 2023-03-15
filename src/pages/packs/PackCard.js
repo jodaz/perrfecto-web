@@ -20,7 +20,7 @@ const PlanCard = props => (
         flexDirection: 'column',
         backgroundColor: 'gray',
         textDecoration: 'none',
-    }} component={LinkBehavior}  to={`/profile/settings/plans/${props.id}`} state={props}>
+    }} component={LinkBehavior}  to={`/profile/settings/packs/${props.id}`} state={props}>
         <Box sx={{
             display: 'flex',
             alignSelf: 'end',
