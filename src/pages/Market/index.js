@@ -119,8 +119,8 @@ const Marketplace = () => {
                 >
                     {publications.map(item => (
                         <BusinessCard
-                            {...item}
-                            handleSelect={() => selectItem(dispatch, { item: item, type: 'business' })}
+                            data={item}
+                            url='/market'
                         />
                     ))}
                     {!publications.length && (

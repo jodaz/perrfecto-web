@@ -6,7 +6,6 @@ import SettingsLayout from '../../layouts/SettingsLayout';
 import useEffectOnce from '../../utils/useEffectOnce';
 import {
     useBusinesses,
-    resetItem,
     selectItem,
     fetchByCategory,
     resetFilters
@@ -25,6 +24,7 @@ const ShowCategory = ({ location }) => {
             })
         } else {
             resetFilters(dispatch)
+            fetchByCategory(dispatch, { category_id: category.id })
         }
     }
 
@@ -50,8 +50,8 @@ const ShowCategory = ({ location }) => {
                     >
                         {publications.map(item => (
                             <BusinessCard
-                                {...item}
-                                handleSelect={() => selectItem(dispatch, { item: item, type: 'business' })}
+                                data={item}
+                                url='/market'
                             />
                         ))}
                     </Stack>

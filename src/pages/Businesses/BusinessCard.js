@@ -8,7 +8,7 @@ import { ChevronRight } from 'lucide-react';
 import getUserPhoto from '../../utils/getUserPhoto'
 import LinkBehavior from '../../components/LinkBehavior';
 
-const BusinessCard = data => (
+const BusinessCard = ({ data, url }) => (
     <Card
         variant="outlined"
         sx={{
@@ -24,7 +24,7 @@ const BusinessCard = data => (
             }
         }}
         component={LinkBehavior}
-        to={`${data.id}`}
+        to={`${url}/${data.id}`}
     >
         {(data.AnnMultimedia.length) ? (
             <CardMedia
