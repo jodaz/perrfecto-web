@@ -5,7 +5,6 @@ import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import FeaturedBusinesses from '../Businesses/FeaturedBusinesses';
 import Categories from './Categories';
-import ShowCategory from './ShowCategory';
 import useEffectOnce from '../../utils/useEffectOnce';
 import { apiProvider } from '../../api';
 import MarketFilterDrawer from '../../components/MarketFilterDrawer';
@@ -18,7 +17,6 @@ import {
     resetFilters,
     fetchBusinesses
 } from '../../context/BusinessContext';
-import ShowMarket from './ShowMarket';
 import SearchBox from '../../components/SearchBox';
 import { alpha } from '@mui/material';
 
@@ -56,10 +54,6 @@ const Marketplace = () => {
     }
 
     useEffectOnce(() => { fetchCategories() }, [])
-
-    if (selectedItem) {
-        return (selectedItem.type == 'category') ? <ShowCategory /> : <ShowMarket />;
-    }
 
     return (
         <Box sx={{

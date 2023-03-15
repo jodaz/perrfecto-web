@@ -81,6 +81,7 @@ import PlanShow from './pages/plans/PlanShow';
 import Privacy from './pages/Settings/Privacy';
 import Conditions from './pages/Settings/Conditions';
 import BusinessSuscriptions from './components/Modals/BusinessSuscriptions';
+import ShowCategory from './pages/Market/ShowCategory';
 
 function AppRoutes() {
     let location = useLocation();
@@ -144,6 +145,14 @@ function AppRoutes() {
                 element={
                     <AppLayout>
                         <Market />
+                    </AppLayout>
+                }
+            />
+            <Route
+                path='/market/category/:id'
+                element={
+                    <AppLayout>
+                        <ShowCategory location={location} />
                     </AppLayout>
                 }
             />

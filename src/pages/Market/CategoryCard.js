@@ -4,12 +4,9 @@ import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
 import CardMedia from '@mui/material/CardMedia';
 import getUserPhoto from '../../utils/getUserPhoto';
+import LinkBehavior from '../../components/LinkBehavior';
 
-const CategoryCard = ({
-    handleClick,
-    name,
-    img
-}) => (
+const CategoryCard = props => (
     <Card
         variant="outlined"
         sx={{
@@ -25,14 +22,16 @@ const CategoryCard = ({
                 opacity: 0.75
             }
         }}
-        onClick={handleClick}
+        component={LinkBehavior}
+        to={`/market/category/${props.id}`}
+        state={props}
     >
         <CardMedia
             component="img"
             width="inherit"
             height="inherit"
             alt="category_pic"
-            src={getUserPhoto(img)}
+            src={getUserPhoto(props.img)}
             sx={{
                 background: theme => `${theme.palette.text.tertiary} !important`,
                 borderRadius: '12px',
@@ -52,7 +51,7 @@ const CategoryCard = ({
                     mt: { xs: 1.5, sm: 0 },
                 }}
             >
-                {name}
+                {props.name}
             </Typography>
         </Box>
     </Card>
