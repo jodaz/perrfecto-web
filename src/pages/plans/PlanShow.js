@@ -4,7 +4,6 @@ import PlanCard from './PlanCard';
 import { useParams } from 'react-router-dom';
 import { apiProvider } from '../../api'
 import SettingsLayout from '../../layouts/SettingsLayout';
-import useEffectOnce from '../../utils/useEffectOnce';
 import LoadingIndicator from '../../components/LoadingIndicator'
 import { useForm } from 'react-hook-form';
 import Checkbox from '../../components/Forms/Checkbox';
@@ -41,7 +40,7 @@ const PlanShow = ({ location }) => {
             setIsLoading(false)
             setItem(location.state)
         } else {
-            // Fetch plan
+            fetchPlan()
         }
     }, [location.state])
 
