@@ -6,39 +6,34 @@ import SettingsLayout from '../../layouts/SettingsLayout';
 import useEffectOnce from '../../utils/useEffectOnce';
 import {
     useBusinesses,
-    resetItem,
     selectItem,
     fetchByCategory,
     resetFilters
 } from '../../context/BusinessContext';
 import SearchBox from '../../components/SearchBox';
 
-const ShowCategory = () => {
-    const { state: {
-        publications,
-        selectedItem
-    }, dispatch } = useBusinesses();
+const ShowCategory = ({ location }) => {
+    const { state: category } = location;
+    const { state: { publications }, dispatch } = useBusinesses();
 
     const filterFunction = ({ search }) => {
         if (search) {
             fetchByCategory(dispatch, {
                 filter: search,
-                category_id: selectedItem.item.id
+                category_id: category.id
             })
         } else {
             resetFilters(dispatch)
+            fetchByCategory(dispatch, { category_id: category.id })
         }
     }
 
     useEffectOnce(() => { fetchByCategory(dispatch, {
-        category_id: selectedItem.item.id
+        category_id: category.id
     }) }, [])
 
     return (
-        <SettingsLayout
-            title={selectedItem.item.name}
-            handleGoBack={() => resetItem(dispatch)}
-        >
+        <SettingsLayout title={category.name}>
             <Box sx={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -55,8 +50,8 @@ const ShowCategory = () => {
                     >
                         {publications.map(item => (
                             <BusinessCard
-                                {...item}
-                                handleSelect={() => selectItem(dispatch, { item: item, type: 'business' })}
+                                data={item}
+                                url='/market'
                             />
                         ))}
                     </Stack>

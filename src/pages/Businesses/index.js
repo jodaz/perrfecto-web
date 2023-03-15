@@ -43,7 +43,7 @@ const Businesses = () => {
                     spacing={2}
                 >
                     {user.publication && (
-                        <BusinessCard {...user.publication} />
+                        <BusinessCard data={user.publication} url='/businesses' />
                     )}
                 </Stack>
             </Box>
