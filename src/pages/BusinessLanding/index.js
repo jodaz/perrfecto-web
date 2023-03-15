@@ -72,7 +72,7 @@ const BusinessLanding = () => {
                             }} />
                         </Box>
                     </Box>
-                    {(isAuth && user.role != 'business') && (
+                    {(!isAuth && user.role != 'business') && (
                         <Box sx={{ p: 1 }}>
                             <Button variant="contained" component={LinkBehavior} to="register">
                                 Registrar negocio
