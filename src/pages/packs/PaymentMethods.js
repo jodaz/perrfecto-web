@@ -31,6 +31,7 @@ const PaymentMethods = () => {
                 margin='0 auto'
                 justifyContent='center'
             >
+                <PaypalButton itemID={id} />
                 <PaymentMethodButton
                     icon={StripeIcon}
                     title='Stripe'
@@ -41,7 +42,6 @@ const PaymentMethods = () => {
                     title={`Tarjeta`}
                     disabled={isLoading}
                 />
-                <PaypalButton itemID={id} />
             </Stack>
         </Box>
     )

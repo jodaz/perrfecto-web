@@ -1,7 +1,9 @@
 import { PayPalButtons } from "@paypal/react-paypal-js";
+import { useNavigate } from "react-router-dom";
 import { apiProvider } from "../../../api";
 
 const PaypalButton = ({ itemID }) => {
+    const navigate = useNavigate()
 
     const requestPayment = async () => {
         try {
@@ -10,7 +12,7 @@ const PaypalButton = ({ itemID }) => {
             })
 
             if (res.status >= 200 && res.status < 300) {
-                console.log(res.data);
+                return res.data.data.id;
             }
         } catch (error) {
             console.log("error ", error)
@@ -19,17 +21,18 @@ const PaypalButton = ({ itemID }) => {
 
     const savePayment = async (data, actions) => {
         try {
-            console.log(data);
-            // const res = await apiProvider.get(`/api/paypal/execute-payment`, {
-            //     params: {
-            //         token: token,
-            //         pack_id: itemID
-            //     }
-            // })
+            const { orderID } = data;
 
-            // if (res.status >= 200 && res.status < 300) {
-            //     console.log(res.data);
-            // }
+            const res = await apiProvider.get(`/api/paypal/execute-payment`, {
+                params: {
+                    token: orderID,
+                    pack_id: itemID
+                }
+            })
+
+            if (res.status >= 200 && res.status < 300) {
+                navigate('checkout?status=success')
+            }
         } catch (error) {
             console.log("error ", error)
         }
@@ -38,7 +41,7 @@ const PaypalButton = ({ itemID }) => {
     return (
         <PayPalButtons
             createOrder={requestPayment}
-            onCancel={(data) => console.log("compra cancelada")}
+            onCancel={() => navigate('checkout?status=refused')}
             onApprove={savePayment}
             style={{ layout: "horizontal", color: "blue" }}
         />

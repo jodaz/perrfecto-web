@@ -1,8 +1,6 @@
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import vars from "../vars";
 
-console.log(process.env)
-
 function PaypalProvider({ children }) {
     return (
         <PayPalScriptProvider

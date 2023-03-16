@@ -335,7 +335,7 @@ function AppRoutes() {
                 }
             />
             <Route
-                path='/profile/settings/plans/:id/checkout'
+                path='/profile/settings/packs/:id/checkout'
                 element={
                     <AppLayout>
                         <PaymentCheckout location={location} />
