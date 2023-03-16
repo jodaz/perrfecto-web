@@ -9,7 +9,6 @@ import {
     Dog,
     Home,
     User,
-    LogOut,
     Newspaper,
     MessageCircle
 } from 'lucide-react';
@@ -102,7 +101,7 @@ const Navigation = ({ isSmall }) => {
             boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.08)',
             backgroundColor: '#fff',
             height: isSmall ? '100%' : 'unset',
-            overflowX: isSmall ? 'scroll' : 'unset',
+            overflowX: 'unset',
             paddingLeft: isSmall ? '14px' : 'unset'
         }}>
             {isSmall && renderLinks(smallScreenOnly)}
