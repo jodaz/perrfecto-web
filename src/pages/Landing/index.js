@@ -36,7 +36,10 @@ const Landing = ({ location }) => {
             <OurPlansSection />
             <BlogsSection />
             <Footer />
-            <DeletedAccount open={openDeleteModal} handleClose={() => navigate('/')} />
+            <DeletedAccount
+                open={openDeleteModal}
+                handleClose={() => navigate('/')}
+            />
         </Box>
     );
 }

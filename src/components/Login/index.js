@@ -74,6 +74,9 @@ export default function Login({ location }) {
                         type: 'byrrss'
                     })
                 }
+                if (message.includes('locked')) {
+                    navigate('/account/locked')
+                }
                 if (message.includes('The user does not exist')) {
                     setErrorAlert('No estás registrado. Crea una cuenta para poder comenzar en TinderDogs.')
                 }
