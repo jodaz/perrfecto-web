@@ -64,19 +64,24 @@ const PlanCard = props => (
             display: 'flex',
             width: '100%'
         }}>
-            <Typography
+            {props.number_photos > 0 && (
+                <Typography
                 variant="subtitle1"
                 fontWeight={500}
                 mr={'10px'}
-            >
-                +{props.number_photos} fotos
-            </Typography>
-            <Typography
+                >
+                    +{props.number_photos} fotos
+                </Typography>
+            )}
+            {props.number_videos > 0 && (
+                <Typography
                 variant="subtitle1"
                 fontWeight={500}
-            >
-                +{props.number_videos} videos
-            </Typography>
+                mr={'10px'}
+                >
+                    +{props.number_videos} videos
+                </Typography>
+            )}
         </Box>
     </Box>
 )
