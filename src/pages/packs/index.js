@@ -34,7 +34,16 @@ const Packs = () => {
             {isLoading ? (
                 <LoadingIndicator height='100%' />
             ) : (
-                <Stack spacing={2} height='100%' minWidth='280px' padding={2} m='0 auto'>
+                <Stack
+                    spacing={2}
+                    sx={{
+                        height: '100%',
+                        maxWidth: '300px',
+                        padding: 1,
+                        margin: '0 auto',
+                        alignItems: 'center'
+                    }}
+                >
                     {packs.map(plan => <PlanCard {...plan} />)}
                 </Stack>
             )}

@@ -41,7 +41,7 @@ const PackShow = ({ location }) => {
     }, [location.state])
 
     return (
-        <SettingsLayout title={item ? item.name : ''}>
+        <SettingsLayout title={item ? `Pack ${item.name}` : ''}>
             {isLoading ? (
                 <LoadingIndicator height='100%' />
             ) : (

@@ -8,12 +8,11 @@ const PlanCard = props => (
     <Box sx={{
         display: 'flex',
         alignItems: 'start',
-        margin: '1rem 0',
         cursor: 'pointer',
         borderRadius: '16px',
         color: '#fff',
-        width: '100%',
-        p: 1,
+        width: 'fit-content',
+        p: 2,
         height: 'fit-content',
         background: `url(${props.Banner && getUserPhoto(props.Banner.img)})`,
         backgroundRepeat: 'no-repeat',
@@ -72,10 +71,7 @@ const PlanCard = props => (
                 Añade fotos y vídeos a tu anuncio.
             </ItemWithCheck>
         )}
-        <Box sx={{
-            display: 'flex',
-            width: '100%'
-        }}>
+        <Box display='flex'>
             {props.number_photos > 0 && (
                 <Typography
                     variant="subtitle1"
