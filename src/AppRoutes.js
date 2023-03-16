@@ -82,6 +82,7 @@ import Privacy from './pages/Settings/Privacy';
 import Conditions from './pages/Settings/Conditions';
 import BusinessSuscriptions from './components/Modals/BusinessSuscriptions';
 import ShowCategory from './pages/Market/ShowCategory';
+import PaymentCheckout from './pages/packs/PaymentCheckout';
 
 function AppRoutes() {
     let location = useLocation();
@@ -330,6 +331,14 @@ function AppRoutes() {
                 element={
                     <AppLayout>
                         <PetInformation location={location} />
+                    </AppLayout>
+                }
+            />
+            <Route
+                path='/profile/settings/plans/:id/checkout'
+                element={
+                    <AppLayout>
+                        <PaymentCheckout location={location} />
                     </AppLayout>
                 }
             />

@@ -6,7 +6,6 @@ import SettingsLayout from '../../layouts/SettingsLayout';
 import useEffectOnce from '../../utils/useEffectOnce';
 import {
     useBusinesses,
-    selectItem,
     fetchByCategory,
     resetFilters
 } from '../../context/BusinessContext';
