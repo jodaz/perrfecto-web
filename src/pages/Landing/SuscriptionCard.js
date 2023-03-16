@@ -4,6 +4,7 @@ import Button from '@mui/material/Button'
 import { alpha } from '@mui/material';
 import { CheckCircle2 } from 'lucide-react';
 import LinkBehavior from '../../components/LinkBehavior';
+import ItemWithCheck from '../../components/ItemWithCheck';
 
 const SuscriptionCard = props => (
     <Box sx={{
@@ -35,19 +36,7 @@ const SuscriptionCard = props => (
                 Subscripción <br/> {props.name}
             </Typography>
             {props.description.map(item => (
-                <Box sx={{
-                    display: 'flex',
-                    alignItems: 'start',
-                    lineHeight: '28px',
-                    fontWeight: 400
-                }}>
-                    <Box mr={1}>
-                        <CheckCircle2 size={16} />
-                    </Box>
-                    <Typography variant="subtitle1" textAlign='left'>
-                        {item}
-                    </Typography>
-                </Box>
+                <ItemWithCheck>{item}</ItemWithCheck>
             ))}
         </Box>
         <Box sx={{

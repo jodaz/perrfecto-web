@@ -2,6 +2,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography'
 import getUserPhoto from '../../utils/getUserPhoto';
 import LinkBehavior from '../../components/LinkBehavior'
+import ItemWithCheck from '../../components/ItemWithCheck';
 
 const PlanCard = props => (
     <Box sx={{
@@ -60,24 +61,37 @@ const PlanCard = props => (
         >
             Plan {props.name}
         </Typography>
+        {props.time_popular_member && (
+            <ItemWithCheck>
+                Publica tu mascota en
+    los miembros populares, durante 24h.
+            </ItemWithCheck>
+        )}
+        {!!(props.number_photos && props.number_videos) && (
+            <ItemWithCheck color="#FFD900">
+                Añade fotos y vídeos a tu anuncio.
+            </ItemWithCheck>
+        )}
         <Box sx={{
             display: 'flex',
             width: '100%'
         }}>
             {props.number_photos > 0 && (
                 <Typography
-                variant="subtitle1"
-                fontWeight={500}
-                mr={'10px'}
+                    variant="subtitle1"
+                    fontWeight={500}
+                    mr={'10px'}
+                    gutterBottom
                 >
                     +{props.number_photos} fotos
                 </Typography>
             )}
             {props.number_videos > 0 && (
                 <Typography
-                variant="subtitle1"
-                fontWeight={500}
-                mr={'10px'}
+                    variant="subtitle1"
+                    fontWeight={500}
+                    mr={'10px'}
+                    gutterBottom
                 >
                     +{props.number_videos} videos
                 </Typography>
