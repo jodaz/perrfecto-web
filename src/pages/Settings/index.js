@@ -50,7 +50,7 @@ const Settings = () => {
                         </ListTitle>
                         {(user.role == 'user') && (
                             <ListItemLink
-                                to="plans"
+                                to="packs"
                                 title="Pack de anuncios"
                             />
                         )}

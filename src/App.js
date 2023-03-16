@@ -15,31 +15,34 @@ import { MultiStepProvider } from './context/MultiStepContext';
 import { BlogProvider } from './context/BlogContext';
 import { ChatProvider } from './context/ChatContext';
 import { NotificationProvider } from './context/NotificationContext';
+import { PaypalProvider } from './context/PaypalContext';
 
 const App = () => (
-    <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={esLocale}>
-        <ThemeProvider theme={theme}>
-            <AuthProvider>
-                <FavouriteProvider>
-                    <GuestProvider>
-                        <PublicationProvider>
-                            <MultiStepProvider>
-                                <BlogProvider>
-                                    <ChatProvider>
-                                        <NotificationProvider>
-                                            <BusinessProvider>
-                                                <AppRoutes />
-                                            </BusinessProvider>
-                                        </NotificationProvider>
-                                    </ChatProvider>
-                                </BlogProvider>
-                            </MultiStepProvider>
-                        </PublicationProvider>
-                    </GuestProvider>
-                </FavouriteProvider>
-            </AuthProvider>
-        </ThemeProvider>
-    </LocalizationProvider>
+    <PaypalProvider>
+        <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={esLocale}>
+            <ThemeProvider theme={theme}>
+                <AuthProvider>
+                    <FavouriteProvider>
+                        <GuestProvider>
+                            <PublicationProvider>
+                                <MultiStepProvider>
+                                    <BlogProvider>
+                                        <ChatProvider>
+                                            <NotificationProvider>
+                                                <BusinessProvider>
+                                                    <AppRoutes />
+                                                </BusinessProvider>
+                                            </NotificationProvider>
+                                        </ChatProvider>
+                                    </BlogProvider>
+                                </MultiStepProvider>
+                            </PublicationProvider>
+                        </GuestProvider>
+                    </FavouriteProvider>
+                </AuthProvider>
+            </ThemeProvider>
+        </LocalizationProvider>
+    </PaypalProvider>
 );
 
 export default App;

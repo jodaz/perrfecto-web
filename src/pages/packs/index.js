@@ -1,14 +1,14 @@
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
-import PlanCard from './PlanCard';
+import PlanCard from './PackCard';
 import { apiProvider } from '../../api'
 import SettingsLayout from '../../layouts/SettingsLayout';
 import useEffectOnce from '../../utils/useEffectOnce';
 import LoadingIndicator from '../../components/LoadingIndicator'
 
-const Plans = () => {
+const Packs = () => {
     const [isLoading, setIsLoading] = React.useState(false);
-    const [plans, setPlans] = React.useState([]);
+    const [packs, setPacks] = React.useState([]);
 
     const fetchPlans = async () => {
         setIsLoading(true)
@@ -18,7 +18,7 @@ const Plans = () => {
             if (res.status >= 200 && res.status < 300) {
                 const { data: { data } } = res;
 
-                setPlans(data)
+                setPacks(data)
                 setIsLoading(false)
             }
         } catch (error) {
@@ -34,12 +34,21 @@ const Plans = () => {
             {isLoading ? (
                 <LoadingIndicator height='100%' />
             ) : (
-                <Stack spacing={2} height='100%' minWidth='280px' padding={2} m='0 auto'>
-                    {plans.map(plan => <PlanCard {...plan} />)}
+                <Stack
+                    spacing={2}
+                    sx={{
+                        height: '100%',
+                        maxWidth: '300px',
+                        padding: 1,
+                        margin: '0 auto',
+                        alignItems: 'center'
+                    }}
+                >
+                    {packs.map(plan => <PlanCard {...plan} />)}
                 </Stack>
             )}
         </SettingsLayout>
     );
 }
 
-export default Plans
+export default Packs

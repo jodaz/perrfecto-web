@@ -1,11 +1,11 @@
-import React, { cloneElement } from 'react'
 import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 const PaymentMethodButton = ({
     icon,
-    title
+    title,
+    disabled
 }) => {
     return (
         <Box sx={{
@@ -13,7 +13,7 @@ const PaymentMethodButton = ({
             flexDirection: 'column',
             alignItems: 'center'
         }}>
-            <IconButton>
+            <IconButton disabled={disabled}>
                 <img src={icon} />
             </IconButton>
             <Typography variant="body2" fontWeight={500} color="text.secondary">

@@ -76,12 +76,13 @@ import GuestProfile from './pages/Profile/GuestProfile';
 import ShowMarket from './pages/Market/ShowMarket';
 import ShowBusinessLocation from './pages/Businesses/ShowBusinessLocation';
 import ShowBusiness from './pages/Businesses/ShowBusiness';
-import Plans from './pages/plans';
-import PlanShow from './pages/plans/PlanShow';
+import Packs from './pages/packs';
+import PackShow from './pages/packs/PackShow';
 import Privacy from './pages/Settings/Privacy';
 import Conditions from './pages/Settings/Conditions';
 import BusinessSuscriptions from './components/Modals/BusinessSuscriptions';
 import ShowCategory from './pages/Market/ShowCategory';
+import PaymentCheckout from './pages/packs/PaymentCheckout';
 
 function AppRoutes() {
     let location = useLocation();
@@ -125,18 +126,18 @@ function AppRoutes() {
                 }
             />
             <Route
-                path='/profile/settings/plans'
+                path='/profile/settings/packs'
                 element={
                     <AppLayout>
-                        <Plans />
+                        <Packs />
                     </AppLayout>
                 }
             />
             <Route
-                path='/profile/settings/plans/:id'
+                path='/profile/settings/packs/:id'
                 element={
                     <AppLayout>
-                        <PlanShow location={location} />
+                        <PackShow location={location} />
                     </AppLayout>
                 }
             />
@@ -330,6 +331,14 @@ function AppRoutes() {
                 element={
                     <AppLayout>
                         <PetInformation location={location} />
+                    </AppLayout>
+                }
+            />
+            <Route
+                path='/profile/settings/packs/:id/checkout'
+                element={
+                    <AppLayout>
+                        <PaymentCheckout location={location} />
                     </AppLayout>
                 }
             />

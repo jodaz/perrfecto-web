@@ -2,17 +2,17 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography'
 import getUserPhoto from '../../utils/getUserPhoto';
 import LinkBehavior from '../../components/LinkBehavior'
+import ItemWithCheck from '../../components/ItemWithCheck';
 
 const PlanCard = props => (
     <Box sx={{
         display: 'flex',
         alignItems: 'start',
-        margin: '1rem 0',
         cursor: 'pointer',
         borderRadius: '16px',
         color: '#fff',
-        width: '100%',
-        p: 1,
+        width: 'fit-content',
+        p: 2,
         height: 'fit-content',
         background: `url(${props.Banner && getUserPhoto(props.Banner.img)})`,
         backgroundRepeat: 'no-repeat',
@@ -20,7 +20,7 @@ const PlanCard = props => (
         flexDirection: 'column',
         backgroundColor: 'gray',
         textDecoration: 'none',
-    }} component={LinkBehavior}  to={`/profile/settings/plans/${props.id}`} state={props}>
+    }} component={LinkBehavior}  to={`/profile/settings/packs/${props.id}`} state={props}>
         <Box sx={{
             display: 'flex',
             alignSelf: 'end',
@@ -60,23 +60,38 @@ const PlanCard = props => (
         >
             Plan {props.name}
         </Typography>
-        <Box sx={{
-            display: 'flex',
-            width: '100%'
-        }}>
-            <Typography
-                variant="subtitle1"
-                fontWeight={500}
-                mr={'10px'}
-            >
-                +{props.number_photos} fotos
-            </Typography>
-            <Typography
-                variant="subtitle1"
-                fontWeight={500}
-            >
-                +{props.number_videos} videos
-            </Typography>
+        {props.time_popular_member && (
+            <ItemWithCheck>
+                Publica tu mascota en
+    los miembros populares, durante 24h.
+            </ItemWithCheck>
+        )}
+        {!!(props.number_photos && props.number_videos) && (
+            <ItemWithCheck color="#FFD900">
+                Añade fotos y vídeos a tu anuncio.
+            </ItemWithCheck>
+        )}
+        <Box display='flex'>
+            {props.number_photos > 0 && (
+                <Typography
+                    variant="subtitle1"
+                    fontWeight={500}
+                    mr={'10px'}
+                    gutterBottom
+                >
+                    +{props.number_photos} fotos
+                </Typography>
+            )}
+            {props.number_videos > 0 && (
+                <Typography
+                    variant="subtitle1"
+                    fontWeight={500}
+                    mr={'10px'}
+                    gutterBottom
+                >
+                    +{props.number_videos} videos
+                </Typography>
+            )}
         </Box>
     </Box>
 )
