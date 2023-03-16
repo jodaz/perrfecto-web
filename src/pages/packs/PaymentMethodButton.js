@@ -5,7 +5,6 @@ import Typography from '@mui/material/Typography';
 const PaymentMethodButton = ({
     icon,
     title,
-    onClick,
     disabled
 }) => {
     return (
@@ -14,7 +13,7 @@ const PaymentMethodButton = ({
             flexDirection: 'column',
             alignItems: 'center'
         }}>
-            <IconButton onClick={onClick} disabled={disabled}>
+            <IconButton disabled={disabled}>
                 <img src={icon} />
             </IconButton>
             <Typography variant="body2" fontWeight={500} color="text.secondary">

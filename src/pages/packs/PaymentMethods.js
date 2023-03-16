@@ -2,34 +2,15 @@ import * as React from 'react'
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import PaypalIcon from '../../assets/icons/Paypal.png'
 import StripeIcon from '../../assets/icons/Stripe.png'
 import DebitCardIcon from '../../assets/icons/DebitCard.png'
 import PaymentMethodButton from './PaymentMethodButton';
-import { apiProvider } from '../../api';
 import { useParams } from 'react-router-dom';
+import PaypalButton from '../../components/Buttons/Paypal';
 
 const PaymentMethods = () => {
     const { id } = useParams();
     const [isLoading, setIsLoading] = React.useState(false);
-
-    const requestPayment = async () => {
-        setIsLoading(true)
-
-        try {
-            const res = await apiProvider.post(`/api/paypal/request-payment`, {
-                pack_id: id
-            })
-
-            if (res.status >= 200 && res.status < 300) {
-                setIsLoading(false)
-                console.log(res.data);
-            }
-        } catch (error) {
-            setIsLoading(false)
-            console.log("error ", error)
-        }
-    }
 
     return (
         <Box sx={{
@@ -51,12 +32,6 @@ const PaymentMethods = () => {
                 justifyContent='center'
             >
                 <PaymentMethodButton
-                    icon={PaypalIcon}
-                    title='Paypal'
-                    onClick={requestPayment}
-                    disabled={isLoading}
-                />
-                <PaymentMethodButton
                     icon={StripeIcon}
                     title='Stripe'
                     disabled={isLoading}
@@ -66,6 +41,7 @@ const PaymentMethods = () => {
                     title={`Tarjeta`}
                     disabled={isLoading}
                 />
+                <PaypalButton itemID={id} />
             </Stack>
         </Box>
     )

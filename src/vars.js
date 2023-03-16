@@ -6,7 +6,9 @@ const vars = {
     source: `${process.env.REACT_APP_API}`,
     GoogleID: `${process.env.REACT_APP_GG_APP_ID}`,
     user: `${process.env.REACT_APP_USER_INFO}`,
-    FacebookID: `${process.env.REACT_APP_FB_APP_ID}`
+    FacebookID: `${process.env.REACT_APP_FB_APP_ID}`,
+    PaypalClientID: `${process.env.REACT_APP_PAYPAL_CLIENT_ID}`,
+    PaypalSecret: `${process.env.REACT_APP_PAYPAL_SECRET}`
 }
 
 export default vars
