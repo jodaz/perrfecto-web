@@ -7,19 +7,7 @@ import Stack from '@mui/material/Stack';
 import LinkBehavior from '../../LinkBehavior'
 
 const AccountLockedAlert = () => (
-    <Box sx={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        flexDirection: 'column',
-        p: 2,
-        maxWidth: '280px',
-        alignItems: 'center',
-        background: '#fff',
-        borderRadius: 4,
-        marginRight: '1rem',
-        textAlign: 'center',
-        color: theme => theme.palette.text.secondary,
-    }}>
+    <>
         <Box sx={{ p: 1, textAlign: 'center' }}>
             <AlertTriangle size={48} />
         </Box>
@@ -51,7 +39,7 @@ const AccountLockedAlert = () => (
                 Solicitar desbloqueo
             </Button>
         </Stack>
-    </Box>
+    </>
 );
 
 export default AccountLockedAlert
