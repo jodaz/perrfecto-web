@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import ProblemDescriptionForm from './ProblemDescriptionForm';
 import getSearchParams from '../../../utils/getSearchParams'
 import Box from '@mui/material/Box';
+import AccountContactInformation from './AccountContactInformation';
 
 const AccountLocked = ({ location }) => {
     const navigate = useNavigate()
@@ -32,7 +33,9 @@ const AccountLocked = ({ location }) => {
             }}>
                 {descriptionForm ? (
                     <ProblemDescriptionForm />
-                ) : <AccountLockedAlert /> }
+                ) : contactInfo  ? (
+                    <AccountContactInformation />
+                ): <AccountLockedAlert /> }
             </Box>
         </InstagramModal>
     );
