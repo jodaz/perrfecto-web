@@ -8,7 +8,9 @@ const vars = {
     user: `${process.env.REACT_APP_USER_INFO}`,
     FacebookID: `${process.env.REACT_APP_FB_APP_ID}`,
     PaypalClientID: `${process.env.REACT_APP_PAYPAL_CLIENT_ID}`,
-    PaypalSecret: `${process.env.REACT_APP_PAYPAL_SECRET}`
+    PaypalSecret: `${process.env.REACT_APP_PAYPAL_SECRET}`,
+    StripeClientID: `${process.env.REACT_APP_STRIPE_CLIENT_ID}`,
+    StripeSecret: `${process.env.REACT_APP_STRIPE_SECRET}`,
 }
 
 export default vars
