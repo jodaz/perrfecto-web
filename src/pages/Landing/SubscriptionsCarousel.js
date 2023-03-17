@@ -21,7 +21,7 @@ const SwiperSlideStyled = styled(SwiperSlide)(() => ({
     width: 'auto'
 }))
 
-const SubscriptionsCarousel = ({ plans }) =>  (
+const SubscriptionsCarousel = ({ plans, selectable = false, selectPlan, selectedPlan }) =>  (
     <SwiperStyled
         slidesPerView={1}
         grabCursor={true}
@@ -30,7 +30,12 @@ const SubscriptionsCarousel = ({ plans }) =>  (
     >
         {plans.map((plan, i) => (
             <SwiperSlideStyled key={i}>
-                <SuscriptionCard data={plan} />
+                <SuscriptionCard
+                    data={plan}
+                    selectable={selectable}
+                    selectPlan={selectPlan}
+                    selectedPlan={selectedPlan}
+                />
             </SwiperSlideStyled>
         ))}
     </SwiperStyled>
