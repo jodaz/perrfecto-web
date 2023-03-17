@@ -19,7 +19,7 @@ const SuscriptionCard = ({
         alignItems: 'center',
         borderRadius: '16px',
         color: '#fff',
-        height: '410px',
+        height: '420px',
         justifyContent: 'space-between',
         p: 2,
         maxWidth: '280px',
@@ -40,7 +40,6 @@ const SuscriptionCard = ({
                 textAlign='center'
                 fontSize='24px'
                 fontWeight={700}
-                gutterBottom
             >
                 Subscripción <br/> {data.name}
             </Typography>
@@ -60,7 +59,7 @@ const SuscriptionCard = ({
                 <Typography
                     variant="subtitle1"
                     fontWeight={700}
-                    fontSize='20px'
+                    fontSize='16px'
                     alignSelf='center'
                     mr='2px'
                 >
@@ -69,7 +68,7 @@ const SuscriptionCard = ({
                 <Typography
                     variant="subtitle1"
                     fontWeight={700}
-                    fontSize='3rem'
+                    fontSize='2.75rem'
                     mr='3px'
                 >
                     {data.PriceBySubscriptions[0].price}
