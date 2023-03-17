@@ -7,8 +7,11 @@ import TextInput from '../../Forms/TextInput';
 import PhoneInput from '../../Forms/PhoneInput'
 import { useNavigate } from 'react-router-dom';
 import { PHONE, EMAIL } from '../../../validations'
+import Alert from '@mui/material/Alert';
+import Fade from '@mui/material/Fade';
 
 const AccountContactInformation = ({ location }) => {
+    const [error, setError] = React.useState(false)
     const navigate = useNavigate()
     const { control, handleSubmit, formState: {
         isSubmitting
@@ -29,7 +32,13 @@ const AccountContactInformation = ({ location }) => {
                 navigate('?success=true')
             }
         } catch (error) {
-            console.log(error)
+            if (error.response.data.msg) {
+                const message = error.response.data.msg;
+
+                if (message.includes('Request Exist')) {
+                    setError(true)
+                }
+            }
         }
     };
 
@@ -43,6 +52,13 @@ const AccountContactInformation = ({ location }) => {
                 width: '100%'
             }}
         >
+            {(error) && (
+                <Fade in={error}>
+                    <Alert severity='error' sx={{ marginBottom: '1.5rem' }}>
+                        Hemos recibido una solicitud de desbloqueo previamente.
+                    </Alert>
+                </Fade>
+            )}
             <Box sx={{ p: 1 }}>
                 <TextInput
                     name='email'
