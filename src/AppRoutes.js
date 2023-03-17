@@ -85,6 +85,7 @@ import ShowCategory from './pages/Market/ShowCategory';
 import PaymentCheckout from './pages/packs/PaymentCheckout';
 import AccountLocked from './components/Modals/AccountLocked';
 import AccountUnlock from './components/Modals/AccountUnlock';
+import SelectedSuscription from './components/Modals/SelectedSuscription';
 
 function AppRoutes() {
     let location = useLocation();
@@ -521,6 +522,10 @@ function AppRoutes() {
                 <Route
                     path="/business/suscriptions"
                     element={<BusinessSuscriptions location={location} />}
+                />
+                <Route
+                    path="/business/suscriptions/:id"
+                    element={<SelectedSuscription location={location} />}
                 />
             </Route>
 

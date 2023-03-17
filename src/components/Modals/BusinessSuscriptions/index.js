@@ -136,7 +136,7 @@ const BusinessSuscriptions = ({ location }) => {
                                 fullWidth
                                 disabled={!selectedPlan}
                                 component={LinkBehavior}
-                                to={selectedPlan && `/business/suscriptions/${selectedPlan.id}/checkout`}
+                                to={selectedPlan && `/business/suscriptions/${selectedPlan.id}`}
                                 state={selectedPlan}
                             >
                                 Siguiente

@@ -11,7 +11,8 @@ const SuscriptionCard = ({
     data,
     selectable = false,
     selectPlan,
-    selectedPlan
+    selectedPlan,
+    hideButton
 }) => (
     <Box sx={{
         display: 'flex',
@@ -82,7 +83,7 @@ const SuscriptionCard = ({
                     / mes
                 </Typography>
             </Box>
-            {!selectable && (
+            {!(hideButton || selectable) && (
                 <Button variant="contained" sx={{
                     backgroundColor: theme => theme.palette.secondary.main,
                     color: theme => theme.palette.primary.main,

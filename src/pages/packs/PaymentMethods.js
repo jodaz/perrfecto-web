@@ -20,7 +20,7 @@ const PaymentMethods = () => {
             <Typography
                 variant="subtitle1"
                 gutterBottom
-                color="text.secondary"
+                color="text.tertiary"
                 marginBottom='2rem'
             >
                 Elegir un método de pago
