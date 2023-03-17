@@ -9,7 +9,7 @@ export default function Modal({ location, title, pathname, children }) {
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const navigate = useNavigate()
 
-    const handleClose = () => navigate('/')
+    const handleClose = () => navigate(-1)
 
     return (
         <Dialog

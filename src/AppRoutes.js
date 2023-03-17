@@ -84,6 +84,7 @@ import BusinessSuscriptions from './components/Modals/BusinessSuscriptions';
 import ShowCategory from './pages/Market/ShowCategory';
 import PaymentCheckout from './pages/packs/PaymentCheckout';
 import AccountLocked from './components/Modals/AccountLocked';
+import AccountUnlock from './components/Modals/AccountUnlock';
 
 function AppRoutes() {
     let location = useLocation();
@@ -506,6 +507,7 @@ function AppRoutes() {
                 <Route path="/recover-password/new" element={<NewPassword location={location} />} />
                 <Route path="/recover-password/code" element={<AskCode location={location} />} />
                 <Route path="/account/locked" element={<AccountLocked location={location} />} />
+                <Route path="/account/unlock" element={<AccountUnlock location={location} />} />
             </Route>
             <Route path="/register/welcome" element={<CreateProfileWelcome location={location} />} />
 
