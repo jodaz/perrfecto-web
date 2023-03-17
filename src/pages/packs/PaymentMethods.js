@@ -8,7 +8,7 @@ import PaymentMethodButton from './PaymentMethodButton';
 import { useParams } from 'react-router-dom';
 import PaypalButton from '../../components/Buttons/Paypal';
 
-const PaymentMethods = () => {
+const PaymentMethods = ({ suscribe }) => {
     const { id } = useParams();
     const [isLoading, setIsLoading] = React.useState(false);
 
@@ -31,7 +31,7 @@ const PaymentMethods = () => {
                 margin='0 auto'
                 justifyContent='center'
             >
-                <PaypalButton itemID={id} />
+                <PaypalButton itemID={id} isSuscribing={suscribe} />
                 <PaymentMethodButton
                     icon={StripeIcon}
                     title='Stripe'

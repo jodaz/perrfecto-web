@@ -97,7 +97,7 @@ const SelectedSuscription = ({ location }) => {
                         flexDirection: 'column'
                     }}>
                         <SuscriptionCard data={location.state} selectedPlan={location.state} hideButton />
-                        <PaymentMethods />
+                        <PaymentMethods suscribe />
                     </Box>
                 </Box>
             </Box>

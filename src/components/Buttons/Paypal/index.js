@@ -2,8 +2,42 @@ import { PayPalButtons } from "@paypal/react-paypal-js";
 import { useNavigate } from "react-router-dom";
 import { apiProvider } from "../../../api";
 
-const PaypalButton = ({ itemID }) => {
+const PaypalButton = ({ itemID, isSuscribing }) => {
     const navigate = useNavigate()
+
+    const requestSuscriptionPayment = async () => {
+        try {
+            const res = await apiProvider.post(`/api/paypal/new-request-subscription`, {
+                plan_id: itemID
+            })
+
+            if (res.status >= 200 && res.status < 300) {
+                const { url } = res.data.data;
+
+                const spplited = url.split('=')
+                console.log(spplited[1])
+                return spplited[1];
+            }
+        } catch (error) {
+            console.log("error ", error)
+        }
+    }
+
+    const saveSuscriptionPayment = async () => {
+        try {
+            const res = await apiProvider.get(`/api/paypal/new-subscription`, {
+                params: {
+                    plan_id: itemID
+                }
+            })
+
+            if (res.status >= 200 && res.status < 300) {
+                navigate('?status=success')
+            }
+        } catch (error) {
+            console.log("error ", error)
+        }
+    }
 
     const requestPayment = async () => {
         try {
@@ -38,11 +72,15 @@ const PaypalButton = ({ itemID }) => {
         }
     }
 
+    const handleRefusedRedirect = () => {
+        isSuscribing ? navigate('?status=refused') : navigate('checkout?status=refused')
+    }
+
     return (
         <PayPalButtons
-            createOrder={requestPayment}
-            onCancel={() => navigate('checkout?status=refused')}
-            onApprove={savePayment}
+            createOrder={isSuscribing ? requestSuscriptionPayment : requestPayment}
+            onCancel={handleRefusedRedirect}
+            onApprove={isSuscribing ? saveSuscriptionPayment : savePayment}
             style={{ layout: "horizontal", color: "blue" }}
         />
     )
