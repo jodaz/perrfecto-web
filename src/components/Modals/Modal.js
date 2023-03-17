@@ -5,11 +5,17 @@ import { useNavigate } from 'react-router-dom';
 import DialogTitle from '../DialogTitle'
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-export default function Modal({ location, title, pathname, children }) {
+export default function Modal({
+    location,
+    title,
+    pathname,
+    children,
+    closeModal = -1
+}) {
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const navigate = useNavigate()
 
-    const handleClose = () => navigate(-1)
+    const handleClose = () => navigate(closeModal)
 
     return (
         <Dialog

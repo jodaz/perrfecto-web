@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import { apiProvider } from '../../../api'
 import Button from '@mui/material/Button';
 import { useForm } from "react-hook-form";
 import TextInput from '../../Forms/TextInput';
@@ -17,7 +17,20 @@ const AccountContactInformation = ({ location }) => {
     });
 
     const onSubmit = async (values) => {
-        console.log(location.state)
+        try {
+            const { state } = location;
+
+            const res = await apiProvider.post('/api/unlock-account/new-request', {
+                ...state,
+                ...values
+            })
+
+            if (res.status >= 200 && res.status < 300) {
+                navigate('?success=true')
+            }
+        } catch (error) {
+            console.log(error)
+        }
     };
 
     return (
