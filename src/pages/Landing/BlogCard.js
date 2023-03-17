@@ -11,8 +11,6 @@ import truncateString from '../../utils/truncateString';
 const BlogCard = ({ data }) => {
     const loading = data == null;
 
-    console.log(loading)
-
     return (
         <Card
             variant="outlined"

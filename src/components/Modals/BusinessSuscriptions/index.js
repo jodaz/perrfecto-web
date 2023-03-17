@@ -11,43 +11,34 @@ import SubscriptionsCarousel from '../../../pages/Landing/SubscriptionsCarousel'
 import SuscriptionCard from '../../../pages/Landing/SuscriptionCard'
 import { IconButton } from '@mui/material';
 import LinkBehavior from '../../LinkBehavior';
+import { apiProvider } from '../../../api'
+import useEffectOnce from '../../../utils/useEffectOnce';
 
-const plans = [
-    {
-        name: 'Básica',
-        price: 6.99,
-        description: [
-            'Acceso a todos los contenidos disponibles en los anuncios.',
-            'Acceso ilimitado a todos los perfiles'
-        ],
-        background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), linear-gradient(180deg, #A770EF 0%, #CF8BF3 48.96%, #FDB99B 100%)'
-    },
-    {
-        name: 'Premium',
-        price: 6.99,
-        description: [
-            'Acceso a  todos los contenidos disponibles de los anuncios',
-            'Acceso ilimitado a todos los perfiles.',
-            'Acceso a distintos packs de anuncios.'
-        ],
-        background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), linear-gradient(180deg, #EF629F 0%, #EECDA3 100%);'
-    },
-    {
-        name: 'PawLover',
-        price: 8.99,
-        description: [
-            'Acceso a  todos los contenidos disponibles de los anuncios.',
-            'Acceso ilimitado a todos los perfiles.',
-            'Acceso a distintos packs de anuncios.'
-        ],
-        background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), linear-gradient(90deg, #9D50BB 0%, #6E48AA 100%)'
-    },
-]
+const initialState = [null, null, null];
 
 const BusinessSuscriptions = ({ location }) => {
+    const [isLoaded, setIsLoaded] = React.useState(false)
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('md'));
     const navigate = useNavigate()
     const handleClose = () => navigate('/business')
+    const [suscriptions, setSubscriptions] = React.useState(initialState)
+
+    const fetchSubscriptions = async () => {
+        try {
+            const res = await apiProvider.get('/api/subscription/get-subscriptions')
+
+            if (res.status >= 200 && res.status < 300) {
+                const { data: { data } } = res;
+
+                setSubscriptions(data)
+                setIsLoaded(true)
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    useEffectOnce(() => { fetchSubscriptions() }, []);
 
     return (
         <Dialog
@@ -99,28 +90,30 @@ const BusinessSuscriptions = ({ location }) => {
                         </Typography>
                     </Box>
                 </Box>
-                <Box sx={{
-                    width: '100%',
-                    color: '#fff',
-                    fontWeight: 400,
-                    position: 'relative',
-                    height: '525px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                }}>
-                    {!isSmall ? (
-                        <Stack
-                            direction="row"
-                            spacing={3}
-                            justifyContent='center'
-                        >
-                            {plans.map(plan => <SuscriptionCard {...plan} />)}
-                        </Stack>
-                    ) : (
-                        <SubscriptionsCarousel plans={plans} />
-                    )}
-                </Box>
+                {isLoaded && (
+                    <Box sx={{
+                        width: '100%',
+                        color: '#fff',
+                        fontWeight: 400,
+                        position: 'relative',
+                        height: '525px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}>
+                        {!isSmall ? (
+                            <Stack
+                                direction="row"
+                                spacing={3}
+                                justifyContent='center'
+                            >
+                                {suscriptions.map(plan => <SuscriptionCard data={plan} />)}
+                            </Stack>
+                        ) : (
+                            <SubscriptionsCarousel plans={suscriptions} />
+                        )}
+                    </Box>
+                )}
             </Box>
         </Dialog>
     );

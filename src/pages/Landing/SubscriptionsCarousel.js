@@ -30,7 +30,7 @@ const SubscriptionsCarousel = ({ plans }) =>  (
     >
         {plans.map((plan, i) => (
             <SwiperSlideStyled key={i}>
-                <SuscriptionCard {...plan} />
+                <SuscriptionCard data={plan} />
             </SwiperSlideStyled>
         ))}
     </SwiperStyled>

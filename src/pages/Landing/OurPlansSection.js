@@ -43,6 +43,7 @@ const plans = [
 ]
 
 const OurPlansSection = () => {
+    const [isLoading, setIsLoading] = React.useState(true)
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('md'));
     const [suscriptions, setSubscriptions] = React.useState(initialState)
 
@@ -54,6 +55,7 @@ const OurPlansSection = () => {
                 const { data: { data } } = res;
 
                 setSubscriptions(data)
+                setIsLoading(false)
             }
         } catch (e) {
             console.log(e);
@@ -61,6 +63,8 @@ const OurPlansSection = () => {
     }
 
     useEffectOnce(() => { fetchSubscriptions() }, []);
+
+    if (isLoading) return null;
 
     return (
         <Box sx={{
@@ -95,7 +99,7 @@ const OurPlansSection = () => {
                     spacing={3}
                     justifyContent='center'
                 >
-                    {plans.map(plan => <SuscriptionCard {...plan} />)}
+                    {plans.map(plan => <SuscriptionCard data={plan} />)}
                 </Stack>
             ) : (
                 <SubscriptionsCarousel plans={plans} />
