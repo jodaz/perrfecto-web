@@ -8,44 +8,10 @@ import { apiProvider } from '../../api';
 import SuscriptionCard from './SuscriptionCard'
 import SubscriptionsCarousel from './SubscriptionsCarousel'
 
-const initialState = [null, null, null];
-
-const plans = [
-    {
-        name: 'Básica',
-        price: 6.99,
-        description: [
-            'Acceso a todos los contenidos disponibles en los anuncios.',
-            'Acceso ilimitado a todos los perfiles'
-        ],
-        background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), linear-gradient(180deg, #A770EF 0%, #CF8BF3 48.96%, #FDB99B 100%)'
-    },
-    {
-        name: 'Premium',
-        price: 6.99,
-        description: [
-            'Acceso a  todos los contenidos disponibles de los anuncios',
-            'Acceso ilimitado a todos los perfiles.',
-            'Acceso a distintos packs de anuncios.'
-        ],
-        background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), linear-gradient(180deg, #EF629F 0%, #EECDA3 100%);'
-    },
-    {
-        name: 'PawLover',
-        price: 8.99,
-        description: [
-            'Acceso a  todos los contenidos disponibles de los anuncios.',
-            'Acceso ilimitado a todos los perfiles.',
-            'Acceso a distintos packs de anuncios.'
-        ],
-        background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), linear-gradient(90deg, #9D50BB 0%, #6E48AA 100%)'
-    },
-]
-
 const OurPlansSection = () => {
-    const [isLoading, setIsLoading] = React.useState(true)
+    const [isLoaded, setIsLoaded] = React.useState(false)
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('md'));
-    const [suscriptions, setSubscriptions] = React.useState(initialState)
+    const [suscriptions, setSubscriptions] = React.useState([])
 
     const fetchSubscriptions = async () => {
         try {
@@ -54,8 +20,9 @@ const OurPlansSection = () => {
             if (res.status >= 200 && res.status < 300) {
                 const { data: { data } } = res;
 
+                console.log()
                 setSubscriptions(data)
-                setIsLoading(false)
+                setIsLoaded(true)
             }
         } catch (e) {
             console.log(e);
@@ -64,7 +31,7 @@ const OurPlansSection = () => {
 
     useEffectOnce(() => { fetchSubscriptions() }, []);
 
-    if (isLoading) return null;
+    if (!isLoaded) return null;
 
     return (
         <Box sx={{
@@ -99,10 +66,10 @@ const OurPlansSection = () => {
                     spacing={3}
                     justifyContent='center'
                 >
-                    {plans.map(plan => <SuscriptionCard data={plan} />)}
+                    {suscriptions.map(plan => <SuscriptionCard data={plan} />)}
                 </Stack>
             ) : (
-                <SubscriptionsCarousel plans={plans} />
+                <SubscriptionsCarousel plans={suscriptions} />
             )}
         </Box>
     )

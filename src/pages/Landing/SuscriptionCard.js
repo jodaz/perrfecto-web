@@ -8,7 +8,7 @@ import getUserPhoto from '../../utils/getUserPhoto'
 
 const SuscriptionCard = ({ data }) => {
     const loading = data == null;
-    console.log(getUserPhoto(data.Banner.img))
+
     return (
         <Box sx={{
             display: 'flex',
