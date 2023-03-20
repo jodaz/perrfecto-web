@@ -85,7 +85,6 @@ import ShowCategory from './pages/Market/ShowCategory';
 import PaymentCheckout from './pages/packs/PaymentCheckout';
 import AccountLocked from './components/Modals/AccountLocked';
 import AccountUnlock from './components/Modals/AccountUnlock';
-import UserPack from './pages/packs/UserPack';
 
 function AppRoutes() {
     let location = useLocation();
