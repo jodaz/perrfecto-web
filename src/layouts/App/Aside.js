@@ -39,15 +39,19 @@ const Sidebar = ({ children }) => {
             <Toolbar sx={{
                 backgroundColor: theme => theme.palette.primary.main,
                 display: 'flex',
-                justifyContent: (user.role == 'guest') ? 'center' : 'space-between'
+                justifyContent: (user.role == 'guest' || user.role == 'business')
+                    ? 'center'
+                    : 'space-between'
             }}>
                 {(user.role == 'user') && <Camera color="#fff" />}
                 <Link to='/'>
                     <Logo dark />
                 </Link>
-                <PrivateRoute authorize="user,business">
-                    <NotificationButton />
-                </PrivateRoute>
+                {(user.role == 'user') && (
+                    <PrivateRoute authorize="user,business">
+                        <NotificationButton />
+                    </PrivateRoute>
+                )}
             </Toolbar>
             <Divider />
             <Navigation />

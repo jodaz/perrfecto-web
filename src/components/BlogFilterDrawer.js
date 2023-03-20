@@ -92,7 +92,7 @@ const BlogFilterDrawer = () => {
                         }
                     }}
                 >
-                    Reestablecer
+                    Restablecer
                 </Button>
             </Box>
         </Box>
