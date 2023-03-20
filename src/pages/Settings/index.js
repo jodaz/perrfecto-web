@@ -32,8 +32,8 @@ const ListTitle = ({ children }) => (
 )
 
 const Settings = () => {
-    const { dispatch, state: { user } } = useAuth();
-    console.log(user.role)
+    const { dispatch, state: { user, userPlan } } = useAuth();
+
     return (
         <SettingsLayout title="Configuraciones">
             <Box sx={{
@@ -52,6 +52,12 @@ const Settings = () => {
                             <ListItemLink
                                 to="packs"
                                 title="Pack de anuncios"
+                            />
+                        )}
+                        {(user.role == 'user' && userPlan) && (
+                            <ListItemLink
+                                to="current-pack"
+                                title="Pack actual"
                             />
                         )}
                         {(user.role == 'business') && (
