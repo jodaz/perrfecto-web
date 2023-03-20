@@ -4,7 +4,7 @@ import {
     Routes,
     useLocation
 } from 'react-router-dom'
-import { useAuth, guestUser } from './context/AuthContext';
+import { useAuth, guestUser, getCurrentPlan } from './context/AuthContext';
 // Layouts
 import AppLayout from './layouts/App';
 import LandingLayout from './layouts/LandingLayout';
@@ -88,12 +88,14 @@ import AccountUnlock from './components/Modals/AccountUnlock';
 
 function AppRoutes() {
     let location = useLocation();
-    const { state: { isAuth }, dispatch } = useAuth();
+    const { state: { isAuth, user }, dispatch } = useAuth();
 
     // Set guest user by default
     React.useEffect(() => {
         if (!isAuth) {
             guestUser(dispatch)
+        } else {
+            getCurrentPlan(dispatch, user.role)
         }
     }, [])
 
