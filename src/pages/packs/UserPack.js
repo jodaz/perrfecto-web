@@ -38,7 +38,7 @@ const UserPack = () => {
                         )}
                         <Button
                             component={LinkBehavior}
-                            variant="text"
+                            variant="contained"
                             to='/profile/settings/packs'
                         >
                             Ver más packs
