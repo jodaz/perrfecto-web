@@ -4,7 +4,7 @@ import {
     Routes,
     useLocation
 } from 'react-router-dom'
-import { useAuth, guestUser } from './context/AuthContext';
+import { useAuth, guestUser, getCurrentPlan } from './context/AuthContext';
 // Layouts
 import AppLayout from './layouts/App';
 import LandingLayout from './layouts/LandingLayout';
@@ -85,17 +85,20 @@ import ShowCategory from './pages/Market/ShowCategory';
 import PaymentCheckout from './pages/packs/PaymentCheckout';
 import AccountLocked from './components/Modals/AccountLocked';
 import AccountUnlock from './components/Modals/AccountUnlock';
+import UserPack from './pages/packs/UserPack';
 
 function AppRoutes() {
     let location = useLocation();
-    const { state: { isAuth }, dispatch } = useAuth();
+    const { state: { isAuth, user }, dispatch } = useAuth();
 
     // Set guest user by default
     React.useEffect(() => {
         if (!isAuth) {
             guestUser(dispatch)
+        } else {
+            getCurrentPlan(dispatch, user.role)
         }
-    }, [])
+    }, [isAuth])
 
     return (
         <Routes>
@@ -131,7 +134,7 @@ function AppRoutes() {
                 path='/profile/settings/packs'
                 element={
                     <AppLayout>
-                        <Packs />
+                        <Packs location={location} />
                     </AppLayout>
                 }
             />

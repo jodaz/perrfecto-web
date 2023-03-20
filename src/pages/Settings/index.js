@@ -34,7 +34,7 @@ const ListTitle = ({ children }) => (
 
 const Settings = () => {
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
-    const { dispatch, state: { user } } = useAuth();
+    const { dispatch, state: { user, userPlan } } = useAuth();
 
     return (
         <SettingsLayout title="Configuraciones">
@@ -52,7 +52,7 @@ const Settings = () => {
                         </ListTitle>
                         {(user.role == 'user') && (
                             <ListItemLink
-                                to="packs"
+                                to={userPlan ? `packs?hasPlan=true` : `packs`}
                                 title="Pack de anuncios"
                             />
                         )}
@@ -70,12 +70,6 @@ const Settings = () => {
                             to="owner"
                             title="Información personal"
                         />
-                        {(user.role == 'user' && user.dog) && (
-                            <ListItemLink
-                                to="pet"
-                                title="Información de la mascota"
-                            />
-                        )}
                     </List>
                     <List>
                         <ListTitle>
