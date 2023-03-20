@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import NotificationCard from './NotificationCard';
 import useEffectOnce from '../../utils/useEffectOnce'
 import LoadingIndicator from '../../components/LoadingIndicator';
-import { useNotifications, fetchNotifications } from '../../context/NotificationContext'
+import { useNotifications, fetchNotifications, readNotifications } from '../../context/NotificationContext'
 
 export default function Notifications() {
     const { state: { items, isLoading }, dispatch } = useNotifications()
