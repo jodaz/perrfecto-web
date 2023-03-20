@@ -9,6 +9,7 @@ import SettingsLayout from '../../layouts/SettingsLayout'
 import ListItemLink from '../../components/ListItemLink';
 import List from '../../components/List';
 import PreferencesForm from './PreferencesForm';
+import { useMediaQuery } from '@mui/material';
 
 const ListTitle = ({ children }) => (
     <ListItem component="div" disablePadding sx={{
@@ -32,8 +33,9 @@ const ListTitle = ({ children }) => (
 )
 
 const Settings = () => {
+    const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
     const { dispatch, state: { user } } = useAuth();
-    console.log(user.role)
+
     return (
         <SettingsLayout title="Configuraciones">
             <Box sx={{
@@ -95,18 +97,20 @@ const Settings = () => {
                         />
                     </List>
                 </Box>
-                <Box sx={{ p: 2 }}>
-                    <Button
-                        variant="outlined"
-                        color="error"
-                        fullWidth
-                        onClick={() => logout(dispatch)}
-                        component={LinkBehavior}
-                        to='/'
-                    >
-                        Cerrar sesión
-                    </Button>
-                </Box>
+                {isSmall && (
+                    <Box sx={{ p: 2 }}>
+                        <Button
+                            variant="outlined"
+                            color="error"
+                            fullWidth
+                            onClick={() => logout(dispatch)}
+                            component={LinkBehavior}
+                            to='/'
+                        >
+                            Cerrar sesión
+                        </Button>
+                    </Box>
+                )}
             </Box>
         </SettingsLayout>
     );
