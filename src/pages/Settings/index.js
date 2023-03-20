@@ -50,14 +50,8 @@ const Settings = () => {
                         </ListTitle>
                         {(user.role == 'user') && (
                             <ListItemLink
-                                to="packs"
+                                to={userPlan ? `packs?hasPlan=true` : `packs`}
                                 title="Pack de anuncios"
-                            />
-                        )}
-                        {(user.role == 'user' && userPlan) && (
-                            <ListItemLink
-                                to="current-pack"
-                                title="Pack actual"
                             />
                         )}
                         {(user.role == 'business') && (
@@ -74,12 +68,6 @@ const Settings = () => {
                             to="owner"
                             title="Información personal"
                         />
-                        {(user.role == 'user' && user.dog) && (
-                            <ListItemLink
-                                to="pet"
-                                title="Información de la mascota"
-                            />
-                        )}
                     </List>
                     <List>
                         <ListTitle>

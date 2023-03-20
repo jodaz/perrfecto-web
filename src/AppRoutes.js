@@ -98,7 +98,7 @@ function AppRoutes() {
         } else {
             getCurrentPlan(dispatch, user.role)
         }
-    }, [])
+    }, [isAuth])
 
     return (
         <Routes>
@@ -134,15 +134,7 @@ function AppRoutes() {
                 path='/profile/settings/packs'
                 element={
                     <AppLayout>
-                        <Packs />
-                    </AppLayout>
-                }
-            />
-            <Route
-                path='/profile/settings/current-pack'
-                element={
-                    <AppLayout>
-                        <UserPack />
+                        <Packs location={location} />
                     </AppLayout>
                 }
             />

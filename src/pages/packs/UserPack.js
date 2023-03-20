@@ -2,7 +2,8 @@ import * as React from 'react';
 import {
     Button,
     Stack,
-    Box
+    Box,
+    Typography
 } from '@mui/material';
 import PlanCard from './PackCard';
 import SettingsLayout from '../../layouts/SettingsLayout';
@@ -16,9 +17,9 @@ const UserPack = () => {
         <SettingsLayout title='Pack Actual'>
             <Box sx={{
                 width: '100%',
-                height: '100%'
+                height: '100%',
+                paddingTop: '1rem'
             }}>
-                {userPlan && (
                     <Stack spacing={2} sx={{
                         height: '100%',
                         maxWidth: '300px',
@@ -26,7 +27,15 @@ const UserPack = () => {
                         margin: '0 auto',
                         alignItems: 'start'
                     }}>
-                        <PlanCard {...userPlan.Pack} />
+                        {userPlan ? (
+                            <PlanCard {...userPlan.Pack} />
+                        ) : (
+                            <Typography
+                                variant="subtitle1"
+                            >
+                                Actualmente no tienes ningún pack.
+                            </Typography>
+                        )}
                         <Button
                             component={LinkBehavior}
                             variant="text"
@@ -35,7 +44,6 @@ const UserPack = () => {
                             Ver más packs
                         </Button>
                     </Stack>
-                )}
             </Box>
         </SettingsLayout>
     );
