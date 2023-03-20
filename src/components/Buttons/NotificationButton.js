@@ -5,7 +5,7 @@ import LinkBehavior from '../../components/LinkBehavior';
 // Icons
 import { Bell } from 'lucide-react';
 
-const NotificationButton = ({ children }) => (
+const NotificationButton = () => (
     <IconButton
         component={LinkBehavior}
         to='/notifications'
