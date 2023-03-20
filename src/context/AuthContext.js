@@ -149,7 +149,7 @@ async function getCurrentPlan(dispatch, role) {
 
             dispatch({
                 type: 'SET_USER_PLAN',
-                payload: data[0] // Primero de la lista
+                payload: data[0] // Último de la lista
             })
         }
     } catch (error) {
