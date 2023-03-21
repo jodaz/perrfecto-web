@@ -7,7 +7,9 @@ import { Bell } from 'lucide-react';
 import { socket } from '../../utils/socket'
 import { useNotifications, newNotification } from '../../context/NotificationContext'
 
-const NotificationButton = () => {
+const NotificationButton = ({
+    iconColor = '#fff'
+}) => {
     const { dispatch } = useNotifications();
     const [counter, setCounter] = React.useState(0)
 
@@ -24,7 +26,7 @@ const NotificationButton = () => {
             to='/notifications'
         >
             <Badge badgeContent={counter} color="error">
-                <Bell color='#fff' />
+                <Bell color={iconColor} />
             </Badge>
         </IconButton>
     )
