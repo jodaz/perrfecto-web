@@ -8,6 +8,7 @@ import List from '../../components/List';
 import EditPhoto from './EditPhoto';
 import { differenceInYears } from 'date-fns';
 import PrivateRoute from '../../components/PrivateRoute'
+import formatPhone from '../../utils/formatPhone';
 
 const getYears = birthDate => differenceInYears(new Date(), new Date (birthDate.toString().replace(/"/g, '')))
 
@@ -118,6 +119,24 @@ const PersonalInformation = () => {
                                 </Typography>
                             </>
                         </PrivateRoute>
+                        <ListItemLink
+                            to="email"
+                            title="Correo electrónico"
+                            color="text.tertiary"
+                        />
+                        <Typography variant="subtitle1" ml={2}>
+                            {(user.email) ? (
+                                <>{user.email}</>
+                            ) : 'No registrado'}
+                        </Typography>
+                        <ListItemLink
+                            to="phone"
+                            title="Teléfono"
+                            color="text.tertiary"
+                        />
+                        <Typography variant="subtitle1" ml={2}>
+                            {formatPhone(user)}
+                        </Typography>
                     </List>
                 </Box>
             </Box>
