@@ -2,13 +2,13 @@ import { PayPalButtons } from "@paypal/react-paypal-js";
 import { useNavigate } from "react-router-dom";
 import { apiProvider } from "../../../api";
 
-const PaypalButton = ({ itemID }) => {
+const PaypalSuscribeButton = ({ itemID }) => {
     const navigate = useNavigate()
 
-    const requestPayment = async () => {
+    const requestSuscriptionPayment = async () => {
         try {
-            const res = await apiProvider.post(`/api/paypal/request-payment`, {
-                pack_id: itemID
+            const res = await apiProvider.post(`/api/paypal/new-request-subscription`, {
+                plan_id: itemID
             })
 
             if (res.status >= 200 && res.status < 300) {
@@ -19,19 +19,16 @@ const PaypalButton = ({ itemID }) => {
         }
     }
 
-    const savePayment = async (data, actions) => {
+    const saveSuscriptionPayment = async () => {
         try {
-            const { orderID } = data;
-
-            const res = await apiProvider.get(`/api/paypal/execute-payment`, {
+            const res = await apiProvider.get(`/api/paypal/new-subscription`, {
                 params: {
-                    token: orderID,
-                    pack_id: itemID
+                    plan_id: itemID
                 }
             })
 
             if (res.status >= 200 && res.status < 300) {
-                navigate('checkout?status=success')
+                navigate('?status=success')
             }
         } catch (error) {
             console.log("error ", error)
@@ -39,17 +36,17 @@ const PaypalButton = ({ itemID }) => {
     }
 
     const handleRefusedRedirect = () => {
-        navigate('checkout?status=refused')
+        navigate('?status=refused')
     }
 
     return (
         <PayPalButtons
-            createOrder={requestPayment}
+            createSubscription={requestSuscriptionPayment}
             onCancel={handleRefusedRedirect}
-            onApprove={savePayment}
+            onApprove={saveSuscriptionPayment}
             style={{ layout: "horizontal", color: "blue" }}
         />
     )
 }
 
-export default PaypalButton
+export default PaypalSuscribeButton

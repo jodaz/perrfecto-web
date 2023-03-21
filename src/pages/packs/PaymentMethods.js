@@ -7,10 +7,10 @@ import DebitCardIcon from '../../assets/icons/DebitCard.png'
 import PaymentMethodButton from './PaymentMethodButton';
 import { useParams } from 'react-router-dom';
 import PaypalButton from '../../components/Buttons/Paypal';
+import PaypalSuscribeButton from '../../components/Buttons/PaypalSuscribeButton';
 
 const PaymentMethods = ({ suscribe }) => {
     const { id } = useParams();
-    const [isLoading, setIsLoading] = React.useState(false);
 
     return (
         <Box sx={{
@@ -31,16 +31,16 @@ const PaymentMethods = ({ suscribe }) => {
                 margin='0 auto'
                 justifyContent='center'
             >
-                <PaypalButton itemID={id} isSuscribing={suscribe} />
+                {suscribe ? (
+                    <PaypalSuscribeButton itemID={id} />
+                ) : <PaypalButton itemID={id} />}
                 <PaymentMethodButton
                     icon={StripeIcon}
                     title='Stripe'
-                    disabled={isLoading}
                 />
                 <PaymentMethodButton
                     icon={DebitCardIcon}
                     title={`Tarjeta`}
-                    disabled={isLoading}
                 />
             </Stack>
         </Box>
