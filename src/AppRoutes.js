@@ -4,7 +4,7 @@ import {
     Routes,
     useLocation
 } from 'react-router-dom'
-import { useAuth, guestUser } from './context/AuthContext';
+import { useAuth, guestUser, getCurrentPlan } from './context/AuthContext';
 // Layouts
 import AppLayout from './layouts/App';
 import LandingLayout from './layouts/LandingLayout';
@@ -33,7 +33,7 @@ import PetProfile from './pages/Profile/PetProfile';
 import PetOwner from './pages/Profile/PetOwner';
 import Settings from './pages/Settings';
 import Favourites from './pages/Favourites';
-import Account from './pages/account';
+import Security from './pages/security';
 import CreateAd from './pages/Ad/CreateAd';
 import PersonalInformation from './pages/PersonalInformation';
 import EditNames from './pages/PersonalInformation/EditNames';
@@ -65,8 +65,7 @@ import BusinessProfile from './pages/Profile/BusinessProfile';
 import PublishedBlogsListing from './pages/Blog/PublishedBlogsListing';
 import PublishedBlog from './pages/Blog/PublishedBlog';
 import BlogEdit from './pages/Blog/BlogEdit';
-import UpdatePassword from './pages/account/UpdatePassword';
-import UpdateEmailAndPhone from './pages/account/UpdateEmailAndPhone';
+import UpdatePassword from './pages/security/UpdatePassword';
 import ShowAd from './pages/Ad/ShowAd';
 import OnlyDesktop from './layouts/App/OnlyDesktop';
 import PrivateRoute from './components/PrivateRoute';
@@ -87,17 +86,21 @@ import AccountLocked from './components/Modals/AccountLocked';
 import AccountUnlock from './components/Modals/AccountUnlock';
 import SelectedSuscription from './components/Modals/SelectedSuscription';
 import SuscriptionsCheckoutProcess from './pages/suscriptions/SuscriptionsCheckoutProcess';
+import EditPhone from './pages/PersonalInformation/EditPhone';
+import EditEmail from './pages/PersonalInformation/EditEmail';
 
 function AppRoutes() {
     let location = useLocation();
-    const { state: { isAuth }, dispatch } = useAuth();
+    const { state: { isAuth, user }, dispatch } = useAuth();
 
     // Set guest user by default
     React.useEffect(() => {
         if (!isAuth) {
             guestUser(dispatch)
+        } else {
+            getCurrentPlan(dispatch, user.role)
         }
-    }, [])
+    }, [isAuth])
 
     return (
         <Routes>
@@ -133,7 +136,7 @@ function AppRoutes() {
                 path='/profile/settings/packs'
                 element={
                     <AppLayout>
-                        <Packs />
+                        <Packs location={location} />
                     </AppLayout>
                 }
             />
@@ -454,15 +457,15 @@ function AppRoutes() {
                 }
             />
             <Route
-                path='/profile/settings/account'
+                path='/profile/settings/security'
                 element={
                     <AppLayout>
-                        <Account location={location} />
+                        <Security location={location} />
                     </AppLayout>
                 }
             />
             <Route
-                path='/profile/settings/account/security'
+                path='/profile/settings/security/update-password'
                 element={
                     <AppLayout>
                         <UpdatePassword />
@@ -470,10 +473,18 @@ function AppRoutes() {
                 }
             />
             <Route
-                path='/profile/settings/account/access'
+                path={'/profile/settings/owner/phone'}
                 element={
                     <AppLayout>
-                        <UpdateEmailAndPhone />
+                        <EditPhone />
+                    </AppLayout>
+                }
+            />
+            <Route
+                path={'/profile/settings/owner/email'}
+                element={
+                    <AppLayout>
+                        <EditEmail />
                     </AppLayout>
                 }
             />

@@ -16,6 +16,7 @@ import { BlogProvider } from './context/BlogContext';
 import { ChatProvider } from './context/ChatContext';
 import { NotificationProvider } from './context/NotificationContext';
 import { PaypalProvider } from './context/PaypalContext';
+import { StripeProvider } from './context/StripeContext';
 
 const App = () => (
     <PaypalProvider>
@@ -29,9 +30,11 @@ const App = () => (
                                     <BlogProvider>
                                         <ChatProvider>
                                             <NotificationProvider>
-                                                <BusinessProvider>
-                                                    <AppRoutes />
-                                                </BusinessProvider>
+                                                <StripeProvider>
+                                                    <BusinessProvider>
+                                                        <AppRoutes />
+                                                    </BusinessProvider>
+                                                </StripeProvider>
                                             </NotificationProvider>
                                         </ChatProvider>
                                     </BlogProvider>

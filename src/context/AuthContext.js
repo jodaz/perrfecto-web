@@ -17,7 +17,8 @@ const initialState = {
     user: {},
     token: '',
     userCoords: null,
-    openGeolocation: false
+    openGeolocation: false,
+    userPlan: null
 }
 
 const getInitialState = () => {
@@ -43,6 +44,12 @@ function authReducer(state, action) {
                     user: action.payload.user,
                     token: action.payload.token,
                     isAuth: true
+                }
+            }
+            case 'SET_USER_PLAN': {
+                return {
+                    ...state,
+                    userPlan: action.payload
                 }
             }
             case 'GUEST': {
@@ -129,6 +136,27 @@ async function renewToken(dispatch, values) {
     }
 }
 
+async function getCurrentPlan(dispatch, role) {
+    try {
+        const endpoint = role == 'user'
+            ? '/api/user/get-packs'
+            : '/api/user/get-subscriptions'
+
+        const res = await apiProvider.get(endpoint);
+
+        if (res.status >= 200 && res.status < 300) {
+            const { data: { data } } = res
+
+            dispatch({
+                type: 'SET_USER_PLAN',
+                payload: data[0] // Último de la lista
+            })
+        }
+    } catch (error) {
+        console.log("renew token error ", error)
+    }
+}
+
 async function loginUser(dispatch, values) {
     try {
         const { data, token } = values
@@ -204,5 +232,6 @@ export {
     logout,
     guestUser,
     renewToken,
-    setUserCoords
+    setUserCoords,
+    getCurrentPlan
 }

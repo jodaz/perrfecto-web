@@ -8,8 +8,6 @@ import {
     Image
 } from 'lucide-react';
 import CustomButton from './CustomButton';
-import getSearchParams from '../../utils/getSearchParams';
-import { useLocation, useNavigate } from 'react-router-dom';
 import BasicTabs from '../../components/Tabs';
 import ProfileOptions from './ProfileOptions';
 import { renewToken, useAuth } from '../../context/AuthContext'
@@ -19,15 +17,10 @@ import { fileProvider, apiProvider } from '../../api'
 import formDataHandler from '../../utils/formDataHandler';
 import LatestPublishedBlogs from '../Blog/LatestPublishedBlogs';
 
-const RegisterOwner = React.lazy(() => import('../../components/RegisterOwner'));
-
 const PetOwner = () => {
     const [error, setError] = React.useState('')
     const { state: { user }, dispatch } = useAuth();
-    const location = useLocation();
-    const navigate = useNavigate();
     const currProfilePic = user.img_profile ? JSON.parse(user.img_profile)[0] : null;
-    const registerOwner = getSearchParams(location, 'register');
     const { handleSubmit, control, watch, formState: {
         isSubmitting
     }} = useForm();
@@ -129,26 +122,24 @@ const PetOwner = () => {
                         component={LinkBehavior}
                         to='/blogs/create'
                     />
-                    {!!(!user.birth_date || !user.img_profile || !user.province) && (
+                    {!!(!user.birth_date
+                        || !user.img_profile
+                        || !user.province
+                        || !user.city
+                        || !user.phone
+                        || !user.phone
+                    ) && (
                         <CustomButton
                             size={32}
                             icon={<PlusSquare />}
                             title='Añadir información'
                             color="info"
                             component={LinkBehavior}
-                            to='?register=true'
+                            to='/profile/settings/owner'
+                            notify
                         />
                     )}
                 </Box>
-                {!!(!user.birth_date || !user.img_profile || !user.province) && (
-                    <React.Suspense>
-                        <RegisterOwner
-                            open={registerOwner}
-                            handleClose={() => navigate('/profile/owner')}
-                            redirect='/profile/owner'
-                        />
-                    </React.Suspense>
-                )}
             </Box>
             <LatestPublishedBlogs />
         </Box>

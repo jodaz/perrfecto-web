@@ -11,7 +11,7 @@ const PlanCard = props => (
         cursor: 'pointer',
         borderRadius: '16px',
         color: '#fff',
-        width: 'fit-content',
+        maxWidth: '280px',
         p: 2,
         height: 'fit-content',
         background: `url(${props.Banner && getUserPhoto(props.Banner.img)})`,

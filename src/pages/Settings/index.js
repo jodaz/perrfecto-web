@@ -9,6 +9,7 @@ import SettingsLayout from '../../layouts/SettingsLayout'
 import ListItemLink from '../../components/ListItemLink';
 import List from '../../components/List';
 import PreferencesForm from './PreferencesForm';
+import { useMediaQuery } from '@mui/material';
 
 const ListTitle = ({ children }) => (
     <ListItem component="div" disablePadding sx={{
@@ -32,8 +33,9 @@ const ListTitle = ({ children }) => (
 )
 
 const Settings = () => {
-    const { dispatch, state: { user } } = useAuth();
-    console.log(user.role)
+    const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
+    const { dispatch, state: { user, userPlan } } = useAuth();
+
     return (
         <SettingsLayout title="Configuraciones">
             <Box sx={{
@@ -50,7 +52,7 @@ const Settings = () => {
                         </ListTitle>
                         {(user.role == 'user') && (
                             <ListItemLink
-                                to="packs"
+                                to={userPlan ? `packs?hasPlan=true` : `packs`}
                                 title="Pack de anuncios"
                             />
                         )}
@@ -61,19 +63,17 @@ const Settings = () => {
                             />
                         )}
                         <ListItemLink
-                            to="account"
-                            title="Cuenta de acceso"
-                        />
-                        <ListItemLink
                             to="owner"
                             title="Información personal"
                         />
-                        {(user.role == 'user' && user.dog) && (
-                            <ListItemLink
-                                to="pet"
-                                title="Información de la mascota"
-                            />
-                        )}
+                        <ListItemLink
+                            to="pet"
+                            title="Información de la mascota"
+                        />
+                        <ListItemLink
+                            to="security"
+                            title="Seguridad"
+                        />
                     </List>
                     <List>
                         <ListTitle>
@@ -95,18 +95,20 @@ const Settings = () => {
                         />
                     </List>
                 </Box>
-                <Box sx={{ p: 2 }}>
-                    <Button
-                        variant="outlined"
-                        color="error"
-                        fullWidth
-                        onClick={() => logout(dispatch)}
-                        component={LinkBehavior}
-                        to='/'
-                    >
-                        Cerrar sesión
-                    </Button>
-                </Box>
+                {isSmall && (
+                    <Box sx={{ p: 2 }}>
+                        <Button
+                            variant="outlined"
+                            color="error"
+                            fullWidth
+                            onClick={() => logout(dispatch)}
+                            component={LinkBehavior}
+                            to='/'
+                        >
+                            Cerrar sesión
+                        </Button>
+                    </Box>
+                )}
             </Box>
         </SettingsLayout>
     );

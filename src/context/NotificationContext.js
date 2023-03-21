@@ -72,6 +72,14 @@ function newNotification(dispatch, payload) {
     })
 }
 
+async function readNotifications() {
+    try {
+        await apiProvider.put('/api/notification/change-status')
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 async function fetchNotifications(dispatch, query) {
     toggleLoading(dispatch) // update to true
 
@@ -88,6 +96,8 @@ async function fetchNotifications(dispatch, query) {
                 type: 'FETCH_NOTIFICATIONS',
                 payload: data
             })
+
+            readNotifications()
         }
     } catch (e) {
         console.log(e);

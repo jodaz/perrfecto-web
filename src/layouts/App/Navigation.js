@@ -14,12 +14,16 @@ import {
 } from 'lucide-react';
 import PrivateRoute from '../../components/PrivateRoute';
 import { logout, useAuth } from '../../context/AuthContext';
+import NotificationButton from './NotificationButton';
+
+const primaryColor = '#A167C9'
+const secondaryColor = '#ccc'
 
 const smallScreenOnly = [
     {
         label: 'Inicio',
-        icon: <Home color='#ccc' />,
-        active: <Home color='#A167C9' />,
+        icon: <Home color={secondaryColor} />,
+        active: <Home color={primaryColor} />,
         route: '/home',
         smallScreensOnly: true
     }
@@ -34,8 +38,8 @@ const generalLinks = [
     },
     {
         label: 'Blog',
-        icon: <Newspaper color='#ccc' />,
-        active: <Newspaper color='#A167C9' />,
+        icon: <Newspaper color={secondaryColor} />,
+        active: <Newspaper color={primaryColor} />,
         route: '/blogs'
     }
 ];
@@ -44,14 +48,14 @@ const onlyUserLinks = () => [
     ...generalLinks,
     {
         label: 'Chat',
-        icon: <MessageCircle color='#ccc' />,
-        active: <MessageCircle color='#A167C9' />,
+        icon: <MessageCircle color={secondaryColor} />,
+        active: <MessageCircle color={primaryColor} />,
         route: '/chat'
     },
     {
         label: 'Perfil',
-        icon: <Dog color='#ccc' />,
-        active: <Dog color='#A167C9' />,
+        icon: <Dog color={secondaryColor} />,
+        active: <Dog color={primaryColor} />,
         route: '/profile'
     }
 ]
@@ -59,20 +63,20 @@ const onlyUserLinks = () => [
 const onlyBusiness = [
     {
         label: 'Marketplace',
-        icon: <StoreIcon color='#ccc' />,
+        icon: <StoreIcon color={secondaryColor} />,
         active: <StoreActiveIcon />,
         route: '/market'
     },
     {
         label: 'Blog',
-        icon: <Newspaper color='#ccc' />,
-        active: <Newspaper color='#A167C9' />,
+        icon: <Newspaper color={secondaryColor} />,
+        active: <Newspaper color={primaryColor} />,
         route: '/blogs'
     },
     {
         label: 'Perfil',
-        icon: <User color='#ccc' />,
-        active: <User color='#A167C9' />,
+        icon: <User color={secondaryColor} />,
+        active: <User color={primaryColor} />,
         route: '/profile'
     }
 ]
@@ -110,6 +114,12 @@ const Navigation = ({ isSmall }) => {
             </PrivateRoute>
             <PrivateRoute authorize='business' unauthorized={null}>
                 {renderLinks(onlyBusiness)}
+            </PrivateRoute>
+            <PrivateRoute authorize='business' unauthorized={null}>
+                <NotificationButton iconColor={location.pathname.startsWith('/notifications')
+                    ? primaryColor
+                    : secondaryColor
+                } />
             </PrivateRoute>
         </Toolbar>
     )

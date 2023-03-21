@@ -28,10 +28,15 @@ const Dropzone = ({
             })
 
             setFile(fileObject);
-            onChange({
-                previous: file,
-                new: acceptedFiles
-            })
+
+            if (defaultValue) {
+                onChange({
+                    previous: file,
+                    new: acceptedFiles
+                })
+            } else {
+                onChange(acceptedFiles)
+            }
         },
         disabled: disabled
     })
@@ -71,7 +76,8 @@ const Dropzone = ({
                 preview: getUserPhoto(defaultValue)
             })
         }
-        return  setFile({ preview: '/images/Avatar.svg' })
+
+        return setFile({ preview: '/images/Avatar.svg' })
     }, [defaultValue])
 
     return (
