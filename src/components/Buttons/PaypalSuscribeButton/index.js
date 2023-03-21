@@ -1,9 +1,10 @@
 import { PayPalButtons } from "@paypal/react-paypal-js";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { apiProvider } from "../../../api";
 
 const PaypalSuscribeButton = ({ itemID }) => {
     const navigate = useNavigate()
+    const location = useLocation();
 
     const requestSuscriptionPayment = async () => {
         try {
@@ -21,14 +22,14 @@ const PaypalSuscribeButton = ({ itemID }) => {
 
     const saveSuscriptionPayment = async () => {
         try {
-            const res = await apiProvider.get(`/api/paypal/new-subscription`, {
-                params: {
-                    plan_id: itemID
-                }
+            const res = await apiProvider.post(`/api/paypal/new-subscription`, {
+                plan_id: itemID
             })
 
             if (res.status >= 200 && res.status < 300) {
-                navigate('?status=success')
+                navigate('checkout?status=success', {
+                    state: location.state
+                })
             }
         } catch (error) {
             console.log("error ", error)
@@ -36,7 +37,9 @@ const PaypalSuscribeButton = ({ itemID }) => {
     }
 
     const handleRefusedRedirect = () => {
-        navigate('?status=refused')
+        navigate('checkout?status=refused', {
+            state: location.state
+        })
     }
 
     return (
