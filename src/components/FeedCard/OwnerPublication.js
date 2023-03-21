@@ -11,12 +11,22 @@ import { Mail, Phone } from 'lucide-react';
 import formatPhone from '../../utils/formatPhone';
 import { useMediaQuery } from '@mui/material';
 
+const createPersonalPhotosArr = data => {
+    if (data) {
+        const arrayNames = JSON.parse(data);
+
+        return arrayNames.map(file => getUserPhoto(file))
+    } else {
+        return ['/images/Avatar.svg']
+    }
+}
+
 const OwnerPublication = ({ open, data, handleClose, handleOpenContactDialog }) => {
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
     const { Owner } = data.publi
     const years = 26
-    const multimedia = [getUserPhoto(data.publi.Owner.img_profile)]
     const dogPhoto = getUserPhoto(JSON.parse(data.publi.dogPhotos)[0]);
+    const personalPhotos = createPersonalPhotosArr(Owner.personalPhotos)
 
     if (!open) return null
 
@@ -32,7 +42,7 @@ const OwnerPublication = ({ open, data, handleClose, handleOpenContactDialog }) 
                 height: isSmall ? 280 : 400,
                 width: isSmall ? 280 : 400
             }}>
-                <PhotoGallery images={multimedia} />
+                <PhotoGallery images={personalPhotos} />
             </Box>
             <Box sx={{
                 height: '100%',
