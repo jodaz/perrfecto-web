@@ -7,7 +7,8 @@ function PaypalProvider({ children }) {
             options={{
                 "client-id": vars.PaypalClientID,
                 currency: 'EUR',
-                intent: 'capture',
+				intent: "capture",
+				vault: true,
                 'enable-funding': ['sofort', 'giropay'],
                 'disable-funding': ['card', 'sepa'],
             }}

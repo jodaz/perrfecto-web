@@ -84,6 +84,8 @@ import ShowCategory from './pages/Market/ShowCategory';
 import PaymentCheckout from './pages/packs/PaymentCheckout';
 import AccountLocked from './components/Modals/AccountLocked';
 import AccountUnlock from './components/Modals/AccountUnlock';
+import SelectedSuscription from './components/Modals/SelectedSuscription';
+import SuscriptionsCheckoutProcess from './pages/suscriptions/SuscriptionsCheckoutProcess';
 import EditPhone from './pages/PersonalInformation/EditPhone';
 import EditEmail from './pages/PersonalInformation/EditEmail';
 
@@ -532,6 +534,14 @@ function AppRoutes() {
                 <Route
                     path="/business/suscriptions"
                     element={<BusinessSuscriptions location={location} />}
+                />
+                <Route
+                    path="/business/suscriptions/:id/checkout"
+                    element={<SuscriptionsCheckoutProcess location={location} />}
+                />
+                <Route
+                    path="/business/suscriptions/:id"
+                    element={<SelectedSuscription location={location} />}
                 />
             </Route>
 

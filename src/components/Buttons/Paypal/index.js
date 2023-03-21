@@ -38,10 +38,14 @@ const PaypalButton = ({ itemID }) => {
         }
     }
 
+    const handleRefusedRedirect = () => {
+        navigate('checkout?status=refused')
+    }
+
     return (
         <PayPalButtons
             createOrder={requestPayment}
-            onCancel={() => navigate('checkout?status=refused')}
+            onCancel={handleRefusedRedirect}
             onApprove={savePayment}
             style={{ layout: "horizontal", color: "blue" }}
         />
