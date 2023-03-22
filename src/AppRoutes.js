@@ -88,6 +88,7 @@ import SelectedSuscription from './components/Modals/SelectedSuscription';
 import SuscriptionsCheckoutProcess from './pages/suscriptions/SuscriptionsCheckoutProcess';
 import EditPhone from './pages/PersonalInformation/EditPhone';
 import EditEmail from './pages/PersonalInformation/EditEmail';
+import CurrentSuscription from './pages/suscriptions/CurrentSuscription';
 
 function AppRoutes() {
     let location = useLocation();
@@ -283,6 +284,16 @@ function AppRoutes() {
                     <AppLayout>
                         <PrivateRoute authorize='user,business' unauthorized={<NotFound />}>
                             <PersonalInformation location={location} />
+                        </PrivateRoute>
+                    </AppLayout>
+                }
+            />
+            <Route
+                path='/profile/subscription'
+                element={
+                    <AppLayout>
+                        <PrivateRoute authorize='business' unauthorized={<NotFound />}>
+                            <CurrentSuscription location={location} />
                         </PrivateRoute>
                     </AppLayout>
                 }
