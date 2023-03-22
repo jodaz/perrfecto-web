@@ -31,6 +31,9 @@ const getMessageByType = ({ name_sender, type }) => {
         case 'like_reply_comment': {
             return `Tu respuesta ha recibido un like.`;
         }
+        case 'refused_publication': {
+            return `Tu anuncio ha sido rechazado.`;
+        }
         case 'like_comment_blog': {
             return `Tu comentario ha recibido un like.`;
         }
@@ -73,7 +76,12 @@ const createNotificationPhoto = ({ img, type }) => {
 
 const NotificationCard = props => {
     const { id } = props
-    const typesWithoutButton = ['like_comment_blog', 'user_report', 'like_reply_comment'];
+    const typesWithoutButton = [
+        'like_comment_blog',
+        'user_report',
+        'like_reply_comment',
+        'refused_publication'
+    ];
 
     return (
         <Box sx={{
