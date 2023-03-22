@@ -35,12 +35,9 @@ const PaymentMethods = ({ suscribe }) => {
                     <PaypalSuscribeButton itemID={id} />
                 ) : <PaypalButton itemID={id} />}
                 <PaymentMethodButton
-                    icon={StripeIcon}
-                    title='Stripe'
-                />
-                <PaymentMethodButton
                     icon={DebitCardIcon}
                     title={`Tarjeta`}
+                    to='checkout'
                 />
             </Stack>
         </Box>
