@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import { useNavigate, useSearchParams, matchRoutes } from 'react-router-dom';
 import EllipseImage from '../../components/EllipseImage';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import PaymentStatus from './PaymentStatus';
+import PaymentStatus from '../../components/PaymentStatus';
 
 const SuscriptionsCheckoutProcess = ({ location }) => {
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('md'));

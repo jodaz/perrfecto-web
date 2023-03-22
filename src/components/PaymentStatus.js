@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import RefusedPayment from '../packs/RefusedPayment';
-import SuccessfulPayment from '../packs/SuccessfulPayment';
+import RefusedPayment from './RefusedPayment';
+import SuccessfulPayment from './SuccessfulPayment';
 
 const PaymentStatus = ({ isSmall, status }) => (
     <Box sx={{
