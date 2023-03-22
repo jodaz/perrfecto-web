@@ -66,9 +66,9 @@ const HowItWorks = () => {
             />
             <DescriptionSection
                 Image={Chat}
-                marked='Coincidir'
-                title={'y chatear'}
-                subtitle={'Accede al chat con pocos clics. Haz coincidir las mascotas con las que te gustaría chatear. Podrás acceder al chat una vez que ambas mascotas coincidan ¡Así que comienza a dar me gusta a las mascotas que te gustan!'}
+                marked='Chatear'
+                title={'y compartir'}
+                subtitle={'Accede al chat con pocos clics. Haz preguntas, comparte tus experiencias y encuentra a tu compañero canino perfecto.'}
                 orientation='row'
             />
         </Box>
