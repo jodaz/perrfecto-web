@@ -42,17 +42,6 @@ const PaymentCheckoutForm = () => {
             } else {
                 navigate(`/profile/settings/packs/${id}/checkout?status=refused`)
             }
-
-            // const confirmPayment = await stripe?.confirmCardPayment(
-            //     response.clientSecret
-            // );
-
-            // if (confirmPayment?.error) {
-            //     alert(confirmPayment.error.message);
-            // } else {
-            //     alert("Success! Check your email for the invoice.");
-            // }
-
         } catch (error) {
             console.log(error);
         }
@@ -68,9 +57,6 @@ const PaymentCheckoutForm = () => {
             }}
         >
             <Box p={2}>
-                <CardElement />
-            </Box>
-            <Box p={2}>
                 <TextInput
                     label="Propietari@"
                     control={control}
@@ -80,6 +66,9 @@ const PaymentCheckoutForm = () => {
                     disabled={isSubmitting}
                     placeholder='Nombre del titular'
                 />
+            </Box>
+            <Box p={2}>
+                <CardElement />
             </Box>
             <Button
                 type="submit"
