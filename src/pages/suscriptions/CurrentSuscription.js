@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {
-    Button,
     Stack,
     Box,
     Typography
@@ -8,7 +7,6 @@ import {
 import SuscriptionCard from '../Landing/SuscriptionCard';
 import SettingsLayout from '../../layouts/SettingsLayout';
 import { useAuth } from '../../context/AuthContext';
-import LinkBehavior from '../../components/LinkBehavior';
 
 const CurrentSuscription = () => {
     const { state: { userPlan } } = useAuth()
@@ -28,7 +26,10 @@ const CurrentSuscription = () => {
                         alignItems: 'start'
                     }}>
                         {userPlan ? (
-                            <SuscriptionCard {...userPlan.Subscription} />
+                            <SuscriptionCard
+                                data={userPlan.Subscription}
+                                selectable
+                            />
                         ) : (
                             <Typography
                                 variant="subtitle1"
