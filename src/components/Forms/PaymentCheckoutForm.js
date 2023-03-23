@@ -11,7 +11,7 @@ import { useForm } from 'react-hook-form';
 import { NAME } from '../../validations';
 import { useNavigate, useParams } from 'react-router-dom';
 
-const PaymentCheckoutForm = () => {
+const PaymentCheckoutForm = ({ isSubscription }) => {
     const { id } = useParams()
     const { control, handleSubmit, formState: {
         isSubmitting
@@ -25,6 +25,15 @@ const PaymentCheckoutForm = () => {
     // main function
     const createSubscription = async ({ values }) => {
         try {
+            const successRedirect = isSubscription
+                ? `/business/suscriptions/${id}/checkout?status=success`
+                : `/profile/settings/packs/${id}/checkout?status=success`;
+            const refusedRedirect = isSubscription
+                ? `/business/suscriptions/${id}/checkout?status=refused`
+                : `/profile/settings/packs/${id}/checkout?status=refused`;
+            const apiEndpoint = isSubscription ? "/api/stripe/new-request-subscription" : "/api/stripe/checkout"
+            const data = {}
+
             // create a payment method
             const paymentMethod = await stripe?.createPaymentMethod({
                 type: "card",
@@ -32,15 +41,20 @@ const PaymentCheckoutForm = () => {
                 billing_details: values,
             });
 
-            const response = await apiProvider.post("/api/stripe/checkout", {
-                stripe_id: paymentMethod?.paymentMethod?.id,
-                pack_id: id
-            });
+            if (isSubscription) {
+                data.plan_id = 2;
+                data.payment_method = paymentMethod?.paymentMethod?.id;
+            } else {
+                data.stripe_id = paymentMethod?.paymentMethod?.id;
+                data.pack_id = id;
+            }
+
+            const response = await apiProvider.post(apiEndpoint, data);
 
             if (response.status >= 200 && response.status < 300) {
-                navigate(`/profile/settings/packs/${id}/checkout?status=success`)
+                navigate(successRedirect)
             } else {
-                navigate(`/profile/settings/packs/${id}/checkout?status=refused`)
+                navigate(refusedRedirect)
             }
         } catch (error) {
             console.log(error);
@@ -75,6 +89,7 @@ const PaymentCheckoutForm = () => {
                 variant="contained"
                 color="primary"
                 fullWidth
+                disabled={isSubmitting}
             >
                 Confirmar pago
             </Button>

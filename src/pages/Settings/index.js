@@ -66,10 +66,12 @@ const Settings = () => {
                             to="owner"
                             title="Información personal"
                         />
-                        <ListItemLink
-                            to="pet"
-                            title="Información de la mascota"
-                        />
+                        {(user.role == 'user') && (
+                            <ListItemLink
+                                to="pet"
+                                title="Información de la mascota"
+                            />
+                        )}
                         <ListItemLink
                             to="security"
                             title="Seguridad"
