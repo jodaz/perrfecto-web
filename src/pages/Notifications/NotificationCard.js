@@ -16,6 +16,9 @@ const getLinkByType = ({ type, link }) => {
         case 'comment_blog': {
             return `/blogs/${link}`;
         }
+        case 'refused_blog': {
+            return `/blogs/${link}`;
+        }
         default: {
             console.log("Unhandled type ", type)
             return `/${type}/${link}`
@@ -45,6 +48,9 @@ const getMessageByType = ({ name_sender, type }) => {
         }
         case 'comment_blog': {
             return `Tu publicación ha recibido un comentario.`;
+        }
+        case 'refused_blog': {
+            return `Tu ha sido rechazado.`;
         }
         default: {
             console.log("Unhandled type ", type)
