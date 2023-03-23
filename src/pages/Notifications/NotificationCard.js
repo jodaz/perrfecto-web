@@ -19,6 +19,9 @@ const getLinkByType = ({ type, link }) => {
         case 'refused_blog': {
             return `/blogs/${link}`;
         }
+        case 'refused_business': {
+            return `/businesses/${link}`;
+        }
         default: {
             console.log("Unhandled type ", type)
             return `/${type}/${link}`
@@ -39,6 +42,9 @@ const getMessageByType = ({ name_sender, type }) => {
         }
         case 'like_comment_blog': {
             return `Tu comentario ha recibido un like.`;
+        }
+        case 'refused_business': {
+            return `Tu negocio ha sido rechazado.`;
         }
         case 'user_report': {
             return `Haz recibido un reporte de usuario.`;
