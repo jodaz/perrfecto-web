@@ -35,7 +35,8 @@ const SelectedSuscription = ({ location }) => {
                 display: 'flex',
                 width: isSmall ? 'fit-content' : '800px',
                 height: 'fit-content',
-                height: '600px',
+                height: '670px',
+                overflowY: 'auto'
             }}>
                 {!isSmall && (
                     <Box sx={{
