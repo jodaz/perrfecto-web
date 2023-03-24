@@ -8,7 +8,8 @@ import {
     Image
 } from 'lucide-react';
 import CustomButton from './CustomButton';
-import BasicTabs from '../../components/Tabs';
+import Tabs from '../../components/Tabs';
+import Tab from '../../components/Tab';
 import ProfileOptions from './ProfileOptions';
 import { renewToken, useAuth } from '../../context/AuthContext'
 import { useForm } from 'react-hook-form';
@@ -71,7 +72,14 @@ const PetOwner = () => {
             textAlign: 'center',
             width: '100%'
         }}>
-            <BasicTabs />
+            <Tabs>
+                <Tab value='/profile'>
+                    Perfil mascota
+                </Tab>
+                <Tab value='/profile/owner'>
+                    Perfil persona
+                </Tab>
+            </Tabs>
             <Box sx={{
                 marginTop: '1rem',
                 width: '100%'
