@@ -31,6 +31,15 @@ const getLinkByType = ({ type, link }) => {
 
 const getMessageByType = ({ name_sender, type }) => {
     switch(type) {
+        case 'pet_day': {
+            return `Tu publicación ha sido elegida mascota del día.`;
+        }
+        case 'pet_moth': {
+            return `Tu publicación ha sido elegida mascota del mes.`;
+        }
+        case 'pet_week': {
+            return `Tu publicación ha sido elegida mascota de la semana.`;
+        }
         case 'like_blog': {
             return `Tu publicación ha recibido un like.`;
         }
@@ -92,7 +101,10 @@ const NotificationCard = props => {
         'like_comment_blog',
         'user_report',
         'like_reply_comment',
-        'refused_publication'
+        'refused_publication',
+        'pet_day',
+        'pet_week',
+        'pet_moth'
     ];
 
     return (
