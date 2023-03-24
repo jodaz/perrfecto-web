@@ -20,10 +20,11 @@ const PaypalSuscribeButton = ({ itemID }) => {
         }
     }
 
-    const saveSuscriptionPayment = async () => {
+    const saveSuscriptionPayment = async (data, actions) => {
         try {
             const res = await apiProvider.post(`/api/paypal/new-subscription`, {
-                plan_id: itemID
+                plan_id: itemID,
+                transaction_id: data.subscriptionID
             })
 
             if (res.status >= 200 && res.status < 300) {
