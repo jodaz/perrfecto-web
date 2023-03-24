@@ -1,19 +1,19 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import PawPrints from '../../../assets/images/pawprints.svg'
-import Stack from './Stack';
-import { CircularProgress, useMediaQuery } from '@mui/material';
+import { useMediaQuery } from '@mui/material';
 import ContactDialog from '../../../components/Modals/ContactDialog';
 import DogPublication from '../../../components/FeedCard/DogPublication'
 import OwnerPublication from '../../../components/FeedCard/OwnerPublication';
 import useEffectOnce from '../../../utils/useEffectOnce';
 import { usePublications, fetchPublications } from '../../../context/PublicationContext';
-import FilterButton from '../../../components/Buttons/FilterButton';
 import InviteUserAlert from '../../../components/InviteUserAlert';
 import { socket, handleDisconnect, listenConnection, handleConnect } from '../../../utils/socket';
 import { useAuth } from '../../../context/AuthContext';
 import { useChat, updateConnectedStatus } from '../../../context/ChatContext';
 import LogoutButton from '../../../components/Buttons/LogOutButton';
+import Tabs from '../../../components/Tabs';
+import Feed from './Feed';
 
 const PopularMembers = React.lazy(() => import('../../../components/PopularMembers'));
 
@@ -97,35 +97,16 @@ const UsersHome = () => {
                 </Box>
             </React.Suspense>
             <InviteUserAlert />
-            <Box sx={{
-                display: 'flex',
-                position: 'relative',
-                flexDirection: 'column',
-                width: isSmall ? '100%' : '50%',
-                margin: '0 auto',
-                height: '100%',
-                zIndex: 100
-            }}>
-                {(!isLoading) ? (
-                    <Stack
-                        data={publications}
-                        isLoaded={isLoaded}
-                        onVote={(item, vote) => null}
-                        onClick={(item) => handleSelect(item)}
-                    />
-                ) : (
-                    <Box sx={{
-                        height: '100%',
-                        width: '100%',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center'
-                    }}>
-                        <CircularProgress color="primary" />
-                    </Box>
-                )}
-                <FilterButton />
-            </Box>
+            <Tabs>
+                <Feed
+                    isLoading={isLoading}
+                    publications={publications}
+                    handleSelect={handleSelect}
+                    isSmall={isSmall}
+                />
+                <Box>Destacada</Box>
+                <Box>Ranking</Box>
+            </Tabs>
             {openDogCard && (
                 <DogPublication
                     data={selectedCard}
