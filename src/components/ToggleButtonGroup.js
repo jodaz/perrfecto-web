@@ -3,14 +3,14 @@ import MuiToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { styled } from '@mui/material/styles';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-const ToggleButtonGroup = styled(MuiToggleButtonGroup)(({ theme }) => ({
+const StyledMuiToggleButtonGroup = styled(MuiToggleButtonGroup)(({ theme }) => ({
     border: `1px solid ${theme.palette.primary.main}`,
     borderRadius: '100px',
     justifyContent: 'center',
     width: 'fit-content',
 }));
 
-const Tabs = ({ children }) => {
+const ToggleButtonGroup = ({ children }) => {
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -19,7 +19,7 @@ const Tabs = ({ children }) => {
     };
 
     return (
-        <ToggleButtonGroup
+        <StyledMuiToggleButtonGroup
             value={location.pathname}
             exclusive
             onChange={handleAlignment}
@@ -36,8 +36,8 @@ const Tabs = ({ children }) => {
                     )
                 }
             })}
-        </ToggleButtonGroup>
+        </StyledMuiToggleButtonGroup>
     );
 }
 
-export default Tabs
+export default ToggleButtonGroup

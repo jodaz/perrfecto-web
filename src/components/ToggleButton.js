@@ -2,7 +2,7 @@ import * as React from 'react';
 import MuiToggleButton from '@mui/material/ToggleButton';
 import { styled, alpha } from '@mui/material/styles';
 
-const ToggleButton = styled(MuiToggleButton)(({ theme }) => ({
+const StyledMuiToggleButton = styled(MuiToggleButton)(({ theme }) => ({
     backgroundColor: 'transparent',
     color: theme.palette.primary.main,
     border: '0 !important',
@@ -26,14 +26,14 @@ const ToggleButton = styled(MuiToggleButton)(({ theme }) => ({
     },
 }));
 
-const Tab = ({ children, currentPath, value, ...restProps }) => (
-    <ToggleButton
+const ToggleButton = ({ children, currentPath, value, ...restProps }) => (
+    <StyledMuiToggleButton
         selected={currentPath == value}
         value={value}
         {...restProps}
     >
         {children}
-    </ToggleButton>
+    </StyledMuiToggleButton>
 );
 
-export default Tab
+export default ToggleButton
