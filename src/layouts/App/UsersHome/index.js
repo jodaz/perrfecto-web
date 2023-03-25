@@ -2,9 +2,6 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import PawPrints from '../../../assets/images/pawprints.svg'
 import { useMediaQuery } from '@mui/material';
-import ContactDialog from '../../../components/Modals/ContactDialog';
-import DogPublication from '../../../components/FeedCard/DogPublication'
-import OwnerPublication from '../../../components/FeedCard/OwnerPublication';
 import useEffectOnce from '../../../utils/useEffectOnce';
 import { usePublications, fetchPublications } from '../../../context/PublicationContext';
 import InviteUserAlert from '../../../components/InviteUserAlert';
@@ -14,6 +11,8 @@ import { useChat, updateConnectedStatus } from '../../../context/ChatContext';
 import LogoutButton from '../../../components/Buttons/LogOutButton';
 import Tabs from '../../../components/Tabs';
 import Feed from './Feed';
+import Featured from './Featured';
+import Ranking from './Ranking';
 
 const PopularMembers = React.lazy(() => import('../../../components/PopularMembers'));
 
@@ -103,33 +102,11 @@ const UsersHome = () => {
                     publications={publications}
                     handleSelect={handleSelect}
                     isSmall={isSmall}
+                    isLoaded={isLoaded}
                 />
-                <Box>Destacada</Box>
-                <Box>Ranking</Box>
+                <Featured handleSelect={handleSelect} />
+                <Ranking handleSelect={handleSelect} />
             </Tabs>
-            {openDogCard && (
-                <DogPublication
-                    data={selectedCard}
-                    handleClose={() => handleCloseCard()}
-                    open={openDogCard}
-                    handleOpenOwnerCard={handleOpenOwnerCard}
-                />
-            )}
-            {openOwnerCard && (
-                <OwnerPublication
-                    data={selectedCard}
-                    handleClose={() => handleCloseCard()}
-                    open={openOwnerCard}
-                    handleOpenContactDialog={handleOpenContactDialog}
-                />
-            )}
-            {openContactDialog && (
-                <ContactDialog
-                    data={selectedCard}
-                    handleClose={() => handleCloseCard()}
-                    open={openContactDialog}
-                />
-            )}
         </Box>
     );
 }

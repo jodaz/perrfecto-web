@@ -69,17 +69,15 @@ const Tabs = ({ children, Tabs }) => {
             width: '100%',
             height: '100%'
         }}>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <StyledMuiTabs
-                    value={value}
-                    onChange={handleChange}
-                    sx={{ '& .MuiTabs-indicator': { display: 'none' } }}
-                >
-                    <Tab label="Feed" {...a11yProps(0)} />
-                    <Tab label="Mascota destacada" {...a11yProps(1)} />
-                    <Tab label="Ranking" {...a11yProps(2)} />
-                </StyledMuiTabs>
-            </Box>
+            <StyledMuiTabs
+                value={value}
+                onChange={handleChange}
+                sx={{ '& .MuiTabs-indicator': { display: 'none' } }}
+            >
+                <Tab label="Feed" {...a11yProps(0)} />
+                <Tab label="Mascota destacada" {...a11yProps(1)} />
+                <Tab label="Ranking" {...a11yProps(2)} />
+            </StyledMuiTabs>
             {(childrenCount) && (
                 React.Children.map(children, (child, i) => {
                     if (React.isValidElement(child)) {
