@@ -20,7 +20,8 @@ const Card = ({
     drag,
     moveLeft,
     moveRight,
-    onClick
+    onClick,
+    featuredComponent
 }) => {
     const { publi } = data;
     const userPhoto = publi.Owner.img_profile.length
@@ -46,7 +47,8 @@ const Card = ({
             visibility: !drag ? 'hidden' : 'none',
             alignSelf: 'center',
             zIndex: 10,
-            cursor: 'pointer'
+            cursor: 'pointer',
+            position: 'relative'
         }} onClick={handleClick}>
             <Box sx={{
                 display: 'flex',
@@ -72,6 +74,15 @@ const Card = ({
                 borderRadius: '20px',
                 position: 'relative'
             }}>
+                {React.isValidElement(featuredComponent) && (
+                    <Box sx={{
+                        position: 'absolute',
+                        right: 0,
+                        top: 0
+                    }}>
+                        {React.cloneElement(featuredComponent)}
+                    </Box>
+                )}
                 <CardMedia
                     component="img"
                     width='100%'

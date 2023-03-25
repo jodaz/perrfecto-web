@@ -7,6 +7,27 @@ import useEffectOnce from '../../../utils/useEffectOnce';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation } from "swiper";
 import styled from '@emotion/styled';
+import BestProduct2 from '../../../assets/icons/BestProduct2.png'
+
+const title = [
+    'Mascota de la semana',
+    'Mascota del mes'
+]
+
+const BestPet = ({ index }) => (
+    <Box sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        color: theme => theme.palette.primary.main,
+        fontWeight: 500,
+        textAlign: 'center',
+        p: 1
+    }}>
+        <Box width='75px'>{title[index]}</Box>
+        <Box component="img" src={BestProduct2} />
+    </Box>
+)
 
 const SwiperStyled = styled(Swiper)(() => ({
     height: 'inherit',
@@ -92,6 +113,7 @@ const Ranking = ({
                                 data={item}
                                 drag={true}
                                 onClick={() => handleSelect(item)}
+                                featuredComponent={<BestPet index={index} />}
                             />
                         </SwiperSlide>
                     ))}

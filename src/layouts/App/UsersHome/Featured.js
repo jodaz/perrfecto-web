@@ -4,6 +4,13 @@ import { CircularProgress } from '@mui/material';
 import Card from '../../../components/Cards/Card'
 import { apiProvider } from '../../../api';
 import useEffectOnce from '../../../utils/useEffectOnce';
+import BestProduct1 from '../../../assets/icons/BestProduct1.png'
+
+const FeaturedImage = () => (
+    <Box sx={{ p: 2 }}>
+        <Box component="img" src={BestProduct1} />
+    </Box>
+)
 
 const Featured = ({
     handleSelect,
@@ -44,6 +51,7 @@ const Featured = ({
                     data={data}
                     drag={true}
                     onClick={() => handleSelect(data)}
+                    featuredComponent={<FeaturedImage />}
                 />
             ) : (
                 <Box sx={{
