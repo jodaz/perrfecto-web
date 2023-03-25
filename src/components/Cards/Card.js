@@ -7,63 +7,33 @@ import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { useMediaQuery } from '@mui/material';
-import { useAuth } from '../../context/AuthContext';
-import { openGuestWarning, useGuest } from '../../context/GuestContext';
-import ShowCard from '../../components/Modals/ShowCard'
 
 // Icons
 import DiscardIconButton from '../Buttons/DiscardButton';
 import LikeButton from '../Buttons/LikeButton';
 import getUserPhoto from '../../utils/getUserPhoto';
-import PublicationDescription from './PublicationDescription';
+import PublicationDescription from '../PublicationDescription';
 import FavouriteButton from '../Buttons/FavouriteButton';
-
-const guestMessages = {
-    'message': 'enviar un mensaje',
-    'favourite': 'guardar un anuncio',
-    'like': 'dar me gusta',
-    'discard': 'descartar'
-}
-
-const flyAwayDistance = (direction, cardElem) => {
-    const parentWidth = cardElem.current.parentNode.getBoundingClientRect()
-        .width;
-    const childWidth = cardElem.current.getBoundingClientRect().width;
-    return direction === "left"
-        ? -parentWidth / 2 - childWidth / 2
-        : parentWidth / 2 + childWidth / 2;
-};
 
 const Card = ({
     data,
-    cardElem,
-    controls,
-    drag
+    drag,
+    moveLeft,
+    moveRight,
+    onClick,
+    featuredComponent
 }) => {
     const { publi } = data;
     const userPhoto = publi.Owner.img_profile.length
         ? getUserPhoto(JSON.parse(publi.Owner.img_profile)[0])
         : '/images/Avatar.svg';
-    const { state: { isAuth } } = useAuth();
-    const { dispatch } = useGuest();
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
     const photoSrc = getUserPhoto(JSON.parse(publi.dogPhotos)[0])
-    const action = (message) => {
-        if (!isAuth && message != 'descartar') {
-            openGuestWarning(dispatch, message);
+
+    const handleClick = () => {
+        if (onClick) {
+            onClick();
         }
-    }
-
-    const likeAction = () => {
-        controls.start({
-            x: flyAwayDistance('right', cardElem)
-        });
-    }
-
-    const discardAction = () => {
-        controls.start({
-            x: flyAwayDistance('left', cardElem)
-        });
     }
 
     return (
@@ -75,8 +45,11 @@ const Card = ({
             marginTop: !drag ? '1rem' : 0,
             transition: '0.3s',
             visibility: !drag ? 'hidden' : 'none',
-            zIndex: 10
-        }}>
+            alignSelf: 'center',
+            zIndex: 10,
+            cursor: 'pointer',
+            position: 'relative'
+        }} onClick={handleClick}>
             <Box sx={{
                 display: 'flex',
                 alignItems: 'center',
@@ -101,6 +74,15 @@ const Card = ({
                 borderRadius: '20px',
                 position: 'relative'
             }}>
+                {React.isValidElement(featuredComponent) && (
+                    <Box sx={{
+                        position: 'absolute',
+                        right: 0,
+                        top: 0
+                    }}>
+                        {React.cloneElement(featuredComponent)}
+                    </Box>
+                )}
                 <CardMedia
                     component="img"
                     width='100%'
@@ -123,16 +105,12 @@ const Card = ({
                         display: 'flex',
                         justifyContent: 'space-between'
                     }}>
-                        <LikeButton sliderAction={likeAction} item={data} />
+                        <LikeButton sliderAction={moveRight} item={data} />
                         <FavouriteButton
                             item={data}
-                            handleClick={likeAction}
+                            handleClick={moveRight}
                         />
-                        <DiscardIconButton onClick={e => {
-                            action(guestMessages.discard)
-                            discardAction()
-                            e.stopPropagation();
-                        }} />
+                        <DiscardIconButton onClick={moveLeft} />
                     </CardActions>
                     <Box sx={{
                         marginTop: '2rem',
@@ -159,7 +137,6 @@ const Card = ({
                     </Box>
                 </CardContent>
             </MuiCard>
-            <ShowCard />
         </Box>
     );
 }

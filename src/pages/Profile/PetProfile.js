@@ -9,7 +9,8 @@ import {
 import CustomButton from './CustomButton';
 import getSearchParams from '../../utils/getSearchParams';
 import { useLocation, useNavigate } from 'react-router-dom';
-import BasicTabs from '../../components/Tabs';
+import ToggleButton from '../../components/ToggleButton';
+import ToggleButtonGroup from '../../components/ToggleButtonGroup';
 import ProfileOptions from './ProfileOptions';
 import { useForm } from 'react-hook-form';
 import { useAuth, renewToken } from '../../context/AuthContext'
@@ -75,7 +76,14 @@ const PetProfile = () => {
     return (
         <>
             <Box sx={{ pt: 1, width: '100%', textAlign: 'center', backgroundColor: '#f6f6f6' }}>
-                <BasicTabs />
+                <ToggleButtonGroup>
+                    <ToggleButton value='/profile'>
+                        Perfil mascota
+                    </ToggleButton>
+                    <ToggleButton value='/profile/owner'>
+                        Perfil persona
+                    </ToggleButton>
+                </ToggleButtonGroup>
                 <Box sx={{
                     marginTop: '1rem',
                 }}>

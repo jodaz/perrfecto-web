@@ -8,7 +8,7 @@ import {
     Image
 } from 'lucide-react';
 import CustomButton from './CustomButton';
-import BasicTabs from '../../components/Tabs';
+import ToggleButtonGroup from '../../components/ToggleButtonGroup';
 import ProfileOptions from './ProfileOptions';
 import { renewToken, useAuth } from '../../context/AuthContext'
 import { useForm } from 'react-hook-form';
@@ -16,6 +16,7 @@ import PhotoInput from '../../components/Forms/PhotoInput';
 import { fileProvider, apiProvider } from '../../api'
 import formDataHandler from '../../utils/formDataHandler';
 import LatestPublishedBlogs from '../Blog/LatestPublishedBlogs';
+import ToggleButton from '../../components/ToggleButton';
 
 const PetOwner = () => {
     const [error, setError] = React.useState('')
@@ -71,7 +72,14 @@ const PetOwner = () => {
             textAlign: 'center',
             width: '100%'
         }}>
-            <BasicTabs />
+            <ToggleButtonGroup>
+                <ToggleButton value='/profile'>
+                    Perfil mascota
+                </ToggleButton>
+                <ToggleButton value='/profile/owner'>
+                    Perfil persona
+                </ToggleButton>
+            </ToggleButtonGroup>
             <Box sx={{
                 marginTop: '1rem',
                 width: '100%'

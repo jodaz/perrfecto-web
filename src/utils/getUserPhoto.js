@@ -11,7 +11,7 @@ const getUserPhoto = filepath => {
         }
     }
 
-    return null;
+    return '/images/Avatar.svg';
 }
 
 export default getUserPhoto;

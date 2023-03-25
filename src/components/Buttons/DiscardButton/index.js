@@ -3,7 +3,7 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import { ReactComponent as HuesitoIcon } from '../../../assets/icons/Huesito.svg'
 
-const DiscardIconButton = props => (
+const DiscardIconButton = ({ onClick, ...restProps }) => (
     <Tooltip
         title='Descartar'
         placement='top'
@@ -15,7 +15,10 @@ const DiscardIconButton = props => (
             '&:hover': {
                 opacity: 0.95
             }
-        }} {...props}>
+        }} onClick={e => {
+            if (onClick) { onClick(); }
+            e.stopPropagation();
+        }} {...restProps}>
             <HuesitoIcon />
         </IconButton>
     </Tooltip>

@@ -1,63 +1,96 @@
 import * as React from 'react';
-import MuiToggleButton from '@mui/material/ToggleButton';
-import MuiToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import { styled, alpha } from '@mui/material/styles';
-import { useNavigate, useLocation } from 'react-router-dom';
-import getSearchParams from '../utils/getSearchParams';
+import PropTypes from 'prop-types';
+import MuiTabs from '@mui/material/Tabs';
+import Box from '@mui/material/Box';
+import { styled } from '@mui/material/styles';
+import Tab from './Tab';
 
-const ToggleButton = styled(MuiToggleButton)(({ theme }) => ({
-    backgroundColor: 'transparent',
-    color: theme.palette.primary.main,
-    border: '0 !important',
-    borderRadius: '100px',
-    textTransform: 'unset',
-    fontWeight: 500,
-    lineHeight: '24px',
-    fontSize: '1rem',
-    borderBottomLeftRadius: '100px !important',
-    borderTopLeftRadius: '100px !important',
-    borderBottomRightRadius: '100px !important',
-    borderTopRightRadius: '100px !important',
-    transition: '0.15s',
-    '&[aria-pressed="true"]': {
-        boxShadow: '0px 2px 12px rgba(161, 103, 201, 0.36)',
-        backgroundColor: theme.palette.primary.main,
-        color: '#fff',
-        '&:hover': {
-            backgroundColor: `${alpha(theme.palette.primary.main, 0.9)}`,
-        }
-    },
-}));
-
-const ToggleButtonGroup = styled(MuiToggleButtonGroup)(({ theme }) => ({
+const StyledMuiTabs = styled(MuiTabs)(({ theme }) => ({
     border: `1px solid ${theme.palette.primary.main}`,
     borderRadius: '100px',
     justifyContent: 'center',
-    width: 'fit-content',
+    width: 'fit-content'
 }));
 
-const ToggleButtons = () => {
-    const location = useLocation();
-    const navigate = useNavigate();
-
-    const handleAlignment = (event, newAlignment) => {
-        navigate(`${newAlignment}`);
-    };
+function TabPanel(props) {
+    const { children, value, index, ...other } = props;
 
     return (
-        <ToggleButtonGroup
-            value={location.pathname}
-            exclusive
-            onChange={handleAlignment}
+        <Box
+            component="div"
+            id={`simple-tabpanel-${index}`}
+            aria-labelledby={`simple-tab-${index}`}
+            {...other}
+            sx={{
+                display: (value == index) ? 'flex' : 'none',
+                position: 'relative',
+                flexDirection: 'column',
+                width: '100%',
+                margin: '0 auto',
+                height: '100%',
+                zIndex: 100
+            }}
         >
-            <ToggleButton value="/profile" onClick={handleAlignment}>
-                Perfil mascota
-            </ToggleButton>
-            <ToggleButton value="/profile/owner" onClick={handleAlignment}>
-                Perfil persona
-            </ToggleButton>
-        </ToggleButtonGroup>
+            {value === index && (
+                <Box sx={{ p: 3, height: 'inherit' }}>
+                    {children}
+                </Box>
+            )}
+        </Box>
     );
 }
 
-export default ToggleButtons
+TabPanel.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+    return {
+        id: `simple-tab-${index}`,
+        'aria-controls': `simple-tabpanel-${index}`,
+    };
+}
+
+const Tabs = ({ children, Tabs }) => {
+    const childrenCount = React.Children.count(children);
+    const [value, setValue] = React.useState(0);
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
+
+    return (
+        <Box sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            width: '100%',
+            height: '100%'
+        }}>
+            <StyledMuiTabs
+                value={value}
+                onChange={handleChange}
+                sx={{ '& .MuiTabs-indicator': { display: 'none' } }}
+            >
+                <Tab label="Feed" {...a11yProps(0)} />
+                <Tab label="Mascota destacada" {...a11yProps(1)} />
+                <Tab label="Ranking" {...a11yProps(2)} />
+            </StyledMuiTabs>
+            {(childrenCount) && (
+                React.Children.map(children, (child, i) => {
+                    if (React.isValidElement(child)) {
+                        return (
+                            <TabPanel value={value} index={i}>
+                                {child}
+                            </TabPanel>
+                        )
+                    }
+                })
+            )}
+        </Box>
+    );
+}
+
+export default Tabs

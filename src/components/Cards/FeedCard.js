@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 import Card from "./Card";
 
 const StyledCard = styled(motion.div)`
-  position: absolute;
+    position: absolute;
 `;
 
 const FeedCard = ({ style, onVote, id, item, ...props }) => {
@@ -38,16 +38,16 @@ const FeedCard = ({ style, onVote, id, item, ...props }) => {
         setDirection(getDirection());
     };
 
-    const flyAway = () => {
-        const flyAwayDistance = (direction) => {
-            const parentWidth = cardElem.current.parentNode.getBoundingClientRect()
-                .width;
-            const childWidth = cardElem.current.getBoundingClientRect().width;
-            return direction === "left"
-                ? -parentWidth / 2 - childWidth / 2
-                : parentWidth / 2 + childWidth / 2;
-        };
+    const flyAwayDistance = (direction) => {
+        const parentWidth = cardElem.current.parentNode.getBoundingClientRect()
+            .width;
+        const childWidth = cardElem.current.getBoundingClientRect().width;
+        return direction === "left"
+            ? -parentWidth / 2 - childWidth / 2
+            : parentWidth / 2 + childWidth / 2;
+    };
 
+    const flyAway = () => {
         if (direction && Math.abs(velocity) > flyAwayMin) {
             setConstrained(false);
             controls.start({
@@ -69,9 +69,16 @@ const FeedCard = ({ style, onVote, id, item, ...props }) => {
         return () => unsubscribeX();
     });
 
-    const discardCard = () => {
-        setVelocity(200);
-        setDirection('left')
+    const moveRight = () => {
+        controls.start({
+            x: flyAwayDistance('right', cardElem)
+        });
+    }
+
+    const moveLeft = () => {
+        controls.start({
+            x: flyAwayDistance('left', cardElem)
+        });
     }
 
     return (
@@ -87,7 +94,8 @@ const FeedCard = ({ style, onVote, id, item, ...props }) => {
             {...props}
         >
             <Card
-                discardAction={discardCard}
+                moveRight={moveRight}
+                moveLeft={moveLeft}
                 data={item}
                 controls={controls}
                 cardElem={cardElem}

@@ -9,7 +9,9 @@ import InstagramModal from '../InstagramModal';
 import getUserPhoto from '../../../utils/getUserPhoto';
 
 const ContactDialog = ({ data, handleClose, open }) => {
-    const dogPhoto = getUserPhoto(JSON.parse(data.multimedia)[0]);
+    const dogPhoto = open && getUserPhoto(JSON.parse(data?.multimedia)[0]);
+
+    if (!open) return null;
 
     return (
         <InstagramModal handleClose={handleClose} open={open}>
