@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import { CircularProgress } from '@mui/material';
-import FeedCard from '../../../components/FeedCard';
+import Card from '../../../components/Cards/Card';
 import { apiProvider } from '../../../api';
 import useEffectOnce from '../../../utils/useEffectOnce';
 

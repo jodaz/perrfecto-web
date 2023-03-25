@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import { CircularProgress } from '@mui/material';
-import FeedCard from '../../../components/FeedCard';
+import Card from '../../../components/Cards/Card'
 import { apiProvider } from '../../../api';
 import useEffectOnce from '../../../utils/useEffectOnce';
 
@@ -9,11 +9,10 @@ const Featured = ({
     handleSelect,
     isSmall
 }) => {
-    const [isLoading, setIsLoading] = React.useState(false);
+    const [isLoading, setIsLoading] = React.useState(true);
     const [data, setData] = React.useState(null);
 
     const fetchData = async () => {
-        setIsLoading(true);
         try {
             const res = await apiProvider.get('/api/ranking/ranking-day')
 
@@ -41,7 +40,7 @@ const Featured = ({
             zIndex: 100
         }}>
             {(!isLoading) ? (
-                <></>
+                <Card data={data} drag={true} />
             ) : (
                 <Box sx={{
                     height: '100%',

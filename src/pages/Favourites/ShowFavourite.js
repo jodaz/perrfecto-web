@@ -4,10 +4,9 @@ import Slide from '@mui/material/Slide';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
-import PublicationDescription from '../../components/FeedCard/PublicationDescription';
 import { Mail, Phone, ChevronLeft, Trash2, Compass } from 'lucide-react'
 import LikeButton from '../../components/Buttons/LikeButton';
-import MessageIconButton from '../../components/Buttons/MessageButton/MessageIconButton';
+import PublicationDescription from '../../components/PublicationDescription';
 import ListCertificates from '../certificates/ListCertificates'
 import ShowVaccines from '../Vaccines/ShowVaccines';
 import getUserPhoto from '../../utils/getUserPhoto';

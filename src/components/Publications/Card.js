@@ -15,7 +15,7 @@ import ShowCard from '../../components/Modals/ShowCard'
 import DiscardIconButton from '../Buttons/DiscardButton';
 import LikeButton from '../Buttons/LikeButton';
 import getUserPhoto from '../../utils/getUserPhoto';
-import PublicationDescription from './PublicationDescription';
+import PublicationDescription from '../PublicationDescription';
 import FavouriteButton from '../Buttons/FavouriteButton';
 
 const guestMessages = {
