@@ -40,7 +40,11 @@ const Featured = ({
             zIndex: 100
         }}>
             {(!isLoading) ? (
-                <Card data={data} drag={true} />
+                <Card
+                    data={data}
+                    drag={true}
+                    onClick={() => handleSelect(data)}
+                />
             ) : (
                 <Box sx={{
                     height: '100%',

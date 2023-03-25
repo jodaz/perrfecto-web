@@ -5,13 +5,13 @@ import Typography from '@mui/material/Typography';
 import ShowCard from '../../components/Modals/ShowCard';
 import getUserPhoto from '../../utils/getUserPhoto';
 import PhotoGallery from '../Modals/ShowCard/PhotoGallery';
-import PublicationDescription from './PublicationDescription';
 import FavouriteButton from '../Buttons/FavouriteButton'
 import LikeButton from '../Buttons/LikeButton'
 import ShowVaccines from '../../pages/Vaccines/ShowVaccines';
 import ListCertificates from '../../pages/certificates/ListCertificates';
 import MessageButton from '../Buttons/MessageButton';
 import { Compass } from 'lucide-react';
+import PublicationDescription from '../PublicationDescription';
 
 const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 

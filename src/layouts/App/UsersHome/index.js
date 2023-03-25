@@ -13,6 +13,10 @@ import Tabs from '../../../components/Tabs';
 import Feed from './Feed';
 import Featured from './Featured';
 import Ranking from './Ranking';
+// Publications
+import ContactDialog from '../../../components/Modals/ContactDialog'
+import DogPublication from '../../../components/Publications/DogPublication'
+import OwnerPublication from '../../../components/Publications/OwnerPublication'
 
 const PopularMembers = React.lazy(() => import('../../../components/PopularMembers'));
 
@@ -107,6 +111,29 @@ const UsersHome = () => {
                 <Featured handleSelect={handleSelect} />
                 <Ranking handleSelect={handleSelect} />
             </Tabs>
+            {openDogCard && (
+                <DogPublication
+                    data={selectedCard}
+                    handleClose={() => handleCloseCard()}
+                    open={openDogCard}
+                    handleOpenOwnerCard={handleOpenOwnerCard}
+                />
+            )}
+            {openOwnerCard && (
+                <OwnerPublication
+                    data={selectedCard}
+                    handleClose={() => handleCloseCard()}
+                    open={openOwnerCard}
+                    handleOpenContactDialog={handleOpenContactDialog}
+                />
+            )}
+            {openContactDialog && (
+                <ContactDialog
+                    data={selectedCard}
+                    handleClose={() => handleCloseCard()}
+                    open={openContactDialog}
+                />
+            )}
         </Box>
     );
 }

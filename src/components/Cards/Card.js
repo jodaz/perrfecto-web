@@ -19,7 +19,8 @@ const Card = ({
     data,
     drag,
     moveLeft,
-    moveRight
+    moveRight,
+    onClick
 }) => {
     const { publi } = data;
     const userPhoto = publi.Owner.img_profile.length
@@ -27,6 +28,12 @@ const Card = ({
         : '/images/Avatar.svg';
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
     const photoSrc = getUserPhoto(JSON.parse(publi.dogPhotos)[0])
+
+    const handleClick = () => {
+        if (onClick) {
+            onClick();
+        }
+    }
 
     return (
         <Box sx={{
@@ -38,8 +45,9 @@ const Card = ({
             transition: '0.3s',
             visibility: !drag ? 'hidden' : 'none',
             alignSelf: 'center',
-            zIndex: 10
-        }}>
+            zIndex: 10,
+            cursor: 'pointer'
+        }} onClick={handleClick}>
             <Box sx={{
                 display: 'flex',
                 alignItems: 'center',
