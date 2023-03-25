@@ -17,8 +17,8 @@ const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
 const DogPublication = ({ open, data, handleClose, handleOpenOwnerCard }) => {
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
-    const multimedia = getImages(JSON.parse(data.multimedia))
-    const userPhoto = data.publi.Owner.img_profile ? getUserPhoto(JSON.parse(data.publi.Owner.img_profile)[0]) : '/images/Avatar.svg'
+    const multimedia = open && getImages(JSON.parse(data.multimedia))
+    const userPhoto = open && getUserPhoto(JSON.parse(data.publi?.Owner?.img_profile)[0])
 
     if (!open) return null
 

@@ -23,12 +23,13 @@ const createPersonalPhotosArr = data => {
 
 const OwnerPublication = ({ open, data, handleClose, handleOpenContactDialog }) => {
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
-    const { Owner } = data.publi
     const years = 26
-    const dogPhoto = getUserPhoto(JSON.parse(data.publi.dogPhotos)[0]);
-    const personalPhotos = createPersonalPhotosArr(Owner.personalPhotos)
+    const dogPhoto = open && getUserPhoto(JSON.parse(data.publi?.dogPhotos)[0]);
+    const personalPhotos = open && createPersonalPhotosArr(data.publi?.Owner.personalPhotos)
 
     if (!open) return null
+
+    const { Owner } = data.publi
 
     return (
         <ShowCard

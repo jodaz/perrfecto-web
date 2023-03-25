@@ -99,6 +99,7 @@ const UsersHome = () => {
                 </Box>
             </React.Suspense>
             <InviteUserAlert />
+
             <Tabs>
                 <Feed
                     isLoading={isLoading}
@@ -110,35 +111,32 @@ const UsersHome = () => {
                 <Featured handleSelect={handleSelect} />
                 <Ranking handleSelect={handleSelect} />
             </Tabs>
-            {openDogCard && (
-                <React.Suspense>
-                    <DogPublication
-                        data={selectedCard}
-                        handleClose={() => handleCloseCard()}
-                        open={openDogCard}
-                        handleOpenOwnerCard={handleOpenOwnerCard}
-                    />
-                </React.Suspense>
-            )}
-            {openOwnerCard && (
-                <React.Suspense>
-                    <OwnerPublication
-                        data={selectedCard}
-                        handleClose={() => handleCloseCard()}
-                        open={openOwnerCard}
-                        handleOpenContactDialog={handleOpenContactDialog}
-                    />
-                </React.Suspense>
-            )}
-            {openContactDialog && (
-                <React.Suspense>
-                    <ContactDialog
-                        data={selectedCard}
-                        handleClose={() => handleCloseCard()}
-                        open={openContactDialog}
-                    />
-                </React.Suspense>
-            )}
+
+            <React.Suspense>
+                <DogPublication
+                    data={selectedCard}
+                    handleClose={() => handleCloseCard()}
+                    open={openDogCard}
+                    handleOpenOwnerCard={handleOpenOwnerCard}
+                />
+            </React.Suspense>
+
+            <React.Suspense>
+                <OwnerPublication
+                    data={selectedCard}
+                    handleClose={() => handleCloseCard()}
+                    open={openOwnerCard}
+                    handleOpenContactDialog={handleOpenContactDialog}
+                />
+            </React.Suspense>
+
+            <React.Suspense>
+                <ContactDialog
+                    data={selectedCard}
+                    handleClose={() => handleCloseCard()}
+                    open={openContactDialog}
+                />
+            </React.Suspense>
         </Box>
     );
 }
