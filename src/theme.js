@@ -11,13 +11,16 @@ const palette = {
         contrastText: 'rgba(31, 44, 56, 1)'
     },
     error: {
-        main: '#F24747'
+        main: '#F24747',
+        contrastText: '#fff'
     },
     info: {
-        main: '#3B82F6'
+        main: '#3B82F6',
+        contrastText: '#fff'
     },
     warning: {
-        main: '#F59E0B'
+        main: '#F59E0B',
+        contrastText: '#fff'
     },
     success: {
         main: '#10B981',

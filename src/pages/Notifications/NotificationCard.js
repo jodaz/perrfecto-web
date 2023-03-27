@@ -5,7 +5,7 @@ import getUserPhoto from '../../utils/getUserPhoto'
 import Typography from '@mui/material/Typography';
 import LinkBehavior from '../../components/LinkBehavior'
 
-const getLinkByType = ({ type, link }) => {
+const getLinkByType = ({ type, link, uid }) => {
     switch(type) {
         case 'like_blog': {
             return `/blogs/${link}`;
@@ -58,6 +58,9 @@ const getMessageByType = ({ name_sender, type }) => {
         case 'user_report': {
             return `Haz recibido un reporte de usuario.`;
         }
+        case 'match': {
+            return `Un usuario ha hecho match contigo.`;
+        }
         case 'new_message': {
             return `Has recibido un nuevo mensaje de ${name_sender}.`;
         }
@@ -76,6 +79,9 @@ const getMessageByType = ({ name_sender, type }) => {
 
 const createNotificationPhoto = ({ img, type }) => {
     switch(type) {
+        case 'match': {
+            return null ? getUserPhoto(img) : '/images/Avatar.svg' ;
+        }
         case 'like_blog': {
             return null ? getUserPhoto(img) : '/images/Avatar.svg' ;
         }
