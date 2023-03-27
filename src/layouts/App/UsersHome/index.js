@@ -13,6 +13,8 @@ import Tabs from '../../../components/Tabs';
 import Feed from './Feed';
 import Featured from './Featured';
 import Ranking from './Ranking';
+import MatchAlert from '../../../components/Modals/MatchAlert';
+import { getCountNotifications, useNotifications } from '../../../context/NotificationContext';
 // Publications
 const PopularMembers = React.lazy(() => import('../../../components/PopularMembers'));
 const ContactDialog = React.lazy(() => import('../../../components/Modals/ContactDialog'));
@@ -27,13 +29,17 @@ const UsersHome = () => {
     const { state: { publications, isLoaded, isLoading }, dispatch } = usePublications();
     const [selectedCard, setSelectedCard] = React.useState(null);
     const [openDogCard, setOpenDogCard] = React.useState(false)
+    const [openMatchModal, setOpenMatchModal] = React.useState(false)
     const [openOwnerCard, setOpenOwnerCard] = React.useState(false)
     const [openContactDialog, setOpenContactDialog] = React.useState(false)
+    const { dispatch: dispatchNotify } = useNotifications()
 
     const handleSelect = data => {
         setSelectedCard(data)
         setOpenDogCard(true)
     }
+
+    const toggleOpenMatchModal = () => setOpenMatchModal(!openMatchModal);
 
     const handleOpenOwnerCard = () => {
         setOpenOwnerCard(true)
@@ -54,6 +60,7 @@ const UsersHome = () => {
 
     React.useEffect(() => {
         if (isAuth) {
+            getCountNotifications(dispatchNotify)
             if (isConnected) {
                 listenConnection(data => updateConnectedStatus(chatDispatch, data))
                 handleDisconnect()
@@ -137,6 +144,10 @@ const UsersHome = () => {
                     open={openContactDialog}
                 />
             </React.Suspense>
+            <MatchAlert
+                open={openMatchModal}
+                handleClose={toggleOpenMatchModal}
+            />
         </Box>
     );
 }

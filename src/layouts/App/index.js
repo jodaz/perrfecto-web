@@ -10,6 +10,8 @@ import Navigation from './Navigation';
 import GuestWarningModal from '../../components/Modals/GuestWarningModal';
 import GeolocationDrawer from '../../components/Drawers/GeolocationDrawer';
 import FilterDrawer from '../../components/FilterDrawer';
+import { socket } from '../../utils/socket';
+import { useNotifications, newNotification } from '../../context/NotificationContext';
 
 const DesktopLayout = ({ user, isAuth, children }) => (
     <Box sx={{
@@ -29,6 +31,13 @@ const DesktopLayout = ({ user, isAuth, children }) => (
 export default function AppLayout({ children }) {
     const { state: { user, isAuth } } = useAuth();
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
+    const { dispatch } = useNotifications();
+
+    React.useEffect(() => {
+        socket.on('notification', response => {
+            newNotification(dispatch, response);
+        })
+    }, [socket])
 
     if (!isSmall) {
         return (
