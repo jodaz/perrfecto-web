@@ -29,7 +29,6 @@ const UsersHome = () => {
     const { state: { publications, isLoaded, isLoading }, dispatch } = usePublications();
     const [selectedCard, setSelectedCard] = React.useState(null);
     const [openDogCard, setOpenDogCard] = React.useState(false)
-    const [openMatchModal, setOpenMatchModal] = React.useState(false)
     const [openOwnerCard, setOpenOwnerCard] = React.useState(false)
     const [openContactDialog, setOpenContactDialog] = React.useState(false)
     const { dispatch: dispatchNotify } = useNotifications()
@@ -38,8 +37,6 @@ const UsersHome = () => {
         setSelectedCard(data)
         setOpenDogCard(true)
     }
-
-    const toggleOpenMatchModal = () => setOpenMatchModal(!openMatchModal);
 
     const handleOpenOwnerCard = () => {
         setOpenOwnerCard(true)
@@ -144,10 +141,7 @@ const UsersHome = () => {
                     open={openContactDialog}
                 />
             </React.Suspense>
-            <MatchAlert
-                open={openMatchModal}
-                handleClose={toggleOpenMatchModal}
-            />
+            <MatchAlert />
         </Box>
     );
 }

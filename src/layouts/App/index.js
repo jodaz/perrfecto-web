@@ -12,6 +12,7 @@ import GeolocationDrawer from '../../components/Drawers/GeolocationDrawer';
 import FilterDrawer from '../../components/FilterDrawer';
 import { socket } from '../../utils/socket';
 import { useNotifications, newNotification } from '../../context/NotificationContext';
+import { useMatch, match } from '../../context/MatchContext';
 
 const DesktopLayout = ({ user, isAuth, children }) => (
     <Box sx={{
@@ -32,12 +33,19 @@ export default function AppLayout({ children }) {
     const { state: { user, isAuth } } = useAuth();
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
     const { dispatch } = useNotifications();
+    const matchContext = useMatch()
 
     React.useEffect(() => {
         socket.on('notification', response => {
+            if (response.notification.type == 'match') {
+                match(matchContext.dispatch, response.notification)
+            }
+
             newNotification(dispatch, response);
         })
     }, [socket])
+
+    console.log(matchContext)
 
     if (!isSmall) {
         return (

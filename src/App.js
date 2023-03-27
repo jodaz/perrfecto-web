@@ -17,6 +17,7 @@ import { ChatProvider } from './context/ChatContext';
 import { NotificationProvider } from './context/NotificationContext';
 import { PaypalProvider } from './context/PaypalContext';
 import { StripeProvider } from './context/StripeContext';
+import { MatchProvider } from './context/MatchContext';
 
 const App = () => (
     <PaypalProvider>
@@ -31,9 +32,11 @@ const App = () => (
                                         <ChatProvider>
                                             <NotificationProvider>
                                                 <StripeProvider>
-                                                    <BusinessProvider>
-                                                        <AppRoutes />
-                                                    </BusinessProvider>
+                                                    <MatchProvider>
+                                                        <BusinessProvider>
+                                                            <AppRoutes />
+                                                        </BusinessProvider>
+                                                    </MatchProvider>
                                                 </StripeProvider>
                                             </NotificationProvider>
                                         </ChatProvider>
