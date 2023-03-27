@@ -13,8 +13,8 @@ const NotificationButton = ({
     const { state: { counter }, dispatch } = useNotifications();
 
     React.useEffect(() => {
-        socket.on('notification', ({ count_notification, notification }) => {
-            newNotification(dispatch, { count_notification, notification });
+        socket.on('notification', response => {
+            newNotification(dispatch, response);
         })
     }, [socket])
 
