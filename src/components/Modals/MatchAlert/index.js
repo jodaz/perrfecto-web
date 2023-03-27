@@ -16,7 +16,7 @@ import PawHeart from '../../../assets/icons/PawHeart.png'
 const MatchAlert = () => {
     const { state: { dispatch } } = useChat()
     const { state: { user } } = useAuth()
-    const { state: { open, matchPub } } = useMatch()
+    const { state: { open, matchPub }, dispatch: matchDispatch } = useMatch()
     const navigate = useNavigate()
 
     const newChat = async () => {
@@ -28,6 +28,7 @@ const MatchAlert = () => {
             if (res.status >= 200 || res.status < 300) {
                 const { data: { data } } = res;
 
+                unmatch(matchDispatch)
                 openChat(dispatch, data, user)
                 navigate(`/chat/${data.id}`)
             }
@@ -39,7 +40,7 @@ const MatchAlert = () => {
     if (!open) return null;
 
     return (
-        <InstagramModal handleClose={unmatch} open={open}>
+        <InstagramModal handleClose={() => unmatch(matchDispatch)} open={open}>
             <Box sx={{
                 display: 'flex',
                 justifyContent: 'space-between',

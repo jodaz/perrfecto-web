@@ -33,19 +33,17 @@ export default function AppLayout({ children }) {
     const { state: { user, isAuth } } = useAuth();
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
     const { dispatch } = useNotifications();
-    const matchContext = useMatch()
+    const { dispatch: matchDispatch } = useMatch()
 
     React.useEffect(() => {
         socket.on('notification', response => {
             if (response.notification.type == 'match') {
-                match(matchContext.dispatch, response.notification)
+                match(matchDispatch, response.notification)
             }
 
             newNotification(dispatch, response);
         })
     }, [socket])
-
-    console.log(matchContext)
 
     if (!isSmall) {
         return (
