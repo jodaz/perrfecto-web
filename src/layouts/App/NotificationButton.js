@@ -10,13 +10,11 @@ import { useNotifications, newNotification } from '../../context/NotificationCon
 const NotificationButton = ({
     iconColor = '#fff'
 }) => {
-    const { dispatch } = useNotifications();
-    const [counter, setCounter] = React.useState(0)
+    const { state: { counter }, dispatch } = useNotifications();
 
     React.useEffect(() => {
         socket.on('notification', ({ count_notification, notification }) => {
-            newNotification(dispatch, notification);
-            setCounter(count_notification)
+            newNotification(dispatch, { count_notification, notification });
         })
     }, [socket])
 

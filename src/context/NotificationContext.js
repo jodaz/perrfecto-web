@@ -5,7 +5,8 @@ const NotificationContext = React.createContext()
 
 const initialState = {
     items: [],
-    isLoading: false
+    isLoading: false,
+    counter: 0
 }
 
 function notificationReducer(state, action) {
@@ -17,16 +18,29 @@ function notificationReducer(state, action) {
                     items: action.payload
                 }
             }
+            // case 'SET_COUNT': {
+            //     return {
+            //         ...state,
+            //         counter: action.payload
+            //     }
+            // }
             case 'NEW_NOTIFICATION': {
                 return {
                     ...state,
-                    items: [action.payload, ...state.items]
+                    items: [action.payload.notification, ...state.items],
+                    counter: action.payload.count_notification
                 }
             }
             case 'TOGGLE_LOADING': {
                 return {
                     ...state,
                     isLoading: !state.isLoading
+                }
+            }
+            case 'RESET_COUNTER': {
+                return {
+                    ...state,
+                    counter: 0
                 }
             }
             case 'RESET': {
@@ -72,9 +86,15 @@ function newNotification(dispatch, payload) {
     })
 }
 
-async function readNotifications() {
+async function readNotifications(dispatch) {
     try {
-        await apiProvider.put('/api/notification/change-status')
+        const res = await apiProvider.put('/api/notification/change-status')
+
+        if (res.status >= 200 && res.status < 300) {
+            dispatch({
+                type: 'RESET_COUNTER'
+            })
+        }
     } catch (e) {
         console.log(e);
     }
@@ -97,7 +117,7 @@ async function fetchNotifications(dispatch, query) {
                 payload: data
             })
 
-            readNotifications()
+            readNotifications(dispatch)
         }
     } catch (e) {
         console.log(e);
