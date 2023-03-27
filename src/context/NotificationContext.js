@@ -18,12 +18,12 @@ function notificationReducer(state, action) {
                     items: action.payload
                 }
             }
-            // case 'SET_COUNT': {
-            //     return {
-            //         ...state,
-            //         counter: action.payload
-            //     }
-            // }
+            case 'SET_COUNT': {
+                return {
+                    ...state,
+                    counter: action.payload
+                }
+            }
             case 'NEW_NOTIFICATION': {
                 return {
                     ...state,
@@ -86,6 +86,23 @@ function newNotification(dispatch, payload) {
     })
 }
 
+async function getCountNotifications(dispatch) {
+    try {
+        const res = await apiProvider.get('/api/notification/count-notifications')
+
+        if (res.status >= 200 && res.status < 300) {
+            const { data } = res.data;
+
+            dispatch({
+                type: 'SET_COUNT',
+                payload: data.count_notifications
+            })
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 async function readNotifications(dispatch) {
     try {
         const res = await apiProvider.put('/api/notification/change-status')
@@ -129,5 +146,6 @@ export {
     NotificationProvider,
     NotificationContext,
     fetchNotifications,
-    newNotification
+    newNotification,
+    getCountNotifications
 }

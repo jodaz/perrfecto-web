@@ -14,6 +14,7 @@ import Feed from './Feed';
 import Featured from './Featured';
 import Ranking from './Ranking';
 import MatchAlert from '../../../components/Modals/MatchAlert';
+import { getCountNotifications, useNotifications } from '../../../context/NotificationContext';
 // Publications
 const PopularMembers = React.lazy(() => import('../../../components/PopularMembers'));
 const ContactDialog = React.lazy(() => import('../../../components/Modals/ContactDialog'));
@@ -31,6 +32,7 @@ const UsersHome = () => {
     const [openMatchModal, setOpenMatchModal] = React.useState(false)
     const [openOwnerCard, setOpenOwnerCard] = React.useState(false)
     const [openContactDialog, setOpenContactDialog] = React.useState(false)
+    const { dispatch: dispatchNotify } = useNotifications()
 
     const handleSelect = data => {
         setSelectedCard(data)
@@ -58,6 +60,7 @@ const UsersHome = () => {
 
     React.useEffect(() => {
         if (isAuth) {
+            getCountNotifications(dispatchNotify)
             if (isConnected) {
                 listenConnection(data => updateConnectedStatus(chatDispatch, data))
                 handleDisconnect()

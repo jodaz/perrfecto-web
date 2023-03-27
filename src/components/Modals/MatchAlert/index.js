@@ -65,6 +65,13 @@ const MatchAlert = ({ data, handleClose, open }) => {
                         Haz realizado un match con tu mascota de interés.
                         Haz click en el botón que se encuentra abajo para chatear.
                     </Typography>
+                    <Box sx={{ p: 2 }}>
+                        <Avatar sx={{
+                            border: '2px solid #F59E0B',
+                            height: '85px',
+                            width: '85px'
+                        }} src={getUserPhoto(data.img)} />
+                    </Box>
                     <Box sx={{ p: 2, color: '#fff' }}>
                         <Button
                             variant="contained"
