@@ -1,22 +1,14 @@
-import * as React from 'react';
 import Badge from '@mui/material/Badge';
 import IconButton from '@mui/material/IconButton';
 import LinkBehavior from '../../components/LinkBehavior';
 // Icons
 import { Bell } from 'lucide-react';
-import { socket } from '../../utils/socket'
-import { useNotifications, newNotification } from '../../context/NotificationContext'
+import { useNotifications } from '../../context/NotificationContext'
 
 const NotificationButton = ({
     iconColor = '#fff'
 }) => {
-    const { state: { counter }, dispatch } = useNotifications();
-
-    React.useEffect(() => {
-        socket.on('notification', response => {
-            newNotification(dispatch, response);
-        })
-    }, [socket])
+    const { state: { counter } } = useNotifications();
 
     return (
         <IconButton
