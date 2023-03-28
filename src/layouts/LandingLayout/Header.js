@@ -7,7 +7,6 @@ import Menu from '@mui/material/Menu';
 import Avatar from '@mui/material/Avatar';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import MenuItem from '@mui/material/MenuItem';
 import LanguageButton from './LanguageButton';
@@ -19,8 +18,9 @@ import { useAuth } from '../../context/AuthContext';
 import getUserPhoto from '../../utils/getUserPhoto'
 import LoginButton from './LoginButton';
 import TransparentBackdrop from '../../components/TransparentBackdrop';
+import { HashLink } from 'react-router-hash-link';
 
-const AnchorTag = styled(Link)(({ theme, dark }) => ({
+const AnchorTag = styled(HashLink)(({ theme, dark }) => ({
     textDecoration: 'none',
     padding: '0',
     [theme.breakpoints.up("sm")]: {
@@ -41,15 +41,15 @@ const AnchorTag = styled(Link)(({ theme, dark }) => ({
 const internalLinks = [
     {
         title: 'Home',
-        link: '/',
+        link: '/#',
     },
     {
         title: 'Conecta',
-        link: '/connect'
+        link: '/#meet'
     },
     {
         title: '¿Cómo funciona?',
-        link: '/how-it-works'
+        link: '/#how-it-works'
     },
     {
         title: 'Registrar negocio',
@@ -122,6 +122,7 @@ function ResponsiveAppBar({ dark }) {
                                     to={link.link}
                                     component={LinkBehavior}
                                     dark={link.dark}
+                                    smooth
                                 >
                                     {link.title}
                                 </AnchorTag>

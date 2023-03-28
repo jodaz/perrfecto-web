@@ -24,7 +24,8 @@ const HowItWorks = () => {
                 textAlign: 'left',
                 width: { sm: '80%', xs: '80%', md: '30%', lg: '30%' },
                 margin: 'auto 0',
-                textAlign: 'center'
+                textAlign: 'center',
+                marginTop: '3rem'
             }}>
                 <Typography
                     variant="subtitle1"
