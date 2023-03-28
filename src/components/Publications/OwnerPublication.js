@@ -41,7 +41,7 @@ const OwnerPublication = ({ open, data, handleClose, handleOpenContactDialog }) 
             <Box sx={{
                 flex: 1,
                 height: isSmall ? 280 : 400,
-                width: isSmall ? 280 : 400
+                width: isSmall ? '100%' : 400
             }}>
                 <PhotoGallery images={personalPhotos} />
             </Box>

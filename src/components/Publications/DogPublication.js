@@ -33,7 +33,7 @@ const DogPublication = ({ open, data, handleClose, handleOpenOwnerCard }) => {
             <Box sx={{
                 flex: 1,
                 height: isSmall ? 280 : 400,
-                width: isSmall ? 280 : 400,
+                width: isSmall ? '100%' : 400,
                 borderTopLeftRadius: '16px',
                 borderBottomLeftRadius: '16px'
             }}>
