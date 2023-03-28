@@ -5,7 +5,7 @@ import Tooltip from '@mui/material/Tooltip';
 import Stack from '@mui/material/Stack';
 import Link from '@mui/material/Link';
 import Button from '@mui/material/Button';
-import { Phone, MapPin, Edit, ArrowRight, Star } from 'lucide-react'
+import { Phone, MapPin, Edit, ArrowRight, Star, Trash2 } from 'lucide-react'
 import getUserPhoto from '../../utils/getUserPhoto';
 import PhotoGallery from '../../components/Modals/ShowCard/PhotoGallery';
 import Menu from '../../components/Menu';
@@ -67,6 +67,18 @@ const ShowBusinessLayout = item => {
                 <Edit />
                 <Box sx={{ paddingLeft: '0.5rem' }}>
                     Editar negocio
+                </Box>
+            </Box>
+            <Box component={LinkBehavior}
+                sx={{
+                display: 'flex',
+                alignItems: 'center',
+                color: 'unset',
+                textDecoration: 'none',
+            }} to='/profile/settings/security?delete=true'>
+                <Trash2 />
+                <Box sx={{ paddingLeft: '0.5rem' }}>
+                    Eliminar negocio
                 </Box>
             </Box>
         </Menu>
