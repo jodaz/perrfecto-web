@@ -32,7 +32,7 @@ function TabPanel(props) {
             }}
         >
             {value === index && (
-                <Box sx={{ p: 3, height: 'inherit' }}>
+                <Box sx={{ height: 'inherit' }}>
                     {children}
                 </Box>
             )}
