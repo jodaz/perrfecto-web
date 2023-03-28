@@ -19,7 +19,7 @@ const HowItWorks = () => {
             flexDirection: 'column',
             alignItems: 'center',
             padding: 4
-        }} id="howitworks">
+        }} id="how-it-works">
             <Box sx={{
                 textAlign: 'left',
                 width: { sm: '80%', xs: '80%', md: '30%', lg: '30%' },

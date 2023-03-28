@@ -5,7 +5,7 @@ import getUserPhoto from '../../utils/getUserPhoto'
 import Typography from '@mui/material/Typography';
 import LinkBehavior from '../../components/LinkBehavior'
 
-const getLinkByType = ({ type, link, uid }) => {
+const getLinkByType = ({ type, link }) => {
     switch(type) {
         case 'like_blog': {
             return `/blogs/${link}`;

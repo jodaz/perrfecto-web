@@ -16,7 +16,7 @@ const DownloadAppSection = () => {
             alignItems: 'center',
             flexDirection: { xs: 'column-reverse', sm: 'column-reverse', md: 'row' },
             padding: '2rem 2rem 4rem 2rem'
-        }}>
+        }} id="meet">
             <Box sx={{
                 textAlign: 'left',
                 width: { sm: '80%', xs: '80%', md: '30%', lg: '30%' },
