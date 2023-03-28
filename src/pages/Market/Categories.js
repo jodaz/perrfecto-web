@@ -12,7 +12,7 @@ const Categories = ({ data, loading }) =>  (
             fontWeight={500}
             fontSize='1rem'
             mb={2}
-            color="text.secondary"
+            color="text.primary"
             textTransform={'uppercase'}
         >
             Categorías
