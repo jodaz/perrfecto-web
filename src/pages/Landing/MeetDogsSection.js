@@ -3,9 +3,34 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import useMediaQuery from '@mui/material/useMediaQuery';
 import EllipseImage from '../../components/EllipseImage';
+import { apiProvider } from '../../api';
+import useEffectOnce from '../../utils/useEffectOnce'
+import Card from '../../components/Cards/Card'
+import DogSectionPawprints from './DogSectionPawprints';
 
 const MeetDogsSection = () => {
-    const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+    const [isLoaded, setIsLoaded] = React.useState(false)
+    const isSmall = useMediaQuery((theme) => theme.breakpoints.down('md'));
+    const [publications, setPublications] = React.useState([])
+
+    const fetchPublications = async () => {
+        try {
+            const res = await apiProvider.get('api/publication/publications')
+
+            if (res.status >= 200 && res.status < 300) {
+                const { data: { data } } = res;
+
+                setPublications(data)
+                setIsLoaded(true)
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    useEffectOnce(() => { fetchPublications() }, []);
+
+    if (!isLoaded) return null;
 
     return (
         <Box sx={{
@@ -31,52 +56,7 @@ const MeetDogsSection = () => {
             >
                 Conoce las mascotas que obtuvieron más likes de la semana, día y mes
             </Typography>
-            {!isSmall && (
-                <>
-                    <EllipseImage
-                        n='pawprints/huella1'
-                        sx={{
-                            top: '30px',
-                            right: '50px'
-                        }}
-                    />
-                    <EllipseImage
-                        n='pawprints/huella2'
-                        sx={{
-                            top: '200px',
-                            right: '40px'
-                        }}
-                    />
-                    <EllipseImage
-                        n='pawprints/huella6'
-                        sx={{
-                            top: '400px',
-                            right: '70px'
-                        }}
-                    />
-                    <EllipseImage
-                        n='pawprints/huella3'
-                        sx={{
-                            top: '30px',
-                            left: '90px'
-                        }}
-                    />
-                    <EllipseImage
-                        n='pawprints/huella4'
-                        sx={{
-                            top: '180px',
-                            left: '50px'
-                        }}
-                    />
-                    <EllipseImage
-                        n='pawprints/huella5'
-                        sx={{
-                            bottom: '50px',
-                            left: '90px'
-                        }}
-                    />
-                </>
-            )}
+            {!isSmall && <DogSectionPawprints />}
         </Box>
     )
 }
