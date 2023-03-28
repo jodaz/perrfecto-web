@@ -24,8 +24,7 @@ import axios from 'axios'
 
 const genders = [
     { label: 'Macho', value: 'male' },
-    { label: 'Hembra', value: 'female' },
-    { label: 'Ambos', value: 'both' },
+    { label: 'Hembra', value: 'female' }
 ]
 
 const FilterDrawer = () => {
