@@ -2,8 +2,8 @@ import * as React from "react"
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import styled from "@emotion/styled"
-import { Search } from "lucide-react"
 import FeedCard from "../../../components/Cards/FeedCard"
+import GuestDog1 from '../../../assets/images/GuestDog1.png'
 
 // basic default styles for container
 const Frame = styled.div`
@@ -28,13 +28,17 @@ const NoPubsMessage = () => (
         alignSelf: 'start',
         flexDirection: 'column'
     }}>
-        <Box p={2}>
-            <Search size={48} />
-        </Box>
+        <Box
+            component="img"
+            height='170px'
+            width='145px'
+            src={GuestDog1}
+            marginBottom='15px'
+        />
         <Typography
             variant="subtitle1"
         >
-            Sin publicaciones
+            Sin publicaciones disponibles.
         </Typography>
     </Box>
 )
