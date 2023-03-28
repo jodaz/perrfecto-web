@@ -36,7 +36,6 @@ const Footer = () => {
     return (
         <Grid container sx={{
             backgroundColor: theme => theme.palette.primary.main,
-            padding: `3rem ${isSmall ? '2rem' : '6rem'}`,
             position: 'relative'
         }}>
             <Box component="img" src={DogFooter} sx={{
@@ -44,79 +43,78 @@ const Footer = () => {
                 top: '-100px',
                 right: 0
             }} />
-            <Grid item md={12} marginBottom='2rem'>
-                <Grid container>
-                    <Grid md={3} sm={12} mt={1}>
-                        <Typography
-                            variant="h6"
-                            textAlign='left'
-                            color="secondary.main"
-                            gutterBottom
-                        >
-                            TinderDogs
-                        </Typography>
-                        <Link to='/#meet'>
-                            Conecta
-                        </Link>
-                        <Link to='/#how-it-works'>
-                            ¿Como funciona?
-                        </Link>
-                        <Link to='/blogs'>
-                            Blog
-                        </Link>
-                        <Link to='/business/register'>
-                            Registrar negocio
-                        </Link>
-                    </Grid>
-                    <Grid md={3} sm={12} mt={1}>
-                        <Typography
-                            variant="h6"
-                            textAlign='left'
-                            color="secondary.main"
-                            gutterBottom
-                        >
-                            Soporte
-                        </Typography>
-                        <Link>
-                            Ayuda al usuario
-                        </Link>
-                    </Grid>
-                    <Grid md={3} sm={12} mt={1}>
-                        <Typography
-                            variant="h6"
-                            textAlign='left'
-                            color="secondary.main"
-                            gutterBottom
-                        >
-                            Legal
-                        </Typography>
-                        <Link>
-                            Políticas de privacidad
-                        </Link>
-                        <Link>
-                            Términos y condiciones
-                        </Link>
-                    </Grid>
-                    <Grid md={3} sm={12} mt={1}>
-                        <Typography
-                            variant="h6"
-                            textAlign='left'
-                            color="secondary.main"
-                            gutterBottom
-                        >
-                            Descargar la App
-                        </Typography>
-                        <Box component="img" padding='10px' src={AppleStore} />
-                        <Box component="img" src={GooglePlay} />
-                    </Grid>
+            <Grid container marginBottom={2} padding={`3rem ${isSmall ? '2rem' : '6rem'}`}>
+                <Grid item md={3} xs={12} sm={12} mt={1}>
+                    <Typography
+                        variant="h6"
+                        textAlign='left'
+                        color="secondary.main"
+                        gutterBottom
+                    >
+                        TinderDogs
+                    </Typography>
+                    <Link to='/#meet'>
+                        Conecta
+                    </Link>
+                    <Link to='/#how-it-works'>
+                        ¿Como funciona?
+                    </Link>
+                    <Link to='/blogs'>
+                        Blog
+                    </Link>
+                    <Link to='/business/register'>
+                        Registrar negocio
+                    </Link>
+                </Grid>
+                <Grid item md={3} xs={12} sm={12} mt={1}>
+                    <Typography
+                        variant="h6"
+                        textAlign='left'
+                        color="secondary.main"
+                        gutterBottom
+                    >
+                        Soporte
+                    </Typography>
+                    <Link>
+                        Ayuda al usuario
+                    </Link>
+                </Grid>
+                <Grid item md={3} xs={12} sm={12} mt={1}>
+                    <Typography
+                        variant="h6"
+                        textAlign='left'
+                        color="secondary.main"
+                        gutterBottom
+                    >
+                        Legal
+                    </Typography>
+                    <Link>
+                        Políticas de privacidad
+                    </Link>
+                    <Link>
+                        Términos y condiciones
+                    </Link>
+                </Grid>
+                <Grid item md={3} xs={12} sm={12} mt={1}>
+                    <Typography
+                        variant="h6"
+                        textAlign='left'
+                        color="secondary.main"
+                        gutterBottom
+                    >
+                        Descargar la App
+                    </Typography>
+                    <Box component="img" padding='10px' src={AppleStore} />
+                    <Box component="img" src={GooglePlay} />
                 </Grid>
             </Grid>
-            <Divider />
+            <Divider sx={{ width: '100%', opacity: '0.5' }} />
             <Grid item md={12}>
                 <Box sx={{
                     height: 'fit-content',
                     display: 'flex',
-                    flexDirection: { xs: 'column-reverse', sm: 'column-reverse', md: 'row' }
+                    flexDirection: { xs: 'column-reverse', sm: 'column-reverse', md: 'row' },
+                    padding: '2rem 3rem'
                 }}>
                     <Typography
                         variant="subtitle1"
