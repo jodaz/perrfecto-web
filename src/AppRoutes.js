@@ -2,7 +2,8 @@ import * as React from 'react'
 import {
     Route,
     Routes,
-    useLocation
+    useLocation,
+    useNavigate
 } from 'react-router-dom'
 import { useAuth, guestUser, getCurrentPlan } from './context/AuthContext';
 // Layouts
@@ -93,6 +94,7 @@ import CurrentSuscription from './pages/suscriptions/CurrentSuscription';
 function AppRoutes() {
     let location = useLocation();
     const { state: { isAuth, user }, dispatch } = useAuth();
+    const navigate = useNavigate()
 
     // Set guest user by default
     React.useEffect(() => {
@@ -100,6 +102,10 @@ function AppRoutes() {
             guestUser(dispatch)
         } else {
             getCurrentPlan(dispatch, user.role)
+
+            if (location.pathname == '/') {
+                navigate('/market')
+            }
         }
     }, [isAuth])
 
