@@ -6,6 +6,7 @@ import './index.css'
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import "swiper/css/effect-coverflow";
 import "swiper/css/scrollbar";
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
