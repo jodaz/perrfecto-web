@@ -26,9 +26,7 @@ const IconButtonWithTitle = ({ to, icon, title }) => (
         component={LinkBehavior}
         to={to}
     >
-        <Box>
-            {icon}
-        </Box>
+        <Box component='img' src={icon} />
         <Typography
             variant="body1"
             color="text.secondary"

@@ -3,8 +3,8 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import EllipseImage from '../../../components/EllipseImage';
-import { ReactComponent as RocketIcon } from '../../../assets/icons/Rocket.svg'
-import { ReactComponent as BlogIcon } from '../../../assets/icons/Blog.svg'
+import RocketIcon from '../../../assets/icons/Rocket.png'
+import BlogIcon from '../../../assets/icons/Blog.png'
 import IconButtonWithTitle from '../../../components/IconButtonWithTitle';
 import LogoutButton from '../../../components/Buttons/LogOutButton';
 import { useMediaQuery } from '@mui/material';
@@ -77,12 +77,12 @@ const BusinessHome = () => {
                 <Stack direction='row' spacing={2} mt={2}>
                     <IconButtonWithTitle
                         title="Negocio"
-                        icon={<RocketIcon />}
+                        icon={RocketIcon}
                         to='/businesses'
                     />
                     <IconButtonWithTitle
                         title="Blog"
-                        icon={<BlogIcon />}
+                        icon={BlogIcon}
                         to='/blogs/create'
                     />
                 </Stack>
