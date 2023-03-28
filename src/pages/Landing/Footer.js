@@ -3,9 +3,8 @@ import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
-// import Image from '../../assets/images/Footer.png'
+import { HashLink } from 'react-router-hash-link';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import LinkBehavior from '../../components/LinkBehavior'
 import AppleStore from '../../assets/icons/AppleStore.png'
 import GooglePlay from '../../assets/icons/GooglePlay.png'
 import DogFooter from '../../assets/icons/DogFooter.png'
@@ -15,7 +14,7 @@ const Link = ({ children, to }) => (
         variant="body1"
         color="#fff"
         fontWeight='400'
-        component={LinkBehavior}
+        component={HashLink}
         sx={{
             textDecoration: 'none',
             display: 'block',
@@ -25,6 +24,7 @@ const Link = ({ children, to }) => (
         }}
         gutterBottom
         to={to}
+        smooth
     >
         {children}
     </Typography>
@@ -75,7 +75,7 @@ const Footer = () => {
                     >
                         Soporte
                     </Typography>
-                    <Link>
+                    <Link to='#'>
                         Ayuda al usuario
                     </Link>
                 </Grid>
@@ -88,10 +88,10 @@ const Footer = () => {
                     >
                         Legal
                     </Typography>
-                    <Link>
+                    <Link to='#'>
                         Políticas de privacidad
                     </Link>
-                    <Link>
+                    <Link to='#'>
                         Términos y condiciones
                     </Link>
                 </Grid>
