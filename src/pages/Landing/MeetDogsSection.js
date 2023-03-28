@@ -15,7 +15,6 @@ const SwiperStyled = styled(Swiper)(() => ({
     borderRadius: 'inherit',
     width: '100%',
     '& .swiper-pagination-bullet': {
-        marginTop: '15rem',
         backgroundColor: '#A167C9',
         width: '8px',
         height: '8px',
@@ -57,7 +56,7 @@ const MeetDogsSection = () => {
             justifyContent: 'center',
             padding: '4rem 0',
             alignItems: 'center',
-            height: isSmall ? '500px' : '600px',
+            height: isSmall ? '560px' : '650px',
             position: 'relative',
             flexDirection: 'column'
         }}>
