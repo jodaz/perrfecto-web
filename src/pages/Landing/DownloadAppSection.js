@@ -3,6 +3,8 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Image from '../../assets/images/DownloadAppSection.png'
 import useMediaQuery from '@mui/material/useMediaQuery';
+import AppleStore from '../../assets/icons/AppleStore.png'
+import GooglePlay from '../../assets/icons/GooglePlay.png'
 
 const DownloadAppSection = () => {
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
@@ -41,6 +43,8 @@ const DownloadAppSection = () => {
                     y trucos con otros dueños de perros, y descubre eventos
                     y actividades para perros en tu área.
                 </Typography>
+                <Box component="img" padding='10px' src={AppleStore} />
+                <Box component="img" src={GooglePlay} />
             </Box>
 
             <Box

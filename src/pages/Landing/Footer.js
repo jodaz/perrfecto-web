@@ -6,6 +6,9 @@ import Divider from '@mui/material/Divider'
 // import Image from '../../assets/images/Footer.png'
 import useMediaQuery from '@mui/material/useMediaQuery';
 import LinkBehavior from '../../components/LinkBehavior'
+import AppleStore from '../../assets/icons/AppleStore.png'
+import GooglePlay from '../../assets/icons/GooglePlay.png'
+import DogFooter from '../../assets/icons/DogFooter.png'
 
 const Link = ({ children, to }) => (
     <Typography
@@ -33,11 +36,17 @@ const Footer = () => {
     return (
         <Grid container sx={{
             backgroundColor: theme => theme.palette.primary.main,
-            padding: `3rem ${isSmall ? '2rem' : '6rem'}`
+            padding: `3rem ${isSmall ? '2rem' : '6rem'}`,
+            position: 'relative'
         }}>
+            <Box component="img" src={DogFooter} sx={{
+                position: 'absolute',
+                top: '-100px',
+                right: 0
+            }} />
             <Grid item md={12} marginBottom='2rem'>
                 <Grid container>
-                    <Grid md={3} sm={12}>
+                    <Grid md={3} sm={12} mt={1}>
                         <Typography
                             variant="h6"
                             textAlign='left'
@@ -59,7 +68,7 @@ const Footer = () => {
                             Registrar negocio
                         </Link>
                     </Grid>
-                    <Grid md={3} sm={12}>
+                    <Grid md={3} sm={12} mt={1}>
                         <Typography
                             variant="h6"
                             textAlign='left'
@@ -72,7 +81,7 @@ const Footer = () => {
                             Ayuda al usuario
                         </Link>
                     </Grid>
-                    <Grid md={3} sm={12}>
+                    <Grid md={3} sm={12} mt={1}>
                         <Typography
                             variant="h6"
                             textAlign='left'
@@ -88,7 +97,7 @@ const Footer = () => {
                             Términos y condiciones
                         </Link>
                     </Grid>
-                    <Grid md={3} sm={12}>
+                    <Grid md={3} sm={12} mt={1}>
                         <Typography
                             variant="h6"
                             textAlign='left'
@@ -97,6 +106,8 @@ const Footer = () => {
                         >
                             Descargar la App
                         </Typography>
+                        <Box component="img" padding='10px' src={AppleStore} />
+                        <Box component="img" src={GooglePlay} />
                     </Grid>
                 </Grid>
             </Grid>
