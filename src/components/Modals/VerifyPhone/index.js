@@ -16,7 +16,8 @@ const VerifyPhone = ({
     handleClose,
     updateStatus,
     method = 'PUT',
-    endpoint
+    endpoint,
+    title
 }) => {
     const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const [success, setSuccess] = React.useState('')
@@ -96,7 +97,7 @@ const VerifyPhone = ({
                     flexDirection: 'column',
                 }}>
                     <Box component='h2' margin='0 0 1rem 0' color="text.primary">
-                        Verificar teléfono
+                        {title}
                     </Box>
                     <Box component="form" onSubmit={handleSubmit(onSubmit)}>
                         {(success) && (

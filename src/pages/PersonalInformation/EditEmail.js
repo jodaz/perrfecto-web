@@ -7,11 +7,15 @@ import { useForm } from 'react-hook-form';
 import { useAuth, renewToken } from '../../context/AuthContext';
 import TextInput from '../../components/Forms/TextInput';
 import formDataHandler from '../../utils/formDataHandler';
-import { fileProvider } from '../../api';
+import { apiProvider } from '../../api';
 import { EMAIL } from '../../validations'
+import VerifyPhone from '../../components/Modals/VerifyPhone';
 
 const EditEmail = () => {
     const { state: { user }, dispatch } = useAuth();
+    const [email, setEmail] = React.useState(null)
+    const [openVerifyEmail, setOpenVerifyEmail] = React.useState(false)
+    const [isVerified, setIsVerified] = React.useState(false);
     const navigate = useNavigate()
     const { control, handleSubmit, setError, formState: {
         isSubmitting
@@ -22,16 +26,15 @@ const EditEmail = () => {
         }))
     });
 
-    const onSubmit = React.useCallback(async values => {
-        try {
-            const formData = await formDataHandler({
-                email: values.email
-            })
-            const res = await fileProvider.put(`/api/auth/user-edit/${user.id}`, formData)
+    const toggleVerifyEmail = () => setOpenVerifyEmail(!openVerifyEmail);
 
-            if (res.status >= 200 && res.status < 300) {
-                navigate(-1)
-                renewToken(dispatch, user)
+    const verifyEmail = React.useCallback(async values => {
+        try {
+            const response = await apiProvider.put(`/api/user/email`, values)
+
+            if (response.status >= 200 && response.status < 300) {
+                setEmail(values)
+                return toggleVerifyEmail() // Abre modal de verificación
             }
         } catch (error) {
             if (error.response.data.msg) {
@@ -45,6 +48,11 @@ const EditEmail = () => {
             }
         }
     }, []);
+
+    const onSubmit = React.useCallback(values => {
+        // Valida el numero de telefono solo si no ha sido validado antes
+        return verifyEmail(values)
+    }, [isVerified]);
 
     return (
         <SettingsLayout title='Cuenta de acceso'>
@@ -80,6 +88,21 @@ const EditEmail = () => {
                         Guardar cambios
                     </Button>
                 </Box>
+                {(openVerifyEmail) && (
+                    <VerifyPhone
+                        title='Verificar email'
+                        open={openVerifyEmail}
+                        data={email}
+                        handleClose={toggleVerifyEmail}
+                        endpoint='/api/user/confirm-change-email'
+                        updateStatus={() => {
+                            setIsVerified(true)
+                            renewToken(dispatch, user)
+                            setEmail(null)
+                            navigate(-1)
+                        }}
+                    />
+                )}
             </Box>
         </SettingsLayout>
     );

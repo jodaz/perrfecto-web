@@ -97,6 +97,7 @@ const EditPhone = () => {
             </Box>
             {(openVerifyPhone) && (
                 <VerifyPhone
+                    title='Editar teléfono'
                     open={openVerifyPhone}
                     data={phoneValues}
                     handleClose={toggleVerifyPhone}
