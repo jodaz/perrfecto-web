@@ -1,5 +1,8 @@
 import * as React from "react"
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
 import styled from "@emotion/styled"
+import { Search } from "lucide-react"
 import FeedCard from "../../../components/Cards/FeedCard"
 
 // basic default styles for container
@@ -12,6 +15,29 @@ const Frame = styled.div`
     position: relative;
     height: 100%;
 `
+
+const NoPubsMessage = () => (
+    <Box sx={{
+        borderRadius: '20px',
+        height: '300px',
+        width: '300px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#fff',
+        alignSelf: 'start',
+        flexDirection: 'column'
+    }}>
+        <Box p={2}>
+            <Search size={48} />
+        </Box>
+        <Typography
+            variant="subtitle1"
+        >
+            Sin publicaciones
+        </Typography>
+    </Box>
+)
 
 const Stack = ({ onVote, isLoaded, data, onClick, ...props }) => {
     const [stack, setStack] = React.useState(data)
@@ -47,6 +73,7 @@ const Stack = ({ onVote, isLoaded, data, onClick, ...props }) => {
                         />
                     )
                 })}
+                {(!stack.length) && <NoPubsMessage />}
             </Frame>
         </>
     )
