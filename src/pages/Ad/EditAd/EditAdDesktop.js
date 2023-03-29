@@ -19,7 +19,7 @@ import { DESCRIPTION, ADD_PHOTOS } from '../../../validations';
 import DialogTitle from '../../../components/DialogTitle';
 import { useNavigate } from 'react-router-dom';
 
-const selectedItems = labels => labels.map(({ id }) => id)
+const selectedItems = labels => labels.map(({ id }) => id).filter(item => item);
 
 const EditAdDesktop = () => {
     const { state: { user }, dispatch } = useAuth();

@@ -18,7 +18,7 @@ import DeletePhotoWarning from '../../../components/Modals/DeletePhotoWarning';
 import DogInformation from '../DogInformation';
 import { DESCRIPTION, ADD_PHOTOS } from '../../../validations';
 
-const selectedItems = labels => labels.map(({ id }) => id)
+const selectedItems = labels => labels.map(({ id }) => id).filter(item => item);
 
 const EditAdMobile = () => {
     const { state: { user }, dispatch } = useAuth();
