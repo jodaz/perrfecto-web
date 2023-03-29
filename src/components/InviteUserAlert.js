@@ -4,8 +4,10 @@ import { Stack } from "@mui/system";
 import { useAuth } from "../context/AuthContext";
 import LinkBehavior from "./LinkBehavior";
 import { useLocation } from 'react-router-dom';
+import { useMediaQuery } from '@mui/material';
 
 const InviteUserAlert = () => {
+    const isSmall = useMediaQuery(theme => theme.breakpoints.down('md'));
     const location = useLocation();
     const { state: { user } } = useAuth();
     const [url, setUrl] = React.useState('')
@@ -43,9 +45,10 @@ const InviteUserAlert = () => {
             backgroundColor: "#f8f8f8",
             borderRadius: '10px',
             boxShadow: '0px 0px 18px rgba(223, 223, 223, 0.5)',
+            width: isSmall ? '300px' : '360px',
             m: 1
         }}>
-            <Stack spacing={1} direction="row" m={2}>
+            <Stack spacing={1} direction={isSmall ? "column" : 'row'} m={2}>
                 <Typography
                     variant="body2"
                 >
