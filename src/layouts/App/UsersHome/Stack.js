@@ -44,7 +44,7 @@ const NoPubsMessage = () => (
 )
 
 const Stack = ({ onVote, isLoaded, data, onClick, ...props }) => {
-    const [stack, setStack] = React.useState(data)
+    const [stack, setStack] = React.useState(data.reverse())
     // return new array with last item removed
     const pop = (array) => {
         return array.filter((_, index) => {
