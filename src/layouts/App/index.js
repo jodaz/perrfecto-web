@@ -1,7 +1,10 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Aside from './Aside'
-import { useAuth } from '../../context/AuthContext'
+import { socket } from '../../utils/socket';
+import { useNotifications, newNotification } from '../../context/NotificationContext';
+import { useMatch, match } from '../../context/MatchContext';
+import { useAuth, renewToken } from '../../context/AuthContext'
 // Screens
 import BusinessHome from './BusinessHome';
 import UsersHome from './UsersHome';
@@ -10,9 +13,6 @@ import Navigation from './Navigation';
 import GuestWarningModal from '../../components/Modals/GuestWarningModal';
 import GeolocationDrawer from '../../components/Drawers/GeolocationDrawer';
 import FilterDrawer from '../../components/FilterDrawer';
-import { socket } from '../../utils/socket';
-import { useNotifications, newNotification } from '../../context/NotificationContext';
-import { useMatch, match } from '../../context/MatchContext';
 
 const DesktopLayout = ({ user, isAuth, children }) => (
     <Box sx={{
@@ -30,7 +30,7 @@ const DesktopLayout = ({ user, isAuth, children }) => (
 )
 
 export default function AppLayout({ children }) {
-    const { state: { user, isAuth } } = useAuth();
+    const { state: { user, isAuth }, dispatch: authDispatch } = useAuth();
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
     const { dispatch } = useNotifications();
     const { dispatch: matchDispatch } = useMatch()
@@ -39,6 +39,9 @@ export default function AppLayout({ children }) {
         socket.on('notification', response => {
             if (response.notification.type == 'match') {
                 match(matchDispatch, response.notification)
+            }
+            if (response.notification.type == 'delete_publication') {
+                renewToken(authDispatch, user)
             }
 
             newNotification(dispatch, response);
