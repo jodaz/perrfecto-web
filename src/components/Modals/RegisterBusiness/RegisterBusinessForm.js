@@ -57,7 +57,7 @@ const RegisterBusinessForm = ({ isSmall }) => {
             if (parsedError.msg) {
                 const message = parsedError.msg;
 
-                if (message.includes('There is a user with the provided email')) {
+                if (message.includes('There was a problem')) {
                     setError('email', {
                        type: 'unique'
                     })

@@ -40,7 +40,7 @@ const EditEmail = () => {
             if (error.response.data.msg) {
                 const message = error.response.data.msg;
 
-                if (message.includes('There is a user with the provided email')) {
+                if (message.includes('There was a problem')) {
                     setError('email', {
                        type: 'unique'
                     })
