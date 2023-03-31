@@ -9,10 +9,10 @@ const Categories = ({ data, loading }) =>  (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <Typography
             variant="subtitle1"
-            fontWeight={500}
+            fontWeight={600}
             fontSize='1rem'
             mb={2}
-            color="text.primary"
+            color="text.secondary"
             textTransform={'uppercase'}
         >
             Categorías
