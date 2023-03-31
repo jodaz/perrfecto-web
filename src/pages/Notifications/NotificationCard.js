@@ -31,6 +31,9 @@ const getLinkByType = ({ type, link }) => {
 
 const getMessageByType = ({ name_sender, type }) => {
     switch(type) {
+        case 'delete_publication': {
+            return `Tu publicación ha sido eliminada por el administrador.`;
+        }
         case 'pet_day': {
             return `Tu publicación ha sido elegida mascota del día.`;
         }
@@ -110,7 +113,8 @@ const NotificationCard = props => {
         'refused_publication',
         'pet_day',
         'pet_week',
-        'pet_moth'
+        'pet_moth',
+        'delete_publication'
     ];
 
     return (
