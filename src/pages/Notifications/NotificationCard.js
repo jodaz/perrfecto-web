@@ -71,7 +71,7 @@ const getMessageByType = ({ name_sender, type }) => {
             return `Tu publicación ha recibido un comentario.`;
         }
         case 'refused_blog': {
-            return `Tu ha sido rechazado.`;
+            return `Tu ha blog sido rechazado.`;
         }
         default: {
             console.log("Unhandled type ", type)
