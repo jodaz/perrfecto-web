@@ -88,10 +88,10 @@ const Footer = () => {
                     >
                         Legal
                     </Typography>
-                    <Link to='#'>
+                    <Link to='/privacy-policies'>
                         Políticas de privacidad
                     </Link>
-                    <Link to='#'>
+                    <Link to='/terms-conditions'>
                         Términos y condiciones
                     </Link>
                 </Grid>
