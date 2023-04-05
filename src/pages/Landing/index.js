@@ -9,7 +9,6 @@ import Intro from './Intro';
 import DownloadAppSection from './DownloadAppSection';
 import RegisterBusinessCalling from './RegisterBusinessCalling';
 import HowItWorks from './HowItWorks';
-import Footer from './Footer';
 import BlogsSection from './BlogsSection';
 import OurPlansSection from './OurPlansSection';
 import MeetDogsSection from './MeetDogsSection';
@@ -35,7 +34,6 @@ const Landing = ({ location }) => {
             <HowItWorks />
             <OurPlansSection />
             <BlogsSection />
-            <Footer />
             <DeletedAccount
                 open={openDeleteModal}
                 handleClose={() => navigate('/')}

@@ -1,5 +1,6 @@
 import Box from '@mui/material/Box'
 import Header from './Header';
+import Footer from './Footer';
 
 const LandingLayout = ({ children, dark }) => (
     <Box sx={{
@@ -8,6 +9,7 @@ const LandingLayout = ({ children, dark }) => (
     }}>
         <Header dark={dark} />
         {children}
+        <Footer />
     </Box>
 );
 

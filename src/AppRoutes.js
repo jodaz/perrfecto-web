@@ -90,6 +90,7 @@ import SuscriptionsCheckoutProcess from './pages/suscriptions/SuscriptionsChecko
 import EditPhone from './pages/PersonalInformation/EditPhone';
 import EditEmail from './pages/PersonalInformation/EditEmail';
 import CurrentSuscription from './pages/suscriptions/CurrentSuscription';
+import PrivacyPolicies from './pages/PrivacyPolicies';
 
 function AppRoutes() {
     let location = useLocation();
@@ -541,6 +542,18 @@ function AppRoutes() {
             </Route>
             <Route path="/register/welcome" element={<CreateProfileWelcome location={location} />} />
 
+            <Route path="/privacy-policies" element={
+                <LandingLayout>
+                    <PrivacyPolicies />
+                </LandingLayout>
+            } />
+
+            <Route path="/legal-terms" element={
+                <LandingLayout>
+                    <Terms />
+                </LandingLayout>
+            } />
+
             {/** Businesss routes */}
             <Route path="/business" element={
                 <LandingLayout dark>
@@ -673,10 +686,6 @@ function AppRoutes() {
             </Route>
 
             <Route path="/introduction" element={<Intro />} />
-
-            <Route path="/terms-conditions" element={<Terms />} />
-
-            <Route path="/privacy" element={<Terms />} />
         </Routes>
     );
 }
