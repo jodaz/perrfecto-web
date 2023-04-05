@@ -548,6 +548,12 @@ function AppRoutes() {
                 </LandingLayout>
             } />
 
+            <Route path="/legal-terms" element={
+                <LandingLayout>
+                    <Terms />
+                </LandingLayout>
+            } />
+
             {/** Businesss routes */}
             <Route path="/business" element={
                 <LandingLayout dark>
@@ -680,10 +686,6 @@ function AppRoutes() {
             </Route>
 
             <Route path="/introduction" element={<Intro />} />
-
-            <Route path="/terms-conditions" element={<Terms />} />
-
-            <Route path="/privacy" element={<Terms />} />
         </Routes>
     );
 }

@@ -91,7 +91,7 @@ const Footer = () => {
                     <Link to='/privacy-policies'>
                         Políticas de privacidad
                     </Link>
-                    <Link to='/terms-conditions'>
+                    <Link to='/legal-terms'>
                         Términos y condiciones
                     </Link>
                 </Grid>

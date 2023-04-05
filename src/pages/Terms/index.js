@@ -14,7 +14,7 @@ const PrivacyPolicies = () => (
             mb={5}
             gutterBottom
         >
-            Políticas de privacidad
+            Términos y condiciones
         </Typography>
         <Typography
             variant="h6"
