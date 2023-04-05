@@ -90,6 +90,7 @@ import SuscriptionsCheckoutProcess from './pages/suscriptions/SuscriptionsChecko
 import EditPhone from './pages/PersonalInformation/EditPhone';
 import EditEmail from './pages/PersonalInformation/EditEmail';
 import CurrentSuscription from './pages/suscriptions/CurrentSuscription';
+import PrivacyPolicies from './pages/PrivacyPolicies';
 
 function AppRoutes() {
     let location = useLocation();
@@ -540,6 +541,12 @@ function AppRoutes() {
                 <Route path="/account/unlock" element={<AccountUnlock location={location} />} />
             </Route>
             <Route path="/register/welcome" element={<CreateProfileWelcome location={location} />} />
+
+            <Route path="/privacy-policies" element={
+                <LandingLayout>
+                    <PrivacyPolicies />
+                </LandingLayout>
+            } />
 
             {/** Businesss routes */}
             <Route path="/business" element={
