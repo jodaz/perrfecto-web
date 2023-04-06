@@ -34,6 +34,9 @@ const getMessageByType = ({ name_sender, type }) => {
         case 'delete_publication': {
             return `Tu publicación ha sido eliminada por el administrador.`;
         }
+        case 'locked_user': {
+            return `Tu usuario ha sido bloqueado por el administrador.`;
+        }
         case 'delete_blog': {
             return `Tu blog ha sido eliminado por el administrador.`;
         }
@@ -118,7 +121,8 @@ const NotificationCard = props => {
         'pet_week',
         'pet_moth',
         'delete_publication',
-        'delete_blog'
+        'delete_blog',
+        'locked_user'
     ];
 
     return (
