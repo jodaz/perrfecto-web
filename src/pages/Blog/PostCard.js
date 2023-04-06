@@ -13,6 +13,58 @@ import Skeleton from "@mui/material/Skeleton";
 import FeaturedMark from './FeaturedMark';
 import LikePostButton from '../../components/Buttons/LikePostButton';
 
+const Status = ({ status }) => {
+    const [label, setLabel] = React.useState(null)
+
+    const updateLabel = async () => {
+        switch(status) {
+            case 'pending':
+            case 'updated': {
+                return await setLabel({
+                    color: 'info.main',
+                    label: 'Pendiente'
+                })
+            }
+            case 'active': {
+                return await setLabel({
+                    color: 'success.main',
+                    label: 'Publicado'
+                })
+            }
+            case 'blocked': {
+                return await setLabel({
+                    color: 'error.main',
+                    label: 'Bloqueado'
+                })
+            }
+            case 'refused': {
+                return await setLabel({
+                    color: 'error.main',
+                    label: 'Rechazado'
+                })
+            }
+            default: {
+                return;
+            }
+        }
+    }
+
+    React.useEffect(() => { updateLabel()})
+
+    if (!label) return <></>;
+
+    return (
+        <Typography
+            variant="body1"
+            color={label.color}
+            fontWeight={500}
+            fontSize={12}
+        >
+            {label.label}
+        </Typography>
+    )
+}
+
 const PostCard = ({
     menu,
     showStatus,
@@ -106,16 +158,7 @@ const PostCard = ({
                             >
                                 {format(new Date(item.createdAt), 'MMMM d, y', { locale: es })}
                             </Typography>
-                            {(showStatus) && (
-                                <Typography
-                                    variant="body1"
-                                    color="success.main"
-                                    fontWeight={500}
-                                    fontSize={12}
-                                >
-                                    Publicado
-                                </Typography>
-                            )}
+                            {(showStatus) && <Status {...item } />}
                         </Box>
                     )}
                     {loading ? (
