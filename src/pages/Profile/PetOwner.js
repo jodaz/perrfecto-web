@@ -48,18 +48,6 @@ const PetOwner = () => {
         }
     }
 
-    const deletePhoto = async (picture) => {
-        try {
-            const res = await apiProvider.delete(`/api/user/img-profile/${picture}`)
-
-            if (res.status >= 200 && res.status < 300) {
-                renewToken(dispatch, user)
-            }
-        } catch (error) {
-            setError('Ha ocurrido un error inesperado.')
-        }
-    }
-
     React.useEffect(() => {
         const subscription = watch(handleSubmit(onSubmit))
 
@@ -96,7 +84,6 @@ const PetOwner = () => {
                         control={control}
                         defaultValue={currProfilePic}
                         disabled={isSubmitting}
-                        handleDelete={() => deletePhoto(currProfilePic)}
                     />
                 </Box>
                 <Typography

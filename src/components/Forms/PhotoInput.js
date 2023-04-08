@@ -3,7 +3,7 @@ import Box from '@mui/material/Box'
 import Avatar from '@mui/material/Avatar'
 import FormHelperText from '@mui/material/FormHelperText'
 import { useDropzone } from 'react-dropzone';
-import { Plus, Trash2 } from 'lucide-react';
+import { Plus, RefreshCw } from 'lucide-react';
 import { Controller } from 'react-hook-form'
 import getUserPhoto from '../../utils/getUserPhoto';
 
@@ -12,8 +12,7 @@ const initialState = { preview: '/images/Avatar.svg' }
 const Dropzone = ({
     onChange,
     disabled,
-    defaultValue,
-    handleDelete
+    defaultValue
 }) => {
     const [file, setFile] = React.useState(initialState);
     const { getRootProps, getInputProps, open } = useDropzone({
@@ -40,13 +39,6 @@ const Dropzone = ({
         },
         disabled: disabled
     })
-
-    const remove = () => {
-        setFile(initialState)
-        if (handleDelete) {
-            handleDelete();
-        }
-    }
 
     const thumbs = () => (
         <Avatar
@@ -125,7 +117,7 @@ const Dropzone = ({
                 height: '1rem',
                 padding: '0.5rem',
                 borderRadius: '50%',
-                background: theme => (file.preview == '/images/Avatar.svg') ? theme.palette.primary.main : theme.palette.error.main,
+                background: theme => theme.palette.primary.main,
                 zIndex: 1000,
                 position: 'absolute',
                 bottom: 0,
@@ -133,7 +125,7 @@ const Dropzone = ({
                 color: '#F6F6F6 !important',
                 cursor: 'pointer'
             }}>
-                {(file.preview != '/images/Avatar.svg') ? <Trash2 onClick={remove} /> : <Plus onClick={open} />}
+                {(file.preview != '/images/Avatar.svg') ? <RefreshCw onClick={open} /> : <Plus onClick={open} />}
             </Box>
         </Box>
     )

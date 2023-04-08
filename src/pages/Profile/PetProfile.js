@@ -54,19 +54,6 @@ const PetProfile = () => {
         }
     }
 
-    const deletePhoto = async () => {
-        try {
-            const dogPhoto = await getCurrDogPhoto(user.dog.dogPhotos)
-            const res = await apiProvider.delete(`/api/dog/img-dog/${user.dog.id}/${dogPhoto}`)
-
-            if (res.status >= 200 && res.status < 300) {
-                renewToken(dispatch, user)
-            }
-        } catch (error) {
-            setError('Ha ocurrido un error inesperado.')
-        }
-    }
-
     React.useEffect(() => {
         const subscription = watch(handleSubmit(onSubmit))
 
@@ -99,7 +86,6 @@ const PetProfile = () => {
                                 name="files"
                                 control={control}
                                 defaultValue={(user.dog) && getCurrDogPhoto(user.dog.dogPhotos)}
-                                handleDelete={deletePhoto}
                             />
                         )}
                     </Box>
