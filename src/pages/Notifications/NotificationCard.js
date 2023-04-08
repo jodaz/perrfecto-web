@@ -31,8 +31,14 @@ const getLinkByType = ({ type, link }) => {
 
 const getMessageByType = ({ name_sender, type }) => {
     switch(type) {
+        case 'active_business': {
+            return `La publicación de negocio ha sido aprobada.`;
+        }
         case 'delete_publication': {
             return `Tu publicación ha sido eliminada por el administrador.`;
+        }
+        case 'locked_user': {
+            return `Tu usuario ha sido bloqueado por el administrador.`;
         }
         case 'delete_blog': {
             return `Tu blog ha sido eliminado por el administrador.`;
@@ -72,6 +78,9 @@ const getMessageByType = ({ name_sender, type }) => {
         }
         case 'comment_blog': {
             return `Tu publicación ha recibido un comentario.`;
+        }
+        case 'active_publication': {
+            return `Tu publicación ha sido aprobada.`;
         }
         case 'refused_blog': {
             return `Tu ha blog sido rechazado.`;
@@ -118,7 +127,10 @@ const NotificationCard = props => {
         'pet_week',
         'pet_moth',
         'delete_publication',
-        'delete_blog'
+        'delete_blog',
+        'active_publication',
+        'locked_user',
+        'active_business'
     ];
 
     return (
