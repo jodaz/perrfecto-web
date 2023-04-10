@@ -21,23 +21,15 @@ const Dropzone = ({
         },
         maxFiles: 1,
         multiple: false,
+        disabled: disabled,
         onDrop: (acceptedFiles, event) => {
             const fileObject = Object.assign(acceptedFiles[0], {
                 preview: URL.createObjectURL(acceptedFiles[0])
             })
 
             setFile(fileObject);
-
-            if (defaultValue) {
-                onChange({
-                    previous: file,
-                    new: acceptedFiles
-                })
-            } else {
-                onChange(acceptedFiles)
-            }
-        },
-        disabled: disabled
+            onChange(acceptedFiles)
+        }
     })
 
     const thumbs = () => (
@@ -63,13 +55,9 @@ const Dropzone = ({
 
     React.useEffect(() => {
         if (defaultValue) {
-            return setFile({
-                path: defaultValue,
-                preview: getUserPhoto(defaultValue)
-            })
+            return setFile({ preview: getUserPhoto(defaultValue) })
         }
-
-        return setFile({ preview: '/images/Avatar.svg' })
+        return  setFile({ preview: '/images/Avatar.svg' })
     }, [defaultValue])
 
     return (

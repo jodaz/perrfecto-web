@@ -19,15 +19,7 @@ const EditPhoto = ({ isEditing }) => {
 
     const onSubmit = async (values) => {
         try {
-            const parsedData = {
-                files: values.files.new
-            }
-
-            if (values.files.previous.path) {
-                parsedData.img_delete = values.files.previous.path
-            }
-
-            const formData = await formDataHandler(parsedData, 'files')
+            const formData = await formDataHandler(values, 'files')
 
             const res = await fileProvider.put(`/api/dog/img-dog/${user.dog.id}`, formData)
 
