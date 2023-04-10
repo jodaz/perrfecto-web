@@ -15,7 +15,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useNavigate } from 'react-router-dom'
 import Alert from '@mui/material/Alert';
 import PhoneInput from '../Forms/PhoneInput'
-import { PHOTO, DATE_BIRTH, PROVINCE, CITY, PHONE } from '../../validations';
+import { PHOTO, DATE_BIRTH, PROVINCE, CITY } from '../../validations';
 import SelectInput from '../Forms/SelectInput';
 import provincias from '../../utils/provincias';
 import dirtyCities from '../../utils/ciudades';
@@ -145,16 +145,6 @@ const RegisterOwner = ({ open, handleClose, redirect = '/market' }) => {
                                     validations={PHOTO.messages}
                                 />
                             </Box>
-                        </Box>
-                        <Box sx={{ p: 2 }}>
-                            <PhoneInput
-                                label="Teléfono"
-                                control={control}
-                                name="phone"
-                                rules={PHONE.rules}
-                                validations={PHONE.messages}
-                                placeholder='Ingresar teléfono'
-                            />
                         </Box>
                         <Box sx={{ p: 2 }}>
                             <DateInput
