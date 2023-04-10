@@ -99,10 +99,7 @@ const EditOwnerProfilePictures = () => {
                     <Typography textAlign="center" color="text.tertiary" sx={{ p: 2 }}>
                         Estas fotos serán visibles para todos los usuarios.
                     </Typography>
-                    <Box sx={{
-                        display: 'flex',
-                        justifyContent: 'center'
-                    }}>
+                    <Box sx={{ p: 2 }}>
                         <GalleryInput
                             control={control}
                             name='files'
