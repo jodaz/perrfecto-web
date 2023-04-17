@@ -11,15 +11,15 @@ on:
     branches: [ "main" ]
 
 env:
-  VITE_APP_API: ${{ secrets.APP_API_DOMAIN }}
-  VITE_APP_TOKEN: ${{ secrets.APP_AUTH_TOKEN_NAME }}
+  VITE_APP_API: ${{ secrets.VITE_APP_API_DOMAIN }}
+  VITE_APP_TOKEN: ${{ secrets.VITE_APP_AUTH_TOKEN_NAME }}
   VITE_APP_INTRODUCTION: 'shouldIntro'
-  VITE_APP_FB_APP_ID: ${{ secrets.APP_FB_APP_ID }}
-  VITE_APP_GG_APP_ID: ${{ secrets.APP_GG_APP_ID }}
-  VITE_APP_NAME: ${{ secrets.APP_NAME }}
-  VITE_APP_USER_INFO: ${{ secrets.APP_USER_STORAGE }}
-  VITE_APP_PAYPAL_CLIENT_ID: ${{ secrets.PAYPAL_CLIENT_ID }}
-  VITE_APP_STRIPE_CLIENT_ID: ${{ secrets.STRIPE_CLIENT_ID }}
+  VITE_APP_FB_APP_ID: ${{ secrets.VITE_APP_FB_APP_ID }}
+  VITE_APP_GG_APP_ID: ${{ secrets.VITE_APP_GG_APP_ID }}
+  VITE_APP_NAME: ${{ secrets.VITE_APP_NAME }}
+  VITE_APP_USER_INFO: ${{ secrets.VITE_APP_USER_STORAGE }}
+  VITE_APP_PAYPAL_CLIENT_ID: ${{ secrets.VITE_PAYPAL_CLIENT_ID }}
+  VITE_APP_STRIPE_CLIENT_ID: ${{ secrets.VITE_STRIPE_CLIENT_ID }}
 
 jobs:
   build:
