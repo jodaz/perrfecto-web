@@ -1,4 +1,4 @@
-name: Deploy CRA
+name: Deployment
 
 on:
   workflow_dispatch:
@@ -11,18 +11,15 @@ on:
     branches: [ "main" ]
 
 env:
-  REACT_APP_API: ${{ secrets.REACT_APP_API_DOMAIN }}
-  REACT_APP_TOKEN: ${{ secrets.REACT_APP_AUTH_TOKEN_NAME }}
-  INLINE_RUNTIME_CHUNK: false
-  REACT_APP_INTRODUCTION: 'shouldIntro'
-  REACT_APP_FB_APP_ID: ${{ secrets.REACT_APP_FB_APP_ID }}
-  REACT_APP_GG_APP_ID: ${{ secrets.REACT_APP_GG_APP_ID }}
-  REACT_APP_NAME: ${{ secrets.APP_NAME }}
-  REACT_APP_USER_INFO: ${{ secrets.APP_USER_STORAGE }}
-  REACT_APP_PAYPAL_SECRET: ${{ secrets.PAYPAL_SECRET }}
-  REACT_APP_PAYPAL_CLIENT_ID: ${{ secrets.PAYPAL_CLIENT_ID }}
-  REACT_APP_STRIPE_SECRET: ${{ secrets.STRIPE_SECRET }}
-  REACT_APP_STRIPE_CLIENT_ID: ${{ secrets.STRIPE_CLIENT_ID }}
+  VITE_APP_API: ${{ secrets.APP_API_DOMAIN }}
+  VITE_APP_TOKEN: ${{ secrets.APP_AUTH_TOKEN_NAME }}
+  VITE_APP_INTRODUCTION: 'shouldIntro'
+  VITE_APP_FB_APP_ID: ${{ secrets.APP_FB_APP_ID }}
+  VITE_APP_GG_APP_ID: ${{ secrets.APP_GG_APP_ID }}
+  VITE_APP_NAME: ${{ secrets.APP_NAME }}
+  VITE_APP_USER_INFO: ${{ secrets.APP_USER_STORAGE }}
+  VITE_APP_PAYPAL_CLIENT_ID: ${{ secrets.PAYPAL_CLIENT_ID }}
+  VITE_APP_STRIPE_CLIENT_ID: ${{ secrets.STRIPE_CLIENT_ID }}
 
 jobs:
   build:
