@@ -107,11 +107,13 @@ export const FEATURES = {
 export const ADD_PHOTOS = {
     rules: {
         required: true,
-        minLength: 1
+        minLength: 1,
+        maxLength: 5
     },
     messages: {
         required: "Ingrese al menos una foto.",
-        minLength: "Ingrese al menos una foto."
+        minLength: "Ingrese al menos una foto.",
+        maxLength: 'Maximo 5 fotos'
     }
 }
 

@@ -8,28 +8,18 @@ import formDataHandler from '../../utils/formDataHandler';
 import Avatar from '@mui/material/Avatar';
 import getUserPhoto from '../../utils/getUserPhoto';
 
-const getCurrDogPhoto = data => JSON.parse(data)[0]
-
-const EditPhoto = ({ isEditing }) => {
+const EditPhoto = ({ isEditing, toggleEdit }) => {
     const { state: { user }, dispatch } = useAuth();
+    const [currProfilePic, setCurrProfilePic] = React.useState(null);
     const { handleSubmit, control, watch, formState: {
-        isSubmitting
+        isSubmitting, isSubmitSuccessful
     }} = useForm();
-    const dogPhoto = getCurrDogPhoto(user.dog.dogPhotos);
 
     const onSubmit = async (values) => {
         try {
-            const parsedData = {
-                files: values.files.new
-            }
+            const formData = await formDataHandler(values, 'files')
 
-            if (values.files.previous.path) {
-                parsedData.img_delete = values.files.previous.path
-            }
-
-            const formData = await formDataHandler(parsedData, 'files')
-
-            const res = await fileProvider.put(`/api/dog/img-dog/${user.dog.id}`, formData)
+            const res = await fileProvider.put('/api/user/img-profile', formData)
 
             if (res.status >= 200 && res.status < 300) {
                 renewToken(dispatch, user)
@@ -41,8 +31,7 @@ const EditPhoto = ({ isEditing }) => {
 
     const deletePhoto = async () => {
         try {
-            const dogPhoto = await getCurrDogPhoto(user.dog.dogPhotos)
-            const res = await apiProvider.delete(`/api/dog/img-dog/${user.dog.id}/${dogPhoto}`)
+            const res = await apiProvider.delete(`/api/user/img-profile/${currProfilePic}`)
 
             if (res.status >= 200 && res.status < 300) {
                 renewToken(dispatch, user)
@@ -58,19 +47,31 @@ const EditPhoto = ({ isEditing }) => {
         return () => subscription.unsubscribe();
     }, [handleSubmit, watch])
 
+    React.useEffect(() => {
+        if (user.img_profile) {
+            setCurrProfilePic(JSON.parse(user.img_profile)[0])
+        }
+    }, [user.img_profile])
+
+    React.useEffect(() => {
+        if (isSubmitSuccessful) {
+            toggleEdit()
+        }
+     }, [isSubmitSuccessful])
+
     return (
         <Box sx={{ display: 'flex' }}>
             {isEditing ? (
                 <PhotoInput
                     name="files"
                     control={control}
-                    defaultValue={JSON.parse(user.dog.dogPhotos)[0]}
+                    defaultValue={currProfilePic}
                     disabled={isSubmitting}
                     handleDelete={deletePhoto}
                 />
             ) : (
                 <Avatar
-                    src={dogPhoto ? getUserPhoto(dogPhoto) : '/images/Avatar.svg'}
+                    src={currProfilePic ? getUserPhoto(currProfilePic) : '/images/Avatar.svg'}
                     alt="profile_photo"
                     sx={{ height: '125px', width: '125px' }}
                 />

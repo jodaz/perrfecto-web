@@ -28,29 +28,9 @@ const PetOwner = () => {
 
     const onSubmit = async (values) => {
         try {
-            const parsedData = {
-                files: values.files.new
-            }
-
-            if (values.files.previous.path) {
-                parsedData.img_delete = values.files.previous.path
-            }
-
-            const formData = await formDataHandler(parsedData, 'files')
+            const formData = await formDataHandler(values, 'files')
 
             const res = await fileProvider.put('/api/user/img-profile', formData)
-
-            if (res.status >= 200 && res.status < 300) {
-                renewToken(dispatch, user)
-            }
-        } catch (error) {
-            setError('Ha ocurrido un error inesperado.')
-        }
-    }
-
-    const deletePhoto = async (picture) => {
-        try {
-            const res = await apiProvider.delete(`/api/user/img-profile/${picture}`)
 
             if (res.status >= 200 && res.status < 300) {
                 renewToken(dispatch, user)
@@ -96,7 +76,6 @@ const PetOwner = () => {
                         control={control}
                         defaultValue={currProfilePic}
                         disabled={isSubmitting}
-                        handleDelete={() => deletePhoto(currProfilePic)}
                     />
                 </Box>
                 <Typography

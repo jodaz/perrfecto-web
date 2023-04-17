@@ -1,5 +1,6 @@
 import * as React from 'react';
 import FormHelperText from '@mui/material/FormHelperText'
+import Alert from '@mui/material/Alert'
 import { useDropzone } from 'react-dropzone';
 import { Controller } from 'react-hook-form'
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -37,7 +38,7 @@ const Dropzone = ({
         }
         return value;
     })());
-    const { getRootProps, getInputProps } = useDropzone({
+    const { getRootProps, getInputProps, fileRejections } = useDropzone({
         accept: accept,
         onDrop: acceptedFiles => {
             const newFiles = [...files, ...acceptedFiles.map(file => Object.assign(file, {
@@ -99,11 +100,6 @@ const Dropzone = ({
         </SwiperSlide>
     ));
 
-    // useEffectOnce(() => {
-    //     // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
-    //     return () => files.forEach(file => URL.revokeObjectURL(file.preview));
-    // }, [files]);
-
     React.useEffect(() => {
         if (typeof(value) == 'string') {
             return setFiles(JSON.parse(value))
@@ -113,70 +109,77 @@ const Dropzone = ({
     }, [value.length])
 
     return (
-        <Box sx={{ display: 'flex', mt: 1, mb: 2, opacity: disabled ? 0.8 : 1 }}>
-            {!!(files.length) && (
-                <Box sx={{ display: 'flex', width: '100%', justifyContent: 'start' }}>
-                    <SwiperStyled
-                        slidesPerView={1}
-                        scrollbar={{
-                            draggable: true
-                        }}
-                        grabCursor={true}
-                        modules={[Scrollbar]}
-                        className='mySwiper'
-                    >
-                        {thumbs}
-                    </SwiperStyled>
-                </Box>
+        <>
+            {!!fileRejections.length && (
+                <Alert severity="error" sx={{ marginBottom: '1.5rem' }}>
+                    Demasiados archivos seleccionados
+                </Alert>
             )}
-            <Box sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
-            }} {...getRootProps({className: 'dropzone'})}>
-                <input {...getInputProps()} />
-                {(!files.length) &&
-                    (<Box sx={{
-                        height: 220,
-                        width: 180,
-                        bgcolor: '#ECECEC',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderRadius: '12px',
-                        cursor: 'pointer'
-                    }}>
-                        <PlusCircle color='#858585' />
+            <Box sx={{ display: 'flex', mt: 1, mb: 2, opacity: disabled ? 0.8 : 1 }}>
+                {!!(files.length) && (
+                    <Box sx={{ display: 'flex', width: '100%', justifyContent: 'start' }}>
+                        <SwiperStyled
+                            slidesPerView={1}
+                            scrollbar={{
+                                draggable: true
+                            }}
+                            grabCursor={true}
+                            modules={[Scrollbar]}
+                            className='mySwiper'
+                        >
+                            {thumbs}
+                        </SwiperStyled>
                     </Box>
                 )}
                 <Box sx={{
                     display: 'flex',
-                    p: 1,
-                    width: '80px',
-                    textAlign: 'center',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexDirection: 'column'
-                }}>
-                    <Box sx={{
-                        width: 'fit-content',
-                        bgcolor: '#ECECEC',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderRadius: 100,
-                    }}>
-                        <IconButton color="text.tertiary" disabled={disabled || files.length == maxFiles}>
-                            <PlusCircle />
-                        </IconButton>
-                    </Box>
-                    {message && (
-                        <Typography fontSize={12} color="text.tertiary">
-                            {message}
-                        </Typography>
+                    justifyContent: 'space-between',
+                }} {...getRootProps({className: 'dropzone'})}>
+                    <input {...getInputProps()} />
+                    {(!files.length) &&
+                        (<Box sx={{
+                            height: 220,
+                            width: 180,
+                            bgcolor: '#ECECEC',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            borderRadius: '12px',
+                            cursor: 'pointer'
+                        }}>
+                            <PlusCircle color='#858585' />
+                        </Box>
                     )}
+                    <Box sx={{
+                        display: 'flex',
+                        p: 1,
+                        width: '80px',
+                        textAlign: 'center',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flexDirection: 'column'
+                    }}>
+                        <Box sx={{
+                            width: 'fit-content',
+                            bgcolor: '#ECECEC',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            borderRadius: 100,
+                        }}>
+                            <IconButton color="text.tertiary" disabled={disabled || files.length == maxFiles}>
+                                <PlusCircle />
+                            </IconButton>
+                        </Box>
+                        {message && (
+                            <Typography fontSize={12} color="text.tertiary">
+                                {message}
+                            </Typography>
+                        )}
+                    </Box>
                 </Box>
             </Box>
-        </Box>
+        </>
     );
 }
 

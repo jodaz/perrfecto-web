@@ -34,30 +34,9 @@ const PetProfile = () => {
 
     const onSubmit = async (values) => {
         try {
-            const parsedData = {
-                files: values.files.new
-            }
-
-            if (values.files.previous.path) {
-                parsedData.img_delete = values.files.previous.path
-            }
-
-            const formData = await formDataHandler(parsedData, 'files')
+            const formData = await formDataHandler(values, 'files')
 
             const res = await fileProvider.put(`/api/dog/img-dog/${user.dog.id}`, formData)
-
-            if (res.status >= 200 && res.status < 300) {
-                renewToken(dispatch, user)
-            }
-        } catch (error) {
-            setError('Ha ocurrido un error inesperado.')
-        }
-    }
-
-    const deletePhoto = async () => {
-        try {
-            const dogPhoto = await getCurrDogPhoto(user.dog.dogPhotos)
-            const res = await apiProvider.delete(`/api/dog/img-dog/${user.dog.id}/${dogPhoto}`)
 
             if (res.status >= 200 && res.status < 300) {
                 renewToken(dispatch, user)
@@ -99,7 +78,6 @@ const PetProfile = () => {
                                 name="files"
                                 control={control}
                                 defaultValue={(user.dog) && getCurrDogPhoto(user.dog.dogPhotos)}
-                                handleDelete={deletePhoto}
                             />
                         )}
                     </Box>

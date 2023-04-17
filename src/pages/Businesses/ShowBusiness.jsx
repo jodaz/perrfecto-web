@@ -18,12 +18,16 @@ import { useParams } from 'react-router-dom';
 import LinkBehavior from '../../components/LinkBehavior';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import ContactBusiness from '../../components/Modals/ContactBusiness';
+import DeleteBusiness from '../../components/Modals/DeleteBusiness';
 
 const getImages = arrImages => arrImages.map(image => getUserPhoto(image));
 
 const ShowBusinessLayout = item => {
     const [featureBusiness, setFeatureBusiness] = React.useState(false)
     const [openContactDialog, setOpenContactDialog] = React.useState(false)
+    const [openDeleteBusiness, setOpenDeleteBusiness] = React.useState(false)
+
+    const toggleDeleteBusiness = () => setOpenDeleteBusiness(!openDeleteBusiness)
 
     const toggleOpenContactDialog = () => setOpenContactDialog(!openContactDialog)
 
@@ -69,13 +73,13 @@ const ShowBusinessLayout = item => {
                     Editar negocio
                 </Box>
             </Box>
-            <Box component={LinkBehavior}
+            <Box
                 sx={{
                 display: 'flex',
                 alignItems: 'center',
                 color: 'unset',
                 textDecoration: 'none',
-            }} to='/profile/settings/security?delete=true'>
+            }} onClick={toggleDeleteBusiness}>
                 <Trash2 />
                 <Box sx={{ paddingLeft: '0.5rem' }}>
                     Eliminar negocio
@@ -228,6 +232,13 @@ const ShowBusinessLayout = item => {
                         {...item}
                         open={openContactDialog}
                         handleClose={toggleOpenContactDialog}
+                    />
+                )}
+                {openDeleteBusiness && (
+                    <DeleteBusiness
+                        item={item}
+                        open={openDeleteBusiness}
+                        handleClose={toggleDeleteBusiness}
                     />
                 )}
             </Box>

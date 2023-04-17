@@ -24,23 +24,14 @@ const BusinessProfile = () => {
     const [error, setError] = React.useState('')
     const { state: { user }, dispatch } = useAuth();
     const location = useLocation();
-    const navigate = useNavigate();
     const currProfilePic = user.img_profile ? JSON.parse(user.img_profile)[0] : null;
-    const registerOwner = getSearchParams(location, 'register');
     const { handleSubmit, control, watch, formState: {
         isSubmitting
     }} = useForm();
 
-    const onSubmit = async (data) => {
+    const onSubmit = async (values) => {
         try {
-            const parsedData = {
-                files: data.files,
-                body: {
-                    img_delete: user.img_profile ? user.img_profile : null
-                }
-            }
-
-            const formData = await formDataHandler(parsedData, 'files')
+            const formData = await formDataHandler(values, 'files')
 
             const res = await fileProvider.put('/api/user/img-profile', formData)
 

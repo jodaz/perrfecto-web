@@ -2,7 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { ReactComponent as RocketIcon } from '../../assets/icons/Rocket.svg'
+import RocketIcon from '../../assets/icons/Rocket.png'
 import IconButtonWithTitle from '../../components/IconButtonWithTitle';
 import SettingsLayout from '../../layouts/SettingsLayout';
 import BusinessCard from './BusinessCard';
@@ -32,7 +32,7 @@ const Businesses = () => {
                     {(!user.publication) && (
                         <IconButtonWithTitle
                             to='create'
-                            icon={<RocketIcon />}
+                            icon={RocketIcon}
                             title='Crear negocio'
                         />
                     )}

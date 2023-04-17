@@ -65,6 +65,8 @@ const SocialAuth = ({ hidePhone, location }) => {
 
             if (message.includes('deleted')) {
                 setError('Su cuenta ha sido eliminada.')
+            } else if (message.includes('locked')) {
+                navigate('/account/locked')
             } else {
                 setError('Ha ocurrido un error')
             }

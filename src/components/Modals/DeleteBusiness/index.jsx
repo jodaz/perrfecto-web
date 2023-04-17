@@ -7,14 +7,30 @@ import { Trash2 } from 'lucide-react';
 import Stack from '@mui/material/Stack';
 import { alpha } from '@mui/material';
 import SuccessfulDeleteBusiness from './SuccessfulDeleteBusiness';
+import { renewToken, useAuth } from '../../../context/AuthContext';
+import { apiProvider } from '../../../api';
+import { useNavigate } from 'react-router-dom';
 
-const DeleteBusiness = ({ open, handleClose, closeBusiness }) => {
+const DeleteBusiness = ({ open, item, handleClose }) => {
+    const { state: { user }, dispatch } = useAuth()
     const [onSubmit, setOnSubmit] = React.useState(false);
     const [success, setSuccess] = React.useState(false)
+    const navigate = useNavigate()
 
     const handleDelete = async () => {
         setOnSubmit(true);
-        setOnSubmit(false)
+        try {
+            const res = await apiProvider.delete(`/api/business-ann/${item.id}`)
+
+            if (res.status >= 200 && res.status < 300) {
+                renewToken(dispatch, user);
+                navigate('/businesses')
+            }
+
+            return res;
+        } catch (e) {
+            console.log(e);
+        }
         setSuccess(true)
     }
 
@@ -28,7 +44,7 @@ const DeleteBusiness = ({ open, handleClose, closeBusiness }) => {
             }}
             open={open}
         >
-            {(success) ? <SuccessfulDeleteBusiness handleClose={closeBusiness}/>
+            {(success) ? <SuccessfulDeleteBusiness handleClose={handleClose}/>
             : (
                 <Box sx={{
                     display: 'flex',

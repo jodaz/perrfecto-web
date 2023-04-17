@@ -4,7 +4,7 @@ import Aside from './Aside'
 import { socket } from '../../utils/socket';
 import { useNotifications, newNotification } from '../../context/NotificationContext';
 import { useMatch, match } from '../../context/MatchContext';
-import { useAuth, renewToken } from '../../context/AuthContext'
+import { useAuth, renewToken, logout } from '../../context/AuthContext'
 // Screens
 import BusinessHome from './BusinessHome';
 import UsersHome from './UsersHome';
@@ -13,6 +13,7 @@ import Navigation from './Navigation';
 import GuestWarningModal from '../../components/Modals/GuestWarningModal';
 import GeolocationDrawer from '../../components/Drawers/GeolocationDrawer';
 import FilterDrawer from '../../components/FilterDrawer';
+import { useNavigate } from 'react-router-dom';
 
 const DesktopLayout = ({ user, isAuth, children }) => (
     <Box sx={{
@@ -34,6 +35,7 @@ export default function AppLayout({ children }) {
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
     const { dispatch } = useNotifications();
     const { dispatch: matchDispatch } = useMatch()
+    const navigate = useNavigate()
 
     React.useEffect(() => {
         socket.on('notification', response => {
@@ -42,6 +44,10 @@ export default function AppLayout({ children }) {
             }
             if (response.notification.type == 'delete_publication') {
                 renewToken(authDispatch, user)
+            }
+            if (response.notification.type == 'locked_user') {
+                logout(authDispatch);
+                return navigate('/account/locked')
             }
 
             newNotification(dispatch, response);
