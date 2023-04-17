@@ -8,9 +8,7 @@ const vars = {
     user: `${import.meta.env.VITE_APP_USER_INFO}`,
     FacebookID: `${import.meta.env.VITE_APP_FB_APP_ID}`,
     PaypalClientID: `${import.meta.env.VITE_APP_PAYPAL_CLIENT_ID}`,
-    PaypalSecret: `${import.meta.env.VITE_APP_PAYPAL_SECRET}`,
-    StripeClientID: `${import.meta.env.VITE_APP_STRIPE_CLIENT_ID}`,
-    StripeSecret: `${import.meta.env.VITE_APP_STRIPE_SECRET}`,
+    StripeClientID: `${import.meta.env.VITE_APP_STRIPE_CLIENT_ID}`
 }
 
 export default vars
