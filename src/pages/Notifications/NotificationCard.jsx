@@ -10,6 +10,9 @@ const getLinkByType = ({ type, link }) => {
         case 'like_blog': {
             return `/blogs/${link}`;
         }
+        case 'active_blog': {
+            return `/blogs/${link}`;
+        }
         case 'new_message': {
             return `/chat/${link}`;
         }
@@ -31,6 +34,9 @@ const getLinkByType = ({ type, link }) => {
 
 const getMessageByType = ({ name_sender, type }) => {
     switch(type) {
+        case 'active_blog': {
+            return `Tu blog ha sido aprobado por el administrador.`;
+        }
         case 'active_business': {
             return `La publicación de negocio ha sido aprobada.`;
         }
