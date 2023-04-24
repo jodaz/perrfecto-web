@@ -9,8 +9,10 @@ import { Outlet } from 'react-router-dom'
 import { closeGuestWarning, useGuest } from '../../context/GuestContext';
 import { guestUser, useAuth } from '../../context/AuthContext'
 import { ArrowRight } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const Intro = () => {
+    const [translations] = useTranslation('global')
     const { dispatch: guestDispatch } = useGuest()
     const matches = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const { state: { isAuth }, dispatch: authDispatch } = useAuth();
@@ -58,7 +60,7 @@ const Intro = () => {
                     fontSize: matches ? '2rem' : '3rem',
                     lineHeight: '50px'
                 }}>
-                    ¡Haz nuevos amigos y planes con otros amantes de los perros!
+                    {translations('landing.welcome')}
                 </Box>
                 {!isAuth ? (
                     <Stack spacing={2}>
@@ -68,7 +70,7 @@ const Intro = () => {
                             to='/register'
                             component={LinkBehavior}
                         >
-                            Crea un perfil para tu mascota
+                            {translations('landing.create-profile')}
                         </Button>
                         <Button
                             variant="contained"
@@ -78,7 +80,7 @@ const Intro = () => {
                             component={LinkBehavior}
                             onClick={() => guestUser(authDispatch)}
                         >
-                            Ingresar como invitado
+                            {translations('landing.enter-guest')}
                         </Button>
                     </Stack>
                 ) : (

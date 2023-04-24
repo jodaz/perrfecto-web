@@ -18,37 +18,53 @@ import { NotificationProvider } from './context/NotificationContext';
 import { PaypalProvider } from './context/PaypalContext';
 import { StripeProvider } from './context/StripeContext';
 import { MatchProvider } from './context/MatchContext';
+import { I18nextProvider } from 'react-i18next';
+import i18next from 'i18next';
+
+import global_es from './translations/es/global.json'
+
+i18next.init({
+    lng: 'es',
+    resources: {
+        es: {
+            global: global_es
+        }
+    }
+})
+
 
 const App = () => (
-    <PaypalProvider>
-        <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={esLocale}>
-            <ThemeProvider theme={theme}>
-                <AuthProvider>
-                    <FavouriteProvider>
-                        <GuestProvider>
-                            <PublicationProvider>
-                                <MultiStepProvider>
-                                    <BlogProvider>
-                                        <ChatProvider>
-                                            <NotificationProvider>
-                                                <StripeProvider>
-                                                    <MatchProvider>
-                                                        <BusinessProvider>
-                                                            <AppRoutes />
-                                                        </BusinessProvider>
-                                                    </MatchProvider>
-                                                </StripeProvider>
-                                            </NotificationProvider>
-                                        </ChatProvider>
-                                    </BlogProvider>
-                                </MultiStepProvider>
-                            </PublicationProvider>
-                        </GuestProvider>
-                    </FavouriteProvider>
-                </AuthProvider>
-            </ThemeProvider>
-        </LocalizationProvider>
-    </PaypalProvider>
+    <I18nextProvider i18n={i18next}>
+        <PaypalProvider>
+            <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={esLocale}>
+                <ThemeProvider theme={theme}>
+                    <AuthProvider>
+                        <FavouriteProvider>
+                            <GuestProvider>
+                                <PublicationProvider>
+                                    <MultiStepProvider>
+                                        <BlogProvider>
+                                            <ChatProvider>
+                                                <NotificationProvider>
+                                                    <StripeProvider>
+                                                        <MatchProvider>
+                                                            <BusinessProvider>
+                                                                <AppRoutes />
+                                                            </BusinessProvider>
+                                                        </MatchProvider>
+                                                    </StripeProvider>
+                                                </NotificationProvider>
+                                            </ChatProvider>
+                                        </BlogProvider>
+                                    </MultiStepProvider>
+                                </PublicationProvider>
+                            </GuestProvider>
+                        </FavouriteProvider>
+                    </AuthProvider>
+                </ThemeProvider>
+            </LocalizationProvider>
+        </PaypalProvider>
+    </I18nextProvider>
 );
 
 export default App;
